@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +8,1128 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
-    <!-- HTML content omitted for brevity in this placeholder -->
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-blue-600">PC Bottleneck Calculator</h1>
+            <p class="text-lg text-gray-600">Find potential performance bottlenecks between your CPU and GPU at different resolutions</p>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Input Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-blue-700 border-b pb-2">Component Selection</h2>
+                
+                <!-- CPU Selection -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3 text-gray-700">CPU Selection</h3>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Brand</label>
+                            <select id="cpu-brand" class="w-full p-2 border rounded-md bg-gray-50">
+                                <option value="">Select Brand</option>
+                                <option value="intel">Intel</option>
+                                <option value="amd">AMD</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Model</label>
+                            <select id="cpu-model" class="w-full p-2 border rounded-md bg-gray-50" disabled>
+                                <option value="">Select Model</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- CPU Specifications -->
+                    <div class="bg-gray-100 p-3 rounded-md">
+                        <h4 class="text-sm font-medium mb-2 text-gray-700">CPU Specifications</h4>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div>Base Clock: <span id="cpu-base-clock" class="font-medium">-</span></div>
+                            <div>Boost Clock: <span id="cpu-boost-clock" class="font-medium">-</span></div>
+                            <div>Cores/Threads: <span id="cpu-cores-threads" class="font-medium">-</span></div>
+                            <div>TDP: <span id="cpu-tdp" class="font-medium">-</span></div>
+                            <div>Performance: <span id="cpu-performance" class="font-medium">-</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GPU Selection -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3 text-gray-700">GPU Selection</h3>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Brand</label>
+                            <select id="gpu-brand" class="w-full p-2 border rounded-md bg-gray-50">
+                                <option value="">Select Brand</option>
+                                <option value="nvidia">NVIDIA</option>
+                                <option value="amd">AMD</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Model</label>
+                            <select id="gpu-model" class="w-full p-2 border rounded-md bg-gray-50" disabled>
+                                <option value="">Select Model</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- GPU Specifications -->
+                    <div class="bg-gray-100 p-3 rounded-md">
+                        <h4 class="text-sm font-medium mb-2 text-gray-700">GPU Specifications</h4>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div>Base Clock: <span id="gpu-base-clock" class="font-medium">-</span></div>
+                            <div>Boost Clock: <span id="gpu-boost-clock" class="font-medium">-</span></div>
+                            <div>VRAM: <span id="gpu-vram" class="font-medium">-</span></div>
+                            <div>TDP: <span id="gpu-tdp" class="font-medium">-</span></div>
+                            <div>Performance: <span id="gpu-performance" class="font-medium">-</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resolution & Settings -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3 text-gray-700">Resolution & Settings</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Display Resolution</label>
+                            <select id="resolution" class="w-full p-2 border rounded-md bg-gray-50">
+                                <option value="1080p">1080p (1920×1080)</option>
+                                <option value="1440p">1440p (2560×1440)</option>
+                                <option value="4k">4K (3840×2160)</option>
+                                <option value="ultrawide1440p">Ultrawide 1440p</option>
+                                <option value="ultrawide4k">Ultrawide 4K</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Workload Type</label>
+                            <select id="workload" class="w-full p-2 border rounded-md bg-gray-50">
+                                <option value="gaming">Gaming</option>
+                                <option value="productivity">Productivity</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="calculate-btn" class="w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700 transition-colors disabled:bg-gray-400" disabled>Calculate Bottleneck</button>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="bg-white p-6 rounded-lg shadow-md hidden">
+                <h2 class="text-xl font-semibold mb-4 text-blue-700 border-b pb-2">Bottleneck Analysis Results</h2>
+                
+                <!-- Component Comparison -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3 text-gray-700">Component Comparison</h3>
+                    <div class="flex justify-center mb-4">
+                        <canvas id="comparison-chart" width="300" height="200"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="p-3 bg-blue-50 rounded-md">
+                            <h4 id="cpu-name" class="font-medium text-blue-800 mb-1">CPU Name</h4>
+                            <div>Performance: <span id="cpu-perf-score" class="font-medium">0</span></div>
+                            <div>Relative Weight: <span id="cpu-weight" class="font-medium">60%</span></div>
+                            <div>Weighted Score: <span id="cpu-weighted-score" class="font-medium">0</span></div>
+                        </div>
+                        <div class="p-3 bg-green-50 rounded-md">
+                            <h4 id="gpu-name" class="font-medium text-green-800 mb-1">GPU Name</h4>
+                            <div>Performance: <span id="gpu-perf-score" class="font-medium">0</span></div>
+                            <div>Relative Weight: <span id="gpu-weight" class="font-medium">40%</span></div>
+                            <div>Weighted Score: <span id="gpu-weighted-score" class="font-medium">0</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottleneck Analysis -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-2 text-gray-700">Bottleneck Analysis</h3>
+                    <div class="text-center mb-2">
+                        <span id="bottleneck-percent" class="text-2xl font-bold">0%</span> Bottleneck
+                    </div>
+                    <div id="loading-indicator" class="flex justify-center mb-2 hidden">
+                        <div class="text-sm text-gray-600">Calculating...</div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                        <div id="bottleneck-indicator" class="h-4 rounded-full bg-green-500" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-600 mb-4">
+                        <div>No Bottleneck<br>(&lt;5%)</div>
+                        <div>Minor<br>(5-10%)</div>
+                        <div>Moderate<br>(10-15%)</div>
+                        <div>Significant<br>(15-30%)</div>
+                        <div>Severe<br>(&gt;30%)</div>
+                    </div>
+                </div>
+                
+                <!-- Analysis Explanation -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-2 text-gray-700">Analysis Explanation</h3>
+                    <p id="analysis-explanation" class="text-gray-600 text-sm">Please select components to see the analysis results.</p>
+                </div>
+                
+                <!-- Recommendations -->
+                <div>
+                    <h3 class="text-lg font-medium mb-2 text-gray-700">Recommendations</h3>
+                    <ul id="recommendations" class="list-disc pl-5 text-sm text-gray-600 space-y-1">
+                        <li>Select CPU and GPU models to receive personalized recommendations.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Explanations Section -->
+        <section class="mt-8 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-blue-700 border-b pb-2">Resolution Impact on Bottlenecks</h2>
+            <p class="mb-4">Resolution has a significant impact on the bottleneck balance between CPU and GPU. As resolution increases, more pressure is placed on the GPU, shifting the bottleneck away from the CPU.</p>
+            
+            <div class="overflow-x-auto mb-6">
+                <table class="min-w-full bg-white border border-gray-200">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-50 text-left">Resolution</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-50 text-left">CPU Impact</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-50 text-left">GPU Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">1080p (1920×1080)</td>
+                            <td class="py-2 px-4 border-b border-gray-200">60%</td>
+                            <td class="py-2 px-4 border-b border-gray-200">40%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">1440p (2560×1440)</td>
+                            <td class="py-2 px-4 border-b border-gray-200">50%</td>
+                            <td class="py-2 px-4 border-b border-gray-200">50%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">4K (3840×2160)</td>
+                            <td class="py-2 px-4 border-b border-gray-200">40%</td>
+                            <td class="py-2 px-4 border-b border-gray-200">60%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">Ultrawide 1440p</td>
+                            <td class="py-2 px-4 border-b border-gray-200">45%</td>
+                            <td class="py-2 px-4 border-b border-gray-200">55%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">Ultrawide 4K</td>
+                            <td class="py-2 px-4 border-b border-gray-200">35%</td>
+                            <td class="py-2 px-4 border-b border-gray-200">65%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-2 text-gray-700">CPU-Intensive Scenarios</h3>
+                    <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
+                        <li>Lower resolutions (1080p)</li>
+                        <li>High refresh rate gaming (144Hz+)</li>
+                        <li>CPU-bound games (simulation, strategy)</li>
+                        <li>Streaming while gaming</li>
+                        <li>Multitasking workloads</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-2 text-gray-700">GPU-Intensive Scenarios</h3>
+                    <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
+                        <li>Higher resolutions (1440p, 4K)</li>
+                        <li>Ray tracing enabled</li>
+                        <li>Graphics-heavy games</li>
+                        <li>GPU-accelerated tasks (rendering, AI)</li>
+                        <li>Multiple monitor setups</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mt-8 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-blue-700 border-b pb-2">Understanding Bottlenecks</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-2 text-gray-700">What is a Bottleneck?</h3>
+                <p class="text-gray-600">A bottleneck occurs when one component in your system limits the performance of other components. In the context of CPU/GPU combinations, a bottleneck means one component is waiting for the other, resulting in unutilized potential performance.</p>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-2 text-gray-700">Bottleneck Severity Levels</h3>
+                <ul class="text-sm text-gray-600 space-y-2">
+                    <li><span class="font-medium text-green-600">No Bottleneck (&lt;5%):</span> Ideal balance between components.</li>
+                    <li><span class="font-medium text-green-700">Minor (5-10%):</span> Slight imbalance, but not noticeable in most scenarios.</li>
+                    <li><span class="font-medium text-yellow-600">Moderate (10-15%):</span> Some performance impact may be noticeable in specific scenarios.</li>
+                    <li><span class="font-medium text-orange-600">Significant (15-30%):</span> Performance is being held back noticeably.</li>
+                    <li><span class="font-medium text-red-600">Severe (&gt;30%):</span> Major component imbalance causing significant performance loss.</li>
+                </ul>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-2 text-gray-700">Limitations of Bottleneck Calculators</h3>
+                <p class="text-gray-600 mb-2">This calculator provides theoretical estimates based on component performance data. Actual bottlenecks can vary based on:</p>
+                <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
+                    <li>Specific games or applications being used</li>
+                    <li>Background processes running on your system</li>
+                    <li>Driver versions and optimizations</li>
+                    <li>System cooling and thermal throttling</li>
+                    <li>Overclocking settings</li>
+                    <li>Memory speed and capacity</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-medium mb-2 text-gray-700">Important Disclaimer</h3>
+                <p class="text-sm text-gray-600 italic">The results provided by this calculator are theoretical estimates based on normalized performance scores. Real-world performance may vary. This tool should be used as one factor in your decision-making process, not as the sole determinant for hardware purchases or upgrades.</p>
+            </div>
+        </section>
+        
+        <footer class="mt-8 text-center text-sm text-gray-500">
+            <p>PC Bottleneck Calculator - A theoretical tool to help with PC component selection</p>
+            <p>Data based on normalized performance benchmarks from multiple sources</p>
+        </footer>
+    </div>
+
+    <script>
+        // Component database
+        const cpuDatabase = {
+            intel: [
+                { 
+                    name: "Intel Core i3-10100", 
+                    baseClock: "3.6 GHz", 
+                    boostClock: "4.3 GHz", 
+                    coresThreads: "4C/8T", 
+                    tdp: "65W", 
+                    performance: 65
+                },
+                { 
+                    name: "Intel Core i5-10400", 
+                    baseClock: "2.9 GHz", 
+                    boostClock: "4.3 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "65W", 
+                    performance: 75
+                },
+                { 
+                    name: "Intel Core i5-10600K", 
+                    baseClock: "4.1 GHz", 
+                    boostClock: "4.8 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "125W", 
+                    performance: 85
+                },
+                { 
+                    name: "Intel Core i7-10700K", 
+                    baseClock: "3.8 GHz", 
+                    boostClock: "5.1 GHz", 
+                    coresThreads: "8C/16T", 
+                    tdp: "125W", 
+                    performance: 92
+                },
+                { 
+                    name: "Intel Core i9-10900K", 
+                    baseClock: "3.7 GHz", 
+                    boostClock: "5.3 GHz", 
+                    coresThreads: "10C/20T", 
+                    tdp: "125W", 
+                    performance: 100
+                },
+                { 
+                    name: "Intel Core i5-11400", 
+                    baseClock: "2.6 GHz", 
+                    boostClock: "4.4 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "65W", 
+                    performance: 80
+                },
+                { 
+                    name: "Intel Core i5-11600K", 
+                    baseClock: "3.9 GHz", 
+                    boostClock: "4.9 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "125W", 
+                    performance: 88
+                },
+                { 
+                    name: "Intel Core i7-11700K", 
+                    baseClock: "3.6 GHz", 
+                    boostClock: "5.0 GHz", 
+                    coresThreads: "8C/16T", 
+                    tdp: "125W", 
+                    performance: 95
+                },
+                { 
+                    name: "Intel Core i9-11900K", 
+                    baseClock: "3.5 GHz", 
+                    boostClock: "5.3 GHz", 
+                    coresThreads: "8C/16T", 
+                    tdp: "125W", 
+                    performance: 102
+                },
+                { 
+                    name: "Intel Core i5-12400", 
+                    baseClock: "2.5 GHz", 
+                    boostClock: "4.4 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "65W", 
+                    performance: 90
+                },
+                { 
+                    name: "Intel Core i5-12600K", 
+                    baseClock: "3.7 GHz", 
+                    boostClock: "4.9 GHz", 
+                    coresThreads: "10C/16T", 
+                    tdp: "125W", 
+                    performance: 105
+                },
+                { 
+                    name: "Intel Core i7-12700K", 
+                    baseClock: "3.6 GHz", 
+                    boostClock: "5.0 GHz", 
+                    coresThreads: "12C/20T", 
+                    tdp: "125W", 
+                    performance: 120
+                },
+                { 
+                    name: "Intel Core i9-12900K", 
+                    baseClock: "3.2 GHz", 
+                    boostClock: "5.2 GHz", 
+                    coresThreads: "16C/24T", 
+                    tdp: "125W", 
+                    performance: 135
+                },
+                { 
+                    name: "Intel Core i5-13400", 
+                    baseClock: "2.5 GHz", 
+                    boostClock: "4.6 GHz", 
+                    coresThreads: "10C/16T", 
+                    tdp: "65W", 
+                    performance: 110
+                },
+                { 
+                    name: "Intel Core i5-13600K", 
+                    baseClock: "3.5 GHz", 
+                    boostClock: "5.1 GHz", 
+                    coresThreads: "14C/20T", 
+                    tdp: "125W", 
+                    performance: 125
+                },
+                { 
+                    name: "Intel Core i7-13700K", 
+                    baseClock: "3.4 GHz", 
+                    boostClock: "5.4 GHz", 
+                    coresThreads: "16C/24T", 
+                    tdp: "125W", 
+                    performance: 140
+                },
+                { 
+                    name: "Intel Core i9-13900K", 
+                    baseClock: "3.0 GHz", 
+                    boostClock: "5.8 GHz", 
+                    coresThreads: "24C/32T", 
+                    tdp: "125W", 
+                    performance: 160
+                },
+                { 
+                    name: "Intel Core i5-14600K", 
+                    baseClock: "3.5 GHz", 
+                    boostClock: "5.3 GHz", 
+                    coresThreads: "14C/20T", 
+                    tdp: "125W", 
+                    performance: 130
+                },
+                { 
+                    name: "Intel Core i7-14700K", 
+                    baseClock: "3.4 GHz", 
+                    boostClock: "5.6 GHz", 
+                    coresThreads: "20C/28T", 
+                    tdp: "125W", 
+                    performance: 150
+                },
+                { 
+                    name: "Intel Core i9-14900K", 
+                    baseClock: "3.2 GHz", 
+                    boostClock: "6.0 GHz", 
+                    coresThreads: "24C/32T", 
+                    tdp: "125W", 
+                    performance: 170
+                }
+            ],
+            amd: [
+                { 
+                    name: "AMD Ryzen 5 3600", 
+                    baseClock: "3.6 GHz", 
+                    boostClock: "4.2 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "65W", 
+                    performance: 75
+                },
+                { 
+                    name: "AMD Ryzen 7 3700X", 
+                    baseClock: "3.6 GHz", 
+                    boostClock: "4.4 GHz", 
+                    coresThreads: "8C/16T", 
+                    tdp: "65W", 
+                    performance: 85
+                },
+                { 
+                    name: "AMD Ryzen 9 3900X", 
+                    baseClock: "3.8 GHz", 
+                    boostClock: "4.6 GHz", 
+                    coresThreads: "12C/24T", 
+                    tdp: "105W", 
+                    performance: 95
+                },
+                { 
+                    name: "AMD Ryzen 5 5600X", 
+                    baseClock: "3.7 GHz", 
+                    boostClock: "4.6 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "65W", 
+                    performance: 90
+                },
+                { 
+                    name: "AMD Ryzen 7 5800X", 
+                    baseClock: "3.8 GHz", 
+                    boostClock: "4.7 GHz", 
+                    coresThreads: "8C/16T", 
+                    tdp: "105W", 
+                    performance: 105
+                },
+                { 
+                    name: "AMD Ryzen 9 5900X", 
+                    baseClock: "3.7 GHz", 
+                    boostClock: "4.8 GHz", 
+                    coresThreads: "12C/24T", 
+                    tdp: "105W", 
+                    performance: 120
+                },
+                { 
+                    name: "AMD Ryzen 9 5950X", 
+                    baseClock: "3.4 GHz", 
+                    boostClock: "4.9 GHz", 
+                    coresThreads: "16C/32T", 
+                    tdp: "105W", 
+                    performance: 130
+                },
+                { 
+                    name: "AMD Ryzen 5 7600X", 
+                    baseClock: "4.7 GHz", 
+                    boostClock: "5.3 GHz", 
+                    coresThreads: "6C/12T", 
+                    tdp: "105W", 
+                    performance: 120
+                },
+                { 
+                    name: "AMD Ryzen 7 7700X", 
+                    baseClock: "4.5 GHz", 
+                    boostClock: "5.4 GHz", 
+                    coresThreads: "8C/16T", 
+                    tdp: "105W", 
+                    performance: 135
+                },
+                { 
+                    name: "AMD Ryzen 9 7900X", 
+                    baseClock: "4.7 GHz", 
+                    boostClock: "5.6 GHz", 
+                    coresThreads: "12C/24T", 
+                    tdp: "170W", 
+                    performance: 150
+                },
+                { 
+                    name: "AMD Ryzen 9 7950X", 
+                    baseClock: "4.5 GHz", 
+                    boostClock: "5.7 GHz", 
+                    coresThreads: "16C/32T", 
+                    tdp: "170W", 
+                    performance: 165
+                }
+            ]
+        };
+
+        const gpuDatabase = {
+            nvidia: [
+                {
+                    name: "NVIDIA RTX 2060",
+                    baseClock: "1365 MHz",
+                    boostClock: "1680 MHz",
+                    vram: "6GB GDDR6",
+                    tdp: "160W",
+                    performance: 70
+                },
+                {
+                    name: "NVIDIA RTX 2070",
+                    baseClock: "1410 MHz",
+                    boostClock: "1710 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "175W",
+                    performance: 85
+                },
+                {
+                    name: "NVIDIA RTX 2080",
+                    baseClock: "1515 MHz",
+                    boostClock: "1800 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "215W",
+                    performance: 95
+                },
+                {
+                    name: "NVIDIA RTX 2080 Ti",
+                    baseClock: "1350 MHz",
+                    boostClock: "1635 MHz",
+                    vram: "11GB GDDR6",
+                    tdp: "250W",
+                    performance: 110
+                },
+                {
+                    name: "NVIDIA RTX 3060",
+                    baseClock: "1320 MHz",
+                    boostClock: "1780 MHz",
+                    vram: "12GB GDDR6",
+                    tdp: "170W",
+                    performance: 80
+                },
+                {
+                    name: "NVIDIA RTX 3060 Ti",
+                    baseClock: "1410 MHz",
+                    boostClock: "1665 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "200W",
+                    performance: 90
+                },
+                {
+                    name: "NVIDIA RTX 3070",
+                    baseClock: "1500 MHz",
+                    boostClock: "1730 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "220W",
+                    performance: 100
+                },
+                {
+                    name: "NVIDIA RTX 3080",
+                    baseClock: "1440 MHz",
+                    boostClock: "1710 MHz",
+                    vram: "10GB GDDR6X",
+                    tdp: "320W",
+                    performance: 120
+                },
+                {
+                    name: "NVIDIA RTX 3090",
+                    baseClock: "1395 MHz",
+                    boostClock: "1695 MHz",
+                    vram: "24GB GDDR6X",
+                    tdp: "350W",
+                    performance: 135
+                },
+                {
+                    name: "NVIDIA RTX 4060",
+                    baseClock: "1830 MHz",
+                    boostClock: "2460 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "115W",
+                    performance: 95
+                },
+                {
+                    name: "NVIDIA RTX 4060 Ti",
+                    baseClock: "2310 MHz",
+                    boostClock: "2535 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "160W",
+                    performance: 110
+                },
+                {
+                    name: "NVIDIA RTX 4070",
+                    baseClock: "1920 MHz",
+                    boostClock: "2475 MHz",
+                    vram: "12GB GDDR6X",
+                    tdp: "200W",
+                    performance: 125
+                },
+                {
+                    name: "NVIDIA RTX 4070 Ti",
+                    baseClock: "2310 MHz",
+                    boostClock: "2610 MHz",
+                    vram: "12GB GDDR6X",
+                    tdp: "285W",
+                    performance: 140
+                },
+                {
+                    name: "NVIDIA RTX 4080",
+                    baseClock: "2205 MHz",
+                    boostClock: "2505 MHz",
+                    vram: "16GB GDDR6X",
+                    tdp: "320W",
+                    performance: 155
+                },
+                {
+                    name: "NVIDIA RTX 4090",
+                    baseClock: "2230 MHz",
+                    boostClock: "2520 MHz",
+                    vram: "24GB GDDR6X",
+                    tdp: "450W",
+                    performance: 180
+                }
+            ],
+            amd: [
+                {
+                    name: "AMD RX 5600 XT",
+                    baseClock: "1130 MHz",
+                    boostClock: "1560 MHz",
+                    vram: "6GB GDDR6",
+                    tdp: "150W",
+                    performance: 65
+                },
+                {
+                    name: "AMD RX 5700",
+                    baseClock: "1465 MHz",
+                    boostClock: "1725 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "180W",
+                    performance: 75
+                },
+                {
+                    name: "AMD RX 5700 XT",
+                    baseClock: "1605 MHz",
+                    boostClock: "1905 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "225W",
+                    performance: 85
+                },
+                {
+                    name: "AMD RX 6600",
+                    baseClock: "1626 MHz",
+                    boostClock: "2491 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "132W",
+                    performance: 75
+                },
+                {
+                    name: "AMD RX 6600 XT",
+                    baseClock: "1968 MHz",
+                    boostClock: "2589 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "160W",
+                    performance: 85
+                },
+                {
+                    name: "AMD RX 6700 XT",
+                    baseClock: "2321 MHz",
+                    boostClock: "2581 MHz",
+                    vram: "12GB GDDR6",
+                    tdp: "230W",
+                    performance: 95
+                },
+                {
+                    name: "AMD RX 6800",
+                    baseClock: "1815 MHz",
+                    boostClock: "2105 MHz",
+                    vram: "16GB GDDR6",
+                    tdp: "250W",
+                    performance: 105
+                },
+                {
+                    name: "AMD RX 6800 XT",
+                    baseClock: "2015 MHz",
+                    boostClock: "2250 MHz",
+                    vram: "16GB GDDR6",
+                    tdp: "300W",
+                    performance: 120
+                },
+                {
+                    name: "AMD RX 6900 XT",
+                    baseClock: "2015 MHz",
+                    boostClock: "2250 MHz",
+                    vram: "16GB GDDR6",
+                    tdp: "300W",
+                    performance: 130
+                },
+                {
+                    name: "AMD RX 7600",
+                    baseClock: "1720 MHz",
+                    boostClock: "2655 MHz",
+                    vram: "8GB GDDR6",
+                    tdp: "165W",
+                    performance: 90
+                },
+                {
+                    name: "AMD RX 7700 XT",
+                    baseClock: "1950 MHz",
+                    boostClock: "2544 MHz",
+                    vram: "12GB GDDR6",
+                    tdp: "245W",
+                    performance: 110
+                },
+                {
+                    name: "AMD RX 7800 XT",
+                    baseClock: "2124 MHz",
+                    boostClock: "2430 MHz",
+                    vram: "16GB GDDR6",
+                    tdp: "263W",
+                    performance: 125
+                },
+                {
+                    name: "AMD RX 7900 XT",
+                    baseClock: "2000 MHz",
+                    boostClock: "2400 MHz",
+                    vram: "20GB GDDR6",
+                    tdp: "300W",
+                    performance: 140
+                },
+                {
+                    name: "AMD RX 7900 XTX",
+                    baseClock: "1855 MHz",
+                    boostClock: "2500 MHz",
+                    vram: "24GB GDDR6",
+                    tdp: "355W",
+                    performance: 160
+                }
+            ]
+        };
+
+        // Resolution weights (CPU% / GPU%)
+        const resolutionWeights = {
+            "1080p": { cpu: 60, gpu: 40 },
+            "1440p": { cpu: 50, gpu: 50 },
+            "4k": { cpu: 40, gpu: 60 },
+            "ultrawide1440p": { cpu: 45, gpu: 55 },
+            "ultrawide4k": { cpu: 35, gpu: 65 }
+        };
+
+        // Initialize chart
+        let comparisonChart;
+
+        // DOM Elements
+        const cpuBrandSelect = document.getElementById('cpu-brand');
+        const cpuModelSelect = document.getElementById('cpu-model');
+        const gpuBrandSelect = document.getElementById('gpu-brand');
+        const gpuModelSelect = document.getElementById('gpu-model');
+        const resolutionSelect = document.getElementById('resolution');
+        const workloadSelect = document.getElementById('workload');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultsSection = document.getElementById('results-section');
+
+        // Event Listeners
+        cpuBrandSelect.addEventListener('change', updateCPUModels);
+        cpuModelSelect.addEventListener('change', updateCPUSpecs);
+        gpuBrandSelect.addEventListener('change', updateGPUModels);
+        gpuModelSelect.addEventListener('change', updateGPUSpecs);
+        calculateBtn.addEventListener('click', calculateBottleneck);
+
+        // Initialize
+        function init() {
+            // Monitor all form elements to enable/disable calculate button
+            document.querySelectorAll('select').forEach(select => {
+                select.addEventListener('change', checkCalculateButtonState);
+            });
+
+            // Initialize chart
+            const ctx = document.getElementById('comparison-chart').getContext('2d');
+            comparisonChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['CPU', 'GPU'],
+                    datasets: [{
+                        label: 'Performance Score',
+                        data: [0, 0],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(75, 192, 192, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 200
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Enable/disable calculate button based on form completeness
+        function checkCalculateButtonState() {
+            const cpuSelected = cpuModelSelect.value !== '';
+            const gpuSelected = gpuModelSelect.value !== '';
+            
+            calculateBtn.disabled = !(cpuSelected && gpuSelected);
+        }
+
+        // Update CPU models based on brand selection
+        function updateCPUModels() {
+            const brand = cpuBrandSelect.value;
+            cpuModelSelect.innerHTML = '<option value="">Select Model</option>';
+            
+            if (brand) {
+                cpuDatabase[brand].forEach(cpu => {
+                    const option = document.createElement('option');
+                    option.value = cpu.name;
+                    option.textContent = cpu.name;
+                    cpuModelSelect.appendChild(option);
+                });
+                cpuModelSelect.disabled = false;
+            } else {
+                cpuModelSelect.disabled = true;
+            }
+            
+            clearCPUSpecs();
+            checkCalculateButtonState();
+        }
+
+        // Update GPU models based on brand selection
+        function updateGPUModels() {
+            const brand = gpuBrandSelect.value;
+            gpuModelSelect.innerHTML = '<option value="">Select Model</option>';
+            
+            if (brand) {
+                gpuDatabase[brand].forEach(gpu => {
+                    const option = document.createElement('option');
+                    option.value = gpu.name;
+                    option.textContent = gpu.name;
+                    gpuModelSelect.appendChild(option);
+                });
+                gpuModelSelect.disabled = false;
+            } else {
+                gpuModelSelect.disabled = true;
+            }
+            
+            clearGPUSpecs();
+            checkCalculateButtonState();
+        }
+
+        // Update CPU specifications display
+        function updateCPUSpecs() {
+            const brand = cpuBrandSelect.value;
+            const model = cpuModelSelect.value;
+            
+            if (brand && model) {
+                const cpu = cpuDatabase[brand].find(c => c.name === model);
+                if (cpu) {
+                    document.getElementById('cpu-base-clock').textContent = cpu.baseClock;
+                    document.getElementById('cpu-boost-clock').textContent = cpu.boostClock;
+                    document.getElementById('cpu-cores-threads').textContent = cpu.coresThreads;
+                    document.getElementById('cpu-tdp').textContent = cpu.tdp;
+                    document.getElementById('cpu-performance').textContent = cpu.performance;
+                }
+            } else {
+                clearCPUSpecs();
+            }
+            
+            checkCalculateButtonState();
+        }
+
+        // Update GPU specifications display
+        function updateGPUSpecs() {
+            const brand = gpuBrandSelect.value;
+            const model = gpuModelSelect.value;
+            
+            if (brand && model) {
+                const gpu = gpuDatabase[brand].find(g => g.name === model);
+                if (gpu) {
+                    document.getElementById('gpu-base-clock').textContent = gpu.baseClock;
+                    document.getElementById('gpu-boost-clock').textContent = gpu.boostClock;
+                    document.getElementById('gpu-vram').textContent = gpu.vram;
+                    document.getElementById('gpu-tdp').textContent = gpu.tdp;
+                    document.getElementById('gpu-performance').textContent = gpu.performance;
+                }
+            } else {
+                clearGPUSpecs();
+            }
+            
+            checkCalculateButtonState();
+        }
+
+        // Clear CPU specifications display
+        function clearCPUSpecs() {
+            document.getElementById('cpu-base-clock').textContent = '-';
+            document.getElementById('cpu-boost-clock').textContent = '-';
+            document.getElementById('cpu-cores-threads').textContent = '-';
+            document.getElementById('cpu-tdp').textContent = '-';
+            document.getElementById('cpu-performance').textContent = '-';
+        }
+
+        // Clear GPU specifications display
+        function clearGPUSpecs() {
+            document.getElementById('gpu-base-clock').textContent = '-';
+            document.getElementById('gpu-boost-clock').textContent = '-';
+            document.getElementById('gpu-vram').textContent = '-';
+            document.getElementById('gpu-tdp').textContent = '-';
+            document.getElementById('gpu-performance').textContent = '-';
+        }
+
+        // Calculate bottleneck
+        function calculateBottleneck() {
+            // Show loading state
+            document.getElementById('loading-indicator').classList.remove('hidden');
+            
+            // Get selected components
+            const cpuBrand = cpuBrandSelect.value;
+            const cpuModel = cpuModelSelect.value;
+            const gpuBrand = gpuBrandSelect.value;
+            const gpuModel = gpuModelSelect.value;
+            const resolution = resolutionSelect.value;
+            const workload = workloadSelect.value;
+
+            // Get component data
+            const cpu = cpuDatabase[cpuBrand].find(c => c.name === cpuModel);
+            const gpu = gpuDatabase[gpuBrand].find(g => g.name === gpuModel);
+            
+            // Apply resolution weighting
+            const weights = resolutionWeights[resolution];
+            const cpuWeight = weights.cpu / 100;
+            const gpuWeight = weights.gpu / 100;
+            
+            // Calculate weighted scores
+            const cpuWeightedScore = cpu.performance * cpuWeight;
+            const gpuWeightedScore = gpu.performance * gpuWeight;
+            
+            // Calculate bottleneck percentage
+            const bottleneckScore = Math.abs(cpuWeightedScore - gpuWeightedScore) / Math.max(cpuWeightedScore, gpuWeightedScore) * 100;
+            const bottleneckPercent = Math.round(bottleneckScore);
+            
+            // Determine bottleneck component
+            const bottleneckComponent = cpuWeightedScore < gpuWeightedScore ? 'CPU' : 'GPU';
+            
+            // Simulate calculation delay
+            setTimeout(() => {
+                // Hide loading state
+                document.getElementById('loading-indicator').classList.add('hidden');
+                
+                // Show results section
+                resultsSection.classList.remove('hidden');
+                
+                // Update chart data
+                comparisonChart.data.datasets[0].data = [cpu.performance, gpu.performance];
+                comparisonChart.update();
+                
+                // Update component comparison section
+                document.getElementById('cpu-name').textContent = cpu.name;
+                document.getElementById('cpu-perf-score').textContent = cpu.performance;
+                document.getElementById('cpu-weight').textContent = weights.cpu + '%';
+                document.getElementById('cpu-weighted-score').textContent = cpuWeightedScore.toFixed(1);
+                
+                document.getElementById('gpu-name').textContent = gpu.name;
+                document.getElementById('gpu-perf-score').textContent = gpu.performance;
+                document.getElementById('gpu-weight').textContent = weights.gpu + '%';
+                document.getElementById('gpu-weighted-score').textContent = gpuWeightedScore.toFixed(1);
+                
+                // Update bottleneck indicator
+                document.getElementById('bottleneck-percent').textContent = bottleneckPercent + '%';
+                
+                const indicator = document.getElementById('bottleneck-indicator');
+                indicator.style.width = Math.min(bottleneckPercent * 2, 100) + '%';
+                
+                // Set indicator color based on severity
+                if (bottleneckPercent < 5) {
+                    indicator.className = 'h-4 rounded-full bg-green-500';
+                } else if (bottleneckPercent < 10) {
+                    indicator.className = 'h-4 rounded-full bg-green-400';
+                } else if (bottleneckPercent < 15) {
+                    indicator.className = 'h-4 rounded-full bg-yellow-500';
+                } else if (bottleneckPercent < 30) {
+                    indicator.className = 'h-4 rounded-full bg-orange-500';
+                } else {
+                    indicator.className = 'h-4 rounded-full bg-red-500';
+                }
+                
+                // Update analysis explanation
+                updateAnalysisExplanation(bottleneckPercent, bottleneckComponent, resolution, cpu.name, gpu.name);
+                
+                // Update recommendations
+                updateRecommendations(bottleneckPercent, bottleneckComponent, cpuBrand, gpuBrand, cpu.name, gpu.name);
+                
+            }, 800); // Simulate calculation time
+        }
+
+        // Update analysis explanation based on results
+        function updateAnalysisExplanation(bottleneckPercent, bottleneckComponent, resolution, cpuName, gpuName) {
+            let explanation = '';
+            
+            if (bottleneckPercent < 5) {
+                explanation = `Your ${cpuName} and ${gpuName} are well-balanced at ${resolution} resolution. This combination should provide optimal performance with neither component significantly limiting the other.`;
+            } else if (bottleneckPercent < 10) {
+                explanation = `Your system has a minor ${bottleneckComponent} bottleneck (${bottleneckPercent}%) at ${resolution} resolution. While this is still a good balance, the ${bottleneckComponent} is slightly limiting your system's potential performance.`;
+            } else if (bottleneckPercent < 15) {
+                explanation = `Your system has a moderate ${bottleneckComponent} bottleneck (${bottleneckPercent}%) at ${resolution} resolution. The ${bottleneckComponent} is somewhat limiting your system's performance, particularly in ${bottleneckComponent}-intensive tasks.`;
+            } else if (bottleneckPercent < 30) {
+                explanation = `Your system has a significant ${bottleneckComponent} bottleneck (${bottleneckPercent}%) at ${resolution} resolution. The ${bottleneckComponent} is limiting your system's performance and you're not getting the full potential from your other components.`;
+            } else {
+                explanation = `Your system has a severe ${bottleneckComponent} bottleneck (${bottleneckPercent}%) at ${resolution} resolution. The ${bottleneckComponent} is substantially limiting your system's performance and is preventing your other components from being utilized effectively.`;
+            }
+            
+            document.getElementById('analysis-explanation').textContent = explanation;
+        }
+
+        // Update recommendations based on results
+        function updateRecommendations(bottleneckPercent, bottleneckComponent, cpuBrand, gpuBrand, cpuName, gpuName) {
+            const recommendationsList = document.getElementById('recommendations');
+            recommendationsList.innerHTML = '';
+            
+            if (bottleneckPercent < 5) {
+                addRecommendation('Your system has excellent balance. No changes needed for optimal performance.');
+                addRecommendation('This setup is ideal for your selected resolution and workload.');
+            } else {
+                // General recommendation based on bottleneck severity
+                if (bottleneckPercent < 10) {
+                    addRecommendation('Your system has good balance with only a minor bottleneck. No immediate changes needed.');
+                } else if (bottleneckPercent < 15) {
+                    addRecommendation(`Consider upgrading your ${bottleneckComponent} in the future to improve system balance.`);
+                } else if (bottleneckPercent < 30) {
+                    addRecommendation(`To improve performance, upgrading your ${bottleneckComponent} is recommended.`);
+                } else {
+                    addRecommendation(`Your ${bottleneckComponent} is significantly limiting your system performance. Upgrading is strongly recommended.`);
+                }
+                
+                // Specific component recommendations
+                if (bottleneckComponent === 'CPU') {
+                    if (cpuBrand === 'intel') {
+                        const currentGen = parseInt(cpuName.match(/i\d-(\d+)/)?.[1]) || 10;
+                        addRecommendation(`Consider upgrading to a higher tier or newer generation Intel CPU (${currentGen+1}th gen or newer).`);
+                    } else if (cpuBrand === 'amd') {
+                        const currentGen = parseInt(cpuName.match(/Ryzen \d (\d+)/)?.[1]) || 3000;
+                        addRecommendation(`Consider upgrading to a higher tier or newer generation AMD Ryzen CPU (${Math.floor(currentGen/1000)+1}000 series or newer).`);
+                    }
+                } else if (bottleneckComponent === 'GPU') {
+                    if (gpuBrand === 'nvidia') {
+                        const currentGen = parseInt(gpuName.match(/RTX (\d+)/)?.[1]) || 2000;
+                        addRecommendation(`Consider upgrading to a higher tier or newer generation NVIDIA GPU (RTX ${Math.floor(currentGen/1000)+1}000 series).`);
+                    } else if (gpuBrand === 'amd') {
+                        const currentGen = parseInt(gpuName.match(/RX (\d+)/)?.[1]) || 5000;
+                        addRecommendation(`Consider upgrading to a higher tier or newer generation AMD GPU (RX ${Math.floor(currentGen/1000)+1}000 series).`);
+                    }
+                }
+                
+                // Resolution-based recommendation
+                const resolution = document.getElementById('resolution').value;
+                if (bottleneckComponent === 'CPU' && (resolution === '1440p' || resolution === '4k' || resolution === 'ultrawide1440p' || resolution === 'ultrawide4k')) {
+                    addRecommendation(`Since you're gaming at ${resolution}, the CPU bottleneck may be less noticeable than the calculator suggests.`);
+                } else if (bottleneckComponent === 'GPU' && resolution === '1080p') {
+                    addRecommendation(`Since you're gaming at ${resolution}, consider upgrading to a higher resolution monitor to better utilize your CPU power.`);
+                }
+            }
+            
+            // Add general advice
+            addRecommendation('Remember that real-world performance can vary based on specific applications and games.');
+        }
+
+        // Add a recommendation to the list
+        function addRecommendation(text) {
+            const recommendationsList = document.getElementById('recommendations');
+            const li = document.createElement('li');
+            li.textContent = text;
+            recommendationsList.appendChild(li);
+        }
+
+        // Initialize the application
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
