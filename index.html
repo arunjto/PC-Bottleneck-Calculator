@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottleneck Calculator</title>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <!-- [Keep all your existing HTML content exactly as is until the script section] -->
+
+    <script>
+        // [Keep all your existing JavaScript code exactly as is until the calculateBtn event listener]
+
+        // Replace ONLY the calculateBtn click handler with this new version:
+        calculateBtn.addEventListener('click', () => {
+            const selectedCpu = cpuSelect.value;
+            const selectedGpu = gpuSelect.value;
+            const selectedRam = ramSelect.value;
+            const selectedStorage = storageSelect.value;
+            const selectedPurpose = purposeSelect.value;
+            const selectedResolution = resolutionSelect.value;
+
+            if (!selectedCpu || !selectedGpu) {
+                alert('Please select both a CPU and a GPU.');
+                return;
+            }
+
+            // Redirect to results page with all parameters
+            window.location.href = `results.html?cpu=${encodeURIComponent(selectedCpu)}&gpu=${encodeURIComponent(selectedGpu)}&ram=${selectedRam}&storage=${selectedStorage}&purpose=${selectedPurpose}&resolution=${selectedResolution}`;
+        });
+
+        // [Keep all the remaining JavaScript code exactly as is]
+        
+        // Light/Dark Mode Toggle
+        const themeSwitchWrapper = document.createElement('div');
+        themeSwitchWrapper.className = 'theme-switch-wrapper';
+        themeSwitchWrapper.innerHTML = `
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+            <em>Dark Mode</em>
+        `;
+        document.querySelector('header').appendChild(themeSwitchWrapper);
+
+        const toggleSwitch = document.getElementById('checkbox');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.body.classList.add(currentTheme);
+            if (currentTheme === 'dark-mode') {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        }
+
+        toggleSwitch.addEventListener('change', switchTheme, false);
+
+        // ARIA roles and labels for accessibility
+        cpuSelect.setAttribute('aria-label', 'Select CPU');
+        gpuSelect.setAttribute('aria-label', 'Select GPU');
+        calculateBtn.setAttribute('aria-label', 'Check Bottleneck');
+        resultDiv.setAttribute('role', 'status');
+        resultDiv.setAttribute('aria-live', 'polite');
+    </script>
+</body>
+</html>
