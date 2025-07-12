@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottleneck Calculator - Results</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root {
+            --primary-blue: #3f51b5;
+            --accent-indigo: #303f9f;
+            --text-color-light: #333;
+            --bg-color-light: #f4f4f4;
+            --card-bg-light: #fff;
+            --shadow-color-light: rgba(0, 0, 0, 0.1);
+
+            --text-color-dark: #e0e0e0;
+            --bg-color-dark: #222;
+            --card-bg-dark: #333;
+            --shadow-color-dark: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px var(--shadow-color-light);
+            margin-bottom: 2rem;
+        }
+
+        body.dark-mode header {
+            box-shadow: 0 2px 4px var(--shadow-color-dark);
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-header h1 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark-mode .results-header h1 {
+            color: #9fa8da;
+        }
+
+        .results-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        body.dark-mode .results-header p {
+            color: #aaa;
+        }
+
+        .performance-summary {
+            background-color: var(--card-bg-light);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color-light);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        body.dark-mode .performance-summary {
+            background-color: var(--card-bg-dark);
+            box-shadow: 0 4px 8px var(--shadow-color-dark);
+        }
+
+        .bottleneck-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin: 1rem 0;
+        }
+
+        body.dark-mode .bottleneck-score {
+            color: #9fa8da;
+        }
+
+        .verdict {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .severity-indicator {
+            height: 10px;
+            background: linear-gradient(to right, #4CAF50, #FFC107, #F44336);
+            border-radius: 5px;
+            margin: 1rem auto;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .severity-marker {
+            position: absolute;
+            top: -5px;
+            width: 10px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 3px;
+            transform: translateX(-50%);
+        }
+
+        body.dark-mode .severity-marker {
+            background-color: #fff;
+        }
+
+        .analysis-section {
+            background-color: var(--card-bg-light);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color-light);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        body.dark-mode .analysis-section {
+            background-color: var(--card-bg-dark);
+            box-shadow: 0 4px 8px var(--shadow-color-dark);
+        }
+
+        .analysis-section h2 {
+            color: var(--primary-blue);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        body.dark-mode .analysis-section h2 {
+            color: #9fa8da;
+            border-bottom-color: #444;
+        }
+
+        .component-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .component-table th, .component-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        body.dark-mode .component-table th, 
+        body.dark-mode .component-table td {
+            border-bottom-color: #444;
+        }
+
+        .component-table th {
+            background-color: rgba(63, 81, 181, 0.1);
+            font-weight: bold;
+        }
+
+        body.dark-mode .component-table th {
+            background-color: rgba(159, 168, 218, 0.1);
+        }
+
+        .performance-factors {
+            margin: 1.5rem 0;
+        }
+
+        .performance-factors h3 {
+            margin-bottom: 1rem;
+        }
+
+        .factor-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        body.dark-mode .factor-item {
+            border-bottom-color: #444;
+        }
+
+        .factor-label {
+            font-weight: bold;
+        }
+
+        .recommendations {
+            background-color: rgba(63, 81, 181, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        body.dark-mode .recommendations {
+            background-color: rgba(159, 168, 218, 0.1);
+        }
+
+        .recommendations h3 {
+            margin-top: 0;
+            color: var(--primary-blue);
+        }
+
+        body.dark-mode .recommendations h3 {
+            color: #9fa8da;
+        }
+
+        .recommendations ul {
+            padding-left: 1.5rem;
+        }
+
+        .recommendations li {
+            margin-bottom: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-indigo);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #283593;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        body.dark-mode .btn-secondary {
+            color: #9fa8da;
+            border-color: #9fa8da;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(63, 81, 181, 0.1);
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background-color: rgba(159, 168, 218, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #777;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        body.dark-mode footer {
+            border-top-color: #444;
+        }
+
+        /* Light/Dark Mode Toggle */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+            padding-right: 1rem;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 48px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-indigo);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .performance-summary,
+            .analysis-section {
+                padding: 1rem;
+            }
+            
+            .bottleneck-score {
+                font-size: 2.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+            <em>Dark Mode</em>
+        </div>
+        <h1>Bottleneck Calculator</h1>
+    </header>
+
+    <div class="container">
+        <div class="results-header">
+            <h1>Your Trusted PC Performance Analysis</h1>
+            <p>Detailed system bottleneck report generated for your configuration</p>
+        </div>
+
+        <div class="performance-summary">
+            <h2>Performance Summary</h2>
+            <div class="bottleneck-score" id="bottleneck-score">12.5%</div>
+            <div class="verdict" id="verdict">Minor GPU Bottleneck</div>
+            
+            <div class="severity-indicator">
+                <div class="severity-marker" id="severity-marker" style="left: 12.5%;"></div>
+            </div>
+            
+            <p>Your system has a slight imbalance between components</p>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Component Analysis</h2>
+            <table class="component-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Model</th>
+                        <th>Performance Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPU</td>
+                        <td id="cpu-model">AMD Ryzen 7 5800X</td>
+                        <td id="cpu-score">84</td>
+                    </tr>
+                    <tr>
+                        <td>GPU</td>
+                        <td id="gpu-model">NVIDIA GeForce RTX 3070</td>
+                        <td id="gpu-score">78</td>
+                    </tr>
+                    <tr>
+                        <td>RAM</td>
+                        <td id="ram-amount">16 GB</td>
+                        <td id="ram-impact">Good</td>
+                    </tr>
+                    <tr>
+                        <td>Storage</td>
+                        <td id="storage-type">NVMe SSD</td>
+                        <td id="storage-impact">Excellent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Performance Factors</h2>
+            <div class="performance-factors">
+                <div class="factor-item">
+                    <span class="factor-label">Primary Use Case:</span>
+                    <span id="use-case">Gaming at 1440p</span>
+                </div>
+                <div class="factor-item">
+                    <span class="factor-label">CPU Utilization:</span>
+                    <span id="cpu-utilization">85% (Well balanced)</span>
+                </div>
+                <div class="factor-item">
+                    <span class="factor-label">GPU Utilization:</span>
+                    <span id="gpu-utilization">95% (Slightly constrained)</span>
+                </div>
+                <div class="factor-item">
+                    <span class="factor-label">Memory Bandwidth:</span>
+                    <span id="memory-bandwidth">Adequate for current setup</span>
+                </div>
+                <div class="factor-item">
+                    <span class="factor-label">Storage Speed Impact:</span>
+                    <span id="storage-speed">Minimal bottleneck</span>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h3>Recommendations</h3>
+                <ul id="recommendations-list">
+                    <li>Your system is well balanced for 1440p gaming</li>
+                    <li>Consider upgrading GPU if moving to 4K resolution</li>
+                    <li>Current RAM capacity is sufficient for gaming</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="index.html" class="btn btn-primary">Check Another Configuration</a>
+            <a href="#" class="btn btn-secondary">Save This Report</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Bottleneck Calculator. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const cpu = urlParams.get('cpu');
+        const gpu = urlParams.get('gpu');
+        const ram = urlParams.get('ram') || '16';
+        const storage = urlParams.get('storage') || 'nvme';
+        const purpose = urlParams.get('purpose') || 'gaming';
+        const resolution = urlParams.get('resolution') || '1440p';
+
+        // CPU and GPU data (same as in index.html)
+        const cpuData = {
+            "Intel Core i9-14900K": 100,
+            "AMD Ryzen 7 5800X": 84,
+            // ... rest of CPU data
+        };
+
+        const gpuData = {
+            "NVIDIA GeForce RTX 3070": 78,
+            // ... rest of GPU data
+        };
+
+        // Impact factors (same as in index.html)
+        const ramImpact = {
+            "4": 0.5, "8": 0.8, "12": 0.9, "16": 1.0, "32": 1.1, "64": 1.2, "128": 1.3
+        };
+
+        const storageImpact = {
+            "hdd": 0.7, "ssd": 0.9, "nvme": 1.0
+        };
+
+        const purposeImpact = {
+            "gaming": { cpu: 0.8, gpu: 1.2, ram: 1.0, storage: 0.9 },
+            // ... other purposes
+        };
+
+        const resolutionImpact = {
+            "1080p": { cpu: 1.0, gpu: 0.9 },
+            "1440p": { cpu: 0.95, gpu: 1.0 },
+            "4k": { cpu: 0.85, gpu: 1.2 },
+            "ultrawide": { cpu: 0.9, gpu: 1.1 }
+        };
+
+        // Display the configuration
+        if (cpu && cpuData[cpu]) {
+            document.getElementById('cpu-model').textContent = cpu;
+            document.getElementById('cpu-score').textContent = cpuData[cpu];
+        }
+
+        if (gpu && gpuData[gpu]) {
+            document.getElementById('gpu-model').textContent = gpu;
+            document.getElementById('gpu-score').textContent = gpuData[gpu];
+        }
+
+        // Display RAM and Storage
+        document.getElementById('ram-amount').textContent = ram + ' GB';
+        document.getElementById('storage-type').textContent = 
+            storage === 'nvme' ? 'NVMe SSD' : 
+            storage === 'ssd' ? 'SATA SSD' : 'HDD';
+
+        // Calculate and display bottleneck
+        if (cpu && gpu && cpuData[cpu] && gpuData[gpu]) {
+            let cpuScore = cpuData[cpu];
+            let gpuScore = gpuData[gpu];
+
+            // Apply purpose weights
+            const purposeWeights = purposeImpact[purpose];
+            cpuScore *= purposeWeights.cpu;
+            gpuScore *= purposeWeights.gpu;
+
+            // Apply resolution impact
+            const resolutionWeights = resolutionImpact[resolution];
+            cpuScore *= resolutionWeights.cpu;
+            gpuScore *= resolutionWeights.gpu;
+
+            // Apply RAM impact
+            cpuScore *= ramImpact[ram];
+
+            // Apply storage impact
+            const storageFactor = storageImpact[storage];
+            cpuScore *= storageFactor;
+            gpuScore *= storageFactor;
+
+            // Calculate bottleneck
+            let bottleneckPercentage;
+            let verdict;
+            let bottleneckComponent;
+
+            if (cpuScore > gpuScore) {
+                bottleneckPercentage = ((cpuScore - gpuScore) / cpuScore) * 100;
+                verdict = 'CPU Bottleneck';
+                bottleneckComponent = 'CPU';
+            } else if (gpuScore > cpuScore) {
+                bottleneckPercentage = ((gpuScore - cpuScore) / gpuScore) * 100;
+                verdict = 'GPU Bottleneck';
+                bottleneckComponent = 'GPU';
+            } else {
+                bottleneckPercentage = 0;
+                verdict = 'No significant bottleneck';
+                bottleneckComponent = 'None';
+            }
+
+            // Refine verdict based on percentage
+            if (bottleneckPercentage > 25) {
+                verdict = 'Severe ' + verdict;
+            } else if (bottleneckPercentage > 15) {
+                verdict = 'Moderate ' + verdict;
+            } else if (bottleneckPercentage > 5) {
+                verdict = 'Minor ' + verdict;
+            } else {
+                verdict = 'No significant bottleneck';
+            }
+
+            // Display results
+            document.getElementById('bottleneck-score').textContent = bottleneckPercentage.toFixed(1) + '%';
+            document.getElementById('verdict').textContent = verdict;
+            document.getElementById('severity-marker').style.left = Math.min(bottleneckPercentage, 100) + '%';
+
+            // Set utilization percentages
+            document.getElementById('cpu-utilization').textContent = 
+                `${Math.round((cpuScore / Math.max(cpuScore, gpuScore)) * 100}% ` +
+                (cpuScore > gpuScore ? '(Potential bottleneck)' : '(Well balanced)');
+                
+            document.getElementById('gpu-utilization').textContent = 
+                `${Math.round((gpuScore / Math.max(cpuScore, gpuScore)) * 100}% ` +
+                (gpuScore > cpuScore ? '(Potential bottleneck)' : '(Well balanced)');
+
+            // Set use case
+            const purposeText = {
+                'gaming': 'Gaming',
+                'video_editing': 'Video Editing',
+                'graphic_design': 'Graphic Design',
+                'general': 'General Use',
+                '3d_rendering': '3D Rendering',
+                'streaming': 'Streaming'
+            };
+            
+            const resolutionText = {
+                '1080p': '1080p (Full HD)',
+                '1440p': '1440p (QHD)',
+                '4k': '4K (UHD)',
+                'ultrawide': 'Ultrawide (3440×1440)'
+            };
+            
+            document.getElementById('use-case').textContent = 
+                `${purposeText[purpose]} at ${resolutionText[resolution]}`;
+
+            // Set RAM impact
+            const ramText = {
+                '4': 'Insufficient',
+                '8': 'Marginal',
+                '12': 'Adequate',
+                '16': 'Good',
+                '32': 'Excellent',
+                '64': 'Overkill',
+                '128': 'Professional'
+            };
+            document.getElementById('ram-impact').textContent = ramText[ram];
+            
+            // Set storage impact
+            document.getElementById('storage-impact').textContent = 
+                storage === 'nvme' ? 'Excellent' :
+                storage === 'ssd' ? 'Good' : 'Marginal';
+
+            // Generate recommendations
+            const recommendationsList = document.getElementById('recommendations-list');
+            recommendationsList.innerHTML = '';
+
+            if (bottleneckComponent === 'CPU' && bottleneckPercentage > 15) {
+                addRecommendation('Consider upgrading your CPU for better performance with your current GPU');
+            } else if (bottleneckComponent === 'GPU' && bottleneckPercentage > 15) {
+                addRecommendation('Consider upgrading your GPU for better performance with your current CPU');
+            }
+
+            if (parseInt(ram) < 16 && (purpose === 'video_editing' || purpose === '3d_rendering')) {
+                addRecommendation('For your use case, consider upgrading to at least 32GB of RAM for optimal performance');
+            } else if (parseInt(ram) < 8) {
+                addRecommendation('Consider upgrading to at least 16GB of RAM for better overall performance');
+            }
+
+            if (storage === 'hdd' && (purpose === 'video_editing' || purpose === 'graphic_design')) {
+                addRecommendation('For your use case, consider upgrading to an NVMe SSD for significantly faster file operations');
+            }
+
+            if (recommendationsList.children.length === 0) {
+                addRecommendation('Your system appears well-balanced for your selected use case and components');
+            }
+
+            function addRecommendation(text) {
+                const li = document.createElement('li');
+                li.textContent = text;
+                recommendationsList.appendChild(li);
+            }
+        }
+
+        // Light/Dark Mode Toggle
+        const toggleSwitch = document.getElementById('checkbox');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.body.classList.add(currentTheme);
+            if (currentTheme === 'dark-mode') {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        }
+
+        toggleSwitch.addEventListener('change', switchTheme, false);
+    </script>
+</body>
+</html>
