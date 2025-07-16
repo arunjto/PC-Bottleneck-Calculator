@@ -260,6 +260,43 @@ document.addEventListener('DOMContentLoaded', () => {
         advancedContent: document.getElementById('advanced-content'),
         themeToggle: document.getElementById('theme-toggle'),
     };
+        // --- NEW HELPER FUNCTION FOR OPTION 2 ---
+    // This function gets the component's score and its image URL.
+    function getComponentInfo(type, name) {
+        const componentData = data[type][name];
+        let score = 0;
+        let imageUrl = '';
+
+        // Check if the data is in the new {score, imageUrl} format
+        if (typeof componentData === 'object' && componentData !== null) {
+            score = componentData.score;
+            imageUrl = componentData.imageUrl; // Use the specific image if it exists
+        } else {
+            score = componentData || 0; // Otherwise, just get the score
+        }
+
+        // If no specific imageUrl was found, generate one automatically using logo.dev
+        if (!imageUrl) {
+            let brand = "chip"; // A generic fallback
+            const lowerCaseName = name.toLowerCase();
+
+            if (lowerCaseName.includes("intel")) brand = "intel";
+            else if (lowerCaseName.includes("amd") || lowerCaseName.includes("ryzen") || lowerCaseName.includes("radeon")) brand = "amd";
+            else if (lowerCaseName.includes("nvidia") || lowerCaseName.includes("geforce")) brand = "nvidia";
+            else if (lowerCaseName.includes("apple")) brand = "apple";
+            
+            // Construct the URL for logo.dev
+            // Note: logo.dev might not have every brand, but it's great for major ones.
+            if(brand !== "chip") {
+                 imageUrl = `https://logo.dev/${brand}.com`;
+            } else {
+                 // Fallback to your original placeholder if no brand is matched
+                 imageUrl = (type === 'cpus') ? "https://i.imgur.com/PHYyIxl.png" : "https://i.imgur.com/Jprx55s.png";
+            }
+        }
+        
+        return { score, imageUrl };
+    }
 
     function populateDropdown(selectElement, data) {
         Object.keys(data).sort().forEach(item => {
@@ -267,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function calculateBottleneck() {
+        function calculateBottleneck() {
         const selected = {
             cpu: dom.cpuSelect.value, gpu: dom.gpuSelect.value, ram: dom.ramSelect.value,
             resolution: dom.resolutionSelect.value, purpose: dom.purposeSelect.value
@@ -277,7 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please select both a CPU and a GPU.'); return;
         }
 
-        const baseScores = { cpu: data.cpus[selected.cpu], gpu: data.gpus[selected.gpu] };
+        // --- MODIFICATION START ---
+        // Use the new helper function to get ALL component info, including image URLs
+        const cpuInfo = getComponentInfo('cpus', selected.cpu);
+        const gpuInfo = getComponentInfo('gpus', selected.gpu);
+
+        // Use the scores from the info objects for calculations
+        const baseScores = { cpu: cpuInfo.score, gpu: gpuInfo.score };
+        // --- MODIFICATION END ---
+        
         const modifiers = {
             ram: data.ramImpact[selected.ram],
             purpose: data.purposeImpact[selected.purpose],
@@ -303,10 +348,11 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (bottleneck.component !== 'None') bottleneck.text = `Minor ${bottleneck.component} Bottleneck`;
         else bottleneck.text = 'Excellent System Balance';
         
-        displayResults(selected, bottleneck);
+        // --- MODIFICATION: Pass the new info objects to the display function ---
+        displayResults(selected, bottleneck, cpuInfo, gpuInfo);
     }
-    
-    function displayResults(selected, bottleneck) {
+         // --- FINAL, CORRECTED FUNCTION ---
+    function displayResults(selected, bottleneck, cpuInfo, gpuInfo) { // Note the arguments from the last step
         dom.calculatorView.classList.add('hidden');
         dom.resultsView.classList.remove('hidden');
 
@@ -314,6 +360,32 @@ document.addEventListener('DOMContentLoaded', () => {
         let summaryText = bottleneck.component === 'CPU' ? `Your GPU is being limited by your CPU's performance.` :
                           bottleneck.component === 'GPU' ? `Your CPU is powerful enough for a stronger GPU.` :
                           'Your components are very well-balanced for this workload.';
+        
+        // --- NEW: LOGIC TO GET THE CORRECT LOGO URL ---
+        const brandToDomain = {
+            intel: "intel.com",
+            amd: "amd.com",
+            nvidia: "nvidia.com",
+            apple: "apple.com"
+        };
+        
+        const getLogoUrl = (name) => {
+            const lowerCaseName = name.toLowerCase();
+            for (const brand in brandToDomain) {
+                if (lowerCaseName.includes(brand)) {
+                    // Use a reliable service that provides direct image links
+                    return `https://icons.duckduckgo.com/ip3/${brandToDomain[brand]}.ico`;
+                }
+            }
+            return null; // Return null if no brand is found
+        };
+
+        const cpuLogoUrl = getLogoUrl(selected.cpu);
+        const gpuLogoUrl = getLogoUrl(selected.gpu);
+
+        // --- NEW: DEFINE THE FALLBACK IMAGES ---
+        const cpuFallbackImage = "https://i.imgur.com/PHYyIxl.png";
+        const gpuFallbackImage = "https://i.imgur.com/Jprx55s.png";
         
         dom.resultsView.innerHTML = `
             <h2>Bottleneck Analysis</h2>
@@ -324,21 +396,31 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="results-card">
                 <h4>Bottleneck: ${bottleneck.percentage.toFixed(1)}% at ${dom.resolutionSelect.options[dom.resolutionSelect.selectedIndex].text}</h4>
                 <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: ${bottleneck.percentage}%; background-color: ${summaryColor};">${bottleneck.percentage.toFixed(1)}%</div>
+                    <div class="progress-bar" style="width: ${bottleneck.percentage.toFixed(1)}%; background-color: ${summaryColor};">${bottleneck.percentage.toFixed(1)}%</div>
                 </div>
             </div>
             <div class="component-analysis">
                 <div class="component-card">
                     <h4>Processor (CPU)</h4>
-                    <img src="https://i.imgur.com/PHYyIxl.png" alt="CPU Chip">
+                    
+                    <!-- CRITICAL FIX: The 'onerror' attribute provides a fallback -->
+                    <img src="${cpuLogoUrl || cpuFallbackImage}" 
+                         onerror="this.onerror=null; this.src='${cpuFallbackImage}';" 
+                         alt="${selected.cpu} logo">
+                    
                     <p><strong>${selected.cpu}</strong></p>
-                    <a href="https://cpu.userbenchmark.com/" target="_blank" rel="noopener">View Benchmarks &rarr;</a>
+                    <a href="https://cpu.userbenchmark.com/Search?searchTerm=${encodeURIComponent(selected.cpu)}" target="_blank" rel="noopener">View Benchmarks →</a>
                 </div>
                 <div class="component-card">
                     <h4>Graphics Card (GPU)</h4>
-                    <img src="https://i.imgur.com/Jprx55s.png" alt="GPU Graphics Card">
+                    
+                    <!-- CRITICAL FIX: The 'onerror' attribute provides a fallback -->
+                    <img src="${gpuLogoUrl || gpuFallbackImage}" 
+                         onerror="this.onerror=null; this.src='${gpuFallbackImage}';" 
+                         alt="${selected.gpu} logo">
+                    
                     <p><strong>${selected.gpu}</strong></p>
-                    <a href="https://gpu.userbenchmark.com/" target="_blank" rel="noopener">View Benchmarks &rarr;</a>
+                    <a href="https://gpu.userbenchmark.com/Search?searchTerm=${encodeURIComponent(selected.gpu)}" target="_blank" rel="noopener">View Benchmarks →</a>
                 </div>
             </div>
             <div class="performance-details">
@@ -355,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         document.getElementById('new-calculation-btn').addEventListener('click', () => {
+            dom.resultsView.innerHTML = ''; // Clear the results
             dom.resultsView.classList.add('hidden');
             dom.calculatorView.classList.remove('hidden');
         });
