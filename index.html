@@ -80,6 +80,25 @@
         <div class="container hidden" id="results-view">
              <!-- Results will be dynamically inserted here -->
         </div>
+	    ---
+
+### Step 3: Link Your Main Page to the New Tool
+
+Now, you need to complete the loop by adding a link from your `index.html` page to this new FPS calculator.
+
+1.  Open your **`index.html`** file.
+2.  Find a good place to add a link. A great spot is right below the calculator card, before the FAQ section.
+3.  Add the following HTML block in that spot:
+
+```html
+        <!-- Add this block inside the <main> tag in index.html, after the calculator container -->
+        <div class="container">
+            <div class="interlink-box" style="text-align:center; border-left: 4px solid var(--primary);">
+                <h4 style="color: var(--primary); border:none;">Curious about gaming performance?</h4>
+                <p>Estimate your average Frames Per Second in popular titles with our new tool.</p>
+                <a href="fps-calculator.html" style="background-color: var(--primary); color: white;">Try the FPS Estimator →</a>
+            </div>
+        </div>
 
         <div class="container">
             <div class="faq-section">
