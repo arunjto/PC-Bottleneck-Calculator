@@ -6,7 +6,6 @@
     <title>FPS Estimator Calculator - How Will Your PC Perform?</title>
     <meta name="description" content="Estimate the Frames Per Second (FPS) you will get in popular games. Select your CPU, GPU, and a game to see your expected gaming performance.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20fill%3D%22%233f51b5%22%20d%3D%22M2%2C0A2%2C2%2C0%2C0%2C0%2C0%2C2V14a2%2C2%2C0%2C0%2C0%2C2%2C2H14a2%2C2%2C0%2C0%2C0%2C2-2V2a2%2C2%2C0%2C0%2C0-2-2ZM4%2C2H6V4H4ZM8%2C2h2V4H8Zm4%2C0h2V4H12ZM4%2C6H6V8H4Zm4%2C0h2V8H8Zm4%2C0h2V8H12ZM4%2C10H6v2H4Zm4%2C0h2v2H8Zm4%2C0h2v2H12Z%22%2F%3E%3C%2Fsvg%3E">
-    <!-- Note: If you separated your CSS, change this to <link rel="stylesheet" href="style.css"> -->
     <style>
         :root {
             --bg-light: #f4f7fa; --fg-light: #1a202c; --card-bg-light: #ffffff; --border-light: #e2e8f0;
@@ -47,8 +46,6 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); }
         input:checked + .slider:before { transform: translateX(20px); }
-        
-        /* FPS Results Specific Styles */
         .results-container { text-align: center; margin-top: 2rem; }
         .fps-display { font-size: 4rem; font-weight: 800; color: var(--primary); line-height: 1; }
         .fps-label { font-size: 1.5rem; margin-top: 0.5rem; color: #718096; }
@@ -110,9 +107,8 @@
     <footer>
         <div class="footer-links">
             <a href="index.html">Bottleneck Calculator</a>
+            <a href="psu-calculator.html">PSU Calculator</a>
             <a href="about.html">About Us</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="contact.html">Contact Us</a>
         </div>
         <p>© 2025 PC Performance Calculators. All rights reserved.</p>
     </footer>
@@ -120,75 +116,54 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
+        // --- DATA OBJECT WITH FULL COMPONENT LIST ---
         const data = {
             cpus: {
-                "Intel Core i9-14900K": 100, "AMD Ryzen 9 7950X3D": 98, "Intel Core i7-14700K": 95, "AMD Ryzen 7 7800X3D": 96, "Intel Core i5-14600K": 90, "AMD Ryzen 5 7600X": 88, "Intel Core i5-12400": 82, "AMD Ryzen 5 5600X": 78
+                "AMD Ryzen 9 9950X3D": { score: 125 }, "AMD Ryzen 9 9900X3D": { score: 124 }, "AMD Ryzen 7 9800X3D": { score: 122 }, "AMD Ryzen 9 9950X": { score: 118 }, "Intel Core Ultra 9 285K": { score: 116 }, "AMD Ryzen 9 9900X": { score: 115 }, "AMD Ryzen 7 9700X": { score: 110 }, "Intel Core Ultra 7 265K": { score: 108 }, "Intel Core Ultra 300 Series (Panther Lake)": { score: 105 }, "AMD Ryzen 5 9600X": { score: 102 }, "Intel Core i9-14900K": { score: 100 }, "AMD Threadripper 3990X": { score: 99 }, "AMD Ryzen 9 7950X3D": { score: 98 }, "Intel Core i9-13900K": { score: 98 }, "Apple M2 Ultra": { score: 98 }, "AMD EPYC 7763": { score: 97 }, "AMD Ryzen 7 7800X3D": { score: 96 }, "Intel Core i7-14700K": { score: 95 }, "Apple M1 Ultra": { score: 95 }, "Intel Core i9-14900HX": { score: 95 }, "Apple M3 Max (Laptop)": { score: 95 }, "AMD Ryzen 9 7900X": { score: 94 }, "AMD Ryzen AI 300 Series": { score: 94 }, "Intel Core i9-12900K": { score: 93 }, "AMD Ryzen 9 8945HS": { score: 93 }, "Intel Core i9-13980HX": { score: 93 }, "Apple M3 Max": { score: 92 }, "AMD Ryzen 7 7700X": { score: 92 }, "Intel Core Ultra 9 185H": { score: 92 }, "Intel Core i7-12700K": { score: 91 }, "AMD Ryzen 9 7945HX": { score: 91 }, "Intel Core i5-14600K": { score: 90 }, "Intel Core i7-13700K": { score: 90 }, "Intel Core i5-13600K": { score: 90 }, "AMD EPYC 7502": { score: 90 }, "AMD Ryzen 7 8840HS": { score: 90 }, "Intel Core i7-14700HX": { score: 90 }, "AMD Ryzen 9 5950X": { score: 89 }, "Intel Core i9-12900HX": { score: 89 }, "AMD Ryzen 5 7600X": { score: 88 }, "Apple M2 Max": { score: 88 }, "Intel Core Ultra 7 155H": { score: 88 }, "Apple M3 Pro (Laptop)": { score: 88 }, "Intel Core i7-13700HX": { score: 88 }, "Intel Core i9-12900HK": { score: 88 }, "AMD Ryzen 5 7600": { score: 87 }, "AMD Ryzen 7 7745HX": { score: 87 }, "AMD Ryzen 9 6980HX": { score: 87 }, "AMD Ryzen 7 5800X3D": { score: 85 }, "Intel Core i9-11900K": { score: 85 }, "AMD Threadripper 2990WX": { score: 85 }, "Apple M3 Pro": { score: 85 }, "Intel Core i5-14500HX": { score: 85 }, "AMD Ryzen 5 8640HS": { score: 85 }, "AMD Ryzen 9 6900HX": { score: 85 }, "Apple M2 Pro (Laptop)": { score: 85 }, "AMD Ryzen 7 5800X": { score: 84 }, "Intel Core i7-12700H": { score: 84 }, "Intel Core i5-13600HX": { score: 83 }, "Apple M1 Max (Laptop)": { score: 83 }, "Intel Core i7-12800H": { score: 83 }, "Intel Core i5-12400": { score: 82 }, "Intel Core i9-11980HK": { score: 82 }, "AMD Ryzen 5 7645HX": { score: 82 }, "Intel Core Ultra 5 125H": { score: 82 }, "AMD Ryzen 7 6800HS": { score: 82 }, "Intel Core i5-12600K": { score: 80 }, "Intel Core i7-11700K": { score: 80 }, "AMD Ryzen 9 3950X": { score: 80 }, "Apple M2 Pro": { score: 80 }, "Apple M1 Max": { score: 80 }, "AMD EPYC 7702": { score: 80 }, "AMD Ryzen 7 6800H": { score: 80 }, "AMD Ryzen 5 5600X": { score: 78 }, "Intel Core i9-10900K": { score: 78 }, "Apple M3": { score: 78 }, "AMD Ryzen 9 5900HX": { score: 78 }, "Intel Core i5-12500H": { score: 78 }, "Intel Core i7-11800H": { score: 77 }, "Intel Core i5-12600H": { score: 77 }, "AMD Ryzen 5 6600HS": { score: 76 }, "Intel Core i5-11600K": { score: 75 }, "Apple M2": { score: 75 }, "AMD Ryzen 9 3900X": { score: 75 }, "AMD Ryzen 5 6600H": { score: 75 }, "Apple M1 Pro (Laptop)": { score: 75 }, "AMD Ryzen 7 5800H": { score: 73 }, "AMD Ryzen 7 3700X": { score: 72 }, "Apple M1 Pro": { score: 72 }, "Intel Core i5-11400H": { score: 72 }, "Intel Core i7-10700K": { score: 70 }, "AMD Ryzen 9 2950X": { score: 70 }, "Intel Xeon E5-2690 V4": { score: 70 }, "Intel Core i9-9900K": { score: 70 }, "Apple M1": { score: 68 }, "AMD Ryzen 5 3600X": { score: 68 }, "AMD Ryzen 7 3800X": { score: 68 }, "AMD Ryzen 5 5600H": { score: 68 }, "Intel Core i7-1165G7": { score: 68 }, "Intel Core i7-9700K": { score: 65 }, "AMD Ryzen 5 3600": { score: 65 }, "Intel Core i5-10600K": { score: 65 }, "Intel Core i7-10750H": { score: 65 }, "Intel Core i5-1135G7": { score: 63 }, "AMD Ryzen 7 2700X": { score: 62 }, "Intel Core i5-9600K": { score: 60 }, "Intel Core i7-8700K": { score: 60 }, "AMD Threadripper 1950X": { score: 60 }, "AMD Ryzen 5 3500X": { score: 60 }, "Intel Core i5-10300H": { score: 60 }, "AMD Ryzen 7 5700U": { score: 60 }
             },
             gpus: {
-                "NVIDIA GeForce RTX 4090": 100, "AMD Radeon RX 7900 XTX": 98, "NVIDIA GeForce RTX 4080 Super": 95, "NVIDIA GeForce RTX 4070 Ti Super": 90, "AMD Radeon RX 7700 XT": 78, "NVIDIA GeForce RTX 4060": 70, "NVIDIA GeForce RTX 3060": 68, "AMD Radeon RX 6600": 60
+                "NVIDIA GeForce RTX 5090": { score: 140 }, "NVIDIA GeForce RTX 5080": { score: 120 }, "NVIDIA GeForce RTX 5070 Ti": { score: 105 }, "AMD Radeon RX 9070 XT": { score: 102 }, "NVIDIA GeForce RTX 4090": { score: 100 }, "AMD Radeon RX 7900 XTX": { score: 98 }, "NVIDIA GeForce RTX 5070": { score: 95 }, "NVIDIA GeForce RTX 4080 Super": { score: 95 }, "Intel Arc Battlemage 24GB": { score: 94 }, "AMD Radeon RX 7900 XT": { score: 92 }, "AMD Radeon RX 9070": { score: 92 }, "NVIDIA GeForce RTX 4090 Laptop": { score: 92 }, "NVIDIA GeForce RTX 4070 Ti Super": { score: 90 }, "NVIDIA GeForce RTX 3090 Ti": { score: 90 }, "AMD Radeon RX 6950 XT": { score: 88 }, "NVIDIA GeForce RTX 4070 Super": { score: 88 }, "Apple M3 Max (Laptop GPU)": { score: 88 }, "NVIDIA GeForce RTX 4080 Laptop": { score: 88 }, "NVIDIA GeForce RTX 3080": { score: 85 }, "AMD Radeon RX 7800 XT": { score: 85 }, "Apple M3 Max (GPU)": { score: 85 }, "AMD Radeon AI PRO R9700": { score: 85 }, "NVIDIA GeForce RTX 5060 Ti": { score: 85 }, "Apple M2 Max (Laptop GPU)": { score: 83 }, "AMD Radeon RX 6800 XT": { score: 82 }, "NVIDIA GeForce RTX 3070 Ti": { score: 82 }, "NVIDIA GeForce RTX 3080 Laptop": { score: 82 }, "AMD Radeon RX 9060 XT": { score: 82 }, "NVIDIA GeForce RTX 4060 Ti": { score: 80 }, "Apple M3 Pro (Laptop GPU)": { score: 80 }, "NVIDIA GeForce RTX 4070 Laptop": { score: 80 }, "AMD Radeon RX 7900S": { score: 80 }, "NVIDIA GeForce RTX 3070": { score: 78 }, "AMD Radeon RX 7700 XT": { score: 78 }, "Apple M2 Max (GPU)": { score: 78 }, "AMD Radeon RX 6850M XT": { score: 78 }, "AMD Radeon RX 6700 XT": { score: 75 }, "NVIDIA GeForce RTX 3060 Ti": { score: 75 }, "Apple M3 Pro (GPU)": { score: 75 }, "Apple M2 Pro (Laptop GPU)": { score: 75 }, "NVIDIA GeForce RTX 4060 Laptop": { score: 75 }, "AMD Radeon RX 7800S": { score: 75 }, "Apple M1 Max (Laptop GPU)": { score: 75 }, "NVIDIA GeForce RTX 5060": { score: 75 }, "AMD Radeon RX 6800M": { score: 72 }, "NVIDIA GeForce RTX 2080 Ti": { score: 70 }, "NVIDIA GeForce RTX 4060": { score: 70 }, "AMD Radeon RX 6700": { score: 70 }, "Apple M2 Pro (GPU)": { score: 70 }, "Apple M1 Max (GPU)": { score: 70 }, "NVIDIA GeForce RTX 4050 Laptop": { score: 70 }, "AMD Radeon RX 7700S": { score: 70 }, "AMD Radeon RX 7600": { score: 68 }, "NVIDIA GeForce RTX 3060": { score: 68 }, "Apple M3 (GPU)": { score: 68 }, "NVIDIA GeForce RTX 3060 Laptop": { score: 68 }, "Intel Arc Pro B60": { score: 68 }, "AMD Radeon RX 5700 XT": { score: 65 }, "Apple M2 (GPU)": { score: 65 }, "AMD Radeon RX 6600 XT": { score: 65 }, "NVIDIA GeForce RTX 2070 Super": { score: 65 }, "AMD Radeon RX 7600S": { score: 65 }, "Apple M1 Pro (Laptop GPU)": { score: 65 }, "AMD Radeon RX 6700M": { score: 65 }, "NVIDIA GeForce RTX 5050": { score: 65 }, "Intel Arc Pro B50": { score: 64 }, "NVIDIA GeForce RTX 3050 Ti Laptop": { score: 62 }, "Intel Arc A770": { score: 60 }, "NVIDIA GeForce GTX 1080 Ti": { score: 60 }, "AMD Radeon RX 6600": { score: 60 }
             },
             games: {
-                "Cyberpunk 2077": { baseFps: 70, cpuWeight: 0.4, gpuWeight: 0.6 },
-                "Valorant": { baseFps: 350, cpuWeight: 0.7, gpuWeight: 0.3 },
-                "Call of Duty: Modern Warfare III": { baseFps: 140, cpuWeight: 0.5, gpuWeight: 0.5 },
-                "Starfield": { baseFps: 60, cpuWeight: 0.6, gpuWeight: 0.4 },
-                "Baldur's Gate 3": { baseFps: 90, cpuWeight: 0.65, gpuWeight: 0.35 },
-                "Fortnite": { baseFps: 200, cpuWeight: 0.6, gpuWeight: 0.4 },
-                "Apex Legends": { baseFps: 180, cpuWeight: 0.5, gpuWeight: 0.5 },
-                "Red Dead Redemption 2": { baseFps: 80, cpuWeight: 0.4, gpuWeight: 0.6 },
-                "The Witcher 3: Wild Hunt": { baseFps: 110, cpuWeight: 0.3, gpuWeight: 0.7 },
-                "Elden Ring": { baseFps: 60, cpuWeight: 0.5, gpuWeight: 0.5 }, // Note: Capped at 60 FPS
-                "Counter-Strike 2": { baseFps: 300, cpuWeight: 0.7, gpuWeight: 0.3 },
+                "Cyberpunk 2077": { baseFps: 70, cpuWeight: 0.4, gpuWeight: 0.6 }, "Valorant": { baseFps: 350, cpuWeight: 0.7, gpuWeight: 0.3 }, "Call of Duty: Modern Warfare III": { baseFps: 140, cpuWeight: 0.5, gpuWeight: 0.5 }, "Starfield": { baseFps: 60, cpuWeight: 0.6, gpuWeight: 0.4 }, "Baldur's Gate 3": { baseFps: 90, cpuWeight: 0.65, gpuWeight: 0.35 }, "Fortnite": { baseFps: 200, cpuWeight: 0.6, gpuWeight: 0.4 }, "Apex Legends": { baseFps: 180, cpuWeight: 0.5, gpuWeight: 0.5 }, "Red Dead Redemption 2": { baseFps: 80, cpuWeight: 0.4, gpuWeight: 0.6 }, "The Witcher 3: Wild Hunt": { baseFps: 110, cpuWeight: 0.3, gpuWeight: 0.7 }, "Elden Ring": { baseFps: 60, cpuWeight: 0.5, gpuWeight: 0.5 }, "Counter-Strike 2": { baseFps: 300, cpuWeight: 0.7, gpuWeight: 0.3 },
             },
             resolutionMultiplier: { "1080p": 1.2, "1440p": 1.0, "4k": 0.7 }
         };
 
         const dom = {
-            cpuSelect: document.getElementById('cpu-select'),
-            gpuSelect: document.getElementById('gpu-select'),
-            gameSelect: document.getElementById('game-select'),
-            resolutionSelect: document.getElementById('resolution-select'),
-            calculateBtn: document.getElementById('calculate-btn'),
-            resultsView: document.getElementById('results-view'),
-            themeToggle: document.getElementById('theme-toggle'),
+            cpuSelect: document.getElementById('cpu-select'), gpuSelect: document.getElementById('gpu-select'), gameSelect: document.getElementById('game-select'), resolutionSelect: document.getElementById('resolution-select'), calculateBtn: document.getElementById('calculate-btn'), resultsView: document.getElementById('results-view'), themeToggle: document.getElementById('theme-toggle'),
         };
+
+        function getComponentScore(type, name) {
+            const componentData = data[type][name];
+            if (typeof componentData === 'object' && componentData !== null) {
+                return componentData.score;
+            }
+            return componentData || 0;
+        }
 
         function populateDropdown(selectElement, dataObject) {
             const sortedKeys = Object.keys(dataObject).sort();
-            sortedKeys.forEach(item => {
-                selectElement.add(new Option(item, item));
-            });
+            sortedKeys.forEach(item => { selectElement.add(new Option(item, item)); });
         }
 
         function getPerformanceScore(componentScore) {
-            // A non-linear scale where higher scores give diminishing returns
             return Math.pow(componentScore / 100, 0.7);
         }
 
         function calculateFps() {
             const selected = {
-                cpu: dom.cpuSelect.value,
-                gpu: dom.gpuSelect.value,
-                game: dom.gameSelect.value,
-                resolution: dom.resolutionSelect.value
+                cpu: dom.cpuSelect.value, gpu: dom.gpuSelect.value, game: dom.gameSelect.value, resolution: dom.resolutionSelect.value
             };
-
             if (!selected.cpu || !selected.gpu || !selected.game) {
-                alert('Please select a CPU, GPU, and a game.');
-                return;
+                alert('Please select a CPU, GPU, and a game.'); return;
             }
-
-            const cpuScore = getPerformanceScore(data.cpus[selected.cpu]);
-            const gpuScore = getPerformanceScore(data.gpus[selected.gpu]);
+            const cpuScore = getPerformanceScore(getComponentScore('cpus', selected.cpu));
+            const gpuScore = getPerformanceScore(getComponentScore('gpus', selected.gpu));
             const game = data.games[selected.game];
             const resMultiplier = data.resolutionMultiplier[selected.resolution];
-
-            // Weighted average based on how much a game depends on CPU vs GPU
             const weightedHardwareScore = (cpuScore * game.cpuWeight) + (gpuScore * game.gpuWeight);
-            
-            // Calculate final FPS
             const estimatedFps = game.baseFps * weightedHardwareScore * resMultiplier;
-
             displayResults(Math.round(estimatedFps), selected.game, selected.resolution);
         }
 
@@ -197,14 +172,12 @@
             if (fps < 30) performanceTier = "struggle";
             else if (fps < 60) performanceTier = "playable";
             else if (fps > 120) performanceTier = "excellent";
-
             const summaryText = {
                 struggle: `The game will likely struggle to run at playable framerates. Expect significant performance issues.`,
                 playable: `You should get a playable experience, though you may need to lower some settings for consistent performance.`,
                 smooth: `You can expect a smooth gaming experience at these settings.`,
                 excellent: `Your system should provide an excellent, high-framerate experience in this title.`
             }[performanceTier];
-
             dom.resultsView.innerHTML = `
                 <p class="performance-summary">Estimated average performance for <strong>${game}</strong> at <strong>${resolution}</strong>:</p>
                 <div class="fps-display">${fps}</div>
@@ -214,8 +187,7 @@
                     <h4>Is your FPS lower than expected?</h4>
                     <p>Your hardware balance could be the issue. A system bottleneck can prevent your components from reaching their full potential.</p>
                     <a href="index.html">Analyze with our Bottleneck Calculator →</a>
-                </div>
-            `;
+                </div>`;
             dom.resultsView.classList.remove('hidden');
         }
 
@@ -242,4 +214,4 @@
     });
     </script>
 </body>
-</html>```
+</html>
