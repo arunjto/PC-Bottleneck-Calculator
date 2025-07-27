@@ -28,6 +28,27 @@
             </div>
         </div>
     </header>
+    <!-- PASTE THIS NEW BLOCK IMMEDIATELY AFTER THE </header> TAG IN ALL HTML FILES -->
+<!-- REPLACE YOUR OLD QUICK TOOLS BAR WITH THIS NEW HORIZONTAL COLLAPSE VERSION -->
+<div class="quick-tools-bar" id="quick-tools-bar">
+    <div class="quick-tools-content">
+        <!-- This part will now ALWAYS be visible -->
+        <div class="quick-tools-static">
+            <span class="quick-tools-icon">⚙️</span>
+            <span class="quick-tools-title">Quick Tools:</span>
+        </div>
+        <!-- This container now ONLY holds the links that will collapse -->
+        <div class="quick-tools-links-container" id="quick-tools-links-container">
+            <a href="index.html">Bottleneck</a>
+            <a href="fps-calculator.html">FPS Calc</a>
+            <a href="psu-calculator.html">PSU Calc</a>
+            <!-- Add new tools here -->
+        </div>
+    </div>
+    <button class="collapse-toggle-btn" id="collapse-toggle-btn" aria-label="Toggle Quick Tools">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+    </button>
+</div>
     <main>
         <div class="container" id="calculator-view">
             <h1>PC Performance & Bottleneck Calculator</h1>
@@ -463,7 +484,101 @@
     padding-left: 5px;
     text-align: justify;
 }
+/* --- ADD THIS NEW CSS AT THE END OF YOUR <style> BLOCK --- */
 
+/* --- Final Horizontal Collapsible Quick Tools Bar --- */
+.quick-tools-bar {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    display: flex; /* Use Flexbox for robust layout */
+    justify-content: space-between; /* Pushes button to the right */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.quick-tools-content {
+    display: flex;
+    align-items: center;
+    min-width: 0; /* Important for flexbox shrinking */
+}
+
+.quick-tools-static {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.quick-tools-icon {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+}
+
+.quick-tools-title {
+    font-weight: 600;
+    color: var(--fg);
+}
+
+.quick-tools-links-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: 0.75rem;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 1000px; /* An arbitrary large width when open */
+    opacity: 1;
+    transition: max-width 0.4s ease-in-out, opacity 0.3s ease-in-out, margin-left 0.4s ease-in-out;
+}
+
+/* Collapsed State */
+.quick-tools-bar.collapsed .quick-tools-links-container {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+}
+
+.collapse-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    border-radius: 50%;
+    flex-shrink: 0; /* Prevents the button from being squished */
+}
+.collapse-toggle-btn:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.collapse-toggle-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+.quick-tools-bar.collapsed .collapse-toggle-btn svg {
+    transform: rotate(180deg);
+}
+
+.quick-tools-links-container a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+.quick-tools-links-container a:hover {
+    color: var(--primary-hover);
+}
+.dark-mode .quick-tools-links-container a {
+    color: #9fa8da;
+}
+.dark-mode .quick-tools-links-container a:hover {
+    color: #c5cae9;
+}
 </style>
 
 <script>
@@ -1069,5 +1184,26 @@ document.addEventListener('DOMContentLoaded', () => {
             answer.style.maxHeight = button.classList.contains('active') ? answer.scrollHeight + "px" : null;
         });
     });
+    // --- Collapsible Quick Tools Bar Logic ---
+        const quickToolsBar = document.getElementById('quick-tools-bar');
+        const quickToolsToggleBtn = document.getElementById('collapse-toggle-btn');
+
+        if (quickToolsBar && quickToolsToggleBtn) {
+            // Check local storage for the user's preference on page load
+            const isCollapsed = localStorage.getItem('quickToolsCollapsed') === 'true';
+            if (isCollapsed) {
+                quickToolsBar.classList.add('collapsed');
+            }
+
+            // Add the click event listener to the button
+            quickToolsToggleBtn.addEventListener('click', () => {
+                quickToolsBar.classList.toggle('collapsed');
+                
+                // Save the new state (true or false) to local storage
+                const isNowCollapsed = quickToolsBar.classList.contains('collapsed');
+                localStorage.setItem('quickToolsCollapsed', isNowCollapsed);
+            });
+        }
+   
 });
 </script>
