@@ -584,7 +584,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DATA OBJECT (All components standardized for reliability) ---
+    // --- DATA OBJECT (All components are now in a standardized object format for reliability) ---
     const data = {
         cpus: {
             "AMD Ryzen 9 9950X3D": { score: 125, tier: 'enthusiast' }, "AMD Ryzen 9 9900X3D": { score: 124, tier: 'enthusiast' }, "AMD Ryzen 7 9800X3D": { score: 122, tier: 'enthusiast' }, "AMD Ryzen 9 9950X": { score: 118, tier: 'enthusiast' }, "Intel Core Ultra 9 285K": { score: 116, tier: 'enthusiast' }, "AMD Ryzen 9 9900X": { score: 115, tier: 'enthusiast' }, "AMD Ryzen 7 9700X": { score: 110, tier: 'enthusiast' }, "Intel Core Ultra 7 265K": { score: 108, tier: 'enthusiast' }, "Intel Core Ultra 300 Series (Panther Lake)": { score: 105, tier: 'enthusiast' }, "AMD Ryzen 5 9600X": { score: 102, tier: 'enthusiast' }, "Intel Core i9-14900K": { score: 100, tier: 'enthusiast', imageUrl: "https://i.imgur.com/4o7iY2A.png" }, "AMD Threadripper 3990X": { score: 99, tier: 'enthusiast' }, "AMD Ryzen 9 7950X3D": { score: 98, tier: 'enthusiast', imageUrl: "https://i.imgur.com/S6FE88v.png" }, "Intel Core i9-13900K": { score: 98, tier: 'enthusiast' }, "Apple M2 Ultra": { score: 98, tier: 'enthusiast' }, "AMD EPYC 7763": { score: 97, tier: 'enthusiast' }, "AMD Ryzen 7 7800X3D": { score: 96, tier: 'high-end', imageUrl: "https://i.imgur.com/S6FE88v.png" }, "Intel Core i7-14700K": { score: 95, tier: 'enthusiast' }, "Apple M1 Ultra": { score: 95, tier: 'enthusiast' }, "Intel Core i9-14900HX": { score: 95, tier: 'enthusiast' }, "Apple M3 Max (Laptop)": { score: 95, tier: 'enthusiast' }, "AMD Ryzen 9 7900X": { score: 94, tier: 'high-end' }, "AMD Ryzen AI 300 Series": { score: 94, tier: 'high-end' }, "Intel Core i9-12900K": { score: 93, tier: 'high-end' }, "AMD Ryzen 9 8945HS": { score: 93, tier: 'high-end' }, "Intel Core i9-13980HX": { score: 93, tier: 'high-end' }, "Apple M3 Max": { score: 92, tier: 'high-end' }, "AMD Ryzen 7 7700X": { score: 92, tier: 'high-end' }, "Intel Core Ultra 9 185H": { score: 92, tier: 'high-end' }, "Intel Core i7-12700K": { score: 91, tier: 'high-end' }, "AMD Ryzen 9 7945HX": { score: 91, tier: 'high-end' }, "Intel Core i5-14600K": { score: 90, tier: 'high-end' }, "Intel Core i7-13700K": { score: 90, tier: 'high-end' }, "Intel Core i5-13600K": { score: 90, tier: 'high-end' }, "AMD EPYC 7502": { score: 90, tier: 'high-end' }, "AMD Ryzen 7 8840HS": { score: 90, tier: 'high-end' }, "Intel Core i7-14700HX": { score: 90, tier: 'high-end' }, "AMD Ryzen 9 5950X": { score: 89, tier: 'high-end' }, "Intel Core i9-12900HX": { score: 89, tier: 'high-end' }, "AMD Ryzen 5 7600X": { score: 88, tier: 'high-end' }, "Apple M2 Max": { score: 88, tier: 'high-end' }, "Intel Core Ultra 7 155H": { score: 88, tier: 'high-end' }, "Apple M3 Pro (Laptop)": { score: 88, tier: 'high-end' }, "Intel Core i7-13700HX": { score: 88, tier: 'high-end' }, "Intel Core i9-12900HK": { score: 88, tier: 'high-end' }, "AMD Ryzen 5 7600": { score: 87, tier: 'high-end' }, "AMD Ryzen 7 7745HX": { score: 87, tier: 'high-end' }, "AMD Ryzen 9 6980HX": { score: 87, tier: 'high-end' }, "AMD Ryzen 7 5800X3D": { score: 85, tier: 'high-end' }, "Intel Core i9-11900K": { score: 85, tier: 'high-end' }, "AMD Threadripper 2990WX": { score: 85, tier: 'high-end' }, "Apple M3 Pro": { score: 85, tier: 'high-end' }, "Intel Core i5-14500HX": { score: 85, tier: 'high-end' }, "AMD Ryzen 5 8640HS": { score: 85, tier: 'high-end' }, "AMD Ryzen 9 6900HX": { score: 85, tier: 'high-end' }, "Apple M2 Pro (Laptop)": { score: 85, tier: 'high-end' }, "AMD Ryzen 7 5800X": { score: 84, tier: 'mid-range' }, "Intel Core i7-12700H": { score: 84, tier: 'mid-range' }, "Intel Core i5-13600HX": { score: 83, tier: 'mid-range' }, "Apple M1 Max (Laptop)": { score: 83, tier: 'mid-range' }, "Intel Core i7-12800H": { score: 83, tier: 'mid-range' }, "Intel Core i5-12400": { score: 82, tier: 'mid-range' }, "Intel Core i9-11980HK": { score: 82, tier: 'mid-range' }, "AMD Ryzen 5 7645HX": { score: 82, tier: 'mid-range' }, "Intel Core Ultra 5 125H": { score: 82, tier: 'mid-range' }, "AMD Ryzen 7 6800HS": { score: 82, tier: 'mid-range' }, "Intel Core i5-12600K": { score: 80, tier: 'mid-range' }, "Intel Core i7-11700K": { score: 80, tier: 'mid-range' }, "AMD Ryzen 9 3950X": { score: 80, tier: 'mid-range' }, "Apple M2 Pro": { score: 80, tier: 'mid-range' }, "Apple M1 Max": { score: 80, tier: 'mid-range' }, "AMD EPYC 7702": { score: 80, tier: 'mid-range' }, "AMD Ryzen 7 6800H": { score: 80, tier: 'mid-range' }, "AMD Ryzen 5 5600X": { score: 78, tier: 'mid-range' }, "Intel Core i9-10900K": { score: 78, tier: 'mid-range' }, "Apple M3": { score: 78, tier: 'mid-range' }, "AMD Ryzen 9 5900HX": { score: 78, tier: 'mid-range' }, "Intel Core i5-12500H": { score: 78, tier: 'mid-range' }, "Intel Core i7-11800H": { score: 77, tier: 'mid-range' }, "Intel Core i5-12600H": { score: 77, tier: 'mid-range' }, "AMD Ryzen 5 6600HS": { score: 76, tier: 'mid-range' }, "Intel Core i5-11600K": { score: 75, tier: 'mid-range' }, "Apple M2": { score: 75, tier: 'mid-range' }, "AMD Ryzen 9 3900X": { score: 75, tier: 'mid-range' }, "AMD Ryzen 5 6600H": { score: 75, tier: 'mid-range' }, "Apple M1 Pro (Laptop)": { score: 75, tier: 'mid-range' }, "AMD Ryzen 7 5800H": { score: 73, tier: 'mid-range' }, "AMD Ryzen 7 3700X": { score: 72, tier: 'mid-range' }, "Apple M1 Pro": { score: 72, tier: 'mid-range' }, "Intel Core i5-11400H": { score: 72, tier: 'mid-range' }, "Intel Core i7-10700K": { score: 70, tier: 'mid-range' }, "AMD Ryzen 9 2950X": { score: 70, tier: 'mid-range' }, "Intel Xeon E5-2690 V4": { score: 70, tier: 'mid-range' }, "Intel Core i9-9900K": { score: 70, tier: 'mid-range' }, "Apple M1": { score: 68, tier: 'mid-range' }, "AMD Ryzen 5 3600X": { score: 68, tier: 'mid-range' }, "AMD Ryzen 7 3800X": { score: 68, tier: 'mid-range' }, "AMD Ryzen 5 5600H": { score: 68, tier: 'mid-range' }, "Intel Core i7-1165G7": { score: 68, tier: 'mid-range' }, "Intel Core i7-9700K": { score: 65, tier: 'mid-range' }, "AMD Ryzen 5 3600": { score: 65, tier: 'mid-range' }, "Intel Core i5-10600K": { score: 65, tier: 'mid-range' }, "Intel Core i7-10750H": { score: 65, tier: 'mid-range' }, "Intel Core i5-1135G7": { score: 63, tier: 'entry-level' }, "AMD Ryzen 7 2700X": { score: 62, tier: 'entry-level' }, "Intel Core i5-9600K": { score: 60, tier: 'entry-level' }, "Intel Core i7-8700K": { score: 60, tier: 'entry-level' }, "AMD Threadripper 1950X": { score: 60, tier: 'entry-level' }, "AMD Ryzen 5 3500X": { score: 60, tier: 'entry-level' }, "Intel Core i5-10300H": { score: 60, tier: 'entry-level' }, "AMD Ryzen 7 5700U": { score: 60, tier: 'entry-level' }
@@ -600,6 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const placeholderImages = { cpu: "https://i.imgur.com/PHYyIxl.png", gpu: "https://i.imgur.com/Jprx55s.png" };
 
         function initGlobal() {
+            // All the logic for menu, theme, quick tools bar
             const themeToggle = document.getElementById('theme-toggle');
             const hamburgerButton = document.getElementById('hamburger-button');
             const mainNav = document.getElementById('main-nav');
@@ -659,13 +660,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 advancedContent: document.getElementById('advanced-content'),
             };
 
-            if (!dom.calculatorView) return;
+            if (!dom.calculatorView) return; // Exit if we are not on the main calculator page
 
+            // --- CORRECTED GET COMPONENT INFO FUNCTION ---
             function getComponentInfo(type, name) {
                 const componentData = data[type][name];
-                if (typeof componentData === 'object' && componentData !== null && typeof componentData.score === 'number') {
-                    return { name, score: componentData.score, tier: componentData.tier || 'mid-range', imageUrl: componentData.imageUrl };
+                if (componentData && typeof componentData.score === 'number') {
+                    return { 
+                        name: name, 
+                        score: componentData.score, 
+                        tier: componentData.tier || 'mid-range', 
+                        imageUrl: componentData.imageUrl 
+                    };
                 }
+                // Fallback for any invalid data, prevents crashes
                 return { name, score: 0, tier: 'entry-level', imageUrl: null };
             }
             
@@ -685,9 +693,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const finalCpuScore = cpuInfo.score * purposeMod.cpu * ramMod;
                 const finalGpuScore = gpuInfo.score * purposeMod.gpu * resMod;
                 let bottleneck = { percentage: 0, component: 'None' };
-                if (finalCpuScore > finalGpuScore * 1.05) bottleneck = { percentage: ((finalCpuScore - finalGpuScore) / finalCpuScore) * 100, component: 'CPU' };
-                else if (finalGpuScore > finalGpuScore * 1.05) bottleneck = { percentage: ((finalGpuScore - finalGpuScore) / finalGpuScore) * 100, component: 'GPU' };
-                displayResults({ selected, bottleneck, cpuInfo, gpuInfo });
+                if (finalCpuScore > finalGpuScore * 1.05) {
+                    bottleneck = { percentage: ((finalCpuScore - finalGpuScore) / finalCpuScore) * 100, component: 'CPU' };
+                } else if (finalGpuScore > finalCpuScore * 1.05) {
+                    bottleneck = { percentage: ((finalGpuScore - finalGpuScore) / finalGpuScore) * 100, component: 'GPU' };
+                }
+                // Pass the detailed text generation functions' results to displayResults
+                displayResults({ 
+                    selected, 
+                    bottleneck, 
+                    cpuInfo, 
+                    gpuInfo 
+                });
             }
 
             function displayResults(results) {
@@ -698,6 +715,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gpuFallbackImage = placeholderImages.gpu;
                 const cpuLogoUrl = cpuInfo.imageUrl;
                 const gpuLogoUrl = gpuInfo.imageUrl;
+                
                 const resultsHTML = `
                     <div class="results-section">
                         <div class="results-card">
@@ -722,7 +740,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="action-buttons"><button id="new-calculation-btn">Calculate Again</button></div>
                     </div>`;
                 dom.resultsView.innerHTML = resultsHTML;
-                document.getElementById('new-calculation-btn').addEventListener('click', () => { dom.resultsView.innerHTML = ''; dom.resultsView.classList.add('hidden'); dom.calculatorView.classList.remove('hidden'); });
+                document.getElementById('new-calculation-btn').addEventListener('click', () => { 
+                    dom.resultsView.innerHTML = ''; 
+                    dom.resultsView.classList.add('hidden'); 
+                    dom.calculatorView.classList.remove('hidden'); 
+                });
             }
 
             populateDropdown(dom.cpuSelect, data.cpus);
@@ -734,6 +756,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // --- RUN THE INITIALIZATION LOGIC ---
         initGlobal();
         initCalculator();
     });
