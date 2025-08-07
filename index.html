@@ -1,16 +1,1101 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Instantly check your PC for component bottlenecks. Our free calculator analyzes your CPU and GPU to prevent performance loss and help you build a balanced system."><title>PC Bottleneck Calculator - Check Your CPU & GPU Balance</title><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20fill%3D%22%233f51b5%22%20d%3D%22M2%2C0A2%2C2%2C0%2C0%2C0%2C0%2C2V14a2%2C2%2C0%2C0%2C0%2C2%2C2H14a2%2C2%2C0%2C0%2C0%2C2-2V2a2%2C2%2C0%2C0%2C0-2-2ZM4%2C2H6V4H4ZM8%2C2h2V4H8Zm4%2C0h2V4H12ZM4%2C6H6V8H4Zm4%2C0h2V8H8Zm4%2C0h2V8H12ZM4%2C10H6v2H4Zm4%2C0h2v2H8Zm4%2C0h2v2H12Z%22%2F%3E%3C%2Fsvg%3E"></head><body><header><div class="header-content"><div class="logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2V8H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 17H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 11H11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bottleneck Calculator</span></div><div class="theme-switch-wrapper"><label class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" /><span class="slider"></span></label></div></div></header><!-- PASTE THIS NEW BLOCK IMMEDIATELY AFTER THE </header> TAG IN ALL HTML FILES --><!-- REPLACE YOUR OLD QUICK TOOLS BAR WITH THIS NEW HORIZONTAL COLLAPSE VERSION --><div class="quick-tools-bar" id="quick-tools-bar"><div class="quick-tools-content"><!-- This part will now ALWAYS be visible --><div class="quick-tools-static"><span class="quick-tools-icon">⚙️</span><span class="quick-tools-title">Quick Tools:</span></div><!-- This container now ONLY holds the links that will collapse --><div class="quick-tools-links-container" id="quick-tools-links-container"><a href="index.html">Bottleneck</a><a href="fps-calculator.html">FPS Calc</a><a href="psu-calculator.html">PSU Calc</a><!-- Add new tools here --></div></div><button class="collapse-toggle-btn" id="collapse-toggle-btn" aria-label="Toggle Quick Tools"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg></button></div><main><div class="container" id="calculator-view"><h1>PC Performance & Bottleneck Calculator</h1><p class="subtitle">Unlock your PC's true potential. Our advanced calculator analyzes the critical balance between your CPU and GPU, pinpointing performance bottlenecks to ensure your system is optimized for elite gaming and demanding productivity.</p><p class="subtitle">Select your components to analyze your PC's performance balance.</p><!-- PASTE THIS ENTIRE BLOCK RIGHT AFTER THE SUBTITLE PARAGRAPH IN YOUR INDEX.HTML --><div class="update-banner"><div class="banner-content"><span class="banner-icon">🚀</span><div class="banner-text"><!-- ADDED CLASS HERE --><h4>Database Updated!</h4><p>Now featuring the latest 2025 CPU & GPU models with up-to-date performance data.</p></div></div><span class="latest-tag">✨ Latest</span></div><div class="calculator-card"><div class="input-group"><label for="cpu-select">Processor (CPU)</label><select id="cpu-select"><option value="">-- Select CPU --</option></select></div><div class="input-group"><label for="gpu-select">Graphics Card (GPU)</label><select id="gpu-select"><option value="">-- Select GPU --</option></select></div><div class="input-group"><label for="resolution-select">Target Resolution</label><select id="resolution-select"><option value="1080p">1080p (1920x1080)</option><option value="1440p" selected>1440p (2560x1440)</option><option value="4k">4K (3840x2160)</option><option value="ultrawide">Ultrawide (3440x1440)</option></select></div><div class="advanced-options"><button id="toggle-advanced" class="toggle-btn">Advanced Options ▼</button><div id="advanced-content" class="hidden"><div class="input-group"><label for="ram-select">System RAM</label><select id="ram-select"><option value="8">8 GB</option><option value="16" selected>16 GB</option><option value="32">32 GB</option><option value="64">64+ GB</option></select></div><div class="input-group"><label for="purpose-select">Primary Use Case</label><select id="purpose-select"><option value="gaming" selected>Gaming</option><option value="streaming">Gaming & Streaming</option><option value="video_editing">Video Editing</option><option value="3d_rendering">3D Rendering & Design</option><option value="general">General & Office Use</option></select></div></div></div><button id="calculate-btn">Analyze My System</button></div></div><div class="container hidden" id="results-view"><!-- Results will be dynamically inserted here --></div><div class="container"><div class="interlink-box" style="text-align:center; border-left: 4px solid var(--primary);"><h4 style="color: var(--primary); border:none;">Curious about gaming performance?</h4><p>Estimate your average Frames Per Second in popular titles with our new tool.</p><a href="fps-calculator.html" style="background-color: var(--primary); color: white;">Try the FPS Estimator →</a></div></div><!-- PASTE THIS ENTIRE BLOCK INTO YOUR INDEX.HTML, REPLACING THE PREVIOUS CONTENT BLOCK --><!-- PASTE THIS ENTIRE BLOCK INTO YOUR INDEX.HTML, REPLACING THE PREVIOUS CONTENT BLOCK --><div class="container"><div class="results-card content-article"><h2>Understanding PC Bottlenecks: A Complete Guide to a Balanced System</h2><p>Welcome to the ultimate resource for PC performance analysis. A <strong>bottleneck</strong> is the single most important concept to understand when building or upgrading a gaming PC. It occurs when one of your components is too slow to keep up with the others, effectively creating a "traffic jam" that limits your entire system's potential. Our <strong>PC Bottleneck Calculator</strong> is designed to instantly identify these issues for you.</p><p>By preventing <strong>bottlenecks</strong>, you ensure that every dollar you spend on hardware translates directly into the <strong>performance</strong> you expect. A <strong>balanced PC</strong> is a powerful, efficient, and cost-effective PC.</p><h3>What is a CPU Bottleneck? (The "Bad" Bottleneck)</h3><p>A <strong>CPU bottleneck</strong> happens when your processor (CPU) cannot process data and instructions fast enough to keep your graphics card (GPU) fully occupied. This is the most common and problematic type of <strong>bottleneck</strong> for gamers, as it leads to inconsistent performance that can't be fixed by simply lowering graphics settings.</p><p><strong>Common Symptoms:</strong><ul><li><strong>Stuttering</strong> or choppy gameplay, especially during intense action.</li><li>Low <strong>FPS</strong> in <strong>CPU-intensive games</strong> (e.g., <em>Valorant</em>, <em>Counter-Strike 2</em>, or large-scale strategy games).</li><li>Your <strong>GPU usage</strong> is unexpectedly low (e.g., 60-70%) while one or more <strong>CPU cores</strong> are at 100%.</li></ul></p><h3>What is a GPU Bottleneck? (The "Good" Bottleneck)</h3><p>A <strong>GPU bottleneck</strong>, also known as being "GPU limited," occurs when your graphics card is running at full capacity (99-100% usage). It is the component dictating your maximum <strong>frame rate</strong> because it's working as hard as possible to render the best visuals.</p><p><strong>This is generally the ideal scenario for gaming.</strong> It means you are getting every bit of <strong>performance</strong> you paid for out of your graphics card. This typically happens when playing graphically demanding AAA titles at high <strong>resolutions</strong> (1440p or 4K) with settings like textures and ray tracing on "Ultra."</p><hr style="margin: 2.5rem 0; border: none; border-top: 1px solid var(--border);"><h2>How to Fix a Bottleneck: Your Action Plan</h2><p>Once our calculator identifies a <strong>bottleneck</strong>, the next step is to address it. Here are the most effective, solution-oriented steps you can take for each scenario.</p><h3>Tackling a CPU Bottleneck</h3><p>If your CPU is the weak link, your primary goal is to reduce its workload or increase its performance.</p><p><strong>Immediate Software & Settings Fixes:</strong><ul><li><strong>Close Background Applications:</strong> Shut down web browsers, streaming apps, and any unnecessary programs before you start a game.</li><li><strong>Lower CPU-Intensive Game Settings:</strong> In your game's options, reduce settings like "Object Detail," "Physics Quality," "Crowd Density," or "View Distance."</li><li><strong>Increase Resolution:</strong> This sounds counterintuitive, but increasing the resolution (e.g., from 1080p to 1440p) puts more stress on the GPU, which can help balance the load and make you more GPU-limited.</li></ul></p><p><strong>Long-Term Hardware Solutions:</strong><ul><li><strong>Overclocking:</strong> If you have adequate cooling, <strong>overclocking</strong> your CPU can provide a 5-15% performance boost, which can be enough to alleviate a minor <strong>bottleneck</strong>.</li><li><strong>Upgrade Your CPU:</strong> This is the most effective solution. Use our calculator's results to find a processor that is a better performance match for your existing graphics card.</li></ul></p><div class="info-box" style="margin-top: 1.5rem;"><h5 style="font-size: 1.1rem;">Real-World Example: Upgrading Your CPU for a Modern GPU</h5><p>Consider a user who just upgraded to a brand new, powerful graphics card like the <strong>NVIDIA RTX 4070</strong>. Their existing processor is a well-regarded but older CPU, such as the <strong>AMD Ryzen 5 3600</strong>.</p><p>In graphically intense, single-player games at 1440p or 4K, this combination might perform reasonably well. However, when trying to achieve high <strong>frame rates</strong> in competitive eSports titles like <em>Valorant</em> or <em>Apex Legends</em> at 1080p, the user would notice that their performance hits a wall and their game <strong>stutters</strong>, no matter how much they lower the graphics settings.</p><p><strong>The Solution:</strong> This is a clear <strong>CPU bottleneck</strong>. The Ryzen 5 3600, while a great chip for its time, struggles to send information fast enough to fully utilize the powerful RTX 4070. By <strong>upgrading the CPU</strong> to a modern equivalent like an <strong>AMD Ryzen 5 7600X</strong> or an <strong>Intel Core i5-14600K</strong>, the <strong>system's balance is restored</strong>. The new CPU can easily keep up, allowing the RTX 4070 to deliver the fluid, high-FPS experience the user was hoping for.</p></div><h3>Managing a GPU Bottleneck</h3><p>Remember, this is often a good thing. The goal here isn't to eliminate the <strong>bottleneck</strong>, but to adjust it to achieve your desired <strong>frame rate</strong>.</p><p><strong>Your Primary Levers for More FPS:</strong><ul><li><strong>Lower GPU-Intensive Game Settings:</strong> The biggest performance gains come from lowering "Texture Quality," "Shadow Quality," "Anti-Aliasing," and disabling "Ray Tracing."</li><li><strong>Enable Performance Scaling:</strong> Use technologies like <strong>NVIDIA DLSS</strong>, <strong>AMD FSR</strong>, or <strong>Intel XeSS</strong>. Setting them to "Performance" or "Ultra Performance" mode can dramatically boost your FPS.</li><li><strong>Lower Your Resolution:</strong> Dropping from 4K to 1440p, or 1440p to 1080p, is the single biggest FPS booster, as it significantly reduces the number of pixels your GPU needs to render.</li><li><strong>Upgrade Your GPU:</strong> If you want to maintain high settings and resolution, the ultimate solution is to <strong>upgrade</strong> to a more powerful graphics card.</li></ul></p><div class="info-box" style="margin-top: 1.5rem;"><h5 style="font-size: 1.1rem;">Real-World Example: Overcoming a Mid-Range GPU Limit</h5><p>Consider a user with a very popular and capable CPU like the <strong>AMD Ryzen 5 5600X</strong>, paired with an older, entry-level graphics card such as the <strong>NVIDIA GeForce GTX 1660 Super</strong>.</p><p>This user wants to play modern AAA titles at 1440p resolution. While the Ryzen 5 5600X has plenty of processing power to handle the game's logic, the GTX 1660 Super would immediately hit 100% usage and struggle to produce a smooth <strong>frame rate</strong>. This is a clear <strong>GPU bottleneck</strong>.</p><p><strong>The Solution:</strong> By <strong>upgrading the graphics card</strong> to a modern mid-range GPU, like an <strong>NVIDIA GeForce RTX 4060</strong> or an <strong>AMD Radeon RX 7700 XT</strong>, the system's gaming potential is unlocked. The new GPU can easily handle 1440p gaming at high settings, perfectly complementing the strong performance of the Ryzen 5 5600X. The result is a dramatically improved visual experience and higher, more stable <strong>frame rates</strong>.</p></div><h2>How Our Calculator Leads to a Balanced PC</h2><p>Our tool analyzes the complex relationship between components so you don't have to. By entering your parts, you get an instant, data-driven analysis that empowers you to:</p><ul><li><strong>Build Smarter:</strong> Avoid pairing a high-end GPU with an entry-level CPU before you buy.</li><li><strong>Upgrade with Confidence:</strong> Know exactly which component to <strong>upgrade</strong> next for the biggest performance gain.</li><li><strong>Save Money:</strong> Don't overspend on a part that your other components can't fully support.</li></ul><p><strong>Ready to check your build?</strong> Scroll back up and use the calculator to ensure your PC is perfectly balanced for maximum performance.</p></div></div><div class="container"><div class="faq-section"><h2>Frequently Asked Questions</h2><div class="faq-item"><button class="faq-question">What is a PC bottleneck?</button><div class="faq-answer"><p>A bottleneck is a situation where one component limits the overall performance of your system. Even if you have a top-tier GPU, a weaker CPU can prevent it from reaching its full potential, creating a "bottleneck" that caps performance.</p></div></div><div class="faq-item"><button class="faq-question">Is a CPU or GPU bottleneck worse?</button><div class="faq-answer"><p>For gaming, a slight GPU bottleneck is often ideal, as it means your graphics card is the component working the hardest to produce maximum visual quality. A significant CPU bottleneck is generally worse for gaming because it can cause stuttering and inconsistent frame rates that can't be fixed by lowering graphics settings.</p></div></div><div class="faq-item"><button class="faq-question">How accurate is this calculator?</button><div class="faq-answer"><p>This tool provides a highly accurate, data-driven estimate based on the relative power of components. It's an excellent guide for build planning. However, real-world performance can vary by game, application, and driver versions. We always suggest pairing this data with real-world benchmark reviews.</p></div></div><div class="faq-item"><button class="faq-question">Do other components like RAM cause bottlenecks?</button><div class="faq-answer"><p>Yes. While the CPU/GPU relationship is the most critical, other parts matter. Insufficient or slow RAM can cause stuttering in demanding tasks. Likewise, a slow hard drive (HDD) will drastically increase loading times compared to an SSD, creating a noticeable storage bottleneck.</p></div></div></div></div></main><!-- REPLACE YOUR ENTIRE CURRENT FOOTER WITH THIS BLOCK --><footer><div class="footer-links"><a href="about.html">About Us</a><a href="privacy.html">Privacy Policy</a><a href="contact.html">Contact Us</a></div><div class="footer-social"><!-- IMPORTANT: Replace the # with your actual page URLs --><a href="https://facebook.com/your-page-url" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14 13.5H16.5L17.5 9.5H14V7.5C14 6.47 14 5.5 16 5.5H17.5V2.14C17.174 2.097 15.943 2 14.643 2C11.928 2 10 3.657 10 6.7V9.5H7V13.5H10V22H14V13.5Z"/></svg></a><a href="https://instagram.com/your-page-url" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg></a></div><p>© 2025 Bottleneck Calculator. All rights reserved.</p></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instantly check your PC for component bottlenecks. Our free calculator analyzes your CPU and GPU to prevent performance loss and help you build a balanced system.">
+    <title>PC Bottleneck Calculator - Check Your CPU & GPU Balance</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20fill%3D%22%233f51b5%22%20d%3D%22M2%2C0A2%2C2%2C0%2C0%2C0%2C0%2C2V14a2%2C2%2C0%2C0%2C0%2C2%2C2H14a2%2C2%2C0%2C0%2C0%2C2-2V2a2%2C2%2C0%2C0%2C0-2-2ZM4%2C2H6V4H4ZM8%2C2h2V4H8Zm4%2C0h2V4H12ZM4%2C6H6V8H4Zm4%2C0h2V8H8Zm4%2C0h2V8H12ZM4%2C10H6v2H4Zm4%2C0h2v2H8Zm4%2C0h2v2H12Z%22%2F%3E%3C%2Fsvg%3E">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 2V8H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 14H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 17H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 11H11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Bottleneck Calculator</span>
+            </div>
+             <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </header>
+    <!-- PASTE THIS NEW BLOCK IMMEDIATELY AFTER THE </header> TAG IN ALL HTML FILES -->
+<!-- REPLACE YOUR OLD QUICK TOOLS BAR WITH THIS NEW HORIZONTAL COLLAPSE VERSION -->
+<div class="quick-tools-bar" id="quick-tools-bar">
+    <div class="quick-tools-content">
+        <!-- This part will now ALWAYS be visible -->
+        <div class="quick-tools-static">
+            <span class="quick-tools-icon">⚙️</span>
+            <span class="quick-tools-title">Quick Tools:</span>
+        </div>
+        <!-- This container now ONLY holds the links that will collapse -->
+        <div class="quick-tools-links-container" id="quick-tools-links-container">
+            <a href="index.html">Bottleneck</a>
+            <a href="fps-calculator.html">FPS Calc</a>
+            <a href="psu-calculator.html">PSU Calc</a>
+            <!-- Add new tools here -->
+        </div>
+    </div>
+    <button class="collapse-toggle-btn" id="collapse-toggle-btn" aria-label="Toggle Quick Tools">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+    </button>
+</div>
+    <main>
+        <div class="container" id="calculator-view">
+            <h1>PC Performance & Bottleneck Calculator</h1>
+            <p class="subtitle">Unlock your PC's true potential. Our advanced calculator analyzes the critical balance between your CPU and GPU, pinpointing performance bottlenecks to ensure your system is optimized for elite gaming and demanding productivity.</p>
+            <p class="subtitle">Select your components to analyze your PC's performance balance.</p>
+            <!-- PASTE THIS ENTIRE BLOCK RIGHT AFTER THE SUBTITLE PARAGRAPH IN YOUR INDEX.HTML -->
+<div class="update-banner">
+    <div class="banner-content">
+        <span class="banner-icon">🚀</span>
+        <div class="banner-text"> <!-- ADDED CLASS HERE -->
+            <h4>Database Updated!</h4>
+            <p>Now featuring the latest 2025 CPU & GPU models with up-to-date performance data.</p>
+        </div>
+    </div>
+    <span class="latest-tag">✨ Latest</span>
+</div>
+            <div class="calculator-card">
+                <div class="input-group">
+                    <label for="cpu-select">Processor (CPU)</label>
+                    <select id="cpu-select"><option value="">-- Select CPU --</option></select>
+                </div>
+                <div class="input-group">
+                    <label for="gpu-select">Graphics Card (GPU)</label>
+                    <select id="gpu-select"><option value="">-- Select GPU --</option></select>
+                </div>
+                <div class="input-group">
+                    <label for="resolution-select">Target Resolution</label>
+                     <select id="resolution-select">
+                        <option value="1080p">1080p (1920x1080)</option>
+                        <option value="1440p" selected>1440p (2560x1440)</option>
+                        <option value="4k">4K (3840x2160)</option>
+                        <option value="ultrawide">Ultrawide (3440x1440)</option>
+                    </select>
+                </div>
+                 <div class="advanced-options">
+                    <button id="toggle-advanced" class="toggle-btn">Advanced Options ▼</button>
+                    <div id="advanced-content" class="hidden">
+                        <div class="input-group">
+                            <label for="ram-select">System RAM</label>
+                            <select id="ram-select">
+                                <option value="8">8 GB</option>
+                                <option value="16" selected>16 GB</option>
+                                <option value="32">32 GB</option>
+                                <option value="64">64+ GB</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="purpose-select">Primary Use Case</label>
+                            <select id="purpose-select">
+                                <option value="gaming" selected>Gaming</option>
+                                <option value="streaming">Gaming & Streaming</option>
+                                <option value="video_editing">Video Editing</option>
+                                <option value="3d_rendering">3D Rendering & Design</option>
+                                <option value="general">General & Office Use</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button id="calculate-btn">Analyze My System</button>
+            </div>
+        </div>
 
-<style>:root{--bg-light:#f4f7fa;--fg-light:#1a202c;--card-bg-light:#ffffff;--border-light:#e2e8f0;--bg-dark:#1a202c;--fg-dark:#e2e8f0;--card-bg-dark:#2d3748;--border-dark:#4a5568;--primary:#3f51b5;--primary-hover:#303f9f;--accent:#ffc107;--danger:#f44336;--success:#4caf50;--shadow-light:0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);--shadow-dark:0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15)}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin:0;padding:0;display:flex;flex-direction:column;min-height:100vh;background-color:var(--bg-light);color:var(--fg-light);transition:background-color 0.3s,color 0.3s}body.dark-mode{--bg:var(--bg-dark);--fg:var(--fg-dark);--card-bg:var(--card-bg-dark);--border:var(--border-dark);--shadow:var(--shadow-dark);background-color:var(--bg-dark);color:var(--fg-dark)}body:not(.dark-mode){--bg:var(--bg-light);--fg:var(--fg-light);--card-bg:var(--card-bg-light);--border:var(--border-light);--shadow:var(--shadow-light)}header{background-color:#2d3748;color:#fff;padding:0 1rem}.header-content{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;height:64px}.logo{display:flex;align-items:center;gap:.75rem;font-weight:600;font-size:1.1rem}main{flex-grow:1;padding:1rem}.container{max-width:800px;margin:0 auto 2rem auto}h1{font-size:2rem;text-align:center;margin-bottom:.5rem}.subtitle{text-align:center;margin-top:0;margin-bottom:2rem;font-size:1.1rem;color:#718096}.dark-mode .subtitle{color:#a0aec0}.calculator-card,.results-card{background-color:var(--card-bg);padding:2rem;border-radius:8px;box-shadow:var(--shadow)}.input-group{margin-bottom:1.5rem}label{display:block;margin-bottom:.5rem;font-weight:600}select{width:100%;padding:.75rem;border:1px solid var(--border);border-radius:4px;font-size:1rem;background-color:var(--card-bg);color:var(--fg);background-image:url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23718096%22%20d%3D%22m181.66%2C101.66l-48%2C48a8%2C8%2C0%2C0%2C1-11.32%2C0l-48-48a8%2C8%2C0%2C0%2C1%2C11.32-11.32L128%2C132.69l42.34-42.35a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E);background-repeat:no-repeat;background-position:right .7em top 50%;background-size:1.2em auto;appearance:none}button#calculate-btn{background-color:var(--primary);color:#fff;padding:.85rem 1.5rem;border:none;border-radius:4px;font-size:1.1rem;font-weight:700;cursor:pointer;width:100%;transition:background-color 0.2s ease-in-out}button#calculate-btn:hover{background-color:var(--primary-hover)}#results-view h2{text-align:center}.bottleneck-summary{padding:1.5rem;border-radius:8px;margin-bottom:1.5rem;text-align:center;border:1px solid var(--accent);background-color:rgb(255 193 7 / .1)}.bottleneck-summary h3{margin:0 0 .5rem 0;color:var(--accent)}#bottleneck-text{margin:0}.progress-bar-container{margin:1rem 0;background-color:#e2e8f0;border-radius:8px}.dark-mode .progress-bar-container{background-color:#4a5568}.progress-bar{height:24px;border-radius:8px;background-color:var(--accent);width:0%;transition:width 0.5s ease-out;text-align:center;color:#000;line-height:24px;font-weight:700}.component-analysis{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}.component-card{background-color:var(--card-bg);padding:1.5rem;border-radius:8px;box-shadow:var(--shadow);text-align:center;border:1px solid var(--border)}.component-card h4{margin:0 0 1rem 0}.component-card img{max-width:100px;height:100px;object-fit:contain;margin-bottom:1rem}.component-card a{color:var(--primary);text-decoration:none;font-weight:700}.component-card a:hover{text-decoration:underline}.performance-details{background-color:var(--card-bg);padding:1.5rem;border-radius:8px;box-shadow:var(--shadow);margin-bottom:1.5rem}.performance-details h4{margin:0 0 1rem 0}.performance-details ul{padding-left:20px;margin:0}.performance-details li{margin-bottom:.5rem}.action-buttons{display:flex;justify-content:center;margin-top:1.5rem}#new-calculation-btn{background-color:#718096;color:#fff;padding:.75rem 1.5rem;border:none;border-radius:4px;font-size:1rem;cursor:pointer}.hidden{display:none}.faq-section{background:var(--card-bg);padding:2rem;border-radius:8px;box-shadow:var(--shadow)}.faq-section h2{text-align:center;margin-top:0;margin-bottom:1.5rem;color:var(--primary)}.faq-item{border-bottom:1px solid var(--border)}.faq-item:last-child{border-bottom:none}.faq-question{width:100%;background:#fff0;border:none;text-align:left;padding:1rem 0;font-size:1.1rem;font-weight:600;color:var(--fg);cursor:pointer;position:relative}.faq-question::after{content:'+';font-size:1.5rem;position:absolute;right:.5rem;top:50%;transform:translateY(-50%);transition:transform 0.2s ease-in-out;color:var(--primary)}.faq-question.active::after{transform:translateY(-50%) rotate(45deg)}.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease-in-out}.faq-answer p{padding-bottom:1rem;margin:0;line-height:1.6}.theme-switch-wrapper{display:flex;align-items:center}.theme-switch{position:relative;display:inline-block;width:44px;height:24px}.theme-switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#4a5568;transition:.4s;border-radius:34px}.slider:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;transition:.4s;border-radius:50%}input:checked+.slider{background-color:var(--primary)}input:checked+.slider:before{transform:translateX(20px)}.advanced-options{margin:1.5rem 0}.toggle-btn{background-color:#fff0;color:var(--primary);border:none;padding:0;width:auto;font-size:.9rem;cursor:pointer;font-weight:700}@media (max-width:768px){.component-analysis{grid-template-columns:1fr}h1{font-size:1.5rem}.subtitle{font-size:1rem}}footer{text-align:center;padding:2rem 1rem;color:#718096;font-size:.9rem;margin-top:2rem}.dark-mode footer{color:#a0aec0}.footer-links{margin-bottom:1rem;display:flex;justify-content:center;gap:1.5rem}.footer-links a{color:#718096;text-decoration:none;font-weight:500}.footer-links a:hover{color:var(--primary);text-decoration:underline}.dark-mode .footer-links a{color:#a0aec0}.footer-social{display:flex;justify-content:center;gap:1.75rem;margin:1.25rem 0}.footer-social a{color:#718096;transition:color 0.2s ease-in-out,transform 0.2s ease-in-out;display:inline-block}.footer-social a:hover{color:var(--primary);transform:scale(1.1)}.footer-social a svg{width:26px;height:26px}.dark-mode .footer-social a{color:#a0aec0}.update-banner{display:flex;justify-content:space-between;align-items:center;gap:1rem;background-color:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:1rem 1.5rem;margin-bottom:2rem;box-shadow:var(--shadow-light)}.banner-content{display:flex;align-items:center;gap:1rem}.banner-icon{font-size:2rem;line-height:1}.banner-text h4{margin:0 0 .25rem 0;color:#2e7d32;font-size:1.1rem;border:none;padding:0}.banner-text p{margin:0;font-size:.9rem;color:#388e3c}.latest-tag{background-color:#c8e6c9;color:#2e7d32;padding:.25rem .75rem;border-radius:20px;font-size:.8rem;font-weight:700;white-space:nowrap}.dark-mode .update-banner{background-color:rgb(102 187 106 / .1);border-color:rgb(102 187 106 / .4);box-shadow:none}.dark-mode .banner-text h4{color:#a5d6a7}.dark-mode .banner-text p{color:#81c784}.dark-mode .latest-tag{background-color:rgb(102 187 106 / .2);color:#a5d6a7}.content-article h2{color:var(--primary);border-bottom:2px solid var(--border);padding-bottom:.75rem;margin-top:2.5rem;font-size:1.75rem}.content-article h3{margin-top:2rem;font-size:1.4rem}.content-article p{text-align:justify;line-height:1.7}.content-article ul{padding-left:25px}.content-article li{margin-bottom:.5rem;padding-left:5px;text-align:justify}.quick-tools-bar{background-color:var(--card-bg);border-bottom:1px solid var(--border);padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}.quick-tools-content{display:flex;align-items:center;min-width:0}.quick-tools-static{display:flex;align-items:center;white-space:nowrap}.quick-tools-icon{font-size:1.25rem;margin-right:.75rem}.quick-tools-title{font-weight:600;color:var(--fg)}.quick-tools-links-container{display:flex;align-items:center;gap:.75rem;margin-left:.75rem;overflow:hidden;white-space:nowrap;max-width:1000px;opacity:1;transition:max-width 0.4s ease-in-out,opacity 0.3s ease-in-out,margin-left 0.4s ease-in-out}.quick-tools-bar.collapsed .quick-tools-links-container{max-width:0;opacity:0;margin-left:0}.collapse-toggle-btn{background:none;border:none;cursor:pointer;padding:.5rem;display:flex;align-items:center;justify-content:center;color:var(--fg);border-radius:50%;flex-shrink:0}.collapse-toggle-btn:hover{background-color:rgb(0 0 0 / .1)}.collapse-toggle-btn svg{width:16px;height:16px;transition:transform 0.3s ease}.quick-tools-bar.collapsed .collapse-toggle-btn svg{transform:rotate(180deg)}.quick-tools-links-container a{color:var(--primary);text-decoration:none;font-weight:500;padding:.25rem .5rem;border-radius:4px}.quick-tools-links-container a:hover{color:var(--primary-hover)}.dark-mode .quick-tools-links-container a{color:#9fa8da}.dark-mode .quick-tools-links-container a:hover{color:#c5cae9}</style>
+        <div class="container hidden" id="results-view">
+             <!-- Results will be dynamically inserted here -->
+        </div>
+         <div class="container">
+            <div class="interlink-box" style="text-align:center; border-left: 4px solid var(--primary);">
+                <h4 style="color: var(--primary); border:none;">Curious about gaming performance?</h4>
+                <p>Estimate your average Frames Per Second in popular titles with our new tool.</p>
+                <a href="fps-calculator.html" style="background-color: var(--primary); color: white;">Try the FPS Estimator →</a>
+            </div>
+        </div>
+                <!-- PASTE THIS ENTIRE BLOCK INTO YOUR INDEX.HTML, REPLACING THE PREVIOUS CONTENT BLOCK -->
+        <!-- PASTE THIS ENTIRE BLOCK INTO YOUR INDEX.HTML, REPLACING THE PREVIOUS CONTENT BLOCK -->
+<div class="container">
+    <div class="results-card content-article">
+        <h2>Understanding PC Bottlenecks: A Complete Guide to a Balanced System</h2>
+        <p>Welcome to the ultimate resource for PC performance analysis. A <strong>bottleneck</strong> is the single most important concept to understand when building or upgrading a gaming PC. It occurs when one of your components is too slow to keep up with the others, effectively creating a "traffic jam" that limits your entire system's potential. Our <strong>PC Bottleneck Calculator</strong> is designed to instantly identify these issues for you.</p>
+        <p>By preventing <strong>bottlenecks</strong>, you ensure that every dollar you spend on hardware translates directly into the <strong>performance</strong> you expect. A <strong>balanced PC</strong> is a powerful, efficient, and cost-effective PC.</p>
 
-<script>document.addEventListener('DOMContentLoaded',()=>{const data={cpus:{"AMD Ryzen 9 9950X3D":{score:125,tier:'enthusiast'},"AMD Ryzen 9 9900X3D":{score:124,tier:'enthusiast'},"AMD Ryzen 7 9800X3D":{score:122,tier:'enthusiast'},"AMD Ryzen 9 9950X":{score:118,tier:'enthusiast'},"Intel Core Ultra 9 285K":{score:116,tier:'enthusiast'},"AMD Ryzen 9 9900X":{score:115,tier:'enthusiast'},"AMD Ryzen 7 9700X":{score:110,tier:'enthusiast'},"Intel Core Ultra 7 265K":{score:108,tier:'enthusiast'},"Intel Core Ultra 300 Series (Panther Lake)":{score:105,tier:'enthusiast'},"AMD Ryzen 5 9600X":{score:102,tier:'enthusiast'},"Intel Core i9-14900K":{score:100,tier:'enthusiast',imageUrl:"https://i.imgur.com/4o7iY2A.png"},"AMD Threadripper 3990X":{score:99,tier:'enthusiast'},"AMD Ryzen 9 7950X3D":{score:98,tier:'enthusiast',imageUrl:"https://i.imgur.com/S6FE88v.png"},"Intel Core i9-13900K":{score:98,tier:'enthusiast'},"Apple M2 Ultra":{score:98,tier:'enthusiast'},"AMD EPYC 7763":{score:97,tier:'enthusiast'},"AMD Ryzen 7 7800X3D":{score:96,tier:'high-end',imageUrl:"https://i.imgur.com/S6FE88v.png"},"Intel Core i7-14700K":{score:95,tier:'enthusiast'},"Apple M1 Ultra":{score:95,tier:'enthusiast'},"Intel Core i9-14900HX":{score:95,tier:'enthusiast'},"Apple M3 Max (Laptop)":{score:95,tier:'enthusiast'},"AMD Ryzen 9 7900X":{score:94,tier:'high-end'},"AMD Ryzen AI 300 Series":{score:94,tier:'high-end'},"Intel Core i9-12900K":{score:93,tier:'high-end'},"AMD Ryzen 9 8945HS":{score:93,tier:'high-end'},"Intel Core i9-13980HX":{score:93,tier:'high-end'},"Apple M3 Max":{score:92,tier:'high-end'},"AMD Ryzen 7 7700X":{score:92,tier:'high-end'},"Intel Core Ultra 9 185H":{score:92,tier:'high-end'},"Intel Core i7-12700K":{score:91,tier:'high-end'},"AMD Ryzen 9 7945HX":{score:91,tier:'high-end'},"Intel Core i5-14600K":{score:90,tier:'high-end'},"Intel Core i7-13700K":{score:90,tier:'high-end'},"Intel Core i5-13600K":{score:90,tier:'high-end'},"AMD EPYC 7502":{score:90,tier:'high-end'},"AMD Ryzen 7 8840HS":{score:90,tier:'high-end'},"Intel Core i7-14700HX":{score:90,tier:'high-end'},"AMD Ryzen 9 5950X":{score:89,tier:'high-end'},"Intel Core i9-12900HX":{score:89,tier:'high-end'},"AMD Ryzen 5 7600X":{score:88,tier:'high-end'},"Apple M2 Max":{score:88,tier:'high-end'},"Intel Core Ultra 7 155H":{score:88,tier:'high-end'},"Apple M3 Pro (Laptop)":{score:88,tier:'high-end'},"Intel Core i7-13700HX":{score:88,tier:'high-end'},"Intel Core i9-12900HK":{score:88,tier:'high-end'},"AMD Ryzen 5 7600":{score:87,tier:'high-end'},"AMD Ryzen 7 7745HX":{score:87,tier:'high-end'},"AMD Ryzen 9 6980HX":{score:87,tier:'high-end'},"AMD Ryzen 7 5800X3D":{score:85,tier:'high-end'},"Intel Core i9-11900K":{score:85,tier:'high-end'},"AMD Threadripper 2990WX":{score:85,tier:'high-end'},"Apple M3 Pro":{score:85,tier:'high-end'},"Intel Core i5-14500HX":{score:85,tier:'high-end'},"AMD Ryzen 5 8640HS":{score:85,tier:'high-end'},"AMD Ryzen 9 6900HX":{score:85,tier:'high-end'},"Apple M2 Pro (Laptop)":{score:85,tier:'high-end'},"AMD Ryzen 7 5800X":{score:84,tier:'mid-range'},"Intel Core i7-12700H":{score:84,tier:'mid-range'},"Intel Core i5-13600HX":{score:83,tier:'mid-range'},"Apple M1 Max (Laptop)":{score:83,tier:'mid-range'},"Intel Core i7-12800H":{score:83,tier:'mid-range'},"Intel Core i5-12400":{score:82,tier:'mid-range'},"Intel Core i9-11980HK":{score:82,tier:'mid-range'},"AMD Ryzen 5 7645HX":{score:82,tier:'mid-range'},"Intel Core Ultra 5 125H":{score:82,tier:'mid-range'},"AMD Ryzen 7 6800HS":{score:82,tier:'mid-range'},"Intel Core i5-12600K":{score:80,tier:'mid-range'},"Intel Core i7-11700K":{score:80,tier:'mid-range'},"AMD Ryzen 9 3950X":{score:80,tier:'mid-range'},"Apple M2 Pro":{score:80,tier:'mid-range'},"Apple M1 Max":{score:80,tier:'mid-range'},"AMD EPYC 7702":{score:80,tier:'mid-range'},"AMD Ryzen 7 6800H":{score:80,tier:'mid-range'},"AMD Ryzen 5 5600X":{score:78,tier:'mid-range'},"Intel Core i9-10900K":{score:78,tier:'mid-range'},"Apple M3":{score:78,tier:'mid-range'},"AMD Ryzen 9 5900HX":{score:78,tier:'mid-range'},"Intel Core i5-12500H":{score:78,tier:'mid-range'},"Intel Core i7-11800H":{score:77,tier:'mid-range'},"Intel Core i5-12600H":{score:77,tier:'mid-range'},"AMD Ryzen 5 6600HS":{score:76,tier:'mid-range'},"Intel Core i5-11600K":{score:75,tier:'mid-range'},"Apple M2":{score:75,tier:'mid-range'},"AMD Ryzen 9 3900X":{score:75,tier:'mid-range'},"AMD Ryzen 5 6600H":{score:75,tier:'mid-range'},"Apple M1 Pro (Laptop)":{score:75,tier:'mid-range'},"AMD Ryzen 7 5800H":{score:73,tier:'mid-range'},"AMD Ryzen 7 3700X":{score:72,tier:'mid-range'},"Apple M1 Pro":{score:72,tier:'mid-range'},"Intel Core i5-11400H":{score:72,tier:'mid-range'},"Intel Core i7-10700K":{score:70,tier:'mid-range'},"AMD Ryzen 9 2950X":{score:70,tier:'mid-range'},"Intel Xeon E5-2690 V4":{score:70,tier:'mid-range'},"Intel Core i9-9900K":{score:70,tier:'mid-range'},"Apple M1":{score:68,tier:'mid-range'},"AMD Ryzen 5 3600X":{score:68,tier:'mid-range'},"AMD Ryzen 7 3800X":{score:68,tier:'mid-range'},"AMD Ryzen 5 5600H":{score:68,tier:'mid-range'},"Intel Core i7-1165G7":{score:68,tier:'mid-range'},"Intel Core i7-9700K":{score:65,tier:'mid-range'},"AMD Ryzen 5 3600":{score:65,tier:'mid-range'},"Intel Core i5-10600K":{score:65,tier:'mid-range'},"Intel Core i7-10750H":{score:65,tier:'mid-range'},"Intel Core i5-1135G7":{score:63,tier:'entry-level'},"AMD Ryzen 7 2700X":{score:62,tier:'entry-level'},"Intel Core i5-9600K":{score:60,tier:'entry-level'},"Intel Core i7-8700K":{score:60,tier:'entry-level'},"AMD Threadripper 1950X":{score:60,tier:'entry-level'},"AMD Ryzen 5 3500X":{score:60,tier:'entry-level'},"Intel Core i5-10300H":{score:60,tier:'entry-level'},"AMD Ryzen 7 5700U":{score:60,tier:'entry-level'},"AMD Ryzen 5 2600X":{score:58,tier:'entry-level'},"Intel Core i7-9750H":{score:58,tier:'entry-level'},"Intel Core i7-1065G7":{score:58,tier:'entry-level'},"Intel Core i7-7700K":{score:55,tier:'entry-level'},"Intel Core i5-8600K":{score:55,tier:'entry-level'},"Intel Core i5-9400F":{score:55,tier:'entry-level'},"AMD Ryzen 7 2700":{score:55,tier:'entry-level'},"AMD Ryzen 7 3750H":{score:55,tier:'entry-level'},"AMD Ryzen 5 5500U":{score:55,tier:'entry-level'},"Intel Core i3-1115G4":{score:55,tier:'entry-level'},"Intel Core i7-8750H":{score:52,tier:'entry-level'},"Intel Core i5-1035G1":{score:52,tier:'entry-level'},"AMD Ryzen 7 1800X":{score:50,tier:'entry-level'},"Intel Core i7-6700K":{score:50,tier:'entry-level'},"Intel Core i7-7700":{score:50,tier:'entry-level'},"AMD Ryzen 5 2600":{score:50,tier:'entry-level'},"AMD Ryzen 5 3550H":{score:50,tier:'entry-level'},"AMD Ryzen 7 4700U":{score:50,tier:'entry-level'},"Intel Core i5-6600K":{score:48,tier:'entry-level'},"Intel Core i7-6700":{score:48,tier:'entry-level'},"Intel Core i5-8300H":{score:48,tier:'entry-level'},"AMD Ryzen 3 5300U":{score:48,tier:'entry-level'},"Intel Core i5-4690K":{score:45,tier:'entry-level'},"AMD Ryzen 5 1600X":{score:45,tier:'entry-level'},"Intel Core i5-7600":{score:45,tier:'entry-level'},"Intel Core i7-7700HQ":{score:45,tier:'entry-level'},"Intel Core i3-1005G1":{score:45,tier:'entry-level'},"AMD Ryzen 5 4500U":{score:45,tier:'entry-level'},"Intel Core i7-4790K":{score:42,tier:'entry-level'},"Intel Core i5-6500":{score:42,tier:'entry-level'},"Intel Core i3-8100":{score:40,tier:'entry-level'},"Intel Xeon E3-1230 V2":{score:40,tier:'entry-level'},"Intel Core i5-7300HQ":{score:40,tier:'entry-level'},"Intel Core i7-8550U":{score:40,tier:'entry-level'},"AMD Ryzen 7 3700U":{score:40,tier:'entry-level'},"AMD Ryzen 3 1300X":{score:38,tier:'entry-level'},"Intel Core i7-4770":{score:38,tier:'entry-level'},"Intel Core i7-6700HQ":{score:38,tier:'entry-level'},"AMD Ryzen 3 4300U":{score:38,tier:'entry-level'},"AMD FX-8350":{score:35,tier:'entry-level'},"Intel Core i3-6100":{score:35,tier:'entry-level'},"Intel Core i7-2600K":{score:35,tier:'entry-level'},"AMD Ryzen 3 2200G":{score:35,tier:'entry-level'},"Intel Core i5-4570":{score:35,tier:'entry-level'},"Intel Core i5-6300HQ":{score:35,tier:'entry-level'},"Intel Core i5-8250U":{score:35,tier:'entry-level'},"AMD Ryzen 5 3500U":{score:35,tier:'entry-level'},"Intel Core i5-2500K":{score:32,tier:'entry-level'},"Intel Core i7-3770":{score:32,tier:'entry-level'},"Intel Core i7-4700MQ":{score:32,tier:'entry-level'},"Intel Pentium G4560":{score:30,tier:'entry-level'},"Intel Core i3-4130":{score:30,tier:'entry-level'},"Intel Core i3-7100":{score:30,tier:'entry-level'},"Intel Core i3-6100":{score:30,tier:'entry-level'},"Intel Core i5-3570":{score:30,tier:'entry-level'},"AMD Ryzen 7 2700U":{score:30,tier:'entry-level'},"Intel Core i7-7500U":{score:30,tier:'entry-level'},"AMD A10-7850K":{score:28,tier:'entry-level'},"Intel Core i3-4160":{score:28,tier:'entry-level'},"AMD FX-6300":{score:28,tier:'entry-level'},"Intel Core i5-4200M":{score:28,tier:'entry-level'},"Intel Core i3-8130U":{score:28,tier:'entry-level'},"Intel Core i7-6500U":{score:28,tier:'entry-level'},"AMD Ryzen 3 3200U":{score:28,tier:'entry-level'},"Intel Celeron G5905":{score:25,tier:'entry-level'},"Intel Core i3-2100":{score:25,tier:'entry-level'},"Intel Pentium G3258":{score:25,tier:'entry-level'},"Intel Core i7-870":{score:25,tier:'entry-level'},"AMD Ryzen 5 2500U":{score:25,tier:'entry-level'},"Intel Core i5-7200U":{score:25,tier:'entry-level'},"Intel Core i7-5500U":{score:25,tier:'entry-level'},"AMD Athlon X4 860K":{score:22,tier:'entry-level'},"Intel Core i3-3220":{score:22,tier:'entry-level'},"Intel Core i5-6200U":{score:22,tier:'entry-level'},"Intel Core i7-4500U":{score:22,tier:'entry-level'},"Intel Core 2 Quad Q6600":{score:20,tier:'entry-level'},"Intel Core i7-920":{score:20,tier:'entry-level'},"AMD Athlon 3000G":{score:20,tier:'entry-level'},"AMD A8-9600":{score:20,tier:'entry-level'},"Intel Core i5-760":{score:20,tier:'entry-level'},"Intel Core i3-4000M":{score:20,tier:'entry-level'},"Intel Core i3-7100U":{score:20,tier:'entry-level'},"Intel Core i5-5200U":{score:20,tier:'entry-level'},"AMD A12-9720P":{score:20,tier:'entry-level'},"Intel Core i5-750":{score:18,tier:'entry-level'},"Intel Core i3-540":{score:18,tier:'entry-level'},"AMD A8-7600":{score:18,tier:'entry-level'},"AMD Athlon Gold 3150U":{score:18,tier:'entry-level'},"Intel Core i3-6100U":{score:18,tier:'entry-level'},"Intel Core i5-4200U":{score:18,tier:'entry-level'},"Intel Pentium G4560":{score:15,tier:'entry-level'},"Intel Core i3-530":{score:15,tier:'entry-level'},"Intel Celeron G1840":{score:15,tier:'entry-level'},"AMD Athlon X4 760K":{score:15,tier:'entry-level'},"Intel Pentium N5030":{score:15,tier:'entry-level'},"Intel Core i3-5005U":{score:15,tier:'entry-level'},"AMD A9-9420":{score:15,tier:'entry-level'},"AMD Athlon 220GE":{score:15,tier:'entry-level'},"AMD Athlon 300U":{score:12,tier:'entry-level'},"Intel Core i3-4010U":{score:12,tier:'entry-level'},"AMD A6-9220":{score:12,tier:'entry-level'},"Intel Celeron N4020":{score:10,tier:'entry-level'},"Intel Pentium 4415U":{score:10,tier:'entry-level'},"AMD Athlon Silver 3050U":{score:10,tier:'entry-level'},"Intel Celeron 3867U":{score:8,tier:'entry-level'},"AMD E1-7010":{score:5,tier:'entry-level'},},gpus:{"NVIDIA GeForce RTX 5090":{score:140,tier:'enthusiast'},"NVIDIA GeForce RTX 5080":{score:120,tier:'enthusiast'},"NVIDIA GeForce RTX 5070 Ti":{score:105,tier:'enthusiast'},"AMD Radeon RX 9070 XT":{score:102,tier:'enthusiast'},"NVIDIA GeForce RTX 4090":{score:100,tier:'enthusiast',imageUrl:"https://i.imgur.com/z2x4UG9.png"},"AMD Radeon RX 7900 XTX":{score:98,tier:'enthusiast',imageUrl:"https://i.imgur.com/mSSTK2B.png"},"NVIDIA GeForce RTX 5070":{score:95,tier:'enthusiast'},"NVIDIA GeForce RTX 4080 Super":{score:95,tier:'high-end',imageUrl:"https://i.imgur.com/z2x4UG9.png"},"Intel Arc Battlemage 24GB":{score:94,tier:'high-end'},"AMD Radeon RX 7900 XT":{score:92,tier:'high-end'},"AMD Radeon RX 9070":{score:92,tier:'high-end'},"NVIDIA GeForce RTX 4090 Laptop":{score:92,tier:'high-end'},"NVIDIA GeForce RTX 4070 Ti Super":{score:90,tier:'high-end',imageUrl:"https://i.imgur.com/uCHO0Lq.png"},"NVIDIA GeForce RTX 3090 Ti":{score:90,tier:'high-end'},"AMD Radeon RX 6950 XT":{score:88,tier:'high-end'},"NVIDIA GeForce RTX 4070 Super":{score:88,tier:'high-end'},"Apple M3 Max (Laptop GPU)":{score:88,tier:'high-end'},"NVIDIA GeForce RTX 4080 Laptop":{score:88,tier:'high-end'},"NVIDIA GeForce RTX 3080":{score:85,tier:'high-end'},"AMD Radeon RX 7800 XT":{score:85,tier:'high-end'},"Apple M3 Max (GPU)":{score:85,tier:'high-end'},"AMD Radeon AI PRO R9700":{score:85,tier:'high-end'},"NVIDIA GeForce RTX 5060 Ti":{score:85,tier:'high-end'},"Apple M2 Max (Laptop GPU)":{score:83,tier:'mid-range'},"AMD Radeon RX 6800 XT":{score:82,tier:'mid-range'},"NVIDIA GeForce RTX 3070 Ti":{score:82,tier:'mid-range'},"NVIDIA GeForce RTX 3080 Laptop":{score:82,tier:'mid-range'},"AMD Radeon RX 9060 XT":{score:82,tier:'mid-range'},"NVIDIA GeForce RTX 4060 Ti":{score:80,tier:'mid-range'},"Apple M3 Pro (Laptop GPU)":{score:80,tier:'mid-range'},"NVIDIA GeForce RTX 4070 Laptop":{score:80,tier:'mid-range'},"AMD Radeon RX 7900S":{score:80,tier:'mid-range'},"NVIDIA GeForce RTX 3070":{score:78,tier:'mid-range'},"AMD Radeon RX 7700 XT":{score:78,tier:'mid-range'},"Apple M2 Max (GPU)":{score:78,tier:'mid-range'},"AMD Radeon RX 6850M XT":{score:78,tier:'mid-range'},"AMD Radeon RX 6700 XT":{score:75,tier:'mid-range'},"NVIDIA GeForce RTX 3060 Ti":{score:75,tier:'mid-range'},"Apple M3 Pro (GPU)":{score:75,tier:'mid-range'},"Apple M2 Pro (Laptop GPU)":{score:75,tier:'mid-range'},"NVIDIA GeForce RTX 4060 Laptop":{score:75,tier:'mid-range'},"AMD Radeon RX 7800S":{score:75,tier:'mid-range'},"Apple M1 Max (Laptop GPU)":{score:75,tier:'mid-range'},"NVIDIA GeForce RTX 5060":{score:75,tier:'mid-range'},"AMD Radeon RX 6800M":{score:72,tier:'mid-range'},"NVIDIA GeForce RTX 2080 Ti":{score:70,tier:'mid-range'},"NVIDIA GeForce RTX 4060":{score:70,tier:'mid-range'},"AMD Radeon RX 6700":{score:70,tier:'mid-range'},"Apple M2 Pro (GPU)":{score:70,tier:'mid-range'},"Apple M1 Max (GPU)":{score:70,tier:'mid-range'},"NVIDIA GeForce RTX 4050 Laptop":{score:70,tier:'mid-range'},"AMD Radeon RX 7700S":{score:70,tier:'mid-range'},"AMD Radeon RX 7600":{score:68,tier:'mid-range'},"NVIDIA GeForce RTX 3060":{score:68,tier:'mid-range'},"Apple M3 (GPU)":{score:68,tier:'mid-range'},"NVIDIA GeForce RTX 3060 Laptop":{score:68,tier:'mid-range'},"Intel Arc Pro B60":{score:68,tier:'mid-range'},"AMD Radeon RX 5700 XT":{score:65,tier:'mid-range'},"Apple M2 (GPU)":{score:65,tier:'mid-range'},"AMD Radeon RX 6600 XT":{score:65,tier:'mid-range'},"NVIDIA GeForce RTX 2070 Super":{score:65,tier:'mid-range'},"AMD Radeon RX 7600S":{score:65,tier:'mid-range'},"Apple M1 Pro (Laptop GPU)":{score:65,tier:'mid-range'},"AMD Radeon RX 6700M":{score:65,tier:'mid-range'},"NVIDIA GeForce RTX 5050":{score:65,tier:'mid-range'},"Intel Arc Pro B50":{score:64,tier:'entry-level'},"NVIDIA GeForce RTX 3050 Ti Laptop":{score:62,tier:'entry-level'},"Intel Arc A770":{score:60,tier:'entry-level'},"NVIDIA GeForce GTX 1080 Ti":{score:60,tier:'entry-level'},"AMD Radeon RX 6600":{score:60,tier:'entry-level'},"NVIDIA GeForce RTX 2060 Super":{score:60,tier:'entry-level'},"Apple M1 Pro (GPU)":{score:60,tier:'entry-level'},"NVIDIA GeForce RTX 3050 Laptop":{score:60,tier:'entry-level'},"AMD Radeon RX 5600 XT":{score:58,tier:'entry-level'},"NVIDIA GeForce GTX 980 Ti":{score:58,tier:'entry-level'},"AMD Radeon RX 6600M":{score:58,tier:'entry-level'},"Intel Arc A750":{score:55,tier:'entry-level'},"Apple M1 (GPU)":{score:55,tier:'entry-level'},"NVIDIA GeForce RTX 2060":{score:55,tier:'entry-level'},"NVIDIA GeForce GTX 1070 Ti":{score:55,tier:'entry-level'},"AMD Radeon R9 Fury X":{score:55,tier:'entry-level'},"NVIDIA GeForce GTX 1080 Laptop":{score:55,tier:'entry-level'},"AMD Radeon RX 5500 XT":{score:52,tier:'entry-level'},"NVIDIA GeForce GTX 1070":{score:52,tier:'entry-level'},"NVIDIA GeForce GTX 980":{score:52,tier:'entry-level'},"AMD Radeon RX 580":{score:50,tier:'entry-level'},"NVIDIA GeForce GTX 1660 Super":{score:50,tier:'entry-level'},"AMD Radeon R9 Nano":{score:50,tier:'entry-level'},"Intel Arc A570M":{score:50,tier:'entry-level'},"NVIDIA GeForce GTX 1070 Laptop":{score:50,tier:'entry-level'},"Intel Arc A580":{score:48,tier:'entry-level'},"AMD Radeon RX 590":{score:48,tier:'entry-level'},"NVIDIA GeForce GTX 1660 Ti Laptop":{score:48,tier:'entry-level'},"NVIDIA GeForce GTX 1060":{score:45,tier:'entry-level'},"NVIDIA GeForce GTX 1650 Super":{score:45,tier:'entry-level'},"Intel Arc A550M":{score:45,tier:'entry-level'},"AMD Radeon RX 570":{score:40,tier:'entry-level'},"Intel Arc A380":{score:40,tier:'entry-level'},"NVIDIA GeForce GTX 1650":{score:40,tier:'entry-level'},"Intel Arc A530M":{score:40,tier:'entry-level'},"NVIDIA GeForce GTX 1060 Laptop":{score:40,tier:'entry-level'},"AMD Radeon RX 560":{score:38,tier:'entry-level'},"NVIDIA GeForce GTX 970":{score:35,tier:'entry-level'},"AMD Radeon HD 7970":{score:35,tier:'entry-level'},"Intel Arc A370M":{score:35,tier:'entry-level'},"NVIDIA GeForce GTX 1650 Laptop":{score:35,tier:'entry-level'},"NVIDIA GeForce GTX 960":{score:32,tier:'entry-level'},"AMD Radeon R9 390":{score:30,tier:'entry-level'},"NVIDIA GeForce GTX 1050 Ti":{score:30,tier:'entry-level'},"AMD Radeon HD 7950":{score:30,tier:'entry-level'},"Intel Arc A350M":{score:30,tier:'entry-level'},"AMD Radeon RX 560X":{score:30,tier:'entry-level'},"NVIDIA GeForce GTX 1050":{score:28,tier:'entry-level'},"AMD Radeon R9 380":{score:28,tier:'entry-level'},"NVIDIA GeForce GTX 750 Ti":{score:25,tier:'entry-level'},"NVIDIA GeForce GTX 1050 Laptop":{score:25,tier:'entry-level'},"AMD Radeon RX 550X":{score:25,tier:'entry-level'},"NVIDIA GeForce GTX 660 Ti":{score:22,tier:'entry-level'},"AMD Radeon HD 7870":{score:20,tier:'entry-level'},"NVIDIA GeForce GTX 660":{score:20,tier:'entry-level'},"AMD Radeon RX 540X":{score:20,tier:'entry-level'},"AMD Radeon HD 7770":{score:18,tier:'entry-level'},"NVIDIA GeForce MX450":{score:18,tier:'entry-level'},"AMD Radeon 680M":{score:18,tier:'entry-level'},"NVIDIA GeForce GT 1030":{score:15,tier:'entry-level'},"Intel Iris Xe Max":{score:15,tier:'entry-level'},"NVIDIA GeForce MX350":{score:15,tier:'entry-level'},"AMD Radeon 660M":{score:15,tier:'entry-level'},"Intel Iris Xe Graphics G7":{score:12,tier:'entry-level'},"NVIDIA GeForce MX250":{score:12,tier:'entry-level'},"Intel Iris Xe Graphics":{score:10,tier:'entry-level'},"NVIDIA GeForce GT 730":{score:10,tier:'entry-level'},"NVIDIA GeForce MX150":{score:10,tier:'entry-level'},"AMD Radeon 610M":{score:10,tier:'entry-level'},"AMD Radeon Vega 8":{score:10,tier:'entry-level'},"AMD Radeon R7 240":{score:8,tier:'entry-level'},"Intel Iris Plus Graphics":{score:8,tier:'entry-level'},"AMD Radeon Vega 7":{score:8,tier:'entry-level'},"AMD Radeon Vega 6":{score:6,tier:'entry-level'},"Intel UHD Graphics 770":{score:5,tier:'entry-level'},"Intel UHD Graphics":{score:5,tier:'entry-level'},"Intel UHD Graphics 630":{score:3,tier:'entry-level'},},ramImpact:{"8":0.9,"16":1.0,"32":1.05,"64":1.1},purposeImpact:{gaming:{cpu:0.9,gpu:1.1},streaming:{cpu:1.1,gpu:1.0},video_editing:{cpu:1.15,gpu:0.95},"3d_rendering":{cpu:1.05,gpu:1.05},general:{cpu:1.0,gpu:1.0}},resolutionImpact:{"1080p":1.0,"1440p":0.85,"4k":0.65,"ultrawide":0.9}};const dom={calculatorView:document.getElementById('calculator-view'),resultsView:document.getElementById('results-view'),cpuSelect:document.getElementById('cpu-select'),gpuSelect:document.getElementById('gpu-select'),ramSelect:document.getElementById('ram-select'),resolutionSelect:document.getElementById('resolution-select'),purposeSelect:document.getElementById('purpose-select'),calculateBtn:document.getElementById('calculate-btn'),toggleAdvancedBtn:document.getElementById('toggle-advanced'),advancedContent:document.getElementById('advanced-content'),themeToggle:document.getElementById('theme-toggle'),};function getComponentInfo(type,name){const componentData=data[type][name];let score=0;let imageUrl='';if(typeof componentData==='object'&&componentData!==null){score=componentData.score;imageUrl=componentData.imageUrl}else{score=componentData||0}
-if(!imageUrl){let brand="chip";const lowerCaseName=name.toLowerCase();if(lowerCaseName.includes("intel"))brand="intel";else if(lowerCaseName.includes("amd")||lowerCaseName.includes("ryzen")||lowerCaseName.includes("radeon"))brand="amd";else if(lowerCaseName.includes("nvidia")||lowerCaseName.includes("geforce"))brand="nvidia";else if(lowerCaseName.includes("apple"))brand="apple";if(brand!=="chip"){imageUrl=`https://logo.dev/${brand}.com`}else{imageUrl=(type==='cpus')?"https://i.imgur.com/PHYyIxl.png":"https://i.imgur.com/Jprx55s.png"}}
-return{score,imageUrl}}
-function populateDropdown(selectElement,data){Object.keys(data).sort().forEach(item=>{selectElement.add(new Option(item,item))})}
-function calculateBottleneck(){const selected={cpu:dom.cpuSelect.value,gpu:dom.gpuSelect.value,ram:dom.ramSelect.value,resolution:dom.resolutionSelect.value,purpose:dom.purposeSelect.value};if(!selected.cpu||!selected.gpu){alert('Please select both a CPU and a GPU.');return}
-const cpuInfo=getComponentInfo('cpus',selected.cpu);const gpuInfo=getComponentInfo('gpus',selected.gpu);const baseScores={cpu:cpuInfo.score,gpu:gpuInfo.score};const modifiers={ram:data.ramImpact[selected.ram],purpose:data.purposeImpact[selected.purpose],resolution:data.resolutionImpact[selected.resolution]};const finalScores={cpu:baseScores.cpu*modifiers.purpose.cpu*modifiers.ram,gpu:baseScores.gpu*modifiers.purpose.gpu*modifiers.resolution.gpu};let bottleneck={percentage:0,component:'None',text:''};if(finalScores.cpu>finalScores.gpu*1.05){bottleneck.percentage=((finalScores.cpu-finalScores.gpu)/finalScores.cpu)*100;bottleneck.component='CPU'}else if(finalScores.gpu>finalScores.cpu*1.05){bottleneck.percentage=((finalScores.gpu-finalScores.cpu)/finalScores.gpu)*100;bottleneck.component='GPU'}
-if(bottleneck.percentage>20)bottleneck.text=`Severe ${bottleneck.component} Bottleneck`;else if(bottleneck.percentage>10)bottleneck.text=`Moderate ${bottleneck.component} Bottleneck`;else if(bottleneck.component!=='None')bottleneck.text=`Minor ${bottleneck.component} Bottleneck`;else bottleneck.text='Excellent System Balance';displayResults(selected,bottleneck,cpuInfo,gpuInfo)}
-function displayResults(selected,bottleneck,cpuInfo,gpuInfo){dom.calculatorView.classList.add('hidden');dom.resultsView.classList.remove('hidden');let summaryColor=bottleneck.percentage>10?'var(--accent)':'var(--success)';let summaryText=bottleneck.component==='CPU'?`Your GPU is being limited by your CPU's performance.`:bottleneck.component==='GPU'?`Your CPU is powerful enough for a stronger GPU.`:'Your components are very well-balanced for this workload.';const brandToDomain={intel:"intel.com",amd:"amd.com",nvidia:"nvidia.com",apple:"apple.com"};const getLogoUrl=(name)=>{const lowerCaseName=name.toLowerCase();for(const brand in brandToDomain){if(lowerCaseName.includes(brand)){return `https://icons.duckduckgo.com/ip3/${brandToDomain[brand]}.ico`}}
-return null};const cpuLogoUrl=getLogoUrl(selected.cpu);const gpuLogoUrl=getLogoUrl(selected.gpu);const cpuFallbackImage="https://i.imgur.com/PHYyIxl.png";const gpuFallbackImage="https://i.imgur.com/Jprx55s.png";dom.resultsView.innerHTML=`
+        <h3>What is a CPU Bottleneck? (The "Bad" Bottleneck)</h3>
+        <p>A <strong>CPU bottleneck</strong> happens when your processor (CPU) cannot process data and instructions fast enough to keep your graphics card (GPU) fully occupied. This is the most common and problematic type of <strong>bottleneck</strong> for gamers, as it leads to inconsistent performance that can't be fixed by simply lowering graphics settings.</p>
+        <p><strong>Common Symptoms:</strong>
+            <ul>
+                <li><strong>Stuttering</strong> or choppy gameplay, especially during intense action.</li>
+                <li>Low <strong>FPS</strong> in <strong>CPU-intensive games</strong> (e.g., <em>Valorant</em>, <em>Counter-Strike 2</em>, or large-scale strategy games).</li>
+                <li>Your <strong>GPU usage</strong> is unexpectedly low (e.g., 60-70%) while one or more <strong>CPU cores</strong> are at 100%.</li>
+            </ul>
+        </p>
+
+        <h3>What is a GPU Bottleneck? (The "Good" Bottleneck)</h3>
+        <p>A <strong>GPU bottleneck</strong>, also known as being "GPU limited," occurs when your graphics card is running at full capacity (99-100% usage). It is the component dictating your maximum <strong>frame rate</strong> because it's working as hard as possible to render the best visuals.</p>
+        <p><strong>This is generally the ideal scenario for gaming.</strong> It means you are getting every bit of <strong>performance</strong> you paid for out of your graphics card. This typically happens when playing graphically demanding AAA titles at high <strong>resolutions</strong> (1440p or 4K) with settings like textures and ray tracing on "Ultra."</p>
+
+        <hr style="margin: 2.5rem 0; border: none; border-top: 1px solid var(--border);">
+
+        <h2>How to Fix a Bottleneck: Your Action Plan</h2>
+        <p>Once our calculator identifies a <strong>bottleneck</strong>, the next step is to address it. Here are the most effective, solution-oriented steps you can take for each scenario.</p>
+
+        <h3>Tackling a CPU Bottleneck</h3>
+        <p>If your CPU is the weak link, your primary goal is to reduce its workload or increase its performance.</p>
+        <p><strong>Immediate Software & Settings Fixes:</strong>
+            <ul>
+                <li><strong>Close Background Applications:</strong> Shut down web browsers, streaming apps, and any unnecessary programs before you start a game.</li>
+                <li><strong>Lower CPU-Intensive Game Settings:</strong> In your game's options, reduce settings like "Object Detail," "Physics Quality," "Crowd Density," or "View Distance."</li>
+                <li><strong>Increase Resolution:</strong> This sounds counterintuitive, but increasing the resolution (e.g., from 1080p to 1440p) puts more stress on the GPU, which can help balance the load and make you more GPU-limited.</li>
+            </ul>
+        </p>
+        <p><strong>Long-Term Hardware Solutions:</strong>
+            <ul>
+                <li><strong>Overclocking:</strong> If you have adequate cooling, <strong>overclocking</strong> your CPU can provide a 5-15% performance boost, which can be enough to alleviate a minor <strong>bottleneck</strong>.</li>
+                <li><strong>Upgrade Your CPU:</strong> This is the most effective solution. Use our calculator's results to find a processor that is a better performance match for your existing graphics card.</li>
+            </ul>
+        </p>
+
+        <div class="info-box" style="margin-top: 1.5rem;">
+            <h5 style="font-size: 1.1rem;">Real-World Example: Upgrading Your CPU for a Modern GPU</h5>
+            <p>Consider a user who just upgraded to a brand new, powerful graphics card like the <strong>NVIDIA RTX 4070</strong>. Their existing processor is a well-regarded but older CPU, such as the <strong>AMD Ryzen 5 3600</strong>.</p>
+            <p>In graphically intense, single-player games at 1440p or 4K, this combination might perform reasonably well. However, when trying to achieve high <strong>frame rates</strong> in competitive eSports titles like <em>Valorant</em> or <em>Apex Legends</em> at 1080p, the user would notice that their performance hits a wall and their game <strong>stutters</strong>, no matter how much they lower the graphics settings.</p>
+            <p><strong>The Solution:</strong> This is a clear <strong>CPU bottleneck</strong>. The Ryzen 5 3600, while a great chip for its time, struggles to send information fast enough to fully utilize the powerful RTX 4070. By <strong>upgrading the CPU</strong> to a modern equivalent like an <strong>AMD Ryzen 5 7600X</strong> or an <strong>Intel Core i5-14600K</strong>, the <strong>system's balance is restored</strong>. The new CPU can easily keep up, allowing the RTX 4070 to deliver the fluid, high-FPS experience the user was hoping for.</p>
+        </div>
+
+        <h3>Managing a GPU Bottleneck</h3>
+        <p>Remember, this is often a good thing. The goal here isn't to eliminate the <strong>bottleneck</strong>, but to adjust it to achieve your desired <strong>frame rate</strong>.</p>
+        <p><strong>Your Primary Levers for More FPS:</strong>
+            <ul>
+                <li><strong>Lower GPU-Intensive Game Settings:</strong> The biggest performance gains come from lowering "Texture Quality," "Shadow Quality," "Anti-Aliasing," and disabling "Ray Tracing."</li>
+                <li><strong>Enable Performance Scaling:</strong> Use technologies like <strong>NVIDIA DLSS</strong>, <strong>AMD FSR</strong>, or <strong>Intel XeSS</strong>. Setting them to "Performance" or "Ultra Performance" mode can dramatically boost your FPS.</li>
+                <li><strong>Lower Your Resolution:</strong> Dropping from 4K to 1440p, or 1440p to 1080p, is the single biggest FPS booster, as it significantly reduces the number of pixels your GPU needs to render.</li>
+                <li><strong>Upgrade Your GPU:</strong> If you want to maintain high settings and resolution, the ultimate solution is to <strong>upgrade</strong> to a more powerful graphics card.</li>
+            </ul>
+        </p>
+        
+        <div class="info-box" style="margin-top: 1.5rem;">
+             <h5 style="font-size: 1.1rem;">Real-World Example: Overcoming a Mid-Range GPU Limit</h5>
+            <p>Consider a user with a very popular and capable CPU like the <strong>AMD Ryzen 5 5600X</strong>, paired with an older, entry-level graphics card such as the <strong>NVIDIA GeForce GTX 1660 Super</strong>.</p>
+            <p>This user wants to play modern AAA titles at 1440p resolution. While the Ryzen 5 5600X has plenty of processing power to handle the game's logic, the GTX 1660 Super would immediately hit 100% usage and struggle to produce a smooth <strong>frame rate</strong>. This is a clear <strong>GPU bottleneck</strong>.</p>
+            <p><strong>The Solution:</strong> By <strong>upgrading the graphics card</strong> to a modern mid-range GPU, like an <strong>NVIDIA GeForce RTX 4060</strong> or an <strong>AMD Radeon RX 7700 XT</strong>, the system's gaming potential is unlocked. The new GPU can easily handle 1440p gaming at high settings, perfectly complementing the strong performance of the Ryzen 5 5600X. The result is a dramatically improved visual experience and higher, more stable <strong>frame rates</strong>.</p>
+        </div>
+
+        <h2>How Our Calculator Leads to a Balanced PC</h2>
+        <p>Our tool analyzes the complex relationship between components so you don't have to. By entering your parts, you get an instant, data-driven analysis that empowers you to:</p>
+        <ul>
+            <li><strong>Build Smarter:</strong> Avoid pairing a high-end GPU with an entry-level CPU before you buy.</li>
+            <li><strong>Upgrade with Confidence:</strong> Know exactly which component to <strong>upgrade</strong> next for the biggest performance gain.</li>
+            <li><strong>Save Money:</strong> Don't overspend on a part that your other components can't fully support.</li>
+        </ul>
+        <p><strong>Ready to check your build?</strong> Scroll back up and use the calculator to ensure your PC is perfectly balanced for maximum performance.</p>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <button class="faq-question">What is a PC bottleneck?</button>
+                    <div class="faq-answer"><p>A bottleneck is a situation where one component limits the overall performance of your system. Even if you have a top-tier GPU, a weaker CPU can prevent it from reaching its full potential, creating a "bottleneck" that caps performance.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Is a CPU or GPU bottleneck worse?</button>
+                    <div class="faq-answer"><p>For gaming, a slight GPU bottleneck is often ideal, as it means your graphics card is the component working the hardest to produce maximum visual quality. A significant CPU bottleneck is generally worse for gaming because it can cause stuttering and inconsistent frame rates that can't be fixed by lowering graphics settings.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">How accurate is this calculator?</button>
+                    <div class="faq-answer"><p>This tool provides a highly accurate, data-driven estimate based on the relative power of components. It's an excellent guide for build planning. However, real-world performance can vary by game, application, and driver versions. We always suggest pairing this data with real-world benchmark reviews.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Do other components like RAM cause bottlenecks?</button>
+                    <div class="faq-answer"><p>Yes. While the CPU/GPU relationship is the most critical, other parts matter. Insufficient or slow RAM can cause stuttering in demanding tasks. Likewise, a slow hard drive (HDD) will drastically increase loading times compared to an SSD, creating a noticeable storage bottleneck.</p></div>
+                </div>
+            </div>
+        </div>
+    </main>
+        <!-- REPLACE YOUR ENTIRE CURRENT FOOTER WITH THIS BLOCK -->
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+
+        <div class="footer-social">
+            <!-- IMPORTANT: Replace the # with your actual page URLs -->
+            <a href="https://facebook.com/your-page-url" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14 13.5H16.5L17.5 9.5H14V7.5C14 6.47 14 5.5 16 5.5H17.5V2.14C17.174 2.097 15.943 2 14.643 2C11.928 2 10 3.657 10 6.7V9.5H7V13.5H10V22H14V13.5Z"/></svg>
+            </a>
+            <a href="https://instagram.com/your-page-url" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.85s.012-3.584.07-4.85c.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg>
+            </a>
+        </div>
+
+        <p>© 2025 Bottleneck Calculator. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+<style>
+    :root {
+        --bg-light: #f4f7fa; --fg-light: #1a202c; --card-bg-light: #ffffff; --border-light: #e2e8f0;
+        --bg-dark: #1a202c; --fg-dark: #e2e8f0; --card-bg-dark: #2d3748; --border-dark: #4a5568;
+        --primary: #3f51b5; --primary-hover: #303f9f; --accent: #ffc107; --danger: #f44336; --success: #4caf50;
+        --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh;
+        background-color: var(--bg-light); color: var(--fg-light); transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+        --bg: var(--bg-dark); --fg: var(--fg-dark); --card-bg: var(--card-bg-dark); --border: var(--border-dark); --shadow: var(--shadow-dark);
+        background-color: var(--bg-dark); color: var(--fg-dark);
+    }
+    body:not(.dark-mode) { --bg: var(--bg-light); --fg: var(--fg-light); --card-bg: var(--card-bg-light); --border: var(--border-light); --shadow: var(--shadow-light); }
+
+    header { background-color: #2d3748; color: white; padding: 0 1rem; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 600; font-size: 1.1rem; }
+    main { flex-grow: 1; padding: 1rem; }
+    .container { max-width: 800px; margin: 0 auto 2rem auto; }
+    
+    h1 { font-size: 2rem; text-align: center; margin-bottom: 0.5rem; }
+    .subtitle { text-align: center; margin-top: 0; margin-bottom: 2rem; font-size: 1.1rem; color: #718096; }
+    .dark-mode .subtitle { color: #a0aec0; }
+    
+    .calculator-card, .results-card { background-color: var(--card-bg); padding: 2rem; border-radius: 8px; box-shadow: var(--shadow); }
+    .input-group { margin-bottom: 1.5rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    select {
+        width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 4px; font-size: 1rem;
+        background-color: var(--card-bg); color: var(--fg);
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23718096%22%20d%3D%22m181.66%2C101.66l-48%2C48a8%2C8%2C0%2C0%2C1-11.32%2C0l-48-48a8%2C8%2C0%2C0%2C1%2C11.32-11.32L128%2C132.69l42.34-42.35a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat; background-position: right 0.7em top 50%; background-size: 1.2em auto; appearance: none;
+    }
+
+    button#calculate-btn {
+        background-color: var(--primary); color: white; padding: 0.85rem 1.5rem; border: none; border-radius: 4px;
+        font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; transition: background-color 0.2s ease-in-out;
+    }
+    button#calculate-btn:hover { background-color: var(--primary-hover); }
+
+    /* Results View */
+    #results-view h2 { text-align: center; }
+    .bottleneck-summary {
+        padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;
+        border: 1px solid var(--accent); background-color: rgba(255, 193, 7, 0.1);
+    }
+    .bottleneck-summary h3 { margin: 0 0 0.5rem 0; color: var(--accent); }
+    #bottleneck-text { margin: 0; }
+    .progress-bar-container { margin: 1rem 0; background-color: #e2e8f0; border-radius: 8px; }
+    .dark-mode .progress-bar-container { background-color: #4a5568; }
+    .progress-bar { height: 24px; border-radius: 8px; background-color: var(--accent); width: 0%; transition: width 0.5s ease-out; text-align: center; color: black; line-height: 24px; font-weight: bold;}
+    .component-analysis { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .component-card { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; box-shadow: var(--shadow); text-align: center; border: 1px solid var(--border); }
+    .component-card h4 { margin: 0 0 1rem 0; }
+    .component-card img { max-width: 100px; height: 100px; object-fit: contain; margin-bottom: 1rem; }
+    .component-card a { color: var(--primary); text-decoration: none; font-weight: bold; }
+    .component-card a:hover { text-decoration: underline; }
+    .performance-details { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+    .performance-details h4 { margin: 0 0 1rem 0; }
+    .performance-details ul { padding-left: 20px; margin: 0; }
+    .performance-details li { margin-bottom: 0.5rem; }
+    .action-buttons { display: flex; justify-content: center; margin-top: 1.5rem; }
+    #new-calculation-btn { background-color: #718096; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; }
+    .hidden { display: none; }
+    
+    /* FAQ */
+    .faq-section { background: var(--card-bg); padding: 2rem; border-radius: 8px; box-shadow: var(--shadow); }
+    .faq-section h2 { text-align: center; margin-top: 0; margin-bottom: 1.5rem; color: var(--primary); }
+    .faq-item { border-bottom: 1px solid var(--border); } .faq-item:last-child { border-bottom: none; }
+    .faq-question { width: 100%; background: transparent; border: none; text-align: left; padding: 1rem 0; font-size: 1.1rem; font-weight: 600; color: var(--fg); cursor: pointer; position: relative; }
+    .faq-question::after { content: '+'; font-size: 1.5rem; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); transition: transform 0.2s ease-in-out; color: var(--primary); }
+    .faq-question.active::after { transform: translateY(-50%) rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
+    .faq-answer p { padding-bottom: 1rem; margin: 0; line-height: 1.6; }
+
+    /* Theme Toggle */
+    .theme-switch-wrapper { display: flex; align-items: center; }
+    .theme-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+    .theme-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4a5568; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: var(--primary); }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* Advanced Options */
+    .advanced-options { margin: 1.5rem 0; }
+    .toggle-btn { background-color: transparent; color: var(--primary); border: none; padding: 0; width: auto; font-size: 0.9rem; cursor: pointer; font-weight: bold; }
+
+    @media (max-width: 768px) {
+        .component-analysis { grid-template-columns: 1fr; }
+        h1 { font-size: 1.5rem; } .subtitle { font-size: 1rem; }
+    }
+    
+    footer { text-align: center; padding: 2rem 1rem; color: #718096; font-size: 0.9rem; margin-top: 2rem; }
+    .dark-mode footer { color: #a0aec0; }
+	/* Add this at the end of your <style> block */
+    .footer-links {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+    .footer-links a {
+        color: #718096;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .footer-links a:hover {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+    .dark-mode .footer-links a {
+        color: #a0aec0;
+    }
+    /* --- ADD THIS NEW CSS AT THE END OF YOUR <style> BLOCK --- */
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 1.75rem; /* The space between the icons */
+    margin: 1.25rem 0;
+}
+.footer-social a {
+    color: #718096; /* Default icon color */
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    display: inline-block; /* Allows transform to work */
+}
+.footer-social a:hover {
+    color: var(--primary); /* Icon color on hover */
+    transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+.footer-social a svg {
+    width: 26px; /* The size of the icons */
+    height: 26px;
+}
+
+/* Dark mode styles for the icons */
+.dark-mode .footer-social a {
+    color: #a0aec0;
+}
+/* --- ADD THIS NEW CSS AT THE END OF YOUR <style> BLOCK --- */
+
+.update-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background-color: #e8f5e9; /* Light green background */
+    border: 1px solid #c8e6c9; /* Slightly darker green border */
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem; /* Space below the banner */
+    box-shadow: var(--shadow-light);
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.banner-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.banner-text h4 {
+    margin: 0 0 0.25rem 0;
+    color: #2e7d32; /* Dark green text */
+    font-size: 1.1rem;
+    border: none;
+    padding: 0;
+}
+
+.banner-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #388e3c;
+}
+
+.latest-tag {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap; /* Prevents the tag from breaking into two lines */
+}
+
+/* Dark mode styles for the banner */
+.dark-mode .update-banner {
+    background-color: rgba(102, 187, 106, 0.1);
+    border-color: rgba(102, 187, 106, 0.4);
+    box-shadow: none;
+}
+.dark-mode .banner-text h4 {
+    color: #a5d6a7; /* Brighter green for dark mode */
+}
+.dark-mode .banner-text p {
+    color: #81c784;
+}
+.dark-mode .latest-tag {
+    background-color: rgba(102, 187, 106, 0.2);
+    color: #a5d6a7;
+}
+.content-article h2 {
+    color: var(--primary); /* Makes the main headings blue */
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.75rem;
+    margin-top: 2.5rem;
+    font-size: 1.75rem;
+}
+
+.content-article h3 {
+    margin-top: 2rem;
+    font-size: 1.4rem;
+}
+
+.content-article p {
+    text-align: justify; /* Justifies the paragraph text */
+    line-height: 1.7;
+}
+
+.content-article ul {
+    padding-left: 25px;
+}
+
+.content-article li {
+    margin-bottom: 0.5rem;
+    padding-left: 5px;
+    text-align: justify;
+}
+/* --- ADD THIS NEW CSS AT THE END OF YOUR <style> BLOCK --- */
+
+/* --- Final Horizontal Collapsible Quick Tools Bar --- */
+.quick-tools-bar {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    display: flex; /* Use Flexbox for robust layout */
+    justify-content: space-between; /* Pushes button to the right */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.quick-tools-content {
+    display: flex;
+    align-items: center;
+    min-width: 0; /* Important for flexbox shrinking */
+}
+
+.quick-tools-static {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.quick-tools-icon {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+}
+
+.quick-tools-title {
+    font-weight: 600;
+    color: var(--fg);
+}
+
+.quick-tools-links-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: 0.75rem;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 1000px; /* An arbitrary large width when open */
+    opacity: 1;
+    transition: max-width 0.4s ease-in-out, opacity 0.3s ease-in-out, margin-left 0.4s ease-in-out;
+}
+
+/* Collapsed State */
+.quick-tools-bar.collapsed .quick-tools-links-container {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+}
+
+.collapse-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    border-radius: 50%;
+    flex-shrink: 0; /* Prevents the button from being squished */
+}
+.collapse-toggle-btn:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.collapse-toggle-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+.quick-tools-bar.collapsed .collapse-toggle-btn svg {
+    transform: rotate(180deg);
+}
+
+.quick-tools-links-container a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+.quick-tools-links-container a:hover {
+    color: var(--primary-hover);
+}
+.dark-mode .quick-tools-links-container a {
+    color: #9fa8da;
+}
+.dark-mode .quick-tools-links-container a:hover {
+    color: #c5cae9;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const data = {
+            cpus: {
+                // --- NEWLY LAUNCHED & UPCOMING CPUs (Projected Scores) ---
+                "AMD Ryzen 9 9950X3D": { score: 125, tier: 'enthusiast' },
+                "AMD Ryzen 9 9900X3D": { score: 124, tier: 'enthusiast' },
+                "AMD Ryzen 7 9800X3D": { score: 122, tier: 'enthusiast' },
+                "AMD Ryzen 9 9950X": { score: 118, tier: 'enthusiast' },
+                "Intel Core Ultra 9 285K": { score: 116, tier: 'enthusiast' },
+                "AMD Ryzen 9 9900X": { score: 115, tier: 'enthusiast' },
+                "AMD Ryzen 7 9700X": { score: 110, tier: 'enthusiast' },
+                "Intel Core Ultra 7 265K": { score: 108, tier: 'enthusiast' },
+                "Intel Core Ultra 300 Series (Panther Lake)": { score: 105, tier: 'enthusiast' },
+                "AMD Ryzen 5 9600X": { score: 102, tier: 'enthusiast' },
+                "Intel Core i9-14900K": { score: 100, tier: 'enthusiast', imageUrl: "https://i.imgur.com/4o7iY2A.png" },
+                "AMD Threadripper 3990X": { score: 99, tier: 'enthusiast' },
+                "AMD Ryzen 9 7950X3D": { score: 98, tier: 'enthusiast', imageUrl: "https://i.imgur.com/S6FE88v.png" },
+                "Intel Core i9-13900K": { score: 98, tier: 'enthusiast' },
+                "Apple M2 Ultra": { score: 98, tier: 'enthusiast' },
+                "AMD EPYC 7763": { score: 97, tier: 'enthusiast' },
+                "AMD Ryzen 7 7800X3D": { score: 96, tier: 'high-end', imageUrl: "https://i.imgur.com/S6FE88v.png" },
+                "Intel Core i7-14700K": { score: 95, tier: 'enthusiast' },
+                "Apple M1 Ultra": { score: 95, tier: 'enthusiast' },
+                "Intel Core i9-14900HX": { score: 95, tier: 'enthusiast' },
+                "Apple M3 Max (Laptop)": { score: 95, tier: 'enthusiast' },
+                "AMD Ryzen 9 7900X": { score: 94, tier: 'high-end' },
+                "AMD Ryzen AI 300 Series": { score: 94, tier: 'high-end' },
+                "Intel Core i9-12900K": { score: 93, tier: 'high-end' },
+                "AMD Ryzen 9 8945HS": { score: 93, tier: 'high-end' },
+                "Intel Core i9-13980HX": { score: 93, tier: 'high-end' },
+                "Apple M3 Max": { score: 92, tier: 'high-end' },
+                "AMD Ryzen 7 7700X": { score: 92, tier: 'high-end' },
+                "Intel Core Ultra 9 185H": { score: 92, tier: 'high-end' },
+                "Intel Core i7-12700K": { score: 91, tier: 'high-end' },
+                "AMD Ryzen 9 7945HX": { score: 91, tier: 'high-end' },
+                "Intel Core i5-14600K": { score: 90, tier: 'high-end' },
+                "Intel Core i7-13700K": { score: 90, tier: 'high-end' },
+                "Intel Core i5-13600K": { score: 90, tier: 'high-end' },
+                "AMD EPYC 7502": { score: 90, tier: 'high-end' },
+                "AMD Ryzen 7 8840HS": { score: 90, tier: 'high-end' },
+                "Intel Core i7-14700HX": { score: 90, tier: 'high-end' },
+                "AMD Ryzen 9 5950X": { score: 89, tier: 'high-end' },
+                "Intel Core i9-12900HX": { score: 89, tier: 'high-end' },
+                "AMD Ryzen 5 7600X": { score: 88, tier: 'high-end' },
+                "Apple M2 Max": { score: 88, tier: 'high-end' },
+                "Intel Core Ultra 7 155H": { score: 88, tier: 'high-end' },
+                "Apple M3 Pro (Laptop)": { score: 88, tier: 'high-end' },
+                "Intel Core i7-13700HX": { score: 88, tier: 'high-end' },
+                "Intel Core i9-12900HK": { score: 88, tier: 'high-end' },
+                "AMD Ryzen 5 7600": { score: 87, tier: 'high-end' },
+                "AMD Ryzen 7 7745HX": { score: 87, tier: 'high-end' },
+                "AMD Ryzen 9 6980HX": { score: 87, tier: 'high-end' },
+                "AMD Ryzen 7 5800X3D": { score: 85, tier: 'high-end' },
+                "Intel Core i9-11900K": { score: 85, tier: 'high-end' },
+                "AMD Threadripper 2990WX": { score: 85, tier: 'high-end' },
+                "Apple M3 Pro": { score: 85, tier: 'high-end' },
+                "Intel Core i5-14500HX": { score: 85, tier: 'high-end' },
+                "AMD Ryzen 5 8640HS": { score: 85, tier: 'high-end' },
+                "AMD Ryzen 9 6900HX": { score: 85, tier: 'high-end' },
+                "Apple M2 Pro (Laptop)": { score: 85, tier: 'high-end' },
+                "AMD Ryzen 7 5800X": { score: 84, tier: 'mid-range' },
+                "Intel Core i7-12700H": { score: 84, tier: 'mid-range' },
+                "Intel Core i5-13600HX": { score: 83, tier: 'mid-range' },
+                "Apple M1 Max (Laptop)": { score: 83, tier: 'mid-range' },
+                "Intel Core i7-12800H": { score: 83, tier: 'mid-range' },
+                "Intel Core i5-12400": { score: 82, tier: 'mid-range' },
+                "Intel Core i9-11980HK": { score: 82, tier: 'mid-range' },
+                "AMD Ryzen 5 7645HX": { score: 82, tier: 'mid-range' },
+                "Intel Core Ultra 5 125H": { score: 82, tier: 'mid-range' },
+                "AMD Ryzen 7 6800HS": { score: 82, tier: 'mid-range' },
+                "Intel Core i5-12600K": { score: 80, tier: 'mid-range' },
+                "Intel Core i7-11700K": { score: 80, tier: 'mid-range' },
+                "AMD Ryzen 9 3950X": { score: 80, tier: 'mid-range' },
+                "Apple M2 Pro": { score: 80, tier: 'mid-range' },
+                "Apple M1 Max": { score: 80, tier: 'mid-range' },
+                "AMD EPYC 7702": { score: 80, tier: 'mid-range' },
+                "AMD Ryzen 7 6800H": { score: 80, tier: 'mid-range' },
+                "AMD Ryzen 5 5600X": { score: 78, tier: 'mid-range' },
+                "Intel Core i9-10900K": { score: 78, tier: 'mid-range' },
+                "Apple M3": { score: 78, tier: 'mid-range' },
+                "AMD Ryzen 9 5900HX": { score: 78, tier: 'mid-range' },
+                "Intel Core i5-12500H": { score: 78, tier: 'mid-range' },
+                "Intel Core i7-11800H": { score: 77, tier: 'mid-range' },
+                "Intel Core i5-12600H": { score: 77, tier: 'mid-range' },
+                "AMD Ryzen 5 6600HS": { score: 76, tier: 'mid-range' },
+                "Intel Core i5-11600K": { score: 75, tier: 'mid-range' },
+                "Apple M2": { score: 75, tier: 'mid-range' },
+                "AMD Ryzen 9 3900X": { score: 75, tier: 'mid-range' },
+                "AMD Ryzen 5 6600H": { score: 75, tier: 'mid-range' },
+                "Apple M1 Pro (Laptop)": { score: 75, tier: 'mid-range' },
+                "AMD Ryzen 7 5800H": { score: 73, tier: 'mid-range' },
+                "AMD Ryzen 7 3700X": { score: 72, tier: 'mid-range' },
+                "Apple M1 Pro": { score: 72, tier: 'mid-range' },
+                "Intel Core i5-11400H": { score: 72, tier: 'mid-range' },
+                "Intel Core i7-10700K": { score: 70, tier: 'mid-range' },
+                "AMD Ryzen 9 2950X": { score: 70, tier: 'mid-range' },
+                "Intel Xeon E5-2690 V4": { score: 70, tier: 'mid-range' },
+                "Intel Core i9-9900K": { score: 70, tier: 'mid-range' },
+                "Apple M1": { score: 68, tier: 'mid-range' },
+                "AMD Ryzen 5 3600X": { score: 68, tier: 'mid-range' },
+                "AMD Ryzen 7 3800X": { score: 68, tier: 'mid-range' },
+                "AMD Ryzen 5 5600H": { score: 68, tier: 'mid-range' },
+                "Intel Core i7-1165G7": { score: 68, tier: 'mid-range' },
+                "Intel Core i7-9700K": { score: 65, tier: 'mid-range' },
+                "AMD Ryzen 5 3600": { score: 65, tier: 'mid-range' },
+                "Intel Core i5-10600K": { score: 65, tier: 'mid-range' },
+                "Intel Core i7-10750H": { score: 65, tier: 'mid-range' },
+                "Intel Core i5-1135G7": { score: 63, tier: 'entry-level' },
+                "AMD Ryzen 7 2700X": { score: 62, tier: 'entry-level' },
+                "Intel Core i5-9600K": { score: 60, tier: 'entry-level' },
+                "Intel Core i7-8700K": { score: 60, tier: 'entry-level' },
+                "AMD Threadripper 1950X": { score: 60, tier: 'entry-level' },
+                "AMD Ryzen 5 3500X": { score: 60, tier: 'entry-level' },
+                "Intel Core i5-10300H": { score: 60, tier: 'entry-level' },
+                "AMD Ryzen 7 5700U": { score: 60, tier: 'entry-level' },
+                "AMD Ryzen 5 2600X": { score: 58, tier: 'entry-level' },
+                "Intel Core i7-9750H": { score: 58, tier: 'entry-level' },
+                "Intel Core i7-1065G7": { score: 58, tier: 'entry-level' },
+                "Intel Core i7-7700K": { score: 55, tier: 'entry-level' },
+                "Intel Core i5-8600K": { score: 55, tier: 'entry-level' },
+                "Intel Core i5-9400F": { score: 55, tier: 'entry-level' },
+                "AMD Ryzen 7 2700": { score: 55, tier: 'entry-level' },
+                "AMD Ryzen 7 3750H": { score: 55, tier: 'entry-level' },
+                "AMD Ryzen 5 5500U": { score: 55, tier: 'entry-level' },
+                "Intel Core i3-1115G4": { score: 55, tier: 'entry-level' },
+                "Intel Core i7-8750H": { score: 52, tier: 'entry-level' },
+                "Intel Core i5-1035G1": { score: 52, tier: 'entry-level' },
+                "AMD Ryzen 7 1800X": { score: 50, tier: 'entry-level' },
+                "Intel Core i7-6700K": { score: 50, tier: 'entry-level' },
+                "Intel Core i7-7700": { score: 50, tier: 'entry-level' },
+                "AMD Ryzen 5 2600": { score: 50, tier: 'entry-level' },
+                "AMD Ryzen 5 3550H": { score: 50, tier: 'entry-level' },
+                "AMD Ryzen 7 4700U": { score: 50, tier: 'entry-level' },
+                "Intel Core i5-6600K": { score: 48, tier: 'entry-level' },
+                "Intel Core i7-6700": { score: 48, tier: 'entry-level' },
+                "Intel Core i5-8300H": { score: 48, tier: 'entry-level' },
+                "AMD Ryzen 3 5300U": { score: 48, tier: 'entry-level' },
+                "Intel Core i5-4690K": { score: 45, tier: 'entry-level' },
+                "AMD Ryzen 5 1600X": { score: 45, tier: 'entry-level' },
+                "Intel Core i5-7600": { score: 45, tier: 'entry-level' },
+                "Intel Core i7-7700HQ": { score: 45, tier: 'entry-level' },
+                "Intel Core i3-1005G1": { score: 45, tier: 'entry-level' },
+                "AMD Ryzen 5 4500U": { score: 45, tier: 'entry-level' },
+                "Intel Core i7-4790K": { score: 42, tier: 'entry-level' },
+                "Intel Core i5-6500": { score: 42, tier: 'entry-level' },
+                "Intel Core i3-8100": { score: 40, tier: 'entry-level' },
+                "Intel Xeon E3-1230 V2": { score: 40, tier: 'entry-level' },
+                "Intel Core i5-7300HQ": { score: 40, tier: 'entry-level' },
+                "Intel Core i7-8550U": { score: 40, tier: 'entry-level' },
+                "AMD Ryzen 7 3700U": { score: 40, tier: 'entry-level' },
+                "AMD Ryzen 3 1300X": { score: 38, tier: 'entry-level' },
+                "Intel Core i7-4770": { score: 38, tier: 'entry-level' },
+                "Intel Core i7-6700HQ": { score: 38, tier: 'entry-level' },
+                "AMD Ryzen 3 4300U": { score: 38, tier: 'entry-level' },
+                "AMD FX-8350": { score: 35, tier: 'entry-level' },
+                "Intel Core i3-6100": { score: 35, tier: 'entry-level' },
+                "Intel Core i7-2600K": { score: 35, tier: 'entry-level' },
+                "AMD Ryzen 3 2200G": { score: 35, tier: 'entry-level' },
+                "Intel Core i5-4570": { score: 35, tier: 'entry-level' },
+                "Intel Core i5-6300HQ": { score: 35, tier: 'entry-level' },
+                "Intel Core i5-8250U": { score: 35, tier: 'entry-level' },
+                "AMD Ryzen 5 3500U": { score: 35, tier: 'entry-level' },
+                "Intel Core i5-2500K": { score: 32, tier: 'entry-level' },
+                "Intel Core i7-3770": { score: 32, tier: 'entry-level' },
+                "Intel Core i7-4700MQ": { score: 32, tier: 'entry-level' },
+                "Intel Pentium G4560": { score: 30, tier: 'entry-level' },
+                "Intel Core i3-4130": { score: 30, tier: 'entry-level' },
+                "Intel Core i3-7100": { score: 30, tier: 'entry-level' },
+                "Intel Core i3-6100": { score: 30, tier: 'entry-level' },
+                "Intel Core i5-3570": { score: 30, tier: 'entry-level' },
+                "AMD Ryzen 7 2700U": { score: 30, tier: 'entry-level' },
+                "Intel Core i7-7500U": { score: 30, tier: 'entry-level' },
+                "AMD A10-7850K": { score: 28, tier: 'entry-level' },
+                "Intel Core i3-4160": { score: 28, tier: 'entry-level' },
+                "AMD FX-6300": { score: 28, tier: 'entry-level' },
+                "Intel Core i5-4200M": { score: 28, tier: 'entry-level' },
+                "Intel Core i3-8130U": { score: 28, tier: 'entry-level' },
+                "Intel Core i7-6500U": { score: 28, tier: 'entry-level' },
+                "AMD Ryzen 3 3200U": { score: 28, tier: 'entry-level' },
+                "Intel Celeron G5905": { score: 25, tier: 'entry-level' },
+                "Intel Core i3-2100": { score: 25, tier: 'entry-level' },
+                "Intel Pentium G3258": { score: 25, tier: 'entry-level' },
+                "Intel Core i7-870": { score: 25, tier: 'entry-level' },
+                "AMD Ryzen 5 2500U": { score: 25, tier: 'entry-level' },
+                "Intel Core i5-7200U": { score: 25, tier: 'entry-level' },
+                "Intel Core i7-5500U": { score: 25, tier: 'entry-level' },
+                "AMD Athlon X4 860K": { score: 22, tier: 'entry-level' },
+                "Intel Core i3-3220": { score: 22, tier: 'entry-level' },
+                "Intel Core i5-6200U": { score: 22, tier: 'entry-level' },
+                "Intel Core i7-4500U": { score: 22, tier: 'entry-level' },
+                "Intel Core 2 Quad Q6600": { score: 20, tier: 'entry-level' },
+                "Intel Core i7-920": { score: 20, tier: 'entry-level' },
+                "AMD Athlon 3000G": { score: 20, tier: 'entry-level' },
+                "AMD A8-9600": { score: 20, tier: 'entry-level' },
+                "Intel Core i5-760": { score: 20, tier: 'entry-level' },
+                "Intel Core i3-4000M": { score: 20, tier: 'entry-level' },
+                "Intel Core i3-7100U": { score: 20, tier: 'entry-level' },
+                "Intel Core i5-5200U": { score: 20, tier: 'entry-level' },
+                "AMD A12-9720P": { score: 20, tier: 'entry-level' },
+                "Intel Core i5-750": { score: 18, tier: 'entry-level' },
+                "Intel Core i3-540": { score: 18, tier: 'entry-level' },
+                "AMD A8-7600": { score: 18, tier: 'entry-level' },
+                "AMD Athlon Gold 3150U": { score: 18, tier: 'entry-level' },
+                "Intel Core i3-6100U": { score: 18, tier: 'entry-level' },
+                "Intel Core i5-4200U": { score: 18, tier: 'entry-level' },
+                "Intel Pentium G4560": { score: 15, tier: 'entry-level' },
+                "Intel Core i3-530": { score: 15, tier: 'entry-level' },
+                "Intel Celeron G1840": { score: 15, tier: 'entry-level' },
+                "AMD Athlon X4 760K": { score: 15, tier: 'entry-level' },
+                "Intel Pentium N5030": { score: 15, tier: 'entry-level' },
+                "Intel Core i3-5005U": { score: 15, tier: 'entry-level' },
+                "AMD A9-9420": { score: 15, tier: 'entry-level' },
+                "AMD Athlon 220GE": { score: 15, tier: 'entry-level' },
+                "AMD Athlon 300U": { score: 12, tier: 'entry-level' },
+                "Intel Core i3-4010U": { score: 12, tier: 'entry-level' },
+                "AMD A6-9220": { score: 12, tier: 'entry-level' },
+                "Intel Celeron N4020": { score: 10, tier: 'entry-level' },
+                "Intel Pentium 4415U": { score: 10, tier: 'entry-level' },
+                "AMD Athlon Silver 3050U": { score: 10, tier: 'entry-level' },
+                "Intel Celeron 3867U": { score: 8, tier: 'entry-level' },
+                "AMD E1-7010": { score: 5, tier: 'entry-level' },
+            },
+            gpus: {
+                // --- NEWLY LAUNCHED & UPCOMING GPUs (Projected Scores) ---
+                "NVIDIA GeForce RTX 5090": { score: 140, tier: 'enthusiast' },
+                "NVIDIA GeForce RTX 5080": { score: 120, tier: 'enthusiast' },
+                "NVIDIA GeForce RTX 5070 Ti": { score: 105, tier: 'enthusiast' },
+                "AMD Radeon RX 9070 XT": { score: 102, tier: 'enthusiast' },
+                "NVIDIA GeForce RTX 4090": { score: 100, tier: 'enthusiast', imageUrl: "https://i.imgur.com/z2x4UG9.png" },
+                "AMD Radeon RX 7900 XTX": { score: 98, tier: 'enthusiast', imageUrl: "https://i.imgur.com/mSSTK2B.png" },
+                "NVIDIA GeForce RTX 5070": { score: 95, tier: 'enthusiast' },
+                "NVIDIA GeForce RTX 4080 Super": { score: 95, tier: 'high-end', imageUrl: "https://i.imgur.com/z2x4UG9.png" },
+                "Intel Arc Battlemage 24GB": { score: 94, tier: 'high-end' },
+                "AMD Radeon RX 7900 XT": { score: 92, tier: 'high-end' },
+                "AMD Radeon RX 9070": { score: 92, tier: 'high-end' },
+                "NVIDIA GeForce RTX 4090 Laptop": { score: 92, tier: 'high-end' },
+                "NVIDIA GeForce RTX 4070 Ti Super": { score: 90, tier: 'high-end', imageUrl: "https://i.imgur.com/uCHO0Lq.png" },
+                "NVIDIA GeForce RTX 3090 Ti": { score: 90, tier: 'high-end' },
+                "AMD Radeon RX 6950 XT": { score: 88, tier: 'high-end' },
+                "NVIDIA GeForce RTX 4070 Super": { score: 88, tier: 'high-end' },
+                "Apple M3 Max (Laptop GPU)": { score: 88, tier: 'high-end' },
+                "NVIDIA GeForce RTX 4080 Laptop": { score: 88, tier: 'high-end' },
+                "NVIDIA GeForce RTX 3080": { score: 85, tier: 'high-end' },
+                "AMD Radeon RX 7800 XT": { score: 85, tier: 'high-end' },
+                "Apple M3 Max (GPU)": { score: 85, tier: 'high-end' },
+                "AMD Radeon AI PRO R9700": { score: 85, tier: 'high-end' },
+                "NVIDIA GeForce RTX 5060 Ti": { score: 85, tier: 'high-end' },
+                "Apple M2 Max (Laptop GPU)": { score: 83, tier: 'mid-range' },
+                "AMD Radeon RX 6800 XT": { score: 82, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 3070 Ti": { score: 82, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 3080 Laptop": { score: 82, tier: 'mid-range' },
+                "AMD Radeon RX 9060 XT": { score: 82, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 4060 Ti": { score: 80, tier: 'mid-range' },
+                "Apple M3 Pro (Laptop GPU)": { score: 80, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 4070 Laptop": { score: 80, tier: 'mid-range' },
+                "AMD Radeon RX 7900S": { score: 80, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 3070": { score: 78, tier: 'mid-range' },
+                "AMD Radeon RX 7700 XT": { score: 78, tier: 'mid-range' },
+                "Apple M2 Max (GPU)": { score: 78, tier: 'mid-range' },
+                "AMD Radeon RX 6850M XT": { score: 78, tier: 'mid-range' },
+                "AMD Radeon RX 6700 XT": { score: 75, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 3060 Ti": { score: 75, tier: 'mid-range' },
+                "Apple M3 Pro (GPU)": { score: 75, tier: 'mid-range' },
+                "Apple M2 Pro (Laptop GPU)": { score: 75, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 4060 Laptop": { score: 75, tier: 'mid-range' },
+                "AMD Radeon RX 7800S": { score: 75, tier: 'mid-range' },
+                "Apple M1 Max (Laptop GPU)": { score: 75, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 5060": { score: 75, tier: 'mid-range' },
+                "AMD Radeon RX 6800M": { score: 72, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 2080 Ti": { score: 70, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 4060": { score: 70, tier: 'mid-range' },
+                "AMD Radeon RX 6700": { score: 70, tier: 'mid-range' },
+                "Apple M2 Pro (GPU)": { score: 70, tier: 'mid-range' },
+                "Apple M1 Max (GPU)": { score: 70, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 4050 Laptop": { score: 70, tier: 'mid-range' },
+                "AMD Radeon RX 7700S": { score: 70, tier: 'mid-range' },
+                "AMD Radeon RX 7600": { score: 68, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 3060": { score: 68, tier: 'mid-range' },
+                "Apple M3 (GPU)": { score: 68, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 3060 Laptop": { score: 68, tier: 'mid-range' },
+                "Intel Arc Pro B60": { score: 68, tier: 'mid-range' },
+                "AMD Radeon RX 5700 XT": { score: 65, tier: 'mid-range' },
+                "Apple M2 (GPU)": { score: 65, tier: 'mid-range' },
+                "AMD Radeon RX 6600 XT": { score: 65, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 2070 Super": { score: 65, tier: 'mid-range' },
+                "AMD Radeon RX 7600S": { score: 65, tier: 'mid-range' },
+                "Apple M1 Pro (Laptop GPU)": { score: 65, tier: 'mid-range' },
+                "AMD Radeon RX 6700M": { score: 65, tier: 'mid-range' },
+                "NVIDIA GeForce RTX 5050": { score: 65, tier: 'mid-range' },
+                "Intel Arc Pro B50": { score: 64, tier: 'entry-level' },
+                "NVIDIA GeForce RTX 3050 Ti Laptop": { score: 62, tier: 'entry-level' },
+                "Intel Arc A770": { score: 60, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1080 Ti": { score: 60, tier: 'entry-level' },
+                "AMD Radeon RX 6600": { score: 60, tier: 'entry-level' },
+                "NVIDIA GeForce RTX 2060 Super": { score: 60, tier: 'entry-level' },
+                "Apple M1 Pro (GPU)": { score: 60, tier: 'entry-level' },
+                "NVIDIA GeForce RTX 3050 Laptop": { score: 60, tier: 'entry-level' },
+                "AMD Radeon RX 5600 XT": { score: 58, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 980 Ti": { score: 58, tier: 'entry-level' },
+                "AMD Radeon RX 6600M": { score: 58, tier: 'entry-level' },
+                "Intel Arc A750": { score: 55, tier: 'entry-level' },
+                "Apple M1 (GPU)": { score: 55, tier: 'entry-level' },
+                "NVIDIA GeForce RTX 2060": { score: 55, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1070 Ti": { score: 55, tier: 'entry-level' },
+                "AMD Radeon R9 Fury X": { score: 55, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1080 Laptop": { score: 55, tier: 'entry-level' },
+                "AMD Radeon RX 5500 XT": { score: 52, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1070": { score: 52, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 980": { score: 52, tier: 'entry-level' },
+                "AMD Radeon RX 580": { score: 50, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1660 Super": { score: 50, tier: 'entry-level' },
+                "AMD Radeon R9 Nano": { score: 50, tier: 'entry-level' },
+                "Intel Arc A570M": { score: 50, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1070 Laptop": { score: 50, tier: 'entry-level' },
+                "Intel Arc A580": { score: 48, tier: 'entry-level' },
+                "AMD Radeon RX 590": { score: 48, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1660 Ti Laptop": { score: 48, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1060": { score: 45, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1650 Super": { score: 45, tier: 'entry-level' },
+                "Intel Arc A550M": { score: 45, tier: 'entry-level' },
+                "AMD Radeon RX 570": { score: 40, tier: 'entry-level' },
+                "Intel Arc A380": { score: 40, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1650": { score: 40, tier: 'entry-level' },
+                "Intel Arc A530M": { score: 40, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1060 Laptop": { score: 40, tier: 'entry-level' },
+                "AMD Radeon RX 560": { score: 38, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 970": { score: 35, tier: 'entry-level' },
+                "AMD Radeon HD 7970": { score: 35, tier: 'entry-level' },
+                "Intel Arc A370M": { score: 35, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1650 Laptop": { score: 35, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 960": { score: 32, tier: 'entry-level' },
+                "AMD Radeon R9 390": { score: 30, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1050 Ti": { score: 30, tier: 'entry-level' },
+                "AMD Radeon HD 7950": { score: 30, tier: 'entry-level' },
+                "Intel Arc A350M": { score: 30, tier: 'entry-level' },
+                "AMD Radeon RX 560X": { score: 30, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1050": { score: 28, tier: 'entry-level' },
+                "AMD Radeon R9 380": { score: 28, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 750 Ti": { score: 25, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 1050 Laptop": { score: 25, tier: 'entry-level' },
+                "AMD Radeon RX 550X": { score: 25, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 660 Ti": { score: 22, tier: 'entry-level' },
+                "AMD Radeon HD 7870": { score: 20, tier: 'entry-level' },
+                "NVIDIA GeForce GTX 660": { score: 20, tier: 'entry-level' },
+                "AMD Radeon RX 540X": { score: 20, tier: 'entry-level' },
+                "AMD Radeon HD 7770": { score: 18, tier: 'entry-level' },
+                "NVIDIA GeForce MX450": { score: 18, tier: 'entry-level' },
+                "AMD Radeon 680M": { score: 18, tier: 'entry-level' },
+                "NVIDIA GeForce GT 1030": { score: 15, tier: 'entry-level' },
+                "Intel Iris Xe Max": { score: 15, tier: 'entry-level' },
+                "NVIDIA GeForce MX350": { score: 15, tier: 'entry-level' },
+                "AMD Radeon 660M": { score: 15, tier: 'entry-level' },
+                "Intel Iris Xe Graphics G7": { score: 12, tier: 'entry-level' },
+                "NVIDIA GeForce MX250": { score: 12, tier: 'entry-level' },
+                "Intel Iris Xe Graphics": { score: 10, tier: 'entry-level' },
+                "NVIDIA GeForce GT 730": { score: 10, tier: 'entry-level' },
+                "NVIDIA GeForce MX150": { score: 10, tier: 'entry-level' },
+                "AMD Radeon 610M": { score: 10, tier: 'entry-level' },
+                "AMD Radeon Vega 8": { score: 10, tier: 'entry-level' },
+                "AMD Radeon R7 240": { score: 8, tier: 'entry-level' },
+                "Intel Iris Plus Graphics": { score: 8, tier: 'entry-level' },
+                "AMD Radeon Vega 7": { score: 8, tier: 'entry-level' },
+                "AMD Radeon Vega 6": { score: 6, tier: 'entry-level' },
+                "Intel UHD Graphics 770": { score: 5, tier: 'entry-level' },
+                "Intel UHD Graphics": { score: 5, tier: 'entry-level' },
+                "Intel UHD Graphics 630": { score: 3, tier: 'entry-level' },
+            },
+            ramImpact: { "8": 0.9, "16": 1.0, "32": 1.05, "64": 1.1 },
+            purposeImpact: { gaming: { cpu: 0.9, gpu: 1.1 }, streaming: { cpu: 1.1, gpu: 1.0 }, video_editing: { cpu: 1.15, gpu: 0.95 }, "3d_rendering": { cpu: 1.05, gpu: 1.05 }, general: { cpu: 1.0, gpu: 1.0 } },
+            resolutionImpact: { "1080p": 1.0, "1440p": 0.85, "4k": 0.65, "ultrawide": 0.9 }
+        };
+
+    const dom = {
+        calculatorView: document.getElementById('calculator-view'),
+        resultsView: document.getElementById('results-view'),
+        cpuSelect: document.getElementById('cpu-select'),
+        gpuSelect: document.getElementById('gpu-select'),
+        ramSelect: document.getElementById('ram-select'),
+        resolutionSelect: document.getElementById('resolution-select'),
+        purposeSelect: document.getElementById('purpose-select'),
+        calculateBtn: document.getElementById('calculate-btn'),
+        toggleAdvancedBtn: document.getElementById('toggle-advanced'),
+        advancedContent: document.getElementById('advanced-content'),
+        themeToggle: document.getElementById('theme-toggle'),
+    };
+        // --- NEW HELPER FUNCTION FOR OPTION 2 ---
+    // This function gets the component's score and its image URL.
+    function getComponentInfo(type, name) {
+        const componentData = data[type][name];
+        let score = 0;
+        let imageUrl = '';
+
+        // Check if the data is in the new {score, imageUrl} format
+        if (typeof componentData === 'object' && componentData !== null) {
+            score = componentData.score;
+            imageUrl = componentData.imageUrl; // Use the specific image if it exists
+        } else {
+            score = componentData || 0; // Otherwise, just get the score
+        }
+
+        // If no specific imageUrl was found, generate one automatically using logo.dev
+        if (!imageUrl) {
+            let brand = "chip"; // A generic fallback
+            const lowerCaseName = name.toLowerCase();
+
+            if (lowerCaseName.includes("intel")) brand = "intel";
+            else if (lowerCaseName.includes("amd") || lowerCaseName.includes("ryzen") || lowerCaseName.includes("radeon")) brand = "amd";
+            else if (lowerCaseName.includes("nvidia") || lowerCaseName.includes("geforce")) brand = "nvidia";
+            else if (lowerCaseName.includes("apple")) brand = "apple";
+            
+            // Construct the URL for logo.dev
+            // Note: logo.dev might not have every brand, but it's great for major ones.
+            if(brand !== "chip") {
+                 imageUrl = `https://logo.dev/${brand}.com`;
+            } else {
+                 // Fallback to your original placeholder if no brand is matched
+                 imageUrl = (type === 'cpus') ? "https://i.imgur.com/PHYyIxl.png" : "https://i.imgur.com/Jprx55s.png";
+            }
+        }
+        
+        return { score, imageUrl };
+    }
+
+    function populateDropdown(selectElement, data) {
+        Object.keys(data).sort().forEach(item => {
+            selectElement.add(new Option(item, item));
+        });
+    }
+
+        function calculateBottleneck() {
+        const selected = {
+            cpu: dom.cpuSelect.value, gpu: dom.gpuSelect.value, ram: dom.ramSelect.value,
+            resolution: dom.resolutionSelect.value, purpose: dom.purposeSelect.value
+        };
+
+        if (!selected.cpu || !selected.gpu) {
+            alert('Please select both a CPU and a GPU.'); return;
+        }
+
+        // --- MODIFICATION START ---
+        // Use the new helper function to get ALL component info, including image URLs
+        const cpuInfo = getComponentInfo('cpus', selected.cpu);
+        const gpuInfo = getComponentInfo('gpus', selected.gpu);
+
+        // Use the scores from the info objects for calculations
+        const baseScores = { cpu: cpuInfo.score, gpu: gpuInfo.score };
+        // --- MODIFICATION END ---
+        
+        const modifiers = {
+            ram: data.ramImpact[selected.ram],
+            purpose: data.purposeImpact[selected.purpose],
+            resolution: data.resolutionImpact[selected.resolution]
+        };
+
+        const finalScores = {
+            cpu: baseScores.cpu * modifiers.purpose.cpu * modifiers.ram,
+            gpu: baseScores.gpu * modifiers.purpose.gpu * modifiers.resolution.gpu
+        };
+        
+        let bottleneck = { percentage: 0, component: 'None', text: '' };
+        if (finalScores.cpu > finalScores.gpu * 1.05) {
+            bottleneck.percentage = ((finalScores.cpu - finalScores.gpu) / finalScores.cpu) * 100;
+            bottleneck.component = 'CPU';
+        } else if (finalScores.gpu > finalScores.cpu * 1.05) {
+            bottleneck.percentage = ((finalScores.gpu - finalScores.cpu) / finalScores.gpu) * 100;
+            bottleneck.component = 'GPU';
+        }
+
+        if (bottleneck.percentage > 20) bottleneck.text = `Severe ${bottleneck.component} Bottleneck`;
+        else if (bottleneck.percentage > 10) bottleneck.text = `Moderate ${bottleneck.component} Bottleneck`;
+        else if (bottleneck.component !== 'None') bottleneck.text = `Minor ${bottleneck.component} Bottleneck`;
+        else bottleneck.text = 'Excellent System Balance';
+        
+        // --- MODIFICATION: Pass the new info objects to the display function ---
+        displayResults(selected, bottleneck, cpuInfo, gpuInfo);
+    }
+         // --- FINAL, CORRECTED FUNCTION ---
+    function displayResults(selected, bottleneck, cpuInfo, gpuInfo) { // Note the arguments from the last step
+        dom.calculatorView.classList.add('hidden');
+        dom.resultsView.classList.remove('hidden');
+
+        let summaryColor = bottleneck.percentage > 10 ? 'var(--accent)' : 'var(--success)';
+        let summaryText = bottleneck.component === 'CPU' ? `Your GPU is being limited by your CPU's performance.` :
+                          bottleneck.component === 'GPU' ? `Your CPU is powerful enough for a stronger GPU.` :
+                          'Your components are very well-balanced for this workload.';
+        
+        // --- NEW: LOGIC TO GET THE CORRECT LOGO URL ---
+        const brandToDomain = {
+            intel: "intel.com",
+            amd: "amd.com",
+            nvidia: "nvidia.com",
+            apple: "apple.com"
+        };
+        
+        const getLogoUrl = (name) => {
+            const lowerCaseName = name.toLowerCase();
+            for (const brand in brandToDomain) {
+                if (lowerCaseName.includes(brand)) {
+                    // Use a reliable service that provides direct image links
+                    return `https://icons.duckduckgo.com/ip3/${brandToDomain[brand]}.ico`;
+                }
+            }
+            return null; // Return null if no brand is found
+        };
+
+        const cpuLogoUrl = getLogoUrl(selected.cpu);
+        const gpuLogoUrl = getLogoUrl(selected.gpu);
+
+        // --- NEW: DEFINE THE FALLBACK IMAGES ---
+        const cpuFallbackImage = "https://i.imgur.com/PHYyIxl.png";
+        const gpuFallbackImage = "https://i.imgur.com/Jprx55s.png";
+        
+        dom.resultsView.innerHTML = `
             <h2>Bottleneck Analysis</h2>
             <div class="bottleneck-summary" style="border-color: ${summaryColor}; background-color: ${summaryColor}1A;">
                 <h3 style="color: ${summaryColor};">${bottleneck.text}</h3>
@@ -49,16 +1134,76 @@ return null};const cpuLogoUrl=getLogoUrl(selected.cpu);const gpuLogoUrl=getLogoU
             <div class="performance-details">
                 <h4>Recommendations & Insights</h4>
                 <ul>
-                    <li><strong>System Balance:</strong> ${bottleneck.component === 'None' ? 'Your system is well-balanced.' : `Your<strong>${bottleneck.component}</strong>is the limiting factor.`}</li>
+                    <li><strong>System Balance:</strong> ${bottleneck.component === 'None' ? 'Your system is well-balanced.' : `Your <strong>${bottleneck.component}</strong> is the limiting factor.`}</li>
                     <li><strong>Gaming Performance:</strong> ${bottleneck.component === 'CPU' ? 'In CPU-heavy games (e.g., strategy, simulations), you may see inconsistent framerates. Consider lowering settings like physics or NPC density.' : 'Your system is well-suited for GPU-intensive games. You can likely increase graphical settings without a major performance hit.'}</li>
                     <li><strong>Resolution Impact:</strong> At ${dom.resolutionSelect.options[dom.resolutionSelect.selectedIndex].text}, the workload is ${data.resolutionImpact[selected.resolution].gpu > 1 ? 'heavily placed on the GPU' : 'balanced between the CPU and GPU'}.</li>
-                    ${bottleneck.percentage > 10 ? `<li><strong>Upgrade Path:</strong>To improve performance for this workload,upgrading your<strong>${bottleneck.component}</strong>would yield the best results.</li>` : ''}
+                    ${bottleneck.percentage > 10 ? `<li><strong>Upgrade Path:</strong> To improve performance for this workload, upgrading your <strong>${bottleneck.component}</strong> would yield the best results.</li>` : ''}
                 </ul>
             </div>
             <div class="action-buttons">
                 <button id="new-calculation-btn">Calculate Again</button>
             </div>
-        `;document.getElementById('new-calculation-btn').addEventListener('click',()=>{dom.resultsView.innerHTML='';dom.resultsView.classList.add('hidden');dom.calculatorView.classList.remove('hidden')})}
-function setupTheme(){const storedTheme=localStorage.getItem('theme');const systemPrefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;const currentTheme=storedTheme||(systemPrefersDark?'dark-mode':'light-mode');document.body.classList.toggle('dark-mode',currentTheme==='dark-mode');dom.themeToggle.checked=currentTheme==='dark-mode';dom.themeToggle.addEventListener('change',(e)=>{const theme=e.target.checked?'dark-mode':'light-mode';document.body.classList.toggle('dark-mode',e.target.checked);localStorage.setItem('theme',theme)})}
-populateDropdown(dom.cpuSelect,data.cpus);populateDropdown(dom.gpuSelect,data.gpus);setupTheme();dom.calculateBtn.addEventListener('click',calculateBottleneck);dom.toggleAdvancedBtn.addEventListener('click',()=>{const isHidden=dom.advancedContent.classList.toggle('hidden');dom.toggleAdvancedBtn.textContent=isHidden?'Advanced Options ▼':'Advanced Options ▲'});document.querySelectorAll('.faq-question').forEach(button=>{button.addEventListener('click',()=>{const answer=button.nextElementSibling;button.classList.toggle('active');answer.style.maxHeight=button.classList.contains('active')?answer.scrollHeight+"px":null})});const quickToolsBar=document.getElementById('quick-tools-bar');const quickToolsToggleBtn=document.getElementById('collapse-toggle-btn');if(quickToolsBar&&quickToolsToggleBtn){const isCollapsed=localStorage.getItem('quickToolsCollapsed')==='true';if(isCollapsed){quickToolsBar.classList.add('collapsed')}
-quickToolsToggleBtn.addEventListener('click',()=>{quickToolsBar.classList.toggle('collapsed');const isNowCollapsed=quickToolsBar.classList.contains('collapsed');localStorage.setItem('quickToolsCollapsed',isNowCollapsed)})}});</script>
+        `;
+        document.getElementById('new-calculation-btn').addEventListener('click', () => {
+            dom.resultsView.innerHTML = ''; // Clear the results
+            dom.resultsView.classList.add('hidden');
+            dom.calculatorView.classList.remove('hidden');
+        });
+    }
+
+    function setupTheme() {
+        const storedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const currentTheme = storedTheme || (systemPrefersDark ? 'dark-mode' : 'light-mode');
+        
+        document.body.classList.toggle('dark-mode', currentTheme === 'dark-mode');
+        dom.themeToggle.checked = currentTheme === 'dark-mode';
+
+        dom.themeToggle.addEventListener('change', (e) => {
+            const theme = e.target.checked ? 'dark-mode' : 'light-mode';
+            document.body.classList.toggle('dark-mode', e.target.checked);
+            localStorage.setItem('theme', theme);
+        });
+    }
+
+    // Initial Setup
+    populateDropdown(dom.cpuSelect, data.cpus);
+    populateDropdown(dom.gpuSelect, data.gpus);
+    setupTheme();
+
+    // Event Listeners
+    dom.calculateBtn.addEventListener('click', calculateBottleneck);
+    dom.toggleAdvancedBtn.addEventListener('click', () => {
+        const isHidden = dom.advancedContent.classList.toggle('hidden');
+        dom.toggleAdvancedBtn.textContent = isHidden ? 'Advanced Options ▼' : 'Advanced Options ▲';
+    });
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            button.classList.toggle('active');
+            answer.style.maxHeight = button.classList.contains('active') ? answer.scrollHeight + "px" : null;
+        });
+    });
+    // --- Collapsible Quick Tools Bar Logic ---
+        const quickToolsBar = document.getElementById('quick-tools-bar');
+        const quickToolsToggleBtn = document.getElementById('collapse-toggle-btn');
+
+        if (quickToolsBar && quickToolsToggleBtn) {
+            // Check local storage for the user's preference on page load
+            const isCollapsed = localStorage.getItem('quickToolsCollapsed') === 'true';
+            if (isCollapsed) {
+                quickToolsBar.classList.add('collapsed');
+            }
+
+            // Add the click event listener to the button
+            quickToolsToggleBtn.addEventListener('click', () => {
+                quickToolsBar.classList.toggle('collapsed');
+                
+                // Save the new state (true or false) to local storage
+                const isNowCollapsed = quickToolsBar.classList.contains('collapsed');
+                localStorage.setItem('quickToolsCollapsed', isNowCollapsed);
+            });
+        }
+   
+});
+</script>
