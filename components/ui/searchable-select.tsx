@@ -16,6 +16,8 @@ interface SearchableSelectProps {
   options: string[];
   type: 'cpu' | 'gpu';
   className?: string;
+  emptyPlaceholder?: string;
+  id?: string;
 }
 
 export function SearchableSelect({
@@ -24,23 +26,25 @@ export function SearchableSelect({
   placeholder,
   options,
   type,
-  className
+  className,
+  emptyPlaceholder = "No options found.",
+  id
 }: SearchableSelectProps) {
   const [open, setOpen] = useState(false);
 
   const sortedOptions = useMemo(() => {
-    const components = type === 'cpu' ? calculatorData.cpus : calculatorData.gpus;
-    return options.sort((a, b) => {
-      const scoreA = components[a as keyof typeof components]?.score || 0;
-      const scoreB = components[b as keyof typeof components]?.score || 0;
-      return scoreB - scoreA;
-    });
-  }, [options, type]);
+  const components = (type === 'cpu' ? calculatorData.cpus : calculatorData.gpus) as any;
+  return options.sort((a, b) => {
+    const scoreA = components[a]?.score || 0;
+    const scoreB = components[b]?.score || 0;
+    return scoreB - scoreA;
+  });
+}, [options, type]);
 
   const getComponentInfo = (componentName: string) => {
-    const components = type === 'cpu' ? calculatorData.cpus : calculatorData.gpus;
-    return components[componentName as keyof typeof components];
-  };
+  const components = (type === 'cpu' ? calculatorData.cpus : calculatorData.gpus) as any;
+  return components[componentName];
+};
 
   const formatComponentDisplay = (componentName: string) => {
     const info = getComponentInfo(componentName);
@@ -79,6 +83,7 @@ export function SearchableSelect({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          id={id}
           variant="outline"
           role="combobox"
           aria-expanded={open}
@@ -100,69 +105,76 @@ export function SearchableSelect({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0" align="start">
-        <Command>
-          <div className="flex items-center border-b px-3">
-            <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-            <CommandInput 
-              placeholder={`Search ${type === 'cpu' ? 'processors' : 'graphics cards'}...`}
-              className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-            />
-          </div>
-          <CommandList className="max-h-[300px] overflow-y-auto">
-            <CommandEmpty>No {type === 'cpu' ? 'processor' : 'graphics card'} found.</CommandEmpty>
-            <CommandGroup>
-              {sortedOptions.map((option) => {
-                const info = getComponentInfo(option);
-                return (
-                  <CommandItem
-                    key={option}
-                    value={option}
-                    onSelect={(currentValue) => {
-                      onValueChange(currentValue === value ? "" : currentValue);
-                      setOpen(false);
-                    }}
-                    className="flex items-center justify-between py-3 px-2 cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          value === option ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      <div className="flex flex-col">
-                        <span className="font-medium">{option}</span>
-                        <div className="flex items-center gap-2 mt-1">
-                          {info && (
-                            <>
-                              <Badge className={`text-xs px-2 py-0.5 ${getTierColor(info.tier)}`}>
-                                {info.tier.replace('-', ' ')}
-                              </Badge>
-                              <span className="text-xs text-muted-foreground">
-                                Score: {info.score}
-                              </span>
-                              {type === 'cpu' && 'cores' in info && (
-                                <span className="text-xs text-muted-foreground">
-                                  {info.cores}C/{info.threads}T
-                                </span>
-                              )}
-                              {type === 'gpu' && 'vram' in info && (
-                                <span className="text-xs text-muted-foreground">
-                                  {info.vram}GB
-                                </span>
-                              )}
-                            </>
+  {options.length === 0 ? (
+    <div className="p-3 text-center text-muted-foreground">
+      <Search className="mx-auto h-4 w-4 mb-2 opacity-50" />
+      {emptyPlaceholder}
+    </div>
+  ) : (
+    <Command>
+      <div className="flex items-center border-b px-3">
+        <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+        <CommandInput 
+          placeholder={`Search ${type === 'cpu' ? 'processors' : 'graphics cards'}...`}
+          className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+        />
+      </div>
+      <CommandList className="max-h-[300px] overflow-y-auto">
+        <CommandEmpty>No {type === 'cpu' ? 'processor' : 'graphics card'} found.</CommandEmpty>
+        <CommandGroup>
+          {sortedOptions.map((option) => {
+            const info = getComponentInfo(option);
+            return (
+              <CommandItem
+                key={option}
+                value={option}
+                onSelect={(currentValue) => {
+                  onValueChange(currentValue === value ? "" : currentValue);
+                  setOpen(false);
+                }}
+                className="flex items-center justify-between py-3 px-2 cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === option ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-medium">{option}</span>
+                    <div className="flex items-center gap-2 mt-1">
+                      {info && (
+                        <>
+                          <Badge className={`text-xs px-2 py-0.5 ${getTierColor(info.tier)}`}>
+                            {info.tier.replace('-', ' ')}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">
+                            Score: {info.score}
+                          </span>
+                          {type === 'cpu' && 'cores' in info && (
+                            <span className="text-xs text-muted-foreground">
+                              {info.cores}C/{info.threads}T
+                            </span>
                           )}
-                        </div>
-                      </div>
+                          {type === 'gpu' && 'vram' in info && (
+                            <span className="text-xs text-muted-foreground">
+                              {info.vram}GB
+                            </span>
+                          )}
+                        </>
+                      )}
                     </div>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
+                  </div>
+                </div>
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  )}
+</PopoverContent>
     </Popover>
   );
 }

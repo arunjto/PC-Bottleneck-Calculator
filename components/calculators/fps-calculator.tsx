@@ -10,6 +10,9 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { calculatorData, gamesData, resolutionMultipliers } from '@/lib/calculator-data';
 
+// Define a type for game names based on the keys of gamesData
+type Game = keyof typeof gamesData | '';
+
 export function FpsCalculator() {
   const [selectedCpu, setSelectedCpu] = useState('');
   const [selectedGpu, setSelectedGpu] = useState('');
@@ -29,7 +32,7 @@ export function FpsCalculator() {
 
     const cpuData = calculatorData.cpus[selectedCpu as keyof typeof calculatorData.cpus];
     const gpuData = calculatorData.gpus[selectedGpu as keyof typeof calculatorData.gpus];
-    
+
     if (!cpuData || !gpuData) {
       alert('Invalid component selection.');
       return;
@@ -37,7 +40,7 @@ export function FpsCalculator() {
 
     const cpuScore = getPerformanceScore(cpuData.score);
     const gpuScore = getPerformanceScore(gpuData.score);
-    const game = gamesData[selectedGame];
+    const game = gamesData[selectedGame as keyof typeof gamesData];
     const resMultiplier = resolutionMultipliers[selectedResolution as keyof typeof resolutionMultipliers];
 
     const weightedHardwareScore = (cpuScore * game.cpuWeight) + (gpuScore * game.gpuWeight);
@@ -64,7 +67,7 @@ export function FpsCalculator() {
       smooth: 'You can expect a smooth gaming experience at these settings.',
       excellent: 'Your system should provide an excellent, high-framerate experience in this title.'
     };
-    
+
     const tier = getPerformanceTier(fps).tier as keyof typeof messages;
     return messages[tier];
   };
@@ -73,111 +76,121 @@ export function FpsCalculator() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
+      className="w-full max-w-4xl mx-auto p-6"
     >
-      <Card className="shadow-lg">
+      <Card>
         <CardHeader>
-          <CardTitle>Gaming Performance Estimator</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">
+            Gaming Performance Estimator
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="cpu-select">Processor (CPU)</Label>
-              <SearchableSelect
-                value={selectedCpu}
-                onValueChange={setSelectedCpu}
-                placeholder="-- Select CPU --"
-                options={Object.keys(calculatorData.cpus)}
-                type="cpu"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="gpu-select">Graphics Card (GPU)</Label>
-              <SearchableSelect
-                value={selectedGpu}
-                onValueChange={setSelectedGpu}
-                placeholder="-- Select GPU --"
-                options={Object.keys(calculatorData.gpus)}
-                type="gpu"
-              />
-            </div>
+          {/* CPU Selection */}
+          <div className="space-y-2">
+            <Label htmlFor="cpu-select">Processor (CPU)</Label>
+            <SearchableSelect
+              value={selectedCpu}
+              onValueChange={setSelectedCpu}
+              options={Object.keys(calculatorData.cpus)}
+              placeholder="-- Select CPU --"
+              emptyPlaceholder="No CPUs found."
+              type="cpu"
+              id="cpu-select"
+            />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="game-select">Select a Game</Label>
-              <Select value={selectedGame} onValueChange={setSelectedGame}>
-                <SelectTrigger>
-                  <SelectValue placeholder="-- Select Game --" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(gamesData)
-                    .sort(([, a], [, b]) => b.releaseYear - a.releaseYear)
-                    .map(([game, data]) => (
+          {/* GPU Selection */}
+          <div className="space-y-2">
+            <Label htmlFor="gpu-select">Graphics Card (GPU)</Label>
+            <SearchableSelect
+              value={selectedGpu}
+              onValueChange={setSelectedGpu}
+              options={Object.keys(calculatorData.gpus)}
+              placeholder="-- Select GPU --"
+              emptyPlaceholder="No GPUs found."
+              type="gpu"
+              id="gpu-select"
+            />
+          </div>
+
+          {/* Game Selection */}
+          <div className="space-y-2">
+            <Label htmlFor="game-select">Select a Game</Label>
+            <Select value={selectedGame} onValueChange={(value) => setSelectedGame(value as Game)}>
+              <SelectTrigger>
+                <SelectValue placeholder="-- Select a Game --" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(gamesData)
+                  .sort(([, a], [, b]) => b.releaseYear - a.releaseYear)
+                  .map(([game, data]) => (
                     <SelectItem key={game} value={game}>
                       <div className="flex items-center justify-between w-full">
                         <span>{game}</span>
-                        <div className="flex items-center gap-2 ml-2">
-                          <Badge variant="outline" className="text-xs">
-                            {data.category}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground">
-                            {data.releaseYear}
-                          </span>
+                        <div className="flex gap-2 ml-2">
+                          <Badge variant="secondary">{data.category}</Badge>
+                          <Badge variant="outline">{data.releaseYear}</Badge>
                         </div>
                       </div>
                     </SelectItem>
                   ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="resolution-select">Target Resolution</Label>
-              <Select value={selectedResolution} onValueChange={setSelectedResolution}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1080p">1080p (FHD)</SelectItem>
-                  <SelectItem value="1440p">1440p (QHD)</SelectItem>
-                  <SelectItem value="4k">4K (UHD)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              </SelectContent>
+            </Select>
           </div>
 
-          <Button 
+          {/* Resolution Selection */}
+          <div className="space-y-2">
+            <Label htmlFor="resolution-select">Target Resolution</Label>
+            <Select value={selectedResolution} onValueChange={setSelectedResolution}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1080p">1080p (FHD)</SelectItem>
+                <SelectItem value="1440p">1440p (QHD)</SelectItem>
+                <SelectItem value="4K">4K (UHD)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Calculate Button */}
+          <Button
             onClick={calculateFps}
-            className="w-full h-12 text-lg font-semibold"
+            className="w-full"
             size="lg"
           >
             Estimate My FPS
           </Button>
 
+          {/* Results */}
           {results && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="text-center space-y-4 pt-6 border-t"
+              transition={{ duration: 0.3 }}
+              className="mt-6"
             >
-              <p className="text-lg">
-                Estimated average performance for <strong>{results.game}</strong> at <strong>{results.resolution}</strong>:
-              </p>
-              
-              <div className={`text-7xl font-bold ${getPerformanceTier(results.fps).color} leading-none`}>
-                {results.fps}
-              </div>
-              
-              <div className="text-xl text-muted-foreground font-medium">
-                Average FPS
-              </div>
-              
-              <p className="text-base max-w-md mx-auto leading-relaxed">
-                {getPerformanceMessage(results.fps)}
-              </p>
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="text-center space-y-4">
+                    <p className="text-lg">
+                      Estimated average performance for <strong>{results.game}</strong> at <strong>{results.resolution}</strong>:
+                    </p>
+                    <div className="text-6xl font-bold">
+                      <span className={getPerformanceTier(results.fps).color}>
+                        {results.fps}
+                      </span>
+                    </div>
+                    <Badge variant="outline" className="text-lg px-4 py-2">
+                      Average FPS
+                    </Badge>
+                    <p className="text-muted-foreground mt-4">
+                      {getPerformanceMessage(results.fps)}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           )}
         </CardContent>

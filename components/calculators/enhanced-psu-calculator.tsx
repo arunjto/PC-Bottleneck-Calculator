@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
 import { allCPUs, allGPUs, getCPUById, getGPUById, calculatePSURequirement } from '@/lib/hardware-database';
-import { Zap, Battery, Shield, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Zap, Battery, Shield, TrendingUp, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 
