@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /404
+Disallow: /500
+
+# Host
+Host: https://www.pcbuildcheck.com
+
+# Sitemaps
+Sitemap: https://www.pcbuildcheck.com/sitemap.xml
