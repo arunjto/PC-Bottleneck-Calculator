@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: 'https://www.pcbuildcheck.com',
-  generateRobotsTxt: true, 
+  generateRobotsTxt: true,
   sitemapSize: 5000,
 
   robotsTxtOptions: {
@@ -17,8 +17,6 @@ module.exports = {
         ],
       },
     ],
-    additionalSitemaps: [
-      'https://www.pcbuildcheck.com/sitemap.xml',
-    ],
   },
 };
+
