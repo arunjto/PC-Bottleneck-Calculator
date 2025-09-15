@@ -8,7 +8,18 @@
           "value": "pc-bottleneck-calculator-fawn.vercel.app"
         }
       ],
-      "destination": "https://pcbuildcheck.com/$1",
+      "destination": "https://www.pcbuildcheck.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "pcbuildcheck.com"
+        }
+      ],
+      "destination": "https://www.pcbuildcheck.com/$1",
       "permanent": true
     },
     {
@@ -18,3 +29,4 @@
     }
   ]
 }
+

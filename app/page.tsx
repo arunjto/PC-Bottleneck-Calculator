@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'PC Bottleneck Calculator - Check Your CPU & GPU Balance',
   description: 'Instantly check your PC for component bottlenecks. Our free calculator analyzes your CPU and GPU to prevent performance loss and help you build a balanced system.',
   keywords: ['PC bottleneck calculator', 'CPU GPU balance', 'gaming performance', 'system optimization'],
+  alternates: {
+    canonical: 'https://www.pcbuildcheck.com',
+  },
 };
 
 export default function HomePage() {

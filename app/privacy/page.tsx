@@ -5,6 +5,9 @@ import { MotionWrapper } from '@/components/ui/motion-wrapper';
 export const metadata: Metadata = {
   title: 'Privacy Policy - PC Performance Calculator',
   description: 'Our privacy policy explains how we handle your data and protect your privacy while using our PC performance tools.',
+  alternates: {
+    canonical: "https://www.pcbuildcheck.com/privacy",
+  },
 };
 
 export default function PrivacyPage() {

@@ -5,7 +5,10 @@ import { MotionWrapper } from '@/components/ui/motion-wrapper';
 export const metadata: Metadata = {
   title: 'About Us - PC Performance Calculator',
   description: 'Learn about our mission to make PC building accessible and help you create balanced, high-performance systems.',
-};
+  alternates: {
+    canonical: "https://www.pcbuildcheck.com/about", // replace dynamically
+  },
+  };
 
 export default function AboutPage() {
   return (
