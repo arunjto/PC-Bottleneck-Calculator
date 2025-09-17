@@ -25,6 +25,10 @@ const faqData = [
   {
     question: "Do other components like RAM cause bottlenecks?",
     answer: "Yes. While the CPU/GPU relationship is the most critical, other parts matter. Insufficient or slow RAM can cause stuttering in demanding tasks. Likewise, a slow hard drive (HDD) will drastically increase loading times compared to an SSD, creating a noticeable storage bottleneck."
+  },
+  {
+    question: "Should I aim for 100% utilization on both CPU and GPU?",
+    answer: "Not necessarily. Ideally, for gaming, you want your GPU utilization to be consistently high (near 95-100%), as this indicates it's working hard to produce frames. Your CPU utilization will vary by game and background tasks; it's less critical for it to be at 100%. If your GPU utilization is low (e.g., 50-70%) while your CPU is high, that's a strong indicator of a CPU bottleneck."
   }
 ];
 
