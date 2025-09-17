@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Mail, Send, User } from 'lucide-react';
+import { Mail, Send, User, Phone, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -126,46 +126,65 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-6">
+          {/* Email */}
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
                 <Mail className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-semibold mb-2">General Inquiries</h3>
+                  <h3 className="font-semibold mb-2">Email</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    For questions about our calculators or general feedback, please email us at:
+                    For general inquiries or support, please email us at:
                   </p>
                   <a 
-                    href="mailto:contact@pcperformancecalc.com"
+                    href="mailto:contact@pcbuildcheck.com"
                     className="text-primary hover:underline font-medium"
                   >
-                    contact@pcperformancecalc.com
+                    contact@pcbuildcheck.com
                   </a>
                 </div>
               </div>
             </CardContent>
           </Card>
 
+          {/* Phone */}
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
-                <User className="h-5 w-5 text-primary mt-1" />
+                <Phone className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-semibold mb-2">Partnerships</h3>
+                  <h3 className="font-semibold mb-2">Phone</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    For partnership opportunities or data inquiries, reach out to:
+                    You can also reach us directly at:
                   </p>
                   <a 
-                    href="mailto:partners@pcperformancecalc.com"
+                    href="tel:+13055557890"
                     className="text-primary hover:underline font-medium"
                   >
-                    partners@pcperformancecalc.com
+                    +(305) 555-7890
                   </a>
                 </div>
               </div>
             </CardContent>
           </Card>
 
+          {/* Address */}
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-primary mt-1" />
+                <div>
+                  <h3 className="font-semibold mb-2">Office Address</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    1428 Orange Blossom Drive,<br />
+                    Orlando, FL 32801
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Response Time */}
           <Card className="border-amber-200 bg-amber-50 dark:bg-amber-950/20">
             <CardContent className="pt-6">
               <p className="text-sm text-amber-800 dark:text-amber-200">
