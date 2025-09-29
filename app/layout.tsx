@@ -10,24 +10,34 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | PC Performance Calculator',
-    default: 'PC Performance Calculator - Check Your CPU & GPU Balance'
+    template: '%s | PC Bottleneck Calculator',
+    default: 'PC Bottleneck Calculator - Optimize CPU & GPU Performance'
   },
-  description: 'Instantly check your PC for component bottlenecks. Our free calculator analyzes your CPU and GPU to prevent performance loss and help you build a balanced system.',
-  keywords: ['PC bottleneck calculator', 'CPU GPU balance', 'gaming performance', 'FPS calculator', 'PSU calculator'],
-  authors: [{ name: 'PC Performance Calculator' }],
+  description:
+    'Use our free PC Bottleneck Calculator to analyze CPU and GPU performance, fix system bottlenecks, and build a balanced gaming PC for maximum FPS.',
+  keywords: [
+    'PC Bottleneck Calculator',
+    'CPU GPU bottleneck',
+    'gaming performance',
+    'FPS calculator',
+    'PSU calculator',
+    'balanced PC build'
+  ],
+  authors: [{ name: 'PC Build Check' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://your-domain.com',
-    title: 'PC Performance Calculator - Optimize Your Gaming Build',
-    description: 'Free tools to analyze CPU/GPU bottlenecks, estimate gaming FPS, and calculate PSU requirements.',
-    siteName: 'PC Performance Calculator',
+    url: 'https://www.pcbuildcheck.com',
+    title: 'PC Bottleneck Calculator - Analyze CPU & GPU Performance',
+    description:
+      'Free PC Bottleneck Calculator to find CPU/GPU mismatches, optimize gaming FPS, and build a balanced PC system.',
+    siteName: 'PC Build Check',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PC Performance Calculator',
-    description: 'Free tools to analyze CPU/GPU bottlenecks, estimate gaming FPS, and calculate PSU requirements.',
+    title: 'PC Bottleneck Calculator',
+    description:
+      'Free tools to analyze CPU/GPU bottlenecks, estimate gaming FPS, and calculate PSU requirements.',
   },
   manifest: '/manifest.json',
   viewport: 'width=device-width, initial-scale=1',
@@ -45,9 +55,7 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <QuickToolsBar />
-            <main className="flex-grow">
-              {children}
-            </main>
+            <main className="flex-grow">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

@@ -5,13 +5,19 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: { 
+  images: {
     unoptimized: true,
     domains: ['i.imgur.com', 'images.pexels.com']
   },
   experimental: {
     optimizeCss: true,
+    cssChunking: 'strict',
+    inlineCss: true, // Critical for static exports
+  },
+  // Ensure CSS is properly handled
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 };
 
-module.exports = nextConfig;
+module.exports = nextConfig;
