@@ -11,7 +11,6 @@ module.exports = {
         allow: '/',
         disallow: [
           '/api/',        // block API routes
-          '/_next/',      // block Next.js build files
           '/404',         // block error page
           '/500',         // block server error page
         ],
