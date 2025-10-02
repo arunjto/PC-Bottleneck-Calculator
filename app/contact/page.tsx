@@ -4,6 +4,9 @@ import { ContactForm } from '@/components/contact/contact-form';
 export const metadata: Metadata = {
   title: 'Contact Us - PC Performance Calculator',
   description: 'Get in touch with our team for questions, feedback, or partnership inquiries about our PC performance tools.',
+  alternates: {
+    canonical: "https://www.pcbuildcheck.com/contact", // replace dynamically
+  },
 };
 
 export default function ContactPage() {
