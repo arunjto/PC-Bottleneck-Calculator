@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { FpsCalculator } from '@/components/calculators/fps-calculator';
+import {EnhancedFPSCalculator} from '@/components/calculators/enhanced-fps-calculator'
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { FpsGuideContent } from '@/components/content/fps-guide-content';
 
@@ -121,7 +122,7 @@ export default function FpsCalculatorPage() {
           </p>
         </div>
 
-        <FpsCalculator />
+        <EnhancedFPSCalculator />
         <FpsGuideContent />
         <InterlinkBox
           title="Is your FPS lower than expected?"

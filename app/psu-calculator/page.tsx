@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import {EnhancedPSUCalculator} from '@/components/calculators/enhanced-psu-calculator'
 import { PsuCalculator } from '@/components/calculators/psu-calculator';
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { PsuContent } from '@/components/content/psu-guide-content';
@@ -126,7 +127,7 @@ export default function PsuCalculatorPage() {
           </p>
         </div>
 
-        <PsuCalculator />
+        <EnhancedPSUCalculator />
         <PsuContent />
 
         <InterlinkBox
