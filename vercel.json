@@ -27,5 +27,6 @@
       "destination": "/:slug",
       "statusCode": 301
     }
-  ]
+  ],
+  "rewrites": []
 }
