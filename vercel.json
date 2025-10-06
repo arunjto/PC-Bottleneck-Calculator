@@ -1,31 +1,31 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "pc-bottleneck-calculator-fawn.vercel.app"
         }
       ],
-      "destination": "https://www.pcbuildcheck.com/$1",
-      "permanent": true
+      "destination": "https://www.pcbuildcheck.com/:path*",
+      "statusCode": 301
     },
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "pcbuildcheck.com"
         }
       ],
-      "destination": "https://www.pcbuildcheck.com/$1",
-      "permanent": true
+      "destination": "https://www.pcbuildcheck.com/:path*",
+      "statusCode": 301
     },
     {
       "source": "/:slug.html",
       "destination": "/:slug",
-      "permanent": true
+      "statusCode": 301
     }
   ]
 }
