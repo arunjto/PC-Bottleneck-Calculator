@@ -14,14 +14,14 @@
     <loc>https://www.pcbuildcheck.com/fps-calculator</loc>
     <lastmod>2025-09-28</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1</priority>
+    <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://www.pcbuildcheck.com/psu-calculator</loc>
     <lastmod>2025-09-28</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1</priority>
+    <priority>1.0</priority>
   </url>
 
   <!-- Static Pages -->

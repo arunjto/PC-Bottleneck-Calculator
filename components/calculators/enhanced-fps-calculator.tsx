@@ -8,48 +8,75 @@ import { Gamepad2, Monitor, BarChart3, TrendingUp } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 
 const resolutionOptions = [
-  { id: '1080p', name: '1920×1080 (1080p)', tier: 'Standard', specs: 'Full HD, 60-144Hz recommended', price: 0 },
-  { id: '1440p', name: '2560×1440 (1440p)', tier: 'High-End', specs: 'Quad HD, 144Hz recommended', price: 0 },
-  { id: '4K', name: '3840×2160 (4K)', tier: 'Premium', specs: 'Ultra HD, 60-120Hz', price: 0 }
+  { id: "1080p", name: "1920×1080 (1080p)", tier: "Standard", specs: "Full HD", price: 0 },
+  { id: "1440p", name: "2560×1440 (1440p)", tier: "High-End", specs: "Quad HD", price: 0 },
+  { id: "4K", name: "3840×2160 (4K)", tier: "Premium", specs: "Ultra HD", price: 0 },
 ];
 
-export function EnhancedFPSCalculator() {
-  const [selectedCPU, setSelectedCPU] = useState('');
-  const [selectedGPU, setSelectedGPU] = useState('');
-  const [selectedGame, setSelectedGame] = useState('');
-  const [selectedResolution, setSelectedResolution] = useState('');
+export function EnhancedFPSCalculator({
+  onBuildChange,
+}: {
+  onBuildChange?: (build: {
+    cpu: string;
+    gpu: string;
+    game: string;
+    resolution: string;
+    fps: number;
+  }) => void;
+}) {
+  const [selectedCPU, setSelectedCPU] = useState("");
+  const [selectedGPU, setSelectedGPU] = useState("");
+  const [selectedGame, setSelectedGame] = useState("");
+  const [selectedResolution, setSelectedResolution] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [estimatedFPS, setEstimatedFPS] = useState<number | null>(null);
 
-  // Transform data for select components
-  const cpuOptions = allCPUs.map(cpu => ({
+  const cpuOptions = allCPUs.map((cpu) => ({
     id: cpu.id,
     name: cpu.name,
     tier: cpu.tier,
-    benchmarkScore: cpu.benchmarkScore,
     specs: `${cpu.cores}C/${cpu.threads}T, ${cpu.boostClock}GHz`,
-    price: cpu.currentPrice
+    price: cpu.currentPrice,
   }));
 
-  const gpuOptions = allGPUs.map(gpu => ({
+  const gpuOptions = allGPUs.map((gpu) => ({
     id: gpu.id,
     name: gpu.name,
     tier: gpu.tier,
-    benchmarkScore: gpu.benchmarkScore,
     specs: `${gpu.vram}GB VRAM, ${gpu.boostClock}MHz`,
-    price: gpu.currentPrice
+    price: gpu.currentPrice,
   }));
 
-  const gameOptions = allGames.map(game => ({
+  const gameOptions = allGames.map((game) => ({
     id: game.id,
     name: game.name,
     tier: game.category,
     specs: `${game.releaseYear}, ${game.cpuDemand} CPU / ${game.gpuDemand} GPU demand`,
-    price: 0
+    price: 0,
   }));
 
   const handleCalculate = () => {
     if (selectedCPU && selectedGPU && selectedGame && selectedResolution) {
-      setShowResults(true);
+      const cpu = getCPUById(selectedCPU);
+      const gpu = getGPUById(selectedGPU);
+      const game = getGameById(selectedGame);
+      if (cpu && gpu && game) {
+        const fps = estimateFPS(cpu, gpu, game, selectedResolution) ?? 0;
+        
+
+        // 🔹 Notify parent about build change
+        if (onBuildChange) {
+  onBuildChange({
+    cpu: cpu.id,         // was cpu.name ❌
+          gpu: gpu.id,         // was gpu.name ❌
+          game: game.id,       // was game.name ❌
+          resolution: selectedResolution,
+          fps,                 // local value (not outdated state)
+  });
+}
+        setEstimatedFPS(fps);
+        setShowResults(true);
+      }
     }
   };
 
