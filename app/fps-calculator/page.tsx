@@ -2,14 +2,15 @@ import { Metadata } from "next";
 import FpsCalculatorClient from "./FpsCalculatorClient";
 
 export const metadata: Metadata = {
-  title: "FPS Estimator Calculator - Gaming Performance Predictor",
+  title: "FPS Calculator | Estimate Gaming Performance & Frame Rates Online",
   description:
-    "Estimate the Frames Per Second (FPS) you will get in popular games. Select your CPU, GPU, and a game to see your expected gaming performance.",
+    "Estimate game FPS based on your CPU and GPU. Instantly predict gaming performance and frame rates for popular titles before you build or upgrade your PC.",
   keywords: [
-    "FPS calculator",
-    "gaming performance",
-    "frame rate estimator",
-    "PC gaming",
+  "FPS calculator",
+  "FPS estimator",
+  "gaming performance predictor",
+  "frame rate calculator",
+  "PC FPS benchmark"
   ],
   alternates: {
     canonical: "https://www.pcbuildcheck.com/fps-calculator",
