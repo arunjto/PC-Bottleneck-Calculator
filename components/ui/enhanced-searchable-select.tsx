@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Check, ChevronDown, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 
 export interface Option {
   id: string;
@@ -36,17 +37,17 @@ const getTierColor = (tier: string) => {
   switch (tier.toLowerCase()) {
     case 'enthusiast':
     case 'premium':
-      return 'bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-700 dark:text-purple-300';
+      return 'bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 text-purple-800 dark:text-purple-200';
     case 'high-end':
-      return 'bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 text-blue-700 dark:text-blue-300';
+      return 'bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 text-blue-800 dark:text-blue-200';
     case 'mid-range':
     case 'standard':
-      return 'bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 text-green-700 dark:text-green-300';
+      return 'bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-800 dark:text-green-200';
     case 'entry-level':
     case 'budget':
-      return 'bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/30 dark:to-orange-900/30 text-yellow-700 dark:text-yellow-300';
+      return 'bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/40 dark:to-orange-900/40 text-yellow-800 dark:text-yellow-200';
     default:
-      return 'bg-gradient-to-r from-gray-100 to-slate-100 dark:from-gray-800/30 dark:to-slate-800/30 text-gray-700 dark:text-gray-300';
+      return 'bg-gradient-to-r from-gray-100 to-slate-100 dark:from-gray-800/40 dark:to-slate-800/40 text-gray-800 dark:text-gray-200';
   }
 };
 
@@ -136,67 +137,82 @@ export function EnhancedSearchableSelect({
 
   return (
     <div ref={containerRef} className="relative w-full">
-      <div
-        className={cn(
-          'flex h-12 w-full items-center justify-between rounded-lg border border-input bg-gradient-to-r from-background to-muted/20 px-3 py-2 text-sm cursor-pointer transition-all duration-200',
-          isOpen && 'border-primary ring-2 ring-primary/20 shadow-lg'
-        )}
-        onClick={() => setIsOpen(!isOpen)}
-        onKeyDown={handleKeyDown}
-        tabIndex={0}
-        role="combobox"
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-        aria-label={placeholder}
-        aria-controls="options-listbox"
-        aria-activedescendant={highlightedIndex >= 0 ? `option-${filteredOptions[highlightedIndex]?.id}` : undefined}
-      >
-        <div className="flex items-center space-x-3 flex-1 min-w-0">
-          <span className="text-lg flex-shrink-0">{getTypeIcon(type)}</span>
-          {selectedOption ? (
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center space-x-2">
-                <span className="font-medium text-foreground truncate">
-                  {selectedOption.name}
-                </span>
-                <span
-                  className={cn(
-                    'px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0',
-                    getTierColor(selectedOption.tier)
-                  )}
-                >
-                  {selectedOption.tier}
-                </span>
+      <Tooltip>
+          <TooltipTrigger asChild>
+            <div
+              className={cn(
+                'flex h-12 w-full items-center justify-between rounded-lg border border-input bg-gradient-to-r from-background to-muted/20 px-3 py-2 text-sm cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+                isOpen && 'border-primary ring-2 ring-primary/20 shadow-lg'
+              )}
+              onClick={() => setIsOpen(!isOpen)}
+              onKeyDown={handleKeyDown}
+              tabIndex={0}
+              role="combobox"
+              aria-expanded={isOpen}
+              aria-haspopup="listbox"
+              aria-label={`${placeholder}. Press Enter or Space to open dropdown. Use arrow keys to navigate.`}
+              aria-controls="options-listbox"
+              aria-activedescendant={highlightedIndex >= 0 ? `option-${filteredOptions[highlightedIndex]?.id}` : undefined}
+            >
+              <div className="flex items-center space-x-3 flex-1 min-w-0">
+                <span className="text-lg flex-shrink-0">{getTypeIcon(type)}</span>
+                {selectedOption ? (
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-medium text-foreground truncate">
+                        {selectedOption.name}
+                      </span>
+                      <span
+                        className={cn(
+                          'px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0',
+                          getTierColor(selectedOption.tier)
+                        )}
+                      >
+                        {selectedOption.tier}
+                      </span>
+                    </div>
+                    <div className="text-xs text-muted-foreground truncate mt-0.5">
+                      {selectedOption.specs}
+                    </div>
+                  </div>
+                ) : (
+                  <span className="text-muted-foreground flex-1 truncate">{placeholder}</span>
+                )}
               </div>
-              <div className="text-xs text-muted-foreground truncate mt-0.5">
-                {selectedOption.specs}
-              </div>
+              <ChevronDown
+                className={cn('h-4 w-4 text-muted-foreground transition-transform duration-200', isOpen && 'rotate-180')}
+              />
             </div>
-          ) : (
-            <span className="text-muted-foreground flex-1 truncate">{placeholder}</span>
-          )}
-        </div>
-        <ChevronDown
-          className={cn('h-4 w-4 text-muted-foreground transition-transform duration-200', isOpen && 'rotate-180')}
-        />
-      </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            Press Enter or Space to open. Use Arrow keys to navigate, Enter to select, Esc to close. Type to search.
+          </TooltipContent>
+        </Tooltip>
 
       {isOpen && (
         <div className="absolute z-50 w-full mt-2 bg-popover border border-border rounded-lg shadow-xl animate-in fade-in-0 zoom-in-95">
           <div className="p-3 border-b border-border relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder={`Search ${type.toUpperCase()}s...`}
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setHighlightedIndex(-1);
-              }}
-              onKeyDown={handleKeyDown}
-              className="w-full pl-10 pr-4 py-2 text-sm bg-background border border-input rounded-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200"
-            />
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <input
+                ref={inputRef}
+                type="text"
+                placeholder={`Search ${type.toUpperCase()}s...`}
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setHighlightedIndex(-1);
+                }}
+                onKeyDown={handleKeyDown}
+                className="w-full pl-10 pr-4 py-2 text-sm bg-background border border-input rounded-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200"
+                aria-label={`Search ${type}s. Type to filter, use arrow keys to navigate results.`}
+              />
+              </TooltipTrigger>
+              <TooltipContent>
+                Type to filter options. Use Arrow keys to navigate results.
+              </TooltipContent>
+            </Tooltip>
           </div>
           <div 
             className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent" 

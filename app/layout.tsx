@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { QuickToolsBar } from '@/components/layout/quick-tools-bar';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -52,12 +53,28 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex flex-col min-h-screen">
+          <TooltipProvider>
+            <div className="flex flex-col min-h-screen">
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:border focus:border-primary focus:text-foreground"
+            >
+              Skip to main content
+            </a>
+            <a
+              href="#quick-tools"
+              className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:border focus:border-primary focus:text-foreground"
+            >
+              Skip to quick tools
+            </a>
             <Navbar />
-            <QuickToolsBar />
-            <main className="flex-grow">{children}</main>
+            <div id="quick-tools" tabIndex={-1}>
+              <QuickToolsBar />
+            </div>
+            <main id="main-content" tabIndex={-1} className="flex-grow">{children}</main>
             <Footer />
-          </div>
+            </div>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
