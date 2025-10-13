@@ -14,9 +14,9 @@ export function UpdateBanner() {
       <div className="flex items-center gap-3">
         <Rocket className="h-8 w-8 text-green-600" />
         <div>
-          <h4 className="font-semibold text-green-800 dark:text-green-200 m-0">
+          <h2 className="font-semibold text-green-800 dark:text-green-200 m-0">
             Database Updated!
-          </h4>
+          </h2>
           <p className="text-sm text-green-700 dark:text-green-300 m-0">
             Now featuring the latest 2025 CPU & GPU models with up-to-date performance data.
           </p>
