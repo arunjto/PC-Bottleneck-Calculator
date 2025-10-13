@@ -56,7 +56,6 @@ export interface Game {
   storageRequirement: number; // GB
   optimizations: string[]; // DLSS, FSR, etc.
 }
-
 // === CPU & GPU arrays (URLs fixed & validated fallbacks) ===
 
 export const intelCPUs: CPU[] = [
@@ -80,7 +79,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake Refresh',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-14900K',
@@ -101,7 +100,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake Refresh',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-14700K',
@@ -122,7 +121,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake Refresh',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i5-14600K',
@@ -143,7 +142,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake Refresh',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-13900KS',
@@ -164,7 +163,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-13900K',
@@ -185,7 +184,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-13700K',
@@ -206,7 +205,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i5-13600K',
@@ -227,7 +226,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Raptor Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-12900KS',
@@ -248,7 +247,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Alder Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-12900K',
@@ -269,7 +268,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Alder Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-12700K',
@@ -290,7 +289,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Alder Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i5-12600K',
@@ -311,7 +310,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
     architecture: 'Alder Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-11900K',
@@ -332,7 +331,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
     architecture: 'Rocket Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-11700K',
@@ -353,7 +352,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
     architecture: 'Rocket Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-10900K',
@@ -374,7 +373,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
     architecture: 'Comet Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-10700K',
@@ -395,7 +394,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
     architecture: 'Comet Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i9-9900K',
@@ -416,7 +415,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
     architecture: 'Coffee Lake Refresh',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-9700K',
@@ -437,7 +436,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
     architecture: 'Coffee Lake Refresh',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-8700K',
@@ -458,7 +457,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
     architecture: 'Coffee Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   },
   {
     id: 'i7-7700K',
@@ -479,7 +478,7 @@ export const intelCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
     architecture: 'Kaby Lake',
-    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
+    officialUrl: 'https://www.intel.com/'
   }
 ];
 
@@ -671,7 +670,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 3+',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen3d'
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-7-5800x3d.html'
   },
   {
     id: 'ryzen-9-5950X',
@@ -692,7 +691,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 3',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-9-5950x.html'
   },
   {
     id: 'ryzen-9-5900X',
@@ -713,7 +712,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 3',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-9-5900x.html'
   },
   {
     id: 'ryzen-7-5800X',
@@ -734,7 +733,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 3',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-7-5800x.html'
   },
   {
     id: 'ryzen-5-5600X',
@@ -755,7 +754,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 3',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-5-5600x.html'
   },
   {
     id: 'ryzen-9-3950X',
@@ -776,7 +775,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 2',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   },
   {
     id: 'ryzen-9-3900X',
@@ -797,7 +796,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 2',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   },
   {
     id: 'ryzen-7-3700X',
@@ -818,7 +817,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 2',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   },
   {
     id: 'ryzen-5-3600X',
@@ -839,7 +838,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen 2',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   },
   {
     id: 'ryzen-7-2700X',
@@ -860,7 +859,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen+',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   },
   {
     id: 'ryzen-5-2600X',
@@ -881,7 +880,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen+',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   },
   {
     id: 'ryzen-7-1700X',
@@ -902,7 +901,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   },
   {
     id: 'ryzen-5-1600X',
@@ -923,7 +922,7 @@ export const amdCPUs: CPU[] = [
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
     architecture: 'Zen',
-    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
+    officialUrl: 'https://www.amd.com/en/products/specifications/processors.html'
   }
 ];
 
@@ -1366,7 +1365,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Turing',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'rtx-2080-super',
@@ -1386,7 +1385,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Turing',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'rtx-2070-super',
@@ -1406,7 +1405,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Turing',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'rtx-2060-super',
@@ -1426,7 +1425,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Turing',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'gtx-1660-Ti',
@@ -1446,7 +1445,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Turing',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/gtx-1660-ti/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'gtx-1660-super',
@@ -1466,7 +1465,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Turing',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/gtx-1660-super/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'gtx-1080-Ti',
@@ -1486,7 +1485,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Pascal',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'gtx-1080',
@@ -1506,7 +1505,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Pascal',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'gtx-1070-Ti',
@@ -1526,7 +1525,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Pascal',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'gtx-1070',
@@ -1546,7 +1545,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Pascal',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   },
   {
     id: 'gtx-1060-6gb',
@@ -1566,7 +1565,7 @@ export const nvidiaGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Pascal',
-    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/'
   }
 ];
 
@@ -1789,7 +1788,7 @@ export const amdGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'RDNA 2',
-    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
   {
     id: 'rx-6800',
@@ -1889,7 +1888,7 @@ export const amdGPUs: GPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'RDNA',
-    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
   {
     id: 'rx-5700',
@@ -1952,6 +1951,8 @@ export const amdGPUs: GPU[] = [
     officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
   }
 ];
+
+
 
 
 // Latest Games (2020-2025)
