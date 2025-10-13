@@ -3,6 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { 
   ArrowLeft, 
   TrendingUp, 
@@ -25,11 +31,34 @@ import {
 import { CPU, GPU, calculateBottleneckPercentage, getBottleneckType, estimateFPS, calculatePSURequirement, allGames } from '@/lib/hardware-database';
 
 interface ComprehensiveBottleneckResultsProps {
-  cpu: CPU;
-  gpu: GPU;
+  cpu: CPU & { officialUrl?: string };
+  gpu: GPU & { officialUrl?: string };
   ram: { id: string; name: string; tier: string; specs: string; price: number };
   resolution: string;
   onBack: () => void;
+}
+
+function ComponentLink({
+  href,
+  children,
+  className = "hover:underline text-blue-600"
+}: {
+  href?: string | null;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  if (!href) return <>{children}</>;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      {children}
+    </a>
+  );
 }
 
 export function ComprehensiveBottleneckResults({ 
@@ -585,7 +614,58 @@ export function ComprehensiveBottleneckResults({
               <div className="flex items-center justify-between mb-2">
                 <div>
                   <h3 className="font-semibold text-blue-900 dark:text-blue-100">CPU Price</h3>
-                  <p className="text-sm text-blue-700 dark:text-blue-300">{cpu.name}</p>
+                  <div className="space-y-2">
+                    <ComponentLink href={cpu.officialUrl}>
+                      <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">{cpu.name}</p>
+                    </ComponentLink>
+                    {cpu.officialUrl && (
+                      <div className="flex items-center space-x-2">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className={`group transition-colors ${
+                                  cpu.brand === 'Intel' 
+                                    ? 'hover:bg-blue-600 hover:text-white' 
+                                    : 'hover:bg-red-600 hover:text-white'
+                                }`}
+                                asChild
+                              >
+                                <a 
+                                  href={cpu.officialUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="flex items-center space-x-2"
+                                >
+                                  {cpu.brand === 'Intel' ? (
+                                    <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                      <path 
+                                        fill="currentColor" 
+                                        d="M24,11.36h-3.24v1.5h3.24V11.36z M19.67,11.36h-3.24v1.5h3.24V11.36z M15.33,11.36h-3.24v1.5h3.24V11.36z M11,11.36H7.76v1.5H11 V11.36z M6.67,11.36H3.43v1.5h3.24V11.36z M2.33,11.36H0v1.5h2.33V11.36z"
+                                      />
+                                    </svg>
+                                  ) : (
+                                    <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                      <path 
+                                        fill="currentColor" 
+                                        d="M18.324 9.137l1.559-1.559v7.117l-1.559-1.559v-3.999zm-3.092 3.092l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091 3.091l1.559-1.559v1.559h-1.559zm-3.092-3.091l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091-3.092l1.559-1.559v7.117l-1.559-1.559v-3.999z"
+                                      />
+                                    </svg>
+                                  )}
+                                  <span className="text-xs">View Specs</span>
+                                </a>
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Official {cpu.brand} Product Page</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-green-600">${cpu.currentPrice}</div>
@@ -606,7 +686,50 @@ export function ComprehensiveBottleneckResults({
               <div className="flex items-center justify-between mb-2">
                 <div>
                   <h3 className="font-semibold text-green-900 dark:text-green-100">GPU Price</h3>
-                  <p className="text-sm text-green-700 dark:text-green-300">{gpu.name}</p>
+                  <div className="space-y-2">
+                    <ComponentLink href={gpu.officialUrl}>
+                      <p className="text-sm text-green-700 dark:text-green-300 font-medium">{gpu.name}</p>
+                    </ComponentLink>
+                    {gpu.officialUrl && (
+                      <div className="flex items-center space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className={`group transition-colors ${
+                            gpu.brand === 'NVIDIA' 
+                              ? 'hover:bg-green-600 hover:text-white' 
+                              : 'hover:bg-red-600 hover:text-white'
+                          }`}
+                          asChild
+                        >
+                          <a 
+                            href={gpu.officialUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="flex items-center space-x-2"
+                          >
+                            {gpu.brand === 'NVIDIA' ? (
+                              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                <path 
+                                  fill="currentColor" 
+                                  d="M12.03,11.16h-1.39v1.56h1.39c0.55,0,0.89-0.31,0.89-0.78C12.92,11.47,12.58,11.16,12.03,11.16z M14.89,13.43 c0-0.48-0.35-0.79-0.91-0.79h-1.41v1.57h1.41C14.54,14.21,14.89,13.91,14.89,13.43z M14.45,9.75h-1.36v1.41h1.36 c0.54,0,0.88-0.29,0.88-0.7C15.33,10.05,14.99,9.75,14.45,9.75z"
+                                />
+                              </svg>
+                            ) : (
+                              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                <path 
+                                  fill="currentColor" 
+                                  d="M18.324 9.137l1.559-1.559v7.117l-1.559-1.559v-3.999zm-3.092 3.092l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091 3.091l1.559-1.559v1.559h-1.559zm-3.092-3.091l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091-3.092l1.559-1.559v7.117l-1.559-1.559v-3.999z"
+                                />
+                              </svg>
+                            )}
+                            <span className="text-xs">View Specs</span>
+                          </a>
+                        </Button>
+                        <span className="text-xs text-gray-500">Official {gpu.brand} Product Page</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-green-600">${gpu.currentPrice}</div>

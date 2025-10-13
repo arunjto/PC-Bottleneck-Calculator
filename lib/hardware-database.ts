@@ -20,6 +20,7 @@ export interface CPU {
   imageUrl: string;
   socket?: string;
   architecture: string;
+  officialUrl?: string; // Official manufacturer product page URL
 }
 
 export interface GPU {
@@ -41,6 +42,7 @@ export interface GPU {
   category: 'Desktop' | 'Mobile' | 'Workstation';
   imageUrl: string;
   architecture: string;
+  officialUrl?: string; // Official manufacturer product page URL
 }
 
 export interface Game {
@@ -55,7 +57,8 @@ export interface Game {
   optimizations: string[]; // DLSS, FSR, etc.
 }
 
-// Intel CPUs (2017-2025)
+// === CPU & GPU arrays (URLs fixed & validated fallbacks) ===
+
 export const intelCPUs: CPU[] = [
   // 14th Gen Meteor Lake (2024-2025)
   {
@@ -76,7 +79,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake Refresh'
+    architecture: 'Raptor Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i9-14900K',
@@ -96,7 +100,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake Refresh'
+    architecture: 'Raptor Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i7-14700K',
@@ -116,7 +121,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake Refresh'
+    architecture: 'Raptor Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i5-14600K',
@@ -136,9 +142,9 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake Refresh'
+    architecture: 'Raptor Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
-  // 13th Gen Raptor Lake (2022-2023)
   {
     id: 'i9-13900KS',
     name: 'Intel Core i9-13900KS',
@@ -157,7 +163,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake'
+    architecture: 'Raptor Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i9-13900K',
@@ -177,7 +184,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake'
+    architecture: 'Raptor Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i7-13700K',
@@ -197,7 +205,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake'
+    architecture: 'Raptor Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i5-13600K',
@@ -217,9 +226,9 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Raptor Lake'
+    architecture: 'Raptor Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
-  // 12th Gen Alder Lake (2021-2022)
   {
     id: 'i9-12900KS',
     name: 'Intel Core i9-12900KS',
@@ -238,7 +247,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Alder Lake'
+    architecture: 'Alder Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i9-12900K',
@@ -258,7 +268,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Alder Lake'
+    architecture: 'Alder Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i7-12700K',
@@ -278,7 +289,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Alder Lake'
+    architecture: 'Alder Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i5-12600K',
@@ -298,9 +310,9 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1700',
-    architecture: 'Alder Lake'
+    architecture: 'Alder Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
-  // 11th Gen Rocket Lake (2021)
   {
     id: 'i9-11900K',
     name: 'Intel Core i9-11900K',
@@ -319,7 +331,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
-    architecture: 'Rocket Lake'
+    architecture: 'Rocket Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i7-11700K',
@@ -339,9 +352,9 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
-    architecture: 'Rocket Lake'
+    architecture: 'Rocket Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
-  // 10th Gen Comet Lake (2020)
   {
     id: 'i9-10900K',
     name: 'Intel Core i9-10900K',
@@ -360,7 +373,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
-    architecture: 'Comet Lake'
+    architecture: 'Comet Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i7-10700K',
@@ -380,9 +394,9 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1200',
-    architecture: 'Comet Lake'
+    architecture: 'Comet Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
-  // 9th Gen Coffee Lake Refresh (2018-2019)
   {
     id: 'i9-9900K',
     name: 'Intel Core i9-9900K',
@@ -401,7 +415,8 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
-    architecture: 'Coffee Lake Refresh'
+    architecture: 'Coffee Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
   {
     id: 'i7-9700K',
@@ -421,9 +436,9 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
-    architecture: 'Coffee Lake Refresh'
+    architecture: 'Coffee Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
-  // 8th Gen Coffee Lake (2017-2018)
   {
     id: 'i7-8700K',
     name: 'Intel Core i7-8700K',
@@ -442,9 +457,9 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
-    architecture: 'Coffee Lake'
+    architecture: 'Coffee Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   },
-  // 7th Gen Kaby Lake (2017)
   {
     id: 'i7-7700K',
     name: 'Intel Core i7-7700K',
@@ -463,13 +478,12 @@ export const intelCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
     socket: 'LGA1151',
-    architecture: 'Kaby Lake'
+    architecture: 'Kaby Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors.html'
   }
 ];
 
-// AMD CPUs (2017-2025)
 export const amdCPUs: CPU[] = [
-  // Zen 5 (2024-2025)
   {
     id: 'ryzen-9-9950X',
     name: 'AMD Ryzen 9 9950X',
@@ -488,7 +502,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 5'
+    architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-9-9950x'
   },
   {
     id: 'ryzen-9-9900X',
@@ -508,7 +523,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 5'
+    architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-9-9900x'
   },
   {
     id: 'ryzen-7-9700X',
@@ -528,7 +544,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 5'
+    architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-7-9700x'
   },
   {
     id: 'ryzen-5-9600X',
@@ -548,9 +565,9 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 5'
+    architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-5-9600x'
   },
-  // Zen 4 (2022-2023)
   {
     id: 'ryzen-9-7950X',
     name: 'AMD Ryzen 9 7950X',
@@ -569,7 +586,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 4'
+    architecture: 'Zen 4',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-9-7950x'
   },
   {
     id: 'ryzen-9-7900X',
@@ -589,7 +607,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 4'
+    architecture: 'Zen 4',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-9-7900x'
   },
   {
     id: 'ryzen-7-7700X',
@@ -609,7 +628,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 4'
+    architecture: 'Zen 4',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-7-7700x'
   },
   {
     id: 'ryzen-5-7600X',
@@ -629,9 +649,9 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM5',
-    architecture: 'Zen 4'
+    architecture: 'Zen 4',
+    officialUrl: 'https://www.amd.com/en/products/cpu/amd-ryzen-5-7600x'
   },
-  // Zen 3+ (2022)
   {
     id: 'ryzen-7-5800X3D',
     name: 'AMD Ryzen 7 5800X3D',
@@ -650,9 +670,9 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 3+'
+    architecture: 'Zen 3+',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen3d'
   },
-  // Zen 3 (2020-2021)
   {
     id: 'ryzen-9-5950X',
     name: 'AMD Ryzen 9 5950X',
@@ -671,7 +691,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 3'
+    architecture: 'Zen 3',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-9-5900X',
@@ -691,7 +712,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 3'
+    architecture: 'Zen 3',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-7-5800X',
@@ -711,7 +733,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 3'
+    architecture: 'Zen 3',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-5-5600X',
@@ -731,9 +754,9 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 3'
+    architecture: 'Zen 3',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
-  // Zen 2 (2019-2020)
   {
     id: 'ryzen-9-3950X',
     name: 'AMD Ryzen 9 3950X',
@@ -752,7 +775,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 2'
+    architecture: 'Zen 2',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-9-3900X',
@@ -772,7 +796,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 2'
+    architecture: 'Zen 2',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-7-3700X',
@@ -792,7 +817,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 2'
+    architecture: 'Zen 2',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-5-3600X',
@@ -812,9 +838,9 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen 2'
+    architecture: 'Zen 2',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
-  // Zen+ (2018)
   {
     id: 'ryzen-7-2700X',
     name: 'AMD Ryzen 7 2700X',
@@ -833,7 +859,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen+'
+    architecture: 'Zen+',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-5-2600X',
@@ -853,9 +880,9 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen+'
+    architecture: 'Zen+',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
-  // Zen (2017)
   {
     id: 'ryzen-7-1700X',
     name: 'AMD Ryzen 7 1700X',
@@ -874,7 +901,8 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen'
+    architecture: 'Zen',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   },
   {
     id: 'ryzen-5-1600X',
@@ -894,13 +922,12 @@ export const amdCPUs: CPU[] = [
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
     socket: 'AM4',
-    architecture: 'Zen'
+    architecture: 'Zen',
+    officialUrl: 'https://www.amd.com/en/products/processors/ryzen'
   }
 ];
 
-// NVIDIA GPUs (2017-2025)
 export const nvidiaGPUs: GPU[] = [
-  // RTX 50-series Blackwell (2025)
   {
     id: 'rtx-5090',
     name: 'NVIDIA GeForce RTX 5090',
@@ -918,7 +945,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Blackwell'
+    architecture: 'Blackwell',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5090/' 
   },
   {
     id: 'rtx-5080',
@@ -937,7 +965,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Blackwell'
+    architecture: 'Blackwell',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5080/'
   },
   {
     id: 'rtx-5070-Ti',
@@ -956,7 +985,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Blackwell'
+    architecture: 'Blackwell',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/'
   },
   {
     id: 'rtx-5070',
@@ -975,9 +1005,9 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Blackwell'
+    architecture: 'Blackwell',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/'
   },
-  // RTX 40-series Ada Lovelace (2022-2024)
   {
     id: 'rtx-4090',
     name: 'NVIDIA GeForce RTX 4090',
@@ -995,7 +1025,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4090/'
   },
   {
     id: 'rtx-4080-super',
@@ -1014,7 +1045,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/'
   },
   {
     id: 'rtx-4080',
@@ -1033,7 +1065,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4080/'
   },
   {
     id: 'rtx-4070-Ti-super',
@@ -1052,7 +1085,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/'
   },
   {
     id: 'rtx-4070-Ti',
@@ -1071,7 +1105,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/'
   },
   {
     id: 'rtx-4070-super',
@@ -1090,7 +1125,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/'
   },
   {
     id: 'rtx-4070',
@@ -1109,7 +1145,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4070/'
   },
   {
     id: 'rtx-4060-Ti',
@@ -1128,7 +1165,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/'
   },
   {
     id: 'rtx-4060',
@@ -1147,9 +1185,9 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ada Lovelace'
+    architecture: 'Ada Lovelace',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4060/'
   },
-  // RTX 30-series Ampere (2020-2022)
   {
     id: 'rtx-3090-Ti',
     name: 'NVIDIA GeForce RTX 3090 Ti',
@@ -1167,7 +1205,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/'
   },
   {
     id: 'rtx-3090',
@@ -1186,7 +1225,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090/'
   },
   {
     id: 'rtx-3080-Ti',
@@ -1205,7 +1245,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/'
   },
   {
     id: 'rtx-3080',
@@ -1224,7 +1265,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/'
   },
   {
     id: 'rtx-3070-Ti',
@@ -1243,7 +1285,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/'
   },
   {
     id: 'rtx-3070',
@@ -1262,7 +1305,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3070/'
   },
   {
     id: 'rtx-3060-Ti',
@@ -1281,7 +1325,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3060-ti/'
   },
   {
     id: 'rtx-3060',
@@ -1300,9 +1345,9 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Ampere'
+    architecture: 'Ampere',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/'
   },
-  // RTX 20-series Turing (2018-2019)
   {
     id: 'rtx-2080-Ti',
     name: 'NVIDIA GeForce RTX 2080 Ti',
@@ -1320,7 +1365,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Turing'
+    architecture: 'Turing',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
   },
   {
     id: 'rtx-2080-super',
@@ -1339,7 +1385,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Turing'
+    architecture: 'Turing',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
   },
   {
     id: 'rtx-2070-super',
@@ -1358,7 +1405,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Turing'
+    architecture: 'Turing',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
   },
   {
     id: 'rtx-2060-super',
@@ -1377,9 +1425,9 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Turing'
+    architecture: 'Turing',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/20-series/'
   },
-  // GTX 16-series Turing (2019)
   {
     id: 'gtx-1660-Ti',
     name: 'NVIDIA GeForce GTX 1660 Ti',
@@ -1397,7 +1445,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Turing'
+    architecture: 'Turing',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/gtx-1660-ti/'
   },
   {
     id: 'gtx-1660-super',
@@ -1416,9 +1465,9 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Turing'
+    architecture: 'Turing',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/gtx-1660-super/'
   },
-  // GTX 10-series Pascal (2016-2017)
   {
     id: 'gtx-1080-Ti',
     name: 'NVIDIA GeForce GTX 1080 Ti',
@@ -1436,7 +1485,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Pascal'
+    architecture: 'Pascal',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
   },
   {
     id: 'gtx-1080',
@@ -1455,7 +1505,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Pascal'
+    architecture: 'Pascal',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
   },
   {
     id: 'gtx-1070-Ti',
@@ -1474,7 +1525,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Pascal'
+    architecture: 'Pascal',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
   },
   {
     id: 'gtx-1070',
@@ -1493,7 +1545,8 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Pascal'
+    architecture: 'Pascal',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
   },
   {
     id: 'gtx-1060-6gb',
@@ -1512,13 +1565,12 @@ export const nvidiaGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'Pascal'
+    architecture: 'Pascal',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/10-series/'
   }
 ];
 
-// AMD GPUs (2017-2025)
 export const amdGPUs: GPU[] = [
-  // RX 8000 series RDNA 4 (2025)
   {
     id: 'rx-8800-XT',
     name: 'AMD Radeon RX 8800 XT',
@@ -1536,7 +1588,8 @@ export const amdGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 4'
+    architecture: 'RDNA 4',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
   },
   {
     id: 'rx-8700-XT',
@@ -1555,9 +1608,9 @@ export const amdGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 4'
+    architecture: 'RDNA 4',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
   },
-  // RX 7000 series RDNA 3 (2022-2024)
   {
     id: 'rx-7900-XTX',
     name: 'AMD Radeon RX 7900 XTX',
@@ -1575,7 +1628,8 @@ export const amdGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 3'
+    architecture: 'RDNA 3',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
   {
     id: 'rx-7900-XT',
@@ -1594,7 +1648,8 @@ export const amdGPUs: GPU[] = [
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 3'
+    architecture: 'RDNA 3',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
   {
     id: 'rx-7800-XT',
@@ -1613,7 +1668,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 3'
+    architecture: 'RDNA 3',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
   {
     id: 'rx-7700-XT',
@@ -1632,7 +1688,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 3'
+    architecture: 'RDNA 3',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
   {
     id: 'rx-7600-XT',
@@ -1651,7 +1708,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 3'
+    architecture: 'RDNA 3',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
   {
     id: 'rx-7600',
@@ -1670,9 +1728,9 @@ export const amdGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 3'
+    architecture: 'RDNA 3',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/7000-series.html'
   },
-  // RX 6000 series RDNA 2 (2020-2021)
   {
     id: 'rx-6950-XT',
     name: 'AMD Radeon RX 6950 XT',
@@ -1690,7 +1748,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 2'
+    architecture: 'RDNA 2',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
   },
   {
     id: 'rx-6900-XT',
@@ -1709,7 +1768,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 2'
+    architecture: 'RDNA 2',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
   },
   {
     id: 'rx-6800-XT',
@@ -1728,7 +1788,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 2'
+    architecture: 'RDNA 2',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
   },
   {
     id: 'rx-6800',
@@ -1747,7 +1808,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 2'
+    architecture: 'RDNA 2',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
   },
   {
     id: 'rx-6700-XT',
@@ -1766,7 +1828,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 2'
+    architecture: 'RDNA 2',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
   },
   {
     id: 'rx-6600-XT',
@@ -1785,7 +1848,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 2'
+    architecture: 'RDNA 2',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
   },
   {
     id: 'rx-6600',
@@ -1804,9 +1868,9 @@ export const amdGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA 2'
+    architecture: 'RDNA 2',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/6000-series.html'
   },
-  // RX 5000 series RDNA (2019-2020)
   {
     id: 'rx-5700-XT',
     name: 'AMD Radeon RX 5700 XT',
@@ -1824,7 +1888,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA'
+    architecture: 'RDNA',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
   },
   {
     id: 'rx-5700',
@@ -1843,9 +1908,9 @@ export const amdGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'RDNA'
+    architecture: 'RDNA',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
   },
-  // RX Vega series (2017-2018)
   {
     id: 'rx-vega-64',
     name: 'AMD Radeon RX Vega 64',
@@ -1863,7 +1928,8 @@ export const amdGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'GCN 5.0'
+    architecture: 'GCN 5.0',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
   },
   {
     id: 'rx-vega-56',
@@ -1882,9 +1948,11 @@ export const amdGPUs: GPU[] = [
     tier: 'Entry-Level',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
-    architecture: 'GCN 5.0'
+    architecture: 'GCN 5.0',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
   }
 ];
+
 
 // Latest Games (2020-2025)
 export const modernGames: Game[] = [
