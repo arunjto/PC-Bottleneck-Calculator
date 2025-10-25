@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { EnhancedFPSCalculator } from "@/components/calculators/enhanced-fps-calculator";
 import FPSCompareAndShare from "@/components/calculators/FPS-Compare-And-Share";
+import { OtherGamesPerformance } from "@/components/calculators/other-games-performance";
 import { InterlinkBox } from "@/components/ui/interlink-box";
 import { FpsGuideContent } from "@/components/content/fps-guide-content";
 
@@ -134,12 +135,20 @@ export default function FpsCalculatorClient() {
 
         {/* ⚖️ Step 2: Compare & Share (only appears after FPS is calculated) */}
         {currentBuild && (
-          <FPSCompareAndShare
-            currentCPU={currentBuild.cpu}
-            currentGPU={currentBuild.gpu}
-            currentGame={currentBuild.game}
-            currentResolution={currentBuild.resolution}
-          />
+          <>
+            <OtherGamesPerformance
+              cpuId={currentBuild.cpu}
+              gpuId={currentBuild.gpu}
+              resolution={currentBuild.resolution}
+              excludedGameId={currentBuild.game}
+            />
+            <FPSCompareAndShare
+              currentCPU={currentBuild.cpu}
+              currentGPU={currentBuild.gpu}
+              currentGame={currentBuild.game}
+              currentResolution={currentBuild.resolution}
+            />
+          </>
         )}
 
         {/* 🧭 Guides and Internal Links */}
