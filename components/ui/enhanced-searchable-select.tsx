@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { Check, ChevronDown, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 export interface Option {
   id: string;
@@ -19,17 +19,25 @@ interface EnhancedSearchableSelectProps {
   value: string;
   onValueChange: (value: string) => void;
   placeholder: string;
-  type: 'cpu' | 'gpu' | 'ram' | 'resolution' | 'game'; // ✅ added "game"
+  type: 'cpu' | 'gpu' | 'ram' | 'resolution' | 'game';
+  labelId?: string;
+  descriptionId?: string;
 }
 
 const getTypeIcon = (type: string) => {
   switch (type) {
-    case 'cpu': return '🔧';
-    case 'gpu': return '🎮';
-    case 'ram': return '💾';
-    case 'resolution': return '🖥️';
-    case 'game': return '🎲'; // icon for game
-    default: return '⚙️';
+    case 'cpu':
+      return '🔧';
+    case 'gpu':
+      return '🖥️';
+    case 'ram':
+      return '💾';
+    case 'resolution':
+      return '🖼️';
+    case 'game':
+      return '🎮';
+    default:
+      return '⭐';
   }
 };
 
@@ -57,12 +65,16 @@ export function EnhancedSearchableSelect({
   onValueChange,
   placeholder,
   type,
+  labelId,
+  descriptionId,
 }: EnhancedSearchableSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const generatedId = useId();
+  const listboxId = `${generatedId}-listbox`;
 
   const filteredOptions = options.filter(
     (option) =>
@@ -150,8 +162,10 @@ export function EnhancedSearchableSelect({
               role="combobox"
               aria-expanded={isOpen}
               aria-haspopup="listbox"
-              aria-label={`${placeholder}. Press Enter or Space to open dropdown. Use arrow keys to navigate.`}
-              aria-controls="options-listbox"
+              aria-label={labelId ? undefined : `${placeholder}. Press Enter or Space to open dropdown. Use arrow keys to navigate.`}
+              aria-labelledby={labelId}
+              aria-describedby={descriptionId}
+              aria-controls={listboxId}
               aria-activedescendant={highlightedIndex >= 0 ? `option-${filteredOptions[highlightedIndex]?.id}` : undefined}
             >
               <div className="flex items-center space-x-3 flex-1 min-w-0">
@@ -206,7 +220,9 @@ export function EnhancedSearchableSelect({
                 }}
                 onKeyDown={handleKeyDown}
                 className="w-full pl-10 pr-4 py-2 text-sm bg-background border border-input rounded-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200"
-                aria-label={`Search ${type}s. Type to filter, use arrow keys to navigate results.`}
+                aria-label={labelId ? undefined : `Search ${type}s. Type to filter, use arrow keys to navigate results.`}
+                aria-labelledby={labelId}
+                aria-describedby={descriptionId}
               />
               </TooltipTrigger>
               <TooltipContent>
@@ -217,7 +233,7 @@ export function EnhancedSearchableSelect({
           <div 
             className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent" 
             role="listbox"
-            id="options-listbox"
+            id={listboxId}
             aria-label={`List of available ${type}s`}
           >
             {filteredOptions.length === 0 ? (
@@ -265,3 +281,4 @@ export function EnhancedSearchableSelect({
     </div>
   );
 }
+

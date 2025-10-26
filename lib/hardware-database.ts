@@ -49,7 +49,7 @@ export interface Game {
   id: string;
   name: string;
   releaseYear: number;
-  category: 'AAA' | 'Esports' | 'Indie' | 'Simulation';
+  category: 'AAA' | 'Esports' | 'Indie' | 'Simulation' | 'Sandbox' | 'Survival';
   cpuDemand: 'Low' | 'Medium' | 'High' | 'Extreme';
   gpuDemand: 'Low' | 'Medium' | 'High' | 'Extreme';
   ramRequirement: number; // GB
@@ -2110,6 +2110,226 @@ export const modernGames: Game[] = [
     ramRequirement: 16,
     storageRequirement: 175,
     optimizations: ['DLSS 3', 'FSR 2', 'NVIDIA Reflex']
+  },
+  {
+    id: 'assassins-creed-mirage',
+    name: "Assassin's Creed Mirage",
+    releaseYear: 2023,
+    category: 'AAA',
+    cpuDemand: 'Medium',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 45,
+    optimizations: ['DLSS 2', 'FSR 2']
+  },
+  {
+    id: 'hogwarts-legacy',
+    name: 'Hogwarts Legacy',
+    releaseYear: 2023,
+    category: 'AAA',
+    cpuDemand: 'High',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 85,
+    optimizations: ['DLSS 3', 'FSR 2', 'Ray Tracing']
+  },
+  {
+    id: 'the-witcher-3-nextgen',
+    name: 'The Witcher 3: Wild Hunt (Next-Gen Update)',
+    releaseYear: 2022,
+    category: 'AAA',
+    cpuDemand: 'Medium',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 80,
+    optimizations: ['DLSS 3', 'FSR 2', 'Ray Tracing']
+  },
+  {
+    id: 'red-dead-redemption-2',
+    name: 'Red Dead Redemption 2',
+    releaseYear: 2018,
+    category: 'AAA',
+    cpuDemand: 'High',
+    gpuDemand: 'High',
+    ramRequirement: 12,
+    storageRequirement: 120,
+    optimizations: ['DLSS 2', 'FSR 2']
+  },
+  {
+    id: 'resident-evil-4-remake',
+    name: 'Resident Evil 4 Remake',
+    releaseYear: 2023,
+    category: 'AAA',
+    cpuDemand: 'Medium',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 60,
+    optimizations: ['DLSS 2', 'FSR 2']
+  },
+  {
+    id: 'spider-man-2',
+    name: 'Marvelâ€™s Spider-Man 2',
+    releaseYear: 2023,
+    category: 'AAA',
+    cpuDemand: 'High',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 98,
+    optimizations: ['DLSS 3', 'FSR 2', 'Ray Tracing']
+  },
+  {
+    id: 'the-last-of-us-part-i',
+    name: 'The Last of Us Part I (PC)',
+    releaseYear: 2023,
+    category: 'AAA',
+    cpuDemand: 'High',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 100,
+    optimizations: ['DLSS 3', 'FSR 2', 'Ray Tracing']
+  },
+  {
+    id: 'alan-wake-2',
+    name: 'Alan Wake 2',
+    releaseYear: 2023,
+    category: 'AAA',
+    cpuDemand: 'High',
+    gpuDemand: 'Extreme',
+    ramRequirement: 16,
+    storageRequirement: 90,
+    optimizations: ['DLSS 3.5', 'FSR 3', 'Path Tracing']
+  },
+  {
+    id: 'forza-horizon-5',
+    name: 'Forza Horizon 5',
+    releaseYear: 2021,
+    category: 'AAA',
+    cpuDemand: 'Medium',
+    gpuDemand: 'High',
+    ramRequirement: 12,
+    storageRequirement: 110,
+    optimizations: ['DLSS 2', 'FSR 2']
+  },
+  {
+    id: 'microsoft-flight-simulator',
+    name: 'Microsoft Flight Simulator',
+    releaseYear: 2020,
+    category: 'Simulation',
+    cpuDemand: 'Extreme',
+    gpuDemand: 'High',
+    ramRequirement: 32,
+    storageRequirement: 150,
+    optimizations: ['DLSS 3', 'FSR 2']
+  },
+  {
+    id: 'rainbow-six-siege',
+    name: 'Rainbow Six Siege',
+    releaseYear: 2015,
+    category: 'Esports',
+    cpuDemand: 'Medium',
+    gpuDemand: 'Medium',
+    ramRequirement: 8,
+    storageRequirement: 85,
+    optimizations: ['DLSS 2', 'NVIDIA Reflex']
+  },
+  {
+    id: 'pubg-battlegrounds',
+    name: 'PUBG: Battlegrounds',
+    releaseYear: 2017,
+    category: 'Esports',
+    cpuDemand: 'Medium',
+    gpuDemand: 'Medium',
+    ramRequirement: 8,
+    storageRequirement: 40,
+    optimizations: ['FSR 2', 'NVIDIA Reflex']
+  },
+  {
+    id: 'league-of-legends',
+    name: 'League of Legends',
+    releaseYear: 2009,
+    category: 'Esports',
+    cpuDemand: 'Low',
+    gpuDemand: 'Low',
+    ramRequirement: 4,
+    storageRequirement: 22,
+    optimizations: ['NVIDIA Reflex']
+  },
+  {
+    id: 'dota-2',
+    name: 'Dota 2',
+    releaseYear: 2013,
+    category: 'Esports',
+    cpuDemand: 'Medium',
+    gpuDemand: 'Low',
+    ramRequirement: 8,
+    storageRequirement: 20,
+    optimizations: ['FSR 2']
+  },
+  {
+    id: 'minecraft-rtx',
+    name: 'Minecraft (RTX Edition)',
+    releaseYear: 2011,
+    category: 'Sandbox',
+    cpuDemand: 'Low',
+    gpuDemand: 'Medium',
+    ramRequirement: 8,
+    storageRequirement: 2,
+    optimizations: ['Ray Tracing', 'DLSS 2']
+  },
+  {
+    id: 'genshin-impact',
+    name: 'Genshin Impact',
+    releaseYear: 2020,
+    category: 'AAA',
+    cpuDemand: 'Medium',
+    gpuDemand: 'Medium',
+    ramRequirement: 8,
+    storageRequirement: 70,
+    optimizations: ['FSR 2']
+  },
+  {
+    id: 'palworld',
+    name: 'Palworld',
+    releaseYear: 2024,
+    category: 'Survival',
+    cpuDemand: 'Medium',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 40,
+    optimizations: ['FSR 2']
+  },
+  {
+    id: 'senua-saga-hellblade-ii',
+    name: "Senua's Saga: Hellblade II",
+    releaseYear: 2024,
+    category: 'AAA',
+    cpuDemand: 'High',
+    gpuDemand: 'Extreme',
+    ramRequirement: 32,
+    storageRequirement: 100,
+    optimizations: ['DLSS 3', 'FSR 3', 'Ray Tracing']
+  },
+  {
+    id: 'fortnite-ue5-creative',
+    name: 'Fortnite (UE5 Creative Mode)',
+    releaseYear: 2023,
+    category: 'Sandbox',
+    cpuDemand: 'Medium',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 30,
+    optimizations: ['DLSS 3', 'FSR 2']
+  },
+  {
+    id: 'battlefield-2042',
+    name: 'Battlefield 2042',
+    releaseYear: 2021,
+    category: 'AAA',
+    cpuDemand: 'High',
+    gpuDemand: 'High',
+    ramRequirement: 16,
+    storageRequirement: 100,
+    optimizations: ['DLSS 3', 'FSR 2', 'Ray Tracing']
   }
 ];
 
