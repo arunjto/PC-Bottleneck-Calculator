@@ -148,7 +148,10 @@ export function EnhancedSearchableSelect({
   };
 
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div
+      ref={containerRef}
+      className={cn('relative w-full', isOpen ? 'z-50' : 'z-10')}
+    >
       <Tooltip>
           <TooltipTrigger asChild>
             <div
