@@ -5,7 +5,7 @@ import { InterlinkBox } from '@/components/ui/interlink-box';
 import { ContentGuide } from '@/components/content/content-guide';
 
 export const metadata: Metadata = {
-  title: 'PC Bottleneck Calculator - Optimize CPU & GPU Performance',
+  title: 'Free PC Bottleneck Calculator - Instantly Find CPU & GPU Limits (2025)',
   description:
     'Use our free PC Bottleneck Calculator to analyze CPU and GPU performance, fix system bottlenecks, and build a balanced gaming PC for maximum FPS.',
   keywords: [
@@ -26,7 +26,7 @@ export default function HomePage() {
     "@graph": [
       {
         "@type": "WebPage",
-        "name": "PC Bottleneck Calculator - Optimize CPU & GPU Performance",
+        "name": "Free PC Bottleneck Calculator - Instantly Find CPU & GPU Limits (2025)",
         "url": "https://www.pcbuildcheck.com",
         "description": "Free PC Bottleneck Calculator to analyze CPU and GPU performance, fix bottlenecks, and build a balanced gaming PC.",
         "publisher": {
@@ -39,7 +39,7 @@ export default function HomePage() {
         },
         "mainEntity": {
           "@type": "SoftwareApplication",
-          "name": "PC Bottleneck Calculator",
+          "name": "Free PC Bottleneck Calculator",
           "operatingSystem": "Windows, Linux, macOS",
           "applicationCategory": "UtilityApplication",
           "description": "Check CPU and GPU bottlenecks instantly for gaming and productivity.",
