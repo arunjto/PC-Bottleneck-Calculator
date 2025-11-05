@@ -2,7 +2,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Script from 'next/script'; // ✅ AdSense via next/script
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
@@ -46,26 +45,19 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1'
 };
 
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* ✅ Google AdSense verification/loader script.
-            Paste this immediately after you apply for AdSense.
-            Replace ca-pub-XXXXXXXXXXXX with your own Publisher ID. */}
-        <Script
-          id="adsense-script"
+        {/* ✅ AdSense: must be a real <script> in <head> so crawlers see it in View Source */}
+        <script
           async
-          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9111916848868133"
           crossOrigin="anonymous"
-        />
-        {/* Optional: when Google gives you a site verification meta tag, paste it here */}
-        {/* <meta name="google-site-verification" content="YOUR_TOKEN" /> */}
+        ></script>
+
+        {/* (Optional) AdSense meta verification also helps */}
+        {/* <meta name="google-adsense-account" content="ca-pub-9111916848868133" /> */}
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
