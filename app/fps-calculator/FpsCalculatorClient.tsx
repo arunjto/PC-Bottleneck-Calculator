@@ -16,100 +16,124 @@ export default function FpsCalculatorClient() {
     fps: number;
   } | null>(null);
 
-  // 🔹 Schema for SEO
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "name": "FPS Calculator - Estimate Your Gaming Performance",
-        "url": "https://www.pcbuildcheck.com/fps-calculator",
-        "description":
-          "Free FPS Calculator to estimate average frames per second for your CPU and GPU setup across popular games.",
-        "publisher": {
-          "@type": "Organization",
-          "name": "PC Performance Calculator",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://www.pcbuildcheck.com/logo.png",
-          },
+  // 🔹 Schema for SEO — FPS Calculator page
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.pcbuildcheck.com/#org",
+      "name": "PC Build Check",
+      "url": "https://www.pcbuildcheck.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.pcbuildcheck.com/logo.png",
+        "width": 512,
+        "height": 512
+      }
+      // "sameAs": ["https://twitter.com/yourbrand","https://www.youtube.com/@yourbrand"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.pcbuildcheck.com/#website",
+      "url": "https://www.pcbuildcheck.com/",
+      "name": "PC Build Check",
+      "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.pcbuildcheck.com/fps-calculator/#webpage",
+      "url": "https://www.pcbuildcheck.com/fps-calculator",
+      "name": "FPS Calculator - Estimate Your Gaming Performance",
+      "description": "Free FPS Calculator to estimate average frames per second for your CPU and GPU setup across popular games.",
+      "isPartOf": { "@id": "https://www.pcbuildcheck.com/#website" },
+      "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
+      "inLanguage": "en",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.pcbuildcheck.com/og-image-fps.png"
+      },
+      "datePublished": "2025-10-01",
+      "dateModified": "2025-11-06",
+      "breadcrumb": { "@id": "https://www.pcbuildcheck.com/fps-calculator/#breadcrumbs" },
+      "mainEntity": { "@id": "https://www.pcbuildcheck.com/fps-calculator/#app" },
+      "hasPart": { "@id": "https://www.pcbuildcheck.com/fps-calculator/#faq" }
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://www.pcbuildcheck.com/fps-calculator/#app",
+      "name": "FPS Calculator",
+      "url": "https://www.pcbuildcheck.com/fps-calculator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Windows, Linux, macOS",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Estimate average frames per second (FPS) for your CPU and GPU combination based on benchmark data."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.pcbuildcheck.com/fps-calculator/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.pcbuildcheck.com/"
         },
-        "mainEntity": {
-          "@type": "SoftwareApplication",
+        {
+          "@type": "ListItem",
+          "position": 2,
           "name": "FPS Calculator",
-          "operatingSystem": "Windows, Linux, macOS",
-          "applicationCategory": "UtilityApplication",
-          "description":
-            "Estimate average frames per second (FPS) for your CPU and GPU combination based on benchmark data.",
-          "url": "https://www.pcbuildcheck.com/fps-calculator",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-          },
+          "item": "https://www.pcbuildcheck.com/fps-calculator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.pcbuildcheck.com/fps-calculator/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the FPS calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The FPS calculator uses a database of component benchmarks and game optimization data to estimate average frames per second you can expect with your selected CPU and GPU combination."
+          }
         },
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://www.pcbuildcheck.com/",
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "FPS Calculator",
-            "item": "https://www.pcbuildcheck.com/fps-calculator",
-          },
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How does the FPS calculator work?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text":
-                "The FPS calculator uses a database of component benchmarks and game optimization data to estimate average frames per second you can expect with your selected CPU and GPU combination.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name":
-              "Why is my actual FPS different from the calculator’s estimate?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text":
-                "Real-world FPS can vary due to drivers, cooling, RAM speed, background processes, and specific in-game settings. The calculator provides a baseline estimate for most users.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use the FPS calculator for future games?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text":
-                "While the calculator is based on current benchmark data, it can give a rough idea for upcoming titles. However, new game engines and updates may cause performance to differ.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name": "Does resolution and graphics settings affect FPS results?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text":
-                "Yes. Running games at higher resolutions (1440p, 4K) or ultra settings requires more GPU power, which lowers FPS compared to playing at 1080p or medium settings.",
-            },
-          },
-        ],
-      },
-    ],
-  };
+        {
+          "@type": "Question",
+          "name": "Why is my actual FPS different from the calculator’s estimate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Real-world FPS can vary due to drivers, cooling, RAM speed, background processes, and specific in-game settings. The calculator provides a baseline estimate for most users."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use the FPS calculator for future games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "While the calculator is based on current benchmark data, it can give a rough idea for upcoming titles. However, new game engines and updates may cause performance to differ."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does resolution and graphics settings affect FPS results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Running games at higher resolutions (1440p, 4K) or ultra settings requires more GPU power, which lowers FPS compared to playing at 1080p or medium settings."
+          }
+        }
+      ]
+    }
+  ]
+};
+
 
   return (
     <div className="py-8 px-4">

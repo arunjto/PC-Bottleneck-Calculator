@@ -25,34 +25,62 @@ export default function HomePage() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebPage",
-        "name": "Free PC Bottleneck Calculator - Instantly Find CPU & GPU Limits (2025)",
-        "url": "https://www.pcbuildcheck.com",
-        "description": "Free PC Bottleneck Calculator to analyze CPU and GPU performance, fix bottlenecks, and build a balanced gaming PC.",
-        "publisher": {
-          "@type": "Organization",
-          "name": "PC Performance Calculator",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://www.pcbuildcheck.com/logo.png"
-          }
-        },
-        "mainEntity": {
-          "@type": "SoftwareApplication",
-          "name": "Free PC Bottleneck Calculator",
-          "operatingSystem": "Windows, Linux, macOS",
-          "applicationCategory": "UtilityApplication",
-          "description": "Check CPU and GPU bottlenecks instantly for gaming and productivity.",
-          "url": "https://www.pcbuildcheck.com",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          }
+        "@type": "Organization",
+        "@id": "https://www.pcbuildcheck.com/#org",
+        "name": "PC Build Check",
+        "url": "https://www.pcbuildcheck.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.pcbuildcheck.com/logo.png",
+          "width": 512,
+          "height": 512
         }
+        // "sameAs": ["https://twitter.com/yourbrand","https://www.youtube.com/@yourbrand"] // add if real
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.pcbuildcheck.com/#website",
+        "url": "https://www.pcbuildcheck.com/",
+        "name": "PC Build Check",
+        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.pcbuildcheck.com/#webpage",
+        "url": "https://www.pcbuildcheck.com/",
+        "name": "Free PC Bottleneck Calculator - Instantly Find CPU & GPU Limits (2025)",
+        "isPartOf": { "@id": "https://www.pcbuildcheck.com/#website" },
+        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
+        "description": "Free PC Bottleneck Calculator to analyze CPU and GPU performance, fix bottlenecks, and build a balanced gaming PC.",
+        "inLanguage": "en",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://www.pcbuildcheck.com/og-image.png"
+        },
+        "datePublished": "2025-10-01",
+        "dateModified": "2025-11-06",
+        "mainEntity": { "@id": "https://www.pcbuildcheck.com/#app" },
+        "hasPart": { "@id": "https://www.pcbuildcheck.com/#faq" }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://www.pcbuildcheck.com/#app",
+        "name": "PC Bottleneck Calculator",
+        "url": "https://www.pcbuildcheck.com/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Check CPU and GPU bottlenecks instantly for gaming and productivity."
       },
       {
         "@type": "BreadcrumbList",
+        "@id": "https://www.pcbuildcheck.com/#breadcrumbs",
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -64,6 +92,7 @@ export default function HomePage() {
       },
       {
         "@type": "FAQPage",
+        "@id": "https://www.pcbuildcheck.com/#faq",
         "mainEntity": [
           {
             "@type": "Question",

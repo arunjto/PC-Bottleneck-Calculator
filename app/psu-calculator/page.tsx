@@ -24,36 +24,63 @@ export default function PsuCalculatorPage() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebPage",
-        "name": "PSU Calculator - Find the Right Power Supply for Your PC",
-        "url": "https://www.pcbuildcheck.com/psu-calculator",
-        "description":
-          "Free PSU Calculator to estimate the ideal power supply wattage for your PC build. Avoid crashes and ensure stable performance by choosing the right PSU.",
-        "publisher": {
-          "@type": "Organization",
-          "name": "PC Performance Calculator",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://www.pcbuildcheck.com/logo.png"
-          }
-        },
-        "mainEntity": {
-          "@type": "SoftwareApplication",
-          "name": "PSU Calculator",
-          "operatingSystem": "Windows, Linux, macOS",
-          "applicationCategory": "UtilityApplication",
-          "description":
-            "Estimate recommended PSU wattage based on your CPU, GPU, RAM, and other PC components with built-in safety margins.",
-          "url": "https://www.pcbuildcheck.com/psu-calculator",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          }
+        "@type": "Organization",
+        "@id": "https://www.pcbuildcheck.com/#org",
+        "name": "PC Build Check",
+        "url": "https://www.pcbuildcheck.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.pcbuildcheck.com/logo.png",
+          "width": 512,
+          "height": 512
         }
+        // "sameAs": ["https://twitter.com/yourbrand","https://www.youtube.com/@yourbrand"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.pcbuildcheck.com/#website",
+        "url": "https://www.pcbuildcheck.com/",
+        "name": "PC Build Check",
+        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.pcbuildcheck.com/psu-calculator/#webpage",
+        "url": "https://www.pcbuildcheck.com/psu-calculator",
+        "name": "PSU Calculator - Find the Right Power Supply for Your PC",
+        "description": "Free PSU Calculator to estimate the ideal power supply wattage for your PC build. Avoid crashes and ensure stable performance by choosing the right PSU.",
+        "isPartOf": { "@id": "https://www.pcbuildcheck.com/#website" },
+        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
+        "inLanguage": "en",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://www.pcbuildcheck.com/og-image-psu.png"
+        },
+        "datePublished": "2025-10-01",
+        "dateModified": "2025-11-06",
+        "breadcrumb": { "@id": "https://www.pcbuildcheck.com/psu-calculator/#breadcrumbs" },
+        "mainEntity": { "@id": "https://www.pcbuildcheck.com/psu-calculator/#app" },
+        "hasPart": { "@id": "https://www.pcbuildcheck.com/psu-calculator/#faq" }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://www.pcbuildcheck.com/psu-calculator/#app",
+        "name": "PSU Calculator",
+        "url": "https://www.pcbuildcheck.com/psu-calculator",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Windows, Linux, macOS",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Estimate recommended PSU wattage based on your CPU, GPU, RAM, and other PC components with built-in safety margins."
       },
       {
         "@type": "BreadcrumbList",
+        "@id": "https://www.pcbuildcheck.com/psu-calculator/#breadcrumbs",
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -71,6 +98,7 @@ export default function PsuCalculatorPage() {
       },
       {
         "@type": "FAQPage",
+        "@id": "https://www.pcbuildcheck.com/psu-calculator/#faq",
         "mainEntity": [
           {
             "@type": "Question",
@@ -108,6 +136,8 @@ export default function PsuCalculatorPage() {
       }
     ]
   };
+  // Render in <Head>:
+  // <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
 
   return (
     <div className="py-8 px-4">

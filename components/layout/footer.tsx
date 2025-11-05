@@ -42,7 +42,7 @@ export function Footer() {
         ))}
       </div>
 
-      <p>© 2025 PC Performance Calculator. All rights reserved.</p>
+      <p>© 2025 PC Build Check. All rights reserved.</p>
     </footer>
   );
 }

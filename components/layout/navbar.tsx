@@ -11,7 +11,7 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center gap-3 font-semibold text-lg hover:text-blue-200 transition-colors">
             <FileText className="h-6 w-6" />
-            <span>PC Performance Calculator</span>
+            <span>PC Build Check</span>
           </Link>
           <ThemeToggle />
         </div>
