@@ -6,13 +6,7 @@ export const metadata: Metadata = {
   title: 'About Us – PCBuildCheck (PC Performance & Bottleneck Calculator)',
   description:
     'PCBuildCheck helps gamers, creators, and professionals make confident PC decisions with transparent, data-driven performance insights and clear explanations.',
-  keywords: [
-    'PC bottleneck calculator',
-    'PC performance calculator',
-    'FPS estimates',
-    'CPU GPU compatibility',
-    'build a gaming PC',
-  ],
+  // (4) Removed meta keywords (modern search engines ignore this)
   alternates: {
     canonical: 'https://www.pcbuildcheck.com/about',
   },
@@ -59,7 +53,8 @@ const ORG_SCHEMA = {
   ],
 };
 
-// WebSite schema (search action & domain info)
+// WebSite schema (domain info)
+// (1) Removed SearchAction because /search?q= does not exist
 const WEBSITE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -67,14 +62,10 @@ const WEBSITE_SCHEMA = {
   url: 'https://www.pcbuildcheck.com',
   name: 'PCBuildCheck',
   publisher: { '@id': 'https://www.pcbuildcheck.com/#org' },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: 'https://www.pcbuildcheck.com/search?q={query}',
-    'query-input': 'required name=query',
-  },
 };
 
 // AboutPage schema (page identity)
+// (3) Added mainEntityOfPage, inLanguage, and image width/height
 const ABOUT_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
@@ -83,11 +74,15 @@ const ABOUT_SCHEMA = {
   url: 'https://www.pcbuildcheck.com/about',
   isPartOf: { '@id': 'https://www.pcbuildcheck.com/#website' },
   about: { '@id': 'https://www.pcbuildcheck.com/#org' },
+  mainEntityOfPage: 'https://www.pcbuildcheck.com/about',
+  inLanguage: 'en-CA',
   description:
     'PCBuildCheck is a transparent, data-driven PC performance and bottleneck calculator built by gamers, creators, and developers.',
   primaryImageOfPage: {
     '@type': 'ImageObject',
     url: 'https://www.pcbuildcheck.com/og-image.png',
+    width: 1200,
+    height: 630,
   },
 };
 
@@ -129,6 +124,17 @@ export default function AboutPage() {
             ]),
           }}
         />
+
+        {/* (7) Visible breadcrumbs to match JSON-LD */}
+        <nav aria-label="Breadcrumb" className="text-sm text-slate-600 mb-4">
+          <ol className="flex gap-1 items-center">
+            <li>
+              <a href="/" className="hover:underline">Home</a>
+            </li>
+            <li aria-hidden className="px-1">›</li>
+            <li className="text-slate-900 font-medium">About</li>
+          </ol>
+        </nav>
 
         <MotionWrapper
           initial={{ opacity: 0, y: 20 }}
