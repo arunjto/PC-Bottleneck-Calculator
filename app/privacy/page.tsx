@@ -193,7 +193,7 @@ export default function PrivacyPage() {
                 </h2>
                 <p className="leading-7">
                   Questions or requests? Email us at{' '}
-                  <a href="mailto:contact@pcbuildcheck.com">contact@pcbuildcheck.com</a>.
+                  <a href="mailto:rekhareet07@gmail.com">rekhareet07@gmail.com</a>.
                 </p>
               </div>
             </CardContent>

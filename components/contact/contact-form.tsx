@@ -137,52 +137,15 @@ export function ContactForm() {
                     For general inquiries or support, please email us at:
                   </p>
                   <a 
-                    href="mailto:contact@pcbuildcheck.com"
+                    href="mailto:rekhareet07@gmail.com"
                     className="text-primary hover:underline font-medium"
                   >
-                    contact@pcbuildcheck.com
+                    rekhareet07@gmail.com
                   </a>
                 </div>
               </div>
             </CardContent>
-          </Card>
-
-          {/* Phone */}
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-3">
-                <Phone className="h-5 w-5 text-primary mt-1" />
-                <div>
-                  <h3 className="font-semibold mb-2">Phone</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    You can also reach us directly at:
-                  </p>
-                  <a 
-                    href="tel:+13055557890"
-                    className="text-primary hover:underline font-medium"
-                  >
-                    +(305) 555-7890
-                  </a>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Address */}
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-primary mt-1" />
-                <div>
-                  <h3 className="font-semibold mb-2">Office Address</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    1428 Orange Blossom Drive,<br />
-                    Orlando, FL 32801
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          </Card>          
 
           {/* Response Time */}
           <Card className="border-amber-200 bg-amber-50 dark:bg-amber-950/20">
