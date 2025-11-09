@@ -17,7 +17,10 @@ const FORMSPREE_ENDPOINT =
   (process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID
     ? `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID}`
     : '');
-const FORMSPREE_REDIRECT = process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL ?? '';
+const FORMSPREE_REDIRECT =
+  process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL && process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL.trim() !== ''
+    ? process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL
+    : '/thank-you';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
