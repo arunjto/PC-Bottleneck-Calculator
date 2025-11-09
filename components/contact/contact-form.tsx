@@ -12,6 +12,13 @@ import { Mail, Send, User, Phone, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/sonner';
 
+const FORMSPREE_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ??
+  (process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID
+    ? `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID}`
+    : '');
+const FORMSPREE_REDIRECT = process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL ?? '';
+
 export function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
@@ -19,23 +26,73 @@ export function ContactForm() {
     subject: '',
     message: ''
   });
+  const [honeypotValue, setHoneypotValue] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!FORMSPREE_ENDPOINT) {
+      toast({
+        title: 'Form configuration missing',
+        description: 'Please configure NEXT_PUBLIC_FORMSPREE_FORM_ID in your environment.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. We'll get back to you within 48 hours.",
-    });
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || 'General Inquiry',
+          message: formData.message,
+          _gotcha: honeypotValue,
+          _redirect: FORMSPREE_REDIRECT || undefined,
+        }),
+      });
 
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    setIsSubmitting(false);
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const errorMessage =
+          result?.errors?.[0]?.message ||
+          result?.error ||
+          'Unable to send message via Formspree.';
+        throw new Error(errorMessage);
+      }
+
+      toast({
+        title: 'Message sent!',
+        description: "Thank you for your message. We'll get back to you within 48 hours.",
+      });
+
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setHoneypotValue('');
+
+      if (FORMSPREE_REDIRECT) {
+        window.location.assign(FORMSPREE_REDIRECT);
+        return;
+      }
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'There was a problem sending your message.';
+      toast({
+        title: 'Submission failed',
+        description: message,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (field: string, value: string) => {
@@ -60,6 +117,22 @@ export function ContactForm() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Formspree honeypot for spam protection */}
+                <div className="hidden" aria-hidden="true">
+                  <Label htmlFor="company" className="sr-only">
+                    Company
+                  </Label>
+                  <Input
+                    id="company"
+                    name="_gotcha"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypotValue}
+                    onChange={(event) => setHoneypotValue(event.target.value)}
+                    aria-hidden="true"
+                  />
+                </div>
+
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Name</Label>
