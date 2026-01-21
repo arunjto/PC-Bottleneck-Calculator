@@ -1,49 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <!-- Homepage -->
-  <url>
-    <loc>https://www.pcbuildcheck.com/</loc>
-    <lastmod>2025-09-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <!-- Calculators (important tools, updated more often) -->
-  <url>
-    <loc>https://www.pcbuildcheck.com/fps-calculator</loc>
-    <lastmod>2025-09-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://www.pcbuildcheck.com/psu-calculator</loc>
-    <lastmod>2025-09-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <!-- Static Pages -->
-  <url>
-    <loc>https://www.pcbuildcheck.com/about</loc>
-    <lastmod>2025-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://www.pcbuildcheck.com/contact</loc>
-    <lastmod>2025-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://www.pcbuildcheck.com/privacy</loc>
-    <lastmod>2025-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://www.pcbuildcheck.com/en/contact</loc><lastmod>2026-01-20T19:10:15.310Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/it/contact</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/fr/contact</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/de/contact</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/es/contact</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/en/about</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/it/about</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/fr/about</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/de/about</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/es/about</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/en/fps-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/it/fps-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/fr/fps-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/de/fps-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/es/fps-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/en</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/it</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/fr</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/de</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/es</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/en/privacy</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/it/privacy</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/fr/privacy</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/de/privacy</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/es/privacy</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/en/thank-you</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/it/thank-you</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/fr/thank-you</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/de/thank-you</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/es/thank-you</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/en/psu-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/it/psu-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/fr/psu-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/de/psu-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.pcbuildcheck.com/es/psu-calculator</loc><lastmod>2026-01-20T19:10:15.312Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

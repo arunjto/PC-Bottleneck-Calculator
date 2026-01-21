@@ -3,9 +3,10 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 
-export function FpsGuideContent() {
+export function FpsGuideContent({ dict }: { dict: any }) {
+  if (!dict) return null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -16,87 +17,64 @@ export function FpsGuideContent() {
       <Card className="shadow-lg">
         <CardContent className="pt-6">
           <article className="prose prose-slate dark:prose-invert max-w-none relative prose-headings:font-semibold prose-strong:text-blue-600 dark:prose-strong:text-blue-400">
-  {/* Header Section */}
-  <header className="relative mb-8 p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200/50 dark:border-blue-800/50 overflow-hidden">
-    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-800/30 dark:to-purple-800/30 rounded-full -mr-16 -mt-16"></div>
-    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-100/50 to-blue-100/50 dark:from-purple-800/30 dark:to-blue-800/30 rounded-full -ml-12 -mb-12"></div>
-    <div className="relative">
-      <h2 className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-700 to-purple-700 dark:from-blue-400 dark:to-purple-400 bg-clip-text leading-tight">
-        Understanding Your Gaming Performance: The FPS Calculator
-      </h2>
-    </div>
-  </header>
+            {/* Header Section */}
+            <header className="relative mb-8 p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200/50 dark:border-blue-800/50 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-800/30 dark:to-purple-800/30 rounded-full -mr-16 -mt-16"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-100/50 to-blue-100/50 dark:from-blue-800/30 dark:to-blue-800/30 rounded-full -ml-12 -mb-12"></div>
+              <div className="relative">
+                <h2 className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-700 to-purple-700 dark:from-blue-400 dark:to-purple-400 bg-clip-text leading-tight">
+                  {dict.fps_guide.title}
+                </h2>
+              </div>
+            </header>
 
-  {/* Introduction */}
-  <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
-    <p className="text-justify leading-7 text-lg">
-      In the world of PC gaming, <strong>Frames Per Second (FPS)</strong> is the ultimate measure of 
-      performance. It represents how many individual images your computer can display every second, 
-      directly translating to the smoothness of your gameplay. A high, stable FPS means a fluid, responsive 
-      experience, while a low FPS leads to stuttering and lag.
-    </p>
-  </section>
+            {/* Introduction */}
+            <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
+              <p className="text-justify leading-7 text-lg" dangerouslySetInnerHTML={{ __html: dict.fps_guide.intro }} />
+            </section>
 
-  {/* Why Estimate FPS */}
-  <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
-    <h3 className="text-xl font-semibold mb-4">Why Estimate Your FPS?</h3>
-    <p className="text-justify leading-7">
-      Knowing your potential <strong>gaming performance</strong> before you buy a new game or upgrade a 
-      component is crucial. It empowers you to make informed decisions, manage expectations, and avoid the 
-      disappointment of a purchase that your PC can't handle.
-    </p>
-  </section>
+            {/* Why Estimate FPS */}
+            <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
+              <h3 className="text-xl font-semibold mb-4">{dict.fps_guide.why_estimate.title}</h3>
+              <p className="text-justify leading-7" dangerouslySetInnerHTML={{ __html: dict.fps_guide.why_estimate.content }} />
+            </section>
 
-  {/* How FPS Calculator Works */}
-  <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
-    <h3 className="text-xl font-semibold mb-4">How Does the FPS Calculator Work?</h3>
-    <p className="text-justify leading-7">
-      Our calculator uses a sophisticated model based on thousands of real-world benchmarks. It considers 
-      three key factors:
-    </p>
-    <ul className="space-y-3 mt-4">
-      <li><strong>Your CPU's Power:</strong> The processor handles the game's logic, physics, and AI. In many eSports titles, the CPU is the primary driver of high frame rates.</li>
-      <li><strong>Your GPU's Power:</strong> The graphics card is responsible for rendering the visuals. In graphically intense AAA titles, the GPU does the heaviest lifting.</li>
-      <li><strong>Your Target Resolution:</strong> Playing at 4K requires your GPU to render four times as many pixels as 1080p, which has a massive impact on the final FPS.</li>
-    </ul>
-  </section>
+            {/* How FPS Calculator Works */}
+            <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
+              <h3 className="text-xl font-semibold mb-4">{dict.fps_guide.how_works.title}</h3>
+              <p className="text-justify leading-7">
+                {dict.fps_guide.how_works.content}
+              </p>
+              <ul className="space-y-3 mt-4">
+                {dict.fps_guide.how_works.list.map((item: string, i: number) => (
+                  <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+                ))}
+              </ul>
+            </section>
 
-  {/* Low FPS Solutions */}
-  <header className="relative mb-8 p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200/50 dark:border-blue-800/50 overflow-hidden">
-    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-800/30 dark:to-purple-800/30 rounded-full -mr-16 -mt-16"></div>
-    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-100/50 to-blue-100/50 dark:from-purple-800/30 dark:to-blue-800/30 rounded-full -ml-12 -mb-12"></div>
-    <div className="relative">
-      <h2 className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-700 to-purple-700 dark:from-blue-400 dark:to-purple-400 bg-clip-text leading-tight">
-        Low FPS? Your Next Steps to a Better Gaming Experience
-      </h2>
-    </div>
-  </header>
+            {/* Low FPS Solutions */}
+            <header className="relative mb-8 p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200/50 dark:border-blue-800/50 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-800/30 dark:to-purple-800/30 rounded-full -mr-16 -mt-16"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-100/50 to-blue-100/50 dark:from-purple-800/30 dark:to-blue-800/30 rounded-full -ml-12 -mb-12"></div>
+              <div className="relative">
+                <h2 className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-700 to-purple-700 dark:from-blue-400 dark:to-purple-400 bg-clip-text leading-tight">
+                  {dict.fps_guide.low_fps.title}
+                </h2>
+              </div>
+            </header>
 
-  <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
-    <h3 className="text-xl font-semibold mb-4">Step 1: Diagnose the Core Issue with Our Bottleneck Calculator</h3>
-    <p className="text-justify leading-7">
-      Before you consider an upgrade, you need to know <em>why</em> your FPS is low. Is your powerful GPU being 
-      held back by an older CPU? Or is your GPU simply not strong enough for your desired settings?
-    </p>
-    <p className="text-justify leading-7 mt-4">
-      Our <strong><Link href="/" className="text-primary hover:underline">PC Bottleneck Calculator</Link></strong> 
-      is the perfect diagnostic tool. It analyzes the synergy between your CPU and GPU to pinpoint the exact 
-      weak link in your system.
-    </p>
-  </section>
+            <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
+              <h3 className="text-xl font-semibold mb-4">{dict.fps_guide.low_fps.step1.title}</h3>
+              <p className="text-justify leading-7" dangerouslySetInnerHTML={{ __html: dict.fps_guide.low_fps.step1.p1 }} />
+              <p className="text-justify leading-7 mt-4" dangerouslySetInnerHTML={{ __html: dict.fps_guide.low_fps.step1.p2 }} />
+            </section>
 
-  <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
-    <h3 className="text-xl font-semibold mb-4">Step 2: Ensure You Have Enough Power for an Upgrade</h3>
-    <p className="text-justify leading-7">
-      If you're planning a GPU upgrade to boost your FPS, there's one critical step you can't ignore: your 
-      Power Supply Unit (PSU). Modern graphics cards can be very power-hungry.
-    </p>
-    <p className="text-justify leading-7 mt-4">
-      Use our <strong><Link href="/psu-calculator" className="text-primary hover:underline">PSU Wattage Calculator</Link></strong> 
-      to ensure your power supply can handle any new hardware you're considering.
-    </p>
-  </section>
-</article>
+            <section className="bg-card rounded-xl p-6 mb-8 border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
+              <h3 className="text-xl font-semibold mb-4">{dict.fps_guide.low_fps.step2.title}</h3>
+              <p className="text-justify leading-7" dangerouslySetInnerHTML={{ __html: dict.fps_guide.low_fps.step2.p1 }} />
+              <p className="text-justify leading-7 mt-4" dangerouslySetInnerHTML={{ __html: dict.fps_guide.low_fps.step2.p2 }} />
+            </section>
+          </article>
 
         </CardContent>
       </Card>

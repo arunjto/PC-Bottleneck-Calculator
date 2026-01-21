@@ -9,11 +9,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { 
-  ArrowLeft, 
-  TrendingUp, 
-  TrendingDown, 
-  Minus,
+import {
+  ArrowLeft,
   Monitor,
   Gamepad2,
   Target,
@@ -26,7 +23,8 @@ import {
   Cpu,
   BarChart3,
   Settings,
-  Star
+  Star,
+  TrendingUp
 } from 'lucide-react';
 import { CPU, GPU, calculateBottleneckPercentage, getBottleneckType, estimateFPS, calculatePSURequirement, allGames } from '@/lib/hardware-database';
 
@@ -36,6 +34,7 @@ interface ComprehensiveBottleneckResultsProps {
   ram: { id: string; name: string; tier: string; specs: string; price: number };
   resolution: string;
   onBack: () => void;
+  dict: any;
 }
 
 function ComponentLink({
@@ -61,13 +60,36 @@ function ComponentLink({
   );
 }
 
-export function ComprehensiveBottleneckResults({ 
-  cpu, 
-  gpu, 
-  ram, 
-  resolution, 
-  onBack 
+export function ComprehensiveBottleneckResults({
+  cpu,
+  gpu,
+  ram,
+  resolution,
+  onBack,
+  dict
 }: ComprehensiveBottleneckResultsProps) {
+  // Defensive Dictionary Destructuring
+  const results = dict?.results || {};
+  const sections = results.sections || {};
+  const labels = results.labels || {};
+  const ratings = results.ratings || {};
+  const sysConfig = results.system_config || { overall_desc: {} };
+  const overallDesc = sysConfig.overall_desc || {};
+  const recs = results.recommendations || {};
+  const upg = recs.upgrade_priority || {
+    cpu_title: '', cpu_desc: '', gpu_title: '', gpu_desc: '',
+    balanced_title: '', balanced_desc: '', ram_title: '', ram_desc: ''
+  };
+  const bot = results.bottleneck_analysis || {
+    balanced_title: '', bottleneck_title: '', balanced_desc: '',
+    bottleneck_desc: '', cpu_scenario: '', gpu_scenario: ''
+  };
+  const mkt = results.market || {
+    current_price: '', view_specs: '', official_page: '', launch_price: '',
+    cpu_price: '', gpu_price: '', combined: '', view_specs_fallback: 'View Specs'
+  };
+
+
   const bottleneckPercentage = calculateBottleneckPercentage(cpu, gpu);
   const bottleneckType = getBottleneckType(cpu, gpu);
   const psuRequirement = calculatePSURequirement(cpu, gpu);
@@ -79,7 +101,7 @@ export function ComprehensiveBottleneckResults({
     const cpuScore = cpu.benchmarkScore * (res === '1080p' ? 0.9 : 1.0); // CPU matters less at higher res
     const gpuScore = gpu.benchmarkScore * multiplier;
     const limitingFactor = cpuScore < gpuScore ? 'CPU' : 'GPU';
-    
+
     return {
       resolution: res,
       cpuScore: Math.round(cpuScore),
@@ -92,21 +114,21 @@ export function ComprehensiveBottleneckResults({
   // Gaming performance assessment
   const cpuGamingScore = Math.min(100, cpu.benchmarkScore + (cpu.cores >= 8 ? 5 : 0) + (cpu.boostClock >= 4.5 ? 5 : 0));
   const gpuGamingScore = gpu.benchmarkScore;
-  
+
   const getCPUGamingRating = (score: number) => {
-    if (score >= 90) return { rating: 'Excellent', color: 'text-green-600', description: 'Handles all modern games flawlessly' };
-    if (score >= 75) return { rating: 'Very Good', color: 'text-blue-600', description: 'Great for most games with high settings' };
-    if (score >= 60) return { rating: 'Good', color: 'text-yellow-600', description: 'Suitable for most games with medium settings' };
-    if (score >= 45) return { rating: 'Fair', color: 'text-orange-600', description: 'May struggle with demanding games' };
-    return { rating: 'Poor', color: 'text-red-600', description: 'Not recommended for modern gaming' };
+    if (score >= 90) return { rating: ratings.excellent, color: 'text-green-600', description: ratings.excellent };
+    if (score >= 75) return { rating: ratings.very_good, color: 'text-blue-600', description: ratings.very_good };
+    if (score >= 60) return { rating: ratings.good, color: 'text-yellow-600', description: ratings.good };
+    if (score >= 45) return { rating: ratings.fair, color: 'text-orange-600', description: ratings.fair };
+    return { rating: ratings.poor, color: 'text-red-600', description: ratings.poor };
   };
 
   const getGPUGamingRating = (score: number) => {
-    if (score >= 90) return { rating: 'Excellent', color: 'text-green-600', description: 'Ultra settings at high resolutions' };
-    if (score >= 75) return { rating: 'Very Good', color: 'text-blue-600', description: 'High settings at 1440p+' };
-    if (score >= 60) return { rating: 'Good', color: 'text-yellow-600', description: 'Medium-High settings at 1080p-1440p' };
-    if (score >= 45) return { rating: 'Fair', color: 'text-orange-600', description: 'Medium settings at 1080p' };
-    return { rating: 'Poor', color: 'text-red-600', description: 'Low settings recommended' };
+    if (score >= 90) return { rating: ratings.excellent, color: 'text-green-600', description: ratings.excellent };
+    if (score >= 75) return { rating: ratings.very_good, color: 'text-blue-600', description: ratings.very_good };
+    if (score >= 60) return { rating: ratings.good, color: 'text-yellow-600', description: ratings.good };
+    if (score >= 45) return { rating: ratings.fair, color: 'text-orange-600', description: ratings.fair };
+    return { rating: ratings.poor, color: 'text-red-600', description: ratings.poor };
   };
 
   const cpuRating = getCPUGamingRating(cpuGamingScore);
@@ -114,12 +136,16 @@ export function ComprehensiveBottleneckResults({
 
   // Configuration scoring
   const getRamScore = (ramId: string) => {
-    if (ramId.includes('64gb')) return { score: 'Excellent', color: 'text-green-600', description: 'Overkill for gaming, perfect for content creation' };
-    if (ramId.includes('32gb')) return { score: 'Excellent', color: 'text-green-600', description: 'Future-proof, great for multitasking' };
-    if (ramId.includes('16gb') && ramId.includes('ddr5')) return { score: 'Very Good', color: 'text-blue-600', description: 'Modern standard, excellent performance' };
-    if (ramId.includes('16gb')) return { score: 'Good', color: 'text-yellow-600', description: 'Current gaming standard' };
-    if (ramId.includes('8gb')) return { score: 'Fair', color: 'text-orange-600', description: 'Minimum for modern games' };
-    return { score: 'Poor', color: 'text-red-600', description: 'Insufficient for modern gaming' };
+    const ramDesc = sysConfig.ram_desc || {};
+
+    const fallbackDesc = "Compatible with modern systems";
+
+    if (ramId.includes('64gb')) return { score: ratings.excellent, color: 'text-green-600', description: ramDesc.excellent || fallbackDesc };
+    if (ramId.includes('32gb')) return { score: ratings.excellent, color: 'text-green-600', description: ramDesc.excellent || fallbackDesc };
+    if (ramId.includes('16gb') && ramId.includes('ddr5')) return { score: ratings.very_good, color: 'text-blue-600', description: ramDesc.very_good || fallbackDesc };
+    if (ramId.includes('16gb')) return { score: ratings.good, color: 'text-yellow-600', description: ramDesc.good || fallbackDesc };
+    if (ramId.includes('8gb')) return { score: ratings.fair, color: 'text-orange-600', description: ramDesc.fair || fallbackDesc };
+    return { score: ratings.poor, color: 'text-red-600', description: ramDesc.fair || fallbackDesc };
   };
 
   const ramScore = getRamScore(ram.id);
@@ -127,30 +153,35 @@ export function ComprehensiveBottleneckResults({
   // Gaming recommendations
   const getGameTypeRecommendations = () => {
     const avgScore = (cpu.benchmarkScore + gpu.benchmarkScore) / 2;
-    
+    // Defensive access done above in 'recs'
+    const allGames = recs.all_games || { label: 'All Games', desc: '', list: [] };
+    const aaaEsports = recs.aaa_esports || { label: 'AAA & Esports', desc: '', list: [] };
+    const esportsCasual = recs.esports_casual || { label: 'Esports & Casual', desc: '', list: [] };
+    const casual = recs.casual || { label: 'Casual', desc: '', list: [] };
+
     if (avgScore >= 85) {
       return {
-        primary: 'All Games',
-        description: 'Your system can handle any game at high settings',
-        games: ['AAA titles at Ultra settings', 'Competitive esports at 240+ FPS', 'VR gaming', 'Content creation']
+        primary: allGames.label,
+        description: allGames.desc,
+        games: allGames.list
       };
     } else if (avgScore >= 70) {
       return {
-        primary: 'AAA & Esports',
-        description: 'Great for most modern games',
-        games: ['AAA titles at High settings', 'Esports at 144+ FPS', 'Streaming while gaming']
+        primary: aaaEsports.label,
+        description: aaaEsports.desc,
+        games: aaaEsports.list
       };
     } else if (avgScore >= 55) {
       return {
-        primary: 'Esports & Casual',
-        description: 'Good for competitive and casual gaming',
-        games: ['Esports at 60-144 FPS', 'Older AAA titles', 'Indie games']
+        primary: esportsCasual.label,
+        description: esportsCasual.desc,
+        games: esportsCasual.list
       };
     } else {
       return {
-        primary: 'Casual Gaming',
-        description: 'Best suited for less demanding games',
-        games: ['Esports at 60 FPS', 'Indie games', 'Older titles']
+        primary: casual.label,
+        description: casual.desc,
+        games: casual.list
       };
     }
   };
@@ -184,11 +215,11 @@ export function ComprehensiveBottleneckResults({
               className="flex items-center space-x-2"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Back to Calculator</span>
+              <span>{results.back_button}</span>
             </Button>
             <div className="text-center">
-              <h1 className="text-2xl font-bold">System Analysis Results</h1>
-              <p className="text-gray-600 dark:text-gray-400">Comprehensive performance breakdown</p>
+              <h1 className="text-2xl font-bold">{results.title}</h1>
+              <p className="text-gray-600 dark:text-gray-400">{results.subtitle}</p>
             </div>
             <div className="w-32" /> {/* Spacer for centering */}
           </div>
@@ -200,40 +231,39 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Monitor className="w-6 h-6 text-blue-600" />
-            <span>🔹 Resolution Impact & Benchmarks</span>
+            <span>🔹 {sections.resolution_impact}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {resolutionImpact.map((impact) => (
-              <div 
+              <div
                 key={impact.resolution}
-                className={`p-4 rounded-lg border-2 ${
-                  impact.resolution === resolution 
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
-                    : 'border-gray-200 dark:border-gray-700'
-                }`}
+                className={`p-4 rounded-lg border-2 ${impact.resolution === resolution
+                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                  : 'border-gray-200 dark:border-gray-700'
+                  }`}
               >
                 <div className="text-center mb-3">
                   <h3 className="font-semibold text-lg">{impact.resolution}</h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Estimated: {impact.estimatedFPS} FPS
+                    {labels.estimated_total}: {impact.estimatedFPS} FPS
                   </p>
                 </div>
-                
+
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm">CPU Performance</span>
+                    <span className="text-sm">{labels.cpu_perf}</span>
                     <span className="font-medium">{impact.cpuScore}%</span>
                   </div>
                   <Progress value={impact.cpuScore} className="h-2" />
-                  
+
                   <div className="flex justify-between items-center">
-                    <span className="text-sm">GPU Performance</span>
+                    <span className="text-sm">{labels.gpu_perf}</span>
                     <span className="font-medium">{impact.gpuScore}%</span>
                   </div>
                   <Progress value={impact.gpuScore} className="h-2" />
-                  
+
                   <div className="flex items-center justify-center mt-3">
                     <Badge variant={impact.limitingFactor === 'CPU' ? 'destructive' : 'secondary'}>
                       {impact.limitingFactor} Limited
@@ -251,7 +281,7 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Gamepad2 className="w-6 h-6 text-green-600" />
-            <span>🔹 Gaming Performance Assessment</span>
+            <span>🔹 {sections.gaming_perf}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -259,10 +289,10 @@ export function ComprehensiveBottleneckResults({
             <div className="space-y-4">
               <h3 className="font-semibold flex items-center space-x-2">
                 <Cpu className="w-5 h-5" />
-                <span>CPU Gaming Performance</span>
+                <span>{labels.cpu_gaming}</span>
               </h3>
               <div className="flex items-center justify-between">
-                <span>Gaming Score</span>
+                <span>{labels.gaming_score}</span>
                 <span className="font-bold text-lg">{cpuGamingScore}/100</span>
               </div>
               <Progress value={cpuGamingScore} className="h-3" />
@@ -277,10 +307,10 @@ export function ComprehensiveBottleneckResults({
             <div className="space-y-4">
               <h3 className="font-semibold flex items-center space-x-2">
                 <Zap className="w-5 h-5" />
-                <span>GPU Gaming Performance</span>
+                <span>{labels.gpu_gaming}</span>
               </h3>
               <div className="flex items-center justify-between">
-                <span>Gaming Score</span>
+                <span>{labels.gaming_score}</span>
                 <span className="font-bold text-lg">{gpuGamingScore}/100</span>
               </div>
               <Progress value={gpuGamingScore} className="h-3" />
@@ -294,18 +324,18 @@ export function ComprehensiveBottleneckResults({
           </div>
 
           <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <h4 className="font-semibold mb-2">System Balance</h4>
+            <h4 className="font-semibold mb-2">{labels.system_balance}</h4>
             <div className="flex items-center space-x-2">
               {bottleneckType === 'Balanced' ? (
                 <>
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-green-600 font-medium">Well Balanced System</span>
+                  <span className="text-green-600 font-medium">{ratings.well_balanced}</span>
                 </>
               ) : (
                 <>
                   <AlertTriangle className="w-5 h-5 text-yellow-600" />
                   <span className="text-yellow-600 font-medium">
-                    {bottleneckPercentage}% {bottleneckType} Bottleneck
+                    {bottleneckPercentage}% {bottleneckType} {ratings.bottleneck_warning}
                   </span>
                 </>
               )}
@@ -319,13 +349,13 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Target className="w-6 h-6 text-purple-600" />
-            <span>🔹 Gaming Recommendations</span>
+            <span>🔹 {sections.recommendations}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h3 className="font-semibold">Recommended Game Types</h3>
+              <h3 className="font-semibold">{labels.rec_game_types}</h3>
               <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                 <div className="font-semibold text-purple-900 dark:text-purple-100 mb-2">
                   {gameRecommendations.primary}
@@ -334,7 +364,7 @@ export function ComprehensiveBottleneckResults({
                   {gameRecommendations.description}
                 </p>
                 <ul className="space-y-1">
-                  {gameRecommendations.games.map((game, index) => (
+                  {gameRecommendations.games.map((game: string, index: number) => (
                     <li key={index} className="text-sm flex items-center space-x-2">
                       <CheckCircle className="w-3 h-3 text-purple-600" />
                       <span>{game}</span>
@@ -345,28 +375,28 @@ export function ComprehensiveBottleneckResults({
             </div>
 
             <div className="space-y-4">
-              <h3 className="font-semibold">Upgrade Priority</h3>
+              <h3 className="font-semibold">{labels.upgrade_priority}</h3>
               <div className="space-y-3">
                 {bottleneckType === 'CPU' && (
                   <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
                     <div className="flex items-center space-x-2 mb-2">
                       <TrendingUp className="w-4 h-4 text-red-600" />
-                      <span className="font-medium text-red-900 dark:text-red-100">Priority: Upgrade CPU</span>
+                      <span className="font-medium text-red-900 dark:text-red-100">{upg.cpu_title}</span>
                     </div>
                     <p className="text-sm text-red-800 dark:text-red-200">
-                      Your CPU is limiting GPU performance by {bottleneckPercentage}%
+                      {upg.cpu_desc?.replace('{val}', bottleneckPercentage.toString())}
                     </p>
                   </div>
                 )}
-                
+
                 {bottleneckType === 'GPU' && (
                   <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
                     <div className="flex items-center space-x-2 mb-2">
                       <TrendingUp className="w-4 h-4 text-red-600" />
-                      <span className="font-medium text-red-900 dark:text-red-100">Priority: Upgrade GPU</span>
+                      <span className="font-medium text-red-900 dark:text-red-100">{upg.gpu_title}</span>
                     </div>
                     <p className="text-sm text-red-800 dark:text-red-200">
-                      Your GPU is the limiting factor by {bottleneckPercentage}%
+                      {upg.gpu_desc?.replace('{val}', bottleneckPercentage.toString())}
                     </p>
                   </div>
                 )}
@@ -375,10 +405,10 @@ export function ComprehensiveBottleneckResults({
                   <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                     <div className="flex items-center space-x-2 mb-2">
                       <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="font-medium text-green-900 dark:text-green-100">Well Balanced</span>
+                      <span className="font-medium text-green-900 dark:text-green-100">{upg.balanced_title}</span>
                     </div>
                     <p className="text-sm text-green-800 dark:text-green-200">
-                      No immediate upgrades needed
+                      {upg.balanced_desc}
                     </p>
                   </div>
                 )}
@@ -387,10 +417,10 @@ export function ComprehensiveBottleneckResults({
                   <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
                     <div className="flex items-center space-x-2 mb-2">
                       <HardDrive className="w-4 h-4 text-yellow-600" />
-                      <span className="font-medium text-yellow-900 dark:text-yellow-100">Consider: More RAM</span>
+                      <span className="font-medium text-yellow-900 dark:text-yellow-100">{upg.ram_title}</span>
                     </div>
                     <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                      16GB recommended for modern gaming
+                      {upg.ram_desc}
                     </p>
                   </div>
                 )}
@@ -405,14 +435,14 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Award className="w-6 h-6 text-yellow-600" />
-            <span>🔹 Configuration Scoring</span>
+            <span>🔹 {sections.config_score}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <HardDrive className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <h3 className="font-semibold mb-1">Memory (RAM)</h3>
+              <h3 className="font-semibold mb-1">{labels.ram_score}</h3>
               <div className={`text-lg font-bold ${ramScore.color} mb-2`}>
                 {ramScore.score}
               </div>
@@ -423,25 +453,25 @@ export function ComprehensiveBottleneckResults({
 
             <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <HardDrive className="w-8 h-8 mx-auto mb-2 text-green-600" />
-              <h3 className="font-semibold mb-1">Storage</h3>
+              <h3 className="font-semibold mb-1">{labels.storage_score}</h3>
               <div className="text-lg font-bold text-green-600 mb-2">
-                Good
+                {ratings.good}
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Modern SSD recommended for best load times
+                {sysConfig.storage_desc}
               </p>
             </div>
 
             <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <Star className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <h3 className="font-semibold mb-1">Overall Rating</h3>
+              <h3 className="font-semibold mb-1">{labels.overall_rating}</h3>
               <div className="text-lg font-bold text-purple-600 mb-2">
-                {bottleneckType === 'Balanced' ? 'Excellent' : 'Good'}
+                {bottleneckType === 'Balanced' ? ratings.excellent : ratings.good}
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                {bottleneckType === 'Balanced' 
-                  ? 'Perfect for gaming and productivity' 
-                  : 'Good performance with room for improvement'
+                {bottleneckType === 'Balanced'
+                  ? overallDesc.balanced
+                  : overallDesc.imbalance
                 }
               </p>
             </div>
@@ -454,19 +484,19 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <BarChart3 className="w-6 h-6 text-red-600" />
-            <span>🔹 Bottleneck Analysis</span>
+            <span>🔹 {sections.bottleneck}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
             <div className="text-center">
               <div className="text-3xl font-bold mb-2">
-                {bottleneckPercentage}% {bottleneckType} Bottleneck
+                {bottleneckPercentage}% {bottleneckType} {ratings.bottleneck_warning}
               </div>
               <p className="text-gray-600 dark:text-gray-400">
-                {bottleneckType === 'Balanced' 
-                  ? 'Your system components are well matched'
-                  : `Your ${bottleneckType} is limiting overall performance`
+                {bottleneckType === 'Balanced'
+                  ? bot.balanced_title
+                  : bot.bottleneck_title?.replace('{type}', bottleneckType)
                 }
               </p>
             </div>
@@ -476,11 +506,11 @@ export function ComprehensiveBottleneckResults({
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium">CPU Utilization</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">
-                    {bottleneckType === 'CPU' ? 'Maxed Out' : 'Optimal'}
+                    {bottleneckType === 'CPU' ? ratings.maxed_out : ratings.optimal}
                   </span>
                 </div>
-                <Progress 
-                  value={bottleneckType === 'CPU' ? 95 : 75} 
+                <Progress
+                  value={bottleneckType === 'CPU' ? 95 : 75}
                   className="h-3"
                 />
               </div>
@@ -489,22 +519,25 @@ export function ComprehensiveBottleneckResults({
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium">GPU Utilization</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">
-                    {bottleneckType === 'GPU' ? 'Maxed Out' : 'Optimal'}
+                    {bottleneckType === 'GPU' ? ratings.maxed_out : ratings.optimal}
                   </span>
                 </div>
-                <Progress 
-                  value={bottleneckType === 'GPU' ? 95 : 85} 
+                <Progress
+                  value={bottleneckType === 'GPU' ? 95 : 85}
                   className="h-3"
                 />
               </div>
             </div>
 
             <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <h4 className="font-semibold mb-2">Performance Impact</h4>
+              <h4 className="font-semibold mb-2">{labels.perf_impact}</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                {bottleneckType === 'Balanced' 
-                  ? 'No significant performance loss. Your components work together efficiently.'
-                  : `The ${bottleneckType} bottleneck may reduce overall gaming performance by approximately ${bottleneckPercentage}% in ${bottleneckType === 'CPU' ? 'CPU-intensive' : 'graphics-intensive'} scenarios.`
+                {bottleneckType === 'Balanced'
+                  ? bot.balanced_desc
+                  : bot.bottleneck_desc
+                    ?.replace('{type}', bottleneckType)
+                    .replace('{val}', bottleneckPercentage.toString())
+                    .replace('{scenario}', bottleneckType === 'CPU' ? bot.cpu_scenario : bot.gpu_scenario)
                 }
               </p>
             </div>
@@ -517,7 +550,7 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Gamepad2 className="w-6 h-6 text-indigo-600" />
-            <span>🔹 Expected Gaming Experience ({resolution})</span>
+            <span>🔹 {sections.expected_experience} ({resolution})</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -525,7 +558,7 @@ export function ComprehensiveBottleneckResults({
             <div>
               <h3 className="font-semibold mb-4 flex items-center space-x-2">
                 <Target className="w-5 h-5 text-blue-600" />
-                <span>Esports Titles</span>
+                <span>{labels.esports}</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {esportsGames.map((game) => {
@@ -550,7 +583,7 @@ export function ComprehensiveBottleneckResults({
             <div>
               <h3 className="font-semibold mb-4 flex items-center space-x-2">
                 <Star className="w-5 h-5 text-purple-600" />
-                <span>AAA Titles</span>
+                <span>{labels.aaa}</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {aaaGames.map((game) => {
@@ -575,11 +608,11 @@ export function ComprehensiveBottleneckResults({
             <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
               <h4 className="font-semibold mb-3 flex items-center space-x-2">
                 <Settings className="w-5 h-5 text-indigo-600" />
-                <span>Optimization Tips</span>
+                <span>{labels.optimization_tips}</span>
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <h5 className="font-medium mb-2">Graphics Settings</h5>
+                  <h5 className="font-medium mb-2">{labels.graphics_settings}</h5>
                   <ul className="space-y-1 text-gray-600 dark:text-gray-400">
                     <li>• Enable DLSS/FSR for better performance</li>
                     <li>• Reduce shadow quality for FPS boost</li>
@@ -587,7 +620,7 @@ export function ComprehensiveBottleneckResults({
                   </ul>
                 </div>
                 <div>
-                  <h5 className="font-medium mb-2">System Optimization</h5>
+                  <h5 className="font-medium mb-2">{labels.system_opt}</h5>
                   <ul className="space-y-1 text-gray-600 dark:text-gray-400">
                     <li>• Close background applications</li>
                     <li>• Enable Game Mode in Windows</li>
@@ -605,7 +638,7 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <DollarSign className="w-6 h-6 text-amber-600" />
-            <span>💰 Current Market Prices</span>
+            <span>💰 {sections.market_prices}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -613,7 +646,7 @@ export function ComprehensiveBottleneckResults({
             <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <div className="flex items-center justify-between mb-2">
                 <div>
-                  <h3 className="font-semibold text-blue-900 dark:text-blue-100">CPU Price</h3>
+                  <h3 className="font-semibold text-blue-900 dark:text-blue-100">{mkt.cpu_price}</h3>
                   <div className="space-y-2">
                     <ComponentLink href={cpu.officialUrl}>
                       <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">{cpu.name}</p>
@@ -626,40 +659,39 @@ export function ComprehensiveBottleneckResults({
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className={`group transition-colors ${
-                                  cpu.brand === 'Intel' 
-                                    ? 'hover:bg-blue-600 hover:text-white' 
-                                    : 'hover:bg-red-600 hover:text-white'
-                                }`}
+                                className={`group transition-colors ${cpu.brand === 'Intel'
+                                  ? 'hover:bg-blue-600 hover:text-white'
+                                  : 'hover:bg-red-600 hover:text-white'
+                                  }`}
                                 asChild
                               >
-                                <a 
-                                  href={cpu.officialUrl} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer" 
+                                <a
+                                  href={cpu.officialUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
                                   className="flex items-center space-x-2"
                                 >
                                   {cpu.brand === 'Intel' ? (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24">
-                                      <path 
-                                        fill="currentColor" 
+                                      <path
+                                        fill="currentColor"
                                         d="M24,11.36h-3.24v1.5h3.24V11.36z M19.67,11.36h-3.24v1.5h3.24V11.36z M15.33,11.36h-3.24v1.5h3.24V11.36z M11,11.36H7.76v1.5H11 V11.36z M6.67,11.36H3.43v1.5h3.24V11.36z M2.33,11.36H0v1.5h2.33V11.36z"
                                       />
                                     </svg>
                                   ) : (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24">
-                                      <path 
-                                        fill="currentColor" 
+                                      <path
+                                        fill="currentColor"
                                         d="M18.324 9.137l1.559-1.559v7.117l-1.559-1.559v-3.999zm-3.092 3.092l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091 3.091l1.559-1.559v1.559h-1.559zm-3.092-3.091l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091-3.092l1.559-1.559v7.117l-1.559-1.559v-3.999z"
                                       />
                                     </svg>
                                   )}
-                                  <span className="text-xs">View Specs</span>
+                                  <span className="text-xs">{mkt.view_specs || mkt.view_specs_fallback}</span>
                                 </a>
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Official {cpu.brand} Product Page</p>
+                              <p>{mkt.official_page?.replace('{brand}', cpu.brand)}</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -669,12 +701,12 @@ export function ComprehensiveBottleneckResults({
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-green-600">${cpu.currentPrice}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Current market price</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">{mkt.current_price}</div>
                 </div>
               </div>
               {cpu.launchPrice !== cpu.currentPrice && (
                 <div className="text-xs text-gray-600 dark:text-gray-400">
-                  Launch price: ${cpu.launchPrice} 
+                  {mkt.launch_price?.replace('{val}', cpu.launchPrice.toString())}
                   <span className={cpu.currentPrice < cpu.launchPrice ? 'text-green-600' : 'text-red-600'}>
                     ({cpu.currentPrice < cpu.launchPrice ? '-' : '+'}${Math.abs(cpu.launchPrice - cpu.currentPrice)})
                   </span>
@@ -685,7 +717,7 @@ export function ComprehensiveBottleneckResults({
             <div className="p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg border border-green-200 dark:border-green-800">
               <div className="flex items-center justify-between mb-2">
                 <div>
-                  <h3 className="font-semibold text-green-900 dark:text-green-100">GPU Price</h3>
+                  <h3 className="font-semibold text-green-900 dark:text-green-100">{mkt.gpu_price}</h3>
                   <div className="space-y-2">
                     <ComponentLink href={gpu.officialUrl}>
                       <p className="text-sm text-green-700 dark:text-green-300 font-medium">{gpu.name}</p>
@@ -695,50 +727,49 @@ export function ComprehensiveBottleneckResults({
                         <Button
                           variant="outline"
                           size="sm"
-                          className={`group transition-colors ${
-                            gpu.brand === 'NVIDIA' 
-                              ? 'hover:bg-green-600 hover:text-white' 
-                              : 'hover:bg-red-600 hover:text-white'
-                          }`}
+                          className={`group transition-colors ${gpu.brand === 'NVIDIA'
+                            ? 'hover:bg-green-600 hover:text-white'
+                            : 'hover:bg-red-600 hover:text-white'
+                            }`}
                           asChild
                         >
-                          <a 
-                            href={gpu.officialUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
+                          <a
+                            href={gpu.officialUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="flex items-center space-x-2"
                           >
                             {gpu.brand === 'NVIDIA' ? (
                               <svg className="w-4 h-4" viewBox="0 0 24 24">
-                                <path 
-                                  fill="currentColor" 
+                                <path
+                                  fill="currentColor"
                                   d="M12.03,11.16h-1.39v1.56h1.39c0.55,0,0.89-0.31,0.89-0.78C12.92,11.47,12.58,11.16,12.03,11.16z M14.89,13.43 c0-0.48-0.35-0.79-0.91-0.79h-1.41v1.57h1.41C14.54,14.21,14.89,13.91,14.89,13.43z M14.45,9.75h-1.36v1.41h1.36 c0.54,0,0.88-0.29,0.88-0.7C15.33,10.05,14.99,9.75,14.45,9.75z"
                                 />
                               </svg>
                             ) : (
                               <svg className="w-4 h-4" viewBox="0 0 24 24">
-                                <path 
-                                  fill="currentColor" 
+                                <path
+                                  fill="currentColor"
                                   d="M18.324 9.137l1.559-1.559v7.117l-1.559-1.559v-3.999zm-3.092 3.092l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091 3.091l1.559-1.559v1.559h-1.559zm-3.092-3.091l1.559-1.559v3.999l-1.559-1.559v-.882zm-3.091-3.092l1.559-1.559v7.117l-1.559-1.559v-3.999z"
                                 />
                               </svg>
                             )}
-                            <span className="text-xs">View Specs</span>
+                            <span className="text-xs">{mkt.view_specs || mkt.view_specs_fallback}</span>
                           </a>
                         </Button>
-                        <span className="text-xs text-gray-500">Official {gpu.brand} Product Page</span>
+                        <span className="text-xs text-gray-500">{mkt.official_page?.replace('{brand}', gpu.brand)}</span>
                       </div>
                     )}
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-green-600">${gpu.currentPrice}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Current market price</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">{mkt.current_price}</div>
                 </div>
               </div>
               {gpu.launchPrice !== gpu.currentPrice && (
                 <div className="text-xs text-gray-600 dark:text-gray-400">
-                  Launch price: ${gpu.launchPrice}
+                  {mkt.launch_price?.replace('{val}', gpu.launchPrice.toString())}
                   <span className={gpu.currentPrice < gpu.launchPrice ? 'text-green-600' : 'text-red-600'}>
                     ({gpu.currentPrice < gpu.launchPrice ? '-' : '+'}${Math.abs(gpu.launchPrice - gpu.currentPrice)})
                   </span>
@@ -750,15 +781,15 @@ export function ComprehensiveBottleneckResults({
           <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-semibold text-amber-900 dark:text-amber-100">Total System Value</h3>
-                <p className="text-sm text-amber-700 dark:text-amber-300">CPU + GPU + RAM combined</p>
+                <h3 className="font-semibold text-amber-900 dark:text-amber-100">{labels.total_system_value}</h3>
+                <p className="text-sm text-amber-700 dark:text-amber-300">{mkt.combined}</p>
               </div>
               <div className="text-right">
                 <div className="text-3xl font-bold text-amber-600">${totalSystemPrice}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Estimated total</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">{labels.estimated_total}</div>
               </div>
             </div>
-            
+
             <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
               <div className="text-center">
                 <div className="font-medium text-gray-900 dark:text-gray-100">${cpu.currentPrice}</div>
@@ -778,10 +809,10 @@ export function ComprehensiveBottleneckResults({
           <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <h4 className="font-semibold mb-2 flex items-center space-x-2">
               <Zap className="w-4 h-4 text-yellow-600" />
-              <span>Power Requirements</span>
+              <span>{labels.power_reqs}</span>
             </h4>
             <div className="flex items-center justify-between">
-              <span>Recommended PSU</span>
+              <span>{labels.rec_psu}</span>
               <span className="font-bold">{psuRequirement}W</span>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -796,35 +827,32 @@ export function ComprehensiveBottleneckResults({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <CheckCircle className="w-6 h-6 text-green-600" />
-            <span>🎯 Final Recommendation Summary</span>
+            <span>🎯 {labels.final_rec}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg border border-green-200 dark:border-green-800">
-              <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">
-                System Verdict: {bottleneckType === 'Balanced' ? 'Excellent Build' : 'Good Build with Optimization Potential'}
-              </h3>
-              <p className="text-sm text-green-800 dark:text-green-200">
-                {bottleneckType === 'Balanced' 
-                  ? `Your system is well-balanced and ready for ${resolution} gaming. You can expect smooth performance in most games with high settings.`
-                  : `Your system will perform well, but upgrading the ${bottleneckType} would unlock ${bottleneckPercentage}% more performance potential.`
-                }
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                <div className="font-semibold text-blue-900 dark:text-blue-100">Gaming</div>
-                <div className="text-blue-700 dark:text-blue-300">{gameRecommendations.primary}</div>
+          <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+            <h3 className="font-bold text-lg mb-2 text-green-900 dark:text-green-100">
+              System Verdict: {bottleneckType === 'Balanced' ? 'Excellent Build' : 'Upgrade Recommended'}
+            </h3>
+            <p className="text-green-800 dark:text-green-200 mb-4">
+              {bottleneckType === 'Balanced'
+                ? 'Your system is well balanced and ready for modern gaming. You can expect smooth performance in most games with high settings.'
+                : `Your system has a significant ${bottleneckType} bottleneck that is holding back performance. Consider upgrading your ${bottleneckType} to unlock the full potential of your build.`
+              }
+            </p>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="p-2 bg-white dark:bg-green-900/40 rounded shadow-sm">
+                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">Gaming</div>
+                <div className="font-bold text-green-900 dark:text-green-100">{gameRecommendations.primary}</div>
               </div>
-              <div className="text-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                <div className="font-semibold text-purple-900 dark:text-purple-100">Resolution</div>
-                <div className="text-purple-700 dark:text-purple-300">{resolution} Ready</div>
+              <div className="p-2 bg-white dark:bg-green-900/40 rounded shadow-sm">
+                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">Resolution</div>
+                <div className="font-bold text-green-900 dark:text-green-100">{resolution} Ready</div>
               </div>
-              <div className="text-center p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
-                <div className="font-semibold text-amber-900 dark:text-amber-100">Value</div>
-                <div className="text-amber-700 dark:text-amber-300">${totalSystemPrice} Total</div>
+              <div className="p-2 bg-white dark:bg-green-900/40 rounded shadow-sm">
+                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">Value</div>
+                <div className="font-bold text-green-900 dark:text-green-100">${totalSystemPrice} Total</div>
               </div>
             </div>
           </div>

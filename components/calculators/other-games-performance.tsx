@@ -16,6 +16,7 @@ interface OtherGamesPerformanceProps {
   gpuId: string;
   resolution: string;
   excludedGameId?: string;
+  dict: any;
 }
 
 const FEATURED_GAME_IDS = [
@@ -108,22 +109,22 @@ function resolveSettingsLabel(game: Game, resolutionPresetHint: string) {
   return GAME_SPECIFIC_SETTINGS[game.id] ?? resolutionPresetHint ?? demandFallback;
 }
 
-function getPerformanceBadge(fps: number, resolutionKey: string) {
+function getPerformanceBadge(fps: number, resolutionKey: string, t: any) {
   const thresholds = PERFORMANCE_THRESHOLDS[resolutionKey] ?? PERFORMANCE_THRESHOLDS.default;
 
   if (fps >= thresholds.excellent) {
-    return { label: 'EXCELLENT', className: 'bg-green-100 text-green-700 border border-green-200' };
+    return { label: t?.badges?.excellent ?? 'EXCELLENT', className: 'bg-green-100 text-green-700 border border-green-200' };
   }
   if (fps >= thresholds.great) {
-    return { label: 'GREAT', className: 'bg-blue-100 text-blue-700 border border-blue-200' };
+    return { label: t?.badges?.great ?? 'GREAT', className: 'bg-blue-100 text-blue-700 border border-blue-200' };
   }
   if (fps >= thresholds.good) {
-    return { label: 'GOOD', className: 'bg-amber-100 text-amber-700 border border-amber-200' };
+    return { label: t?.badges?.good ?? 'GOOD', className: 'bg-amber-100 text-amber-700 border border-amber-200' };
   }
   if (fps >= thresholds.playable) {
-    return { label: 'PLAYABLE', className: 'bg-yellow-100 text-yellow-800 border border-yellow-200' };
+    return { label: t?.badges?.playable ?? 'PLAYABLE', className: 'bg-yellow-100 text-yellow-800 border border-yellow-200' };
   }
-  return { label: 'UPGRADE ADVISED', className: 'bg-red-100 text-red-700 border border-red-200' };
+  return { label: t?.badges?.upgrade ?? 'UPGRADE ADVISED', className: 'bg-red-100 text-red-700 border border-red-200' };
 }
 
 function buildGameList(excludedGameId?: string) {
@@ -153,11 +154,13 @@ export function OtherGamesPerformance({
   gpuId,
   resolution,
   excludedGameId,
+  dict
 }: OtherGamesPerformanceProps) {
+  const t = dict?.other_games;
   const cpu = getCPUById(cpuId);
   const gpu = getGPUById(gpuId);
 
-  if (!cpu || !gpu) return null;
+  if (!t || !cpu || !gpu) return null;
 
   const comparisonGames = buildGameList(excludedGameId);
   if (!comparisonGames.length) return null;
@@ -175,10 +178,22 @@ export function OtherGamesPerformance({
         game,
         fps,
         preset: resolveSettingsLabel(game, resolutionDetails.presetHint),
-        badge: getPerformanceBadge(fps, resolution),
+        badge: getPerformanceBadge(fps, resolution, t),
       };
     })
     .sort((a, b) => b.fps - a.fps);
+
+  const description = t.description
+    .replace('{cpu}', cpu.name)
+    .replace('{gpu}', gpu.name)
+    .replace('{res}', resolutionDetails.label);
+
+  const badgeScale = t.badge_scale
+    .replace('{res}', resolutionDetails.label)
+    .replace('{exc}', thresholds.excellent.toString())
+    .replace('{great}', thresholds.great.toString())
+    .replace('{good}', thresholds.good.toString())
+    .replace('{play}', thresholds.playable.toString());
 
   return (
     <Card className="border-blue-100 shadow-md bg-slate-50/70 dark:bg-slate-900/50">
@@ -187,17 +202,16 @@ export function OtherGamesPerformance({
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-200">
             <MonitorPlay className="h-5 w-5" />
           </span>
-      Performance in Other Games
-    </CardTitle>
-    <p className="text-sm text-slate-600 dark:text-slate-300">
-      Based on your current build ({cpu.name} + {gpu.name}), here is the expected performance in
-      other popular titles at {resolutionDetails.label}.
-    </p>
-    <p className="text-xs text-slate-500 dark:text-slate-400">
-      Badge scale for {resolutionDetails.label}: Excellent ≥ {thresholds.excellent} FPS · Great ≥ {thresholds.great} FPS · Good ≥ {thresholds.good} FPS · Playable ≥ {thresholds.playable} FPS.
-    </p>
-  </CardHeader>
-  <CardContent>
+          {t.title}
+        </CardTitle>
+        <p className="text-sm text-slate-600 dark:text-slate-300">
+          {description}
+        </p>
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          {badgeScale}
+        </p>
+      </CardHeader>
+      <CardContent>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {projections.map(({ game, fps, preset, badge }) => (
             <article
@@ -224,7 +238,7 @@ export function OtherGamesPerformance({
                   <p className="text-3xl font-bold text-blue-600 dark:text-blue-300">
                     {Math.max(fps, 0)}
                     <span className="ml-1 text-sm font-medium text-slate-500 dark:text-slate-400">
-                      FPS (avg)
+                      {t.fps_avg}
                     </span>
                   </p>
                   <p className="text-xs text-slate-500 dark:text-slate-400">

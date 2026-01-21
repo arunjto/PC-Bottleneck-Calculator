@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion';
 import { Rocket, Sparkles } from 'lucide-react';
 
-export function UpdateBanner() {
+export function UpdateBanner({ dict }: { dict: any }) {
+  if (!dict) return null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -15,16 +17,16 @@ export function UpdateBanner() {
         <Rocket className="h-8 w-8 text-green-600" />
         <div>
           <h2 className="font-semibold text-green-800 dark:text-green-200 m-0">
-            Database Updated!
+            {dict.title}
           </h2>
           <p className="text-sm text-green-700 dark:text-green-300 m-0">
-            Now featuring the latest 2025 CPU & GPU models with up-to-date performance data.
+            {dict.description}
           </p>
         </div>
       </div>
       <div className="flex items-center gap-1 bg-green-100 dark:bg-green-900/50 px-3 py-1 rounded-full text-xs font-bold text-green-800 dark:text-green-200 whitespace-nowrap">
         <Sparkles className="h-3 w-3" />
-        Latest
+        {dict.badge}
       </div>
     </motion.div>
   );

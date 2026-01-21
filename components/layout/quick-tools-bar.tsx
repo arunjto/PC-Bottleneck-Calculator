@@ -4,9 +4,18 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, Zap, Gamepad2, Settings2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getLocalizedPath } from '@/lib/path-translations';
 
-export function QuickToolsBar() {
+export function QuickToolsBar({ dict, lang }: { dict: any; lang: string }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Fallback
+  const t = dict || {
+    title: 'Quick Tools',
+    bottleneck: { label: 'Bottleneck', desc: 'Check system balance' },
+    fps_calc: { label: 'FPS Calculator', desc: 'Estimate gaming performance' },
+    psu_calc: { label: 'PSU Calculator', desc: 'Calculate power needs' }
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem('quickToolsCollapsed');
@@ -22,9 +31,9 @@ export function QuickToolsBar() {
   };
 
   const tools = [
-    { href: '/', label: 'Bottleneck', icon: Zap, description: 'Check system balance' },
-    { href: '/fps-calculator', label: 'FPS Calculator', icon: Gamepad2, description: 'Estimate gaming performance' },
-    { href: '/psu-calculator', label: 'PSU Calculator', icon: Settings2, description: 'Calculate power needs' },
+    { href: `/${lang}`, label: t.bottleneck.label, icon: Zap, description: t.bottleneck.desc },
+    { href: getLocalizedPath(lang as any, 'fps-calculator'), label: t.fps_calc.label, icon: Gamepad2, description: t.fps_calc.desc },
+    { href: getLocalizedPath(lang as any, 'psu-calculator'), label: t.psu_calc.label, icon: Settings2, description: t.psu_calc.desc },
   ];
 
   return (
@@ -35,13 +44,12 @@ export function QuickToolsBar() {
             <div className="flex items-center whitespace-nowrap">
               <div className="flex items-center gap-2 mr-4">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <span className="font-bold text-primary">Quick Tools</span>
+                <span className="font-bold text-primary">{t.title}</span>
               </div>
             </div>
-            <div 
-              className={`flex items-center gap-2 overflow-hidden transition-all duration-500 ease-in-out ${
-                isCollapsed ? 'max-w-0 opacity-0' : 'max-w-screen-lg opacity-100'
-              }`}
+            <div
+              className={`flex items-center gap-2 overflow-hidden transition-all duration-500 ease-in-out ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-screen-lg opacity-100'
+                }`}
             >
               {tools.map((tool) => (
                 <Link
@@ -69,10 +77,9 @@ export function QuickToolsBar() {
             onClick={toggleCollapsed}
             className="h-10 w-10 rounded-full bg-white dark:bg-slate-800 shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-700 hover:border-primary/30 transition-all duration-300 hover:scale-105"
           >
-            <ChevronLeft 
-              className={`h-4 w-4 text-primary transition-transform duration-500 ${
-                isCollapsed ? 'rotate-180' : ''
-              }`} 
+            <ChevronLeft
+              className={`h-4 w-4 text-primary transition-transform duration-500 ${isCollapsed ? 'rotate-180' : ''
+                }`}
             />
           </Button>
         </div>

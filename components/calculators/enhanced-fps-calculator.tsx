@@ -112,6 +112,7 @@ const antiAliasingOptions: ModifierOption[] = [
 
 export function EnhancedFPSCalculator({
   onBuildChange,
+  dict
 }: {
   onBuildChange?: (build: {
     cpu: string;
@@ -120,7 +121,11 @@ export function EnhancedFPSCalculator({
     resolution: string;
     fps: number;
   } | null) => void;
+  dict: any;
 }) {
+  const t = dict?.fps_calculator;
+  const results = dict?.results || {};
+
   const [selectedCPU, setSelectedCPU] = useState("");
   const [selectedGPU, setSelectedGPU] = useState("");
   const [selectedGame, setSelectedGame] = useState("");
@@ -137,6 +142,41 @@ export function EnhancedFPSCalculator({
   const [showResults, setShowResults] = useState(false);
   const [estimatedFPS, setEstimatedFPS] = useState<number | null>(null);
   const resultsRegionRef = useRef<HTMLDivElement>(null);
+
+  if (!t) return null;
+
+  // Localization Helpers
+  const getLocOption = (options: ModifierOption[], category: any, key: string) => {
+    return options.map(opt => ({
+      ...opt,
+      label: category?.[key]?.[opt.id]?.label ?? opt.label,
+      description: category?.[key]?.[opt.id]?.desc ?? opt.description
+    }));
+  };
+
+  const getLocBasicOption = (options: BasicOption[], category: any, key: string) => {
+    return options.map(opt => ({
+      ...opt,
+      label: category?.[key]?.[opt.id]?.label ?? opt.label,
+      description: category?.[key]?.[opt.id]?.desc ?? opt.description
+    }));
+  };
+
+  const locRamSizeOptions = getLocOption(ramSizeOptions, t.memory, 'ram_size_options');
+  const locRamSpeedOptions = getLocOption(ramSpeedOptions, t.memory, 'ram_speed_options');
+  const locStorageOptions = getLocOption(storageTypeOptions, t.memory, 'storage_options');
+  const locCpuOcOptions = getLocOption(cpuOverclockOptions, t.cpu, 'overclock_options');
+  const locGpuOcOptions = getLocOption(gpuOverclockOptions, t.gpu, 'overclock_options');
+  const locGraphicsOptions = getLocOption(graphicsQualityOptions, t.quality, 'graphics_options');
+  const locUpscalingOptions = getLocOption(upscalingOptions, t.quality, 'upscaling_options');
+  const locAaOptions = getLocOption(antiAliasingOptions, t.display, 'aa_options');
+  const locRefreshOptions = getLocBasicOption(refreshRateOptions, t.display, 'refresh_options');
+  const locResolutionOptions = resolutionOptions.map(opt => ({
+    ...opt,
+    name: t.game.resolution_options[opt.id]?.name ?? opt.name,
+    specs: t.game.resolution_options[opt.id]?.specs ?? opt.specs
+  }));
+
 
   useEffect(() => {
     if (showResults) {
@@ -293,13 +333,13 @@ export function EnhancedFPSCalculator({
     const cpu = getCPUById(selectedCPU);
     const gpu = getGPUById(selectedGPU);
     const game = getGameById(selectedGame);
-    
+
     if (cpu && gpu && game) {
       const baselineFps = estimateFPS(cpu, gpu, game, selectedResolution) ?? 0;
       const adjustedFps = applyAdvancedModifiers(baselineFps);
-      
-      // Calculate FPS for all resolutions
-      const allResolutionFPS = resolutionOptions.map((res) => {
+
+      // Calculate FPS for all resolutions -- using LOCALIZED logic for names
+      const allResolutionFPS = locResolutionOptions.map((res) => {
         const resolutionBaseline = estimateFPS(cpu, gpu, game, res.id) ?? 0;
         return {
           resolution: res.name,
@@ -308,34 +348,35 @@ export function EnhancedFPSCalculator({
       });
 
       const getPerformanceRating = (fps: number) => {
-        if (fps >= 120) return { rating: 'Excellent', color: 'text-green-600', description: 'Smooth high refresh rate gaming' };
-        if (fps >= 90) return { rating: 'Very Good', color: 'text-blue-600', description: 'Great gaming experience' };
-        if (fps >= 60) return { rating: 'Good', color: 'text-yellow-600', description: 'Playable with good experience' };
-        if (fps >= 30) return { rating: 'Fair', color: 'text-orange-600', description: 'Playable but not ideal' };
-        return { rating: 'Poor', color: 'text-red-600', description: 'Not recommended' };
+        if (fps >= 120) return { rating: t.results.ratings.excellent.label, color: 'text-green-600', description: t.results.ratings.excellent.desc };
+        if (fps >= 90) return { rating: t.results.ratings.very_good.label, color: 'text-blue-600', description: t.results.ratings.very_good.desc };
+        if (fps >= 60) return { rating: t.results.ratings.good.label, color: 'text-yellow-600', description: t.results.ratings.good.desc };
+        if (fps >= 30) return { rating: t.results.ratings.fair.label, color: 'text-orange-600', description: t.results.ratings.fair.desc };
+        return { rating: t.results.ratings.poor.label, color: 'text-red-600', description: t.results.ratings.poor.desc };
       };
 
       const performanceRating = getPerformanceRating(adjustedFps);
-      const ramSizeOption = getModifierOption(ramSizeOptions, selectedRamSize);
-      const ramSpeedOption = getModifierOption(ramSpeedOptions, selectedRamSpeed);
-      const storageOption = getModifierOption(storageTypeOptions, selectedStorageType);
-      const cpuOcOption = getModifierOption(cpuOverclockOptions, selectedCpuOverclock);
-      const gpuOcOption = getModifierOption(gpuOverclockOptions, selectedGpuOverclock);
-      const graphicsOption = getModifierOption(graphicsQualityOptions, selectedGraphicsQuality);
-      const upscalingOption = getModifierOption(upscalingOptions, selectedUpscaling);
-      const aaOption = getModifierOption(antiAliasingOptions, selectedAntiAliasing);
-      const refreshRateOption = getBasicOption(refreshRateOptions, selectedRefreshRate);
+      // Use LOCALIZED options for summary
+      const ramSizeOption = getModifierOption(locRamSizeOptions, selectedRamSize);
+      const ramSpeedOption = getModifierOption(locRamSpeedOptions, selectedRamSpeed);
+      const storageOption = getModifierOption(locStorageOptions, selectedStorageType);
+      const cpuOcOption = getModifierOption(locCpuOcOptions, selectedCpuOverclock);
+      const gpuOcOption = getModifierOption(locGpuOcOptions, selectedGpuOverclock);
+      const graphicsOption = getModifierOption(locGraphicsOptions, selectedGraphicsQuality);
+      const upscalingOption = getModifierOption(locUpscalingOptions, selectedUpscaling);
+      const aaOption = getModifierOption(locAaOptions, selectedAntiAliasing);
+      const refreshRateOption = getBasicOption(locRefreshOptions, selectedRefreshRate);
 
       const advancedSummary = [
-        { label: 'RAM Size', value: ramSizeOption.label, helper: ramSizeOption.description },
-        { label: 'RAM Speed', value: ramSpeedOption.label, helper: ramSpeedOption.description },
-        { label: 'Storage Type', value: storageOption.label, helper: storageOption.description },
-        { label: 'CPU Overclock', value: cpuOcOption.label, helper: cpuOcOption.description },
-        { label: 'GPU Overclock', value: gpuOcOption.label, helper: gpuOcOption.description },
-        { label: 'Graphics Quality', value: graphicsOption.label, helper: graphicsOption.description },
-        { label: 'Upscaling', value: upscalingOption.label, helper: upscalingOption.description },
-        { label: 'Anti-Aliasing', value: aaOption.label, helper: aaOption.description },
-        { label: 'Target Refresh', value: refreshRateOption.label, helper: refreshRateOption.description },
+        { label: t.memory.ram_size_label, value: ramSizeOption.label, helper: ramSizeOption.description },
+        { label: t.memory.ram_speed_label, value: ramSpeedOption.label, helper: ramSpeedOption.description },
+        { label: t.memory.storage_label, value: storageOption.label, helper: storageOption.description },
+        { label: t.cpu.overclock_label, value: cpuOcOption.label, helper: cpuOcOption.description },
+        { label: t.gpu.overclock_label, value: gpuOcOption.label, helper: gpuOcOption.description },
+        { label: t.quality.graphics_label, value: graphicsOption.label, helper: graphicsOption.description },
+        { label: t.quality.upscaling_label, value: upscalingOption.label, helper: upscalingOption.description },
+        { label: t.display.aa_label, value: aaOption.label, helper: aaOption.description },
+        { label: t.display.refresh_label, value: refreshRateOption.label, helper: refreshRateOption.description },
       ];
 
       const fpsDelta = adjustedFps - baselineFps;
@@ -346,11 +387,18 @@ export function EnhancedFPSCalculator({
       const fpsPercentDeltaDisplay = Number.isFinite(fpsPercentDelta) ? fpsPercentDelta.toFixed(1) : '0.0';
       const fpsDeltaPrefix = fpsDeltaRounded >= 0 ? '+' : '';
       const fpsPercentDeltaPrefix = fpsPercentDelta >= 0 ? '+' : '';
+
+      const refreshFailText = t.results.advanced_impact.refresh_fail
+        .replace('{diff}', Math.max(0, refreshTargetValue - adjustedFps))
+        .replace('{target}', refreshRateOption.label);
+      const refreshPassText = t.results.advanced_impact.refresh_pass
+        .replace('{target}', refreshRateOption.label);
+
       const refreshComparison =
         refreshTargetValue > 0
           ? adjustedFps >= refreshTargetValue
-            ? `Estimated FPS exceeds the ${refreshRateOption.label} target, so you can expect fluid gameplay.`
-            : `About ${Math.max(0, refreshTargetValue - adjustedFps)} FPS below the ${refreshRateOption.label} target. Consider lowering quality or enabling a stronger upscaling preset.`
+            ? refreshPassText
+            : refreshFailText
           : '';
 
       return (
@@ -358,7 +406,7 @@ export function EnhancedFPSCalculator({
           ref={resultsRegionRef}
           role="region"
           aria-live="polite"
-          aria-label="FPS analysis results"
+          aria-label={t.results.title}
           tabIndex={-1}
           className="w-full max-w-4xl mx-auto space-y-6 focus:outline-none"
         >
@@ -371,11 +419,11 @@ export function EnhancedFPSCalculator({
                   className="flex items-center space-x-2"
                 >
                   <TrendingUp className="w-4 h-4" />
-                  <span>Back to Calculator</span>
+                  <span>{t.actions.back}</span>
                 </Button>
                 <div className="text-center">
-                  <h1 className="text-2xl font-bold">FPS Analysis Results</h1>
-                  <p className="text-gray-600 dark:text-gray-400">{game.name} Performance</p>
+                  <h1 className="text-2xl font-bold">{t.results.title}</h1>
+                  <p className="text-gray-600 dark:text-gray-400">{game.name} {t.results.subtitle}</p>
                 </div>
                 <div className="w-32" />
               </div>
@@ -387,14 +435,14 @@ export function EnhancedFPSCalculator({
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <BarChart3 className="w-6 h-6 text-blue-600" />
-                <span>Performance Results</span>
+                <span>{t.results.performance_title}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-center mb-6">
                 <div className="text-6xl font-bold text-blue-600 mb-2">{adjustedFps}</div>
                 <div className="text-xl text-gray-600 dark:text-gray-400 mb-4">
-                  Average FPS at {selectedResolution}
+                  {t.results.average_fps} {selectedResolution}
                 </div>
                 <div className={`text-lg font-semibold ${performanceRating.color} mb-2`}>
                   {performanceRating.rating}
@@ -406,13 +454,12 @@ export function EnhancedFPSCalculator({
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {allResolutionFPS.map((result, index) => (
-                  <div 
+                  <div
                     key={result.resolution}
-                    className={`p-4 rounded-lg border-2 ${
-                      result.resolution.includes(selectedResolution) 
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
-                        : 'border-gray-200 dark:border-gray-700'
-                    }`}
+                    className={`p-4 rounded-lg border-2 ${result.resolution.includes(selectedResolution)
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                      : 'border-gray-200 dark:border-gray-700'
+                      }`}
                   >
                     <div className="text-center">
                       <h3 className="font-semibold">{result.resolution}</h3>
@@ -430,7 +477,7 @@ export function EnhancedFPSCalculator({
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Sparkles className="w-5 h-5 text-purple-500" />
-                <span>Advanced Settings Impact</span>
+                <span>{t.results.advanced_impact.title}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -454,13 +501,13 @@ export function EnhancedFPSCalculator({
               </div>
               <div className="mt-6 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30 p-4 space-y-2">
                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                  Baseline estimate (defaults):{' '}
+                  {t.results.advanced_impact.baseline}{' '}
                   <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {baselineRounded} FPS
                   </span>
                 </p>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                  Advanced tuning impact:{' '}
+                  {t.results.advanced_impact.impact}{' '}
                   <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {fpsDeltaPrefix}
                     {fpsDeltaRounded} FPS ({fpsPercentDeltaPrefix}
@@ -477,7 +524,7 @@ export function EnhancedFPSCalculator({
           {/* System Components */}
           <Card>
             <CardHeader>
-              <CardTitle>System Configuration</CardTitle>
+              <CardTitle>{results.system_config.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -505,22 +552,22 @@ export function EnhancedFPSCalculator({
 
                 <div className="space-y-4">
                   <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <h3 className="font-semibold mb-2">Game Requirements</h3>
+                    <h3 className="font-semibold mb-2">{results.system_config.game_reqs}</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span>CPU Demand:</span>
+                        <span>{results.system_config.cpu_demand}</span>
                         <span className="font-medium">{game.cpuDemand}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>GPU Demand:</span>
+                        <span>{results.system_config.gpu_demand}</span>
                         <span className="font-medium">{game.gpuDemand}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>RAM Required:</span>
+                        <span>{results.system_config.ram_req}</span>
                         <span className="font-medium">{game.ramRequirement}GB</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Storage:</span>
+                        <span>{results.system_config.storage}</span>
                         <span className="font-medium">{game.storageRequirement}GB</span>
                       </div>
                     </div>
@@ -529,11 +576,11 @@ export function EnhancedFPSCalculator({
                   {game.optimizations.length > 0 && (
                     <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
                       <h3 className="font-semibold mb-2 text-green-900 dark:text-green-100">
-                        Available Optimizations
+                        {results.system_config.optimizations}
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {game.optimizations.map((opt, index) => (
-                          <span 
+                          <span
                             key={index}
                             className="px-2 py-1 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 rounded text-xs font-medium"
                           >
@@ -555,16 +602,16 @@ export function EnhancedFPSCalculator({
   const cpuName = selectedCPU ? getCPUById(selectedCPU)?.name ?? '' : '';
   const gpuName = selectedGPU ? getGPUById(selectedGPU)?.name ?? '' : '';
   const gameName = selectedGame ? getGameById(selectedGame)?.name ?? '' : '';
-  const resolutionOption = resolutionOptions.find((option) => option.id === selectedResolution);
-  const cpuOcOptionForm = getModifierOption(cpuOverclockOptions, selectedCpuOverclock);
-  const gpuOcOptionForm = getModifierOption(gpuOverclockOptions, selectedGpuOverclock);
-  const ramSizeOptionForm = getModifierOption(ramSizeOptions, selectedRamSize);
-  const ramSpeedOptionForm = getModifierOption(ramSpeedOptions, selectedRamSpeed);
-  const storageOptionForm = getModifierOption(storageTypeOptions, selectedStorageType);
-  const graphicsOptionForm = getModifierOption(graphicsQualityOptions, selectedGraphicsQuality);
-  const upscalingOptionForm = getModifierOption(upscalingOptions, selectedUpscaling);
-  const aaOptionForm = getModifierOption(antiAliasingOptions, selectedAntiAliasing);
-  const refreshRateOptionForm = getBasicOption(refreshRateOptions, selectedRefreshRate);
+  const resolutionOption = locResolutionOptions.find((option) => option.id === selectedResolution);
+  const cpuOcOptionForm = getModifierOption(locCpuOcOptions, selectedCpuOverclock);
+  const gpuOcOptionForm = getModifierOption(locGpuOcOptions, selectedGpuOverclock);
+  const ramSizeOptionForm = getModifierOption(locRamSizeOptions, selectedRamSize);
+  const ramSpeedOptionForm = getModifierOption(locRamSpeedOptions, selectedRamSpeed);
+  const storageOptionForm = getModifierOption(locStorageOptions, selectedStorageType);
+  const graphicsOptionForm = getModifierOption(locGraphicsOptions, selectedGraphicsQuality);
+  const upscalingOptionForm = getModifierOption(locUpscalingOptions, selectedUpscaling);
+  const aaOptionForm = getModifierOption(locAaOptions, selectedAntiAliasing);
+  const refreshRateOptionForm = getBasicOption(locRefreshOptions, selectedRefreshRate);
   const calculateHelpId = 'calculate-help';
 
   return (
@@ -573,10 +620,10 @@ export function EnhancedFPSCalculator({
         <CardHeader className="text-center space-y-3">
           <CardTitle className="flex items-center justify-center gap-2 text-2xl font-semibold">
             <Gamepad2 className="w-8 h-8 text-green-600" />
-            <span>Advanced FPS Calculator</span>
+            <span>{t.title}</span>
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Estimate gaming performance with extended tuning for memory, quality presets, and display targets.
+            {t.description}
           </p>
         </CardHeader>
       </Card>
@@ -587,11 +634,11 @@ export function EnhancedFPSCalculator({
             <CardTitle className="flex items-center justify-between text-base font-semibold">
               <span className="flex items-center gap-2">
                 <Cpu className="w-5 h-5 text-blue-600" />
-                Processor (CPU)
+                {t.cpu.title}
               </span>
               <span className="text-xs font-medium text-slate-500">2000+</span>
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Search for your CPU to anchor the estimate.</p>
+            <p className="text-xs text-muted-foreground">{t.cpu.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-3 flex-1 flex flex-col">
             <div className="space-y-1">
@@ -599,26 +646,26 @@ export function EnhancedFPSCalculator({
                 id="cpu-select-label"
                 className="text-sm font-medium text-slate-700 dark:text-slate-200"
               >
-                Search CPUs
+                {t.cpu.label}
               </label>
               <EnhancedSearchableSelect
                 options={cpuOptions}
                 value={selectedCPU}
                 onValueChange={handleCpuChange}
-                placeholder="Select your CPU..."
+                placeholder={t.cpu.placeholder}
                 type="cpu"
                 labelId="cpu-select-label"
                 descriptionId="cpu-select-help"
               />
               <p id="cpu-select-help" className="text-xs text-muted-foreground">
-                Start typing a model name, core count, or tier to filter the list.
+                {t.cpu.help}
               </p>
             </div>
             <div className="min-h-[44px]">
               {selectedCPU && (
                 <div className="flex items-center justify-between text-xs text-muted-foreground bg-slate-100/80 dark:bg-slate-800/60 px-3 py-2 rounded-md">
                   <span className="truncate">
-                    Selected:{' '}
+                    {t.cpu.selected}{' '}
                     <span className="font-medium text-foreground">{cpuName}</span>
                   </span>
                   <button
@@ -626,14 +673,14 @@ export function EnhancedFPSCalculator({
                     className="text-primary font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 rounded"
                     onClick={() => handleClearSelection('cpu')}
                   >
-                    Clear
+                    {t.cpu.clear}
                   </button>
                 </div>
               )}
             </div>
             <div className="space-y-1 mt-auto">
               <label htmlFor="cpu-overclock" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                CPU Overclock
+                {t.cpu.overclock_label}
               </label>
               <select
                 id="cpu-overclock"
@@ -642,7 +689,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="cpu-overclock-help"
               >
-                {cpuOverclockOptions.map((option) => (
+                {locCpuOcOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -660,11 +707,11 @@ export function EnhancedFPSCalculator({
             <CardTitle className="flex items-center justify-between text-base font-semibold">
               <span className="flex items-center gap-2">
                 <Zap className="w-5 h-5 text-indigo-600" />
-                Graphics Card (GPU)
+                {t.gpu.title}
               </span>
               <span className="text-xs font-medium text-slate-500">2000+</span>
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Match the GPU powering your games.</p>
+            <p className="text-xs text-muted-foreground">{t.gpu.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-3 flex-1 flex flex-col">
             <div className="space-y-1">
@@ -672,26 +719,26 @@ export function EnhancedFPSCalculator({
                 id="gpu-select-label"
                 className="text-sm font-medium text-slate-700 dark:text-slate-200"
               >
-                Search GPUs
+                {t.gpu.label}
               </label>
               <EnhancedSearchableSelect
                 options={gpuOptions}
                 value={selectedGPU}
                 onValueChange={handleGpuChange}
-                placeholder="Select your GPU..."
+                placeholder={t.gpu.placeholder}
                 type="gpu"
                 labelId="gpu-select-label"
                 descriptionId="gpu-select-help"
               />
               <p id="gpu-select-help" className="text-xs text-muted-foreground">
-                Filter by chipset, VRAM capacity, or series.
+                {t.gpu.help}
               </p>
             </div>
             <div className="min-h-[44px]">
               {selectedGPU && (
                 <div className="flex items-center justify-between text-xs text-muted-foreground bg-slate-100/80 dark:bg-slate-800/60 px-3 py-2 rounded-md">
                   <span className="truncate">
-                    Selected:{' '}
+                    {t.gpu.selected}{' '}
                     <span className="font-medium text-foreground">{gpuName}</span>
                   </span>
                   <button
@@ -699,14 +746,14 @@ export function EnhancedFPSCalculator({
                     className="text-primary font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 rounded"
                     onClick={() => handleClearSelection('gpu')}
                   >
-                    Clear
+                    {t.gpu.clear}
                   </button>
                 </div>
               )}
             </div>
             <div className="space-y-1 mt-auto">
               <label htmlFor="gpu-overclock" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                GPU Overclock
+                {t.gpu.overclock_label}
               </label>
               <select
                 id="gpu-overclock"
@@ -715,7 +762,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="gpu-overclock-help"
               >
-                {gpuOverclockOptions.map((option) => (
+                {locGpuOcOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -735,14 +782,14 @@ export function EnhancedFPSCalculator({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base font-semibold">
               <HardDrive className="w-5 h-5 text-amber-600" />
-              Memory &amp; Storage
+              {t.memory.title}
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Dial in memory capacity, speed, and storage type.</p>
+            <p className="text-xs text-muted-foreground">{t.memory.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-3 flex-1 flex flex-col">
             <div className="space-y-1">
               <label htmlFor="ram-size" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                RAM Size
+                {t.memory.ram_size_label}
               </label>
               <select
                 id="ram-size"
@@ -751,7 +798,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="ram-size-help"
               >
-                {ramSizeOptions.map((option) => (
+                {locRamSizeOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -764,7 +811,7 @@ export function EnhancedFPSCalculator({
 
             <div className="space-y-1">
               <label htmlFor="ram-speed" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                RAM Speed (MHz)
+                {t.memory.ram_speed_label}
               </label>
               <select
                 id="ram-speed"
@@ -773,7 +820,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="ram-speed-help"
               >
-                {ramSpeedOptions.map((option) => (
+                {locRamSpeedOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -786,7 +833,7 @@ export function EnhancedFPSCalculator({
 
             <div className="space-y-1 mt-auto">
               <label htmlFor="storage-type" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Storage Type
+                {t.memory.storage_label}
               </label>
               <select
                 id="storage-type"
@@ -795,7 +842,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="storage-type-help"
               >
-                {storageTypeOptions.map((option) => (
+                {locStorageOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -814,9 +861,9 @@ export function EnhancedFPSCalculator({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base font-semibold">
               <Gamepad2 className="w-5 h-5 text-emerald-600" />
-              Game Selection
+              {t.game.title}
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Choose the title and resolution you want to profile.</p>
+            <p className="text-xs text-muted-foreground">{t.game.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-3 flex-1 flex flex-col">
             <div className="space-y-1">
@@ -824,26 +871,26 @@ export function EnhancedFPSCalculator({
                 id="game-select-label"
                 className="text-sm font-medium text-slate-700 dark:text-slate-200"
               >
-                Search Games
+                {t.game.label}
               </label>
               <EnhancedSearchableSelect
                 options={gameOptions}
                 value={selectedGame}
                 onValueChange={handleGameChange}
-                placeholder="Select a game..."
+                placeholder={t.game.placeholder}
                 type="game"
                 labelId="game-select-label"
                 descriptionId="game-select-help"
               />
               <p id="game-select-help" className="text-xs text-muted-foreground">
-                Pick from esports standouts to demanding AAA releases.
+                {t.game.help}
               </p>
             </div>
             <div className="min-h-[44px]">
               {selectedGame && (
                 <div className="flex items-center justify-between text-xs text-muted-foreground bg-slate-100/80 dark:bg-slate-800/60 px-3 py-2 rounded-md">
                   <span className="truncate">
-                    Selected:{' '}
+                    {t.game.selected}{' '}
                     <span className="font-medium text-foreground">{gameName}</span>
                   </span>
                   <button
@@ -851,7 +898,7 @@ export function EnhancedFPSCalculator({
                     className="text-primary font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 rounded"
                     onClick={() => handleClearSelection('game')}
                   >
-                    Clear
+                    {t.game.clear}
                   </button>
                 </div>
               )}
@@ -861,19 +908,19 @@ export function EnhancedFPSCalculator({
                 id="resolution-select-label"
                 className="text-sm font-medium text-slate-700 dark:text-slate-200"
               >
-                Screen Resolution
+                {t.game.resolution_label}
               </label>
               <EnhancedSearchableSelect
-                options={resolutionOptions}
+                options={locResolutionOptions}
                 value={selectedResolution}
                 onValueChange={handleResolutionChange}
-                placeholder="Select resolution..."
+                placeholder={t.game.resolution_placeholder}
                 type="resolution"
                 labelId="resolution-select-label"
                 descriptionId="resolution-select-help"
               />
               <p id="resolution-select-help" className="text-xs text-muted-foreground">
-                {resolutionOption ? resolutionOption.specs : 'Higher resolutions stress the GPU more heavily.'}
+                {resolutionOption ? resolutionOption.specs : t.game.resolution_help_default}
               </p>
             </div>
           </CardContent>
@@ -883,14 +930,14 @@ export function EnhancedFPSCalculator({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base font-semibold">
               <Sparkles className="w-5 h-5 text-purple-600" />
-              Quality Settings
+              {t.quality.title}
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Adjust visual fidelity and upscaling preferences.</p>
+            <p className="text-xs text-muted-foreground">{t.quality.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-3 flex-1 flex flex-col">
             <div className="space-y-1">
               <label htmlFor="graphics-quality" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Graphics Quality
+                {t.quality.graphics_label}
               </label>
               <select
                 id="graphics-quality"
@@ -899,7 +946,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="graphics-quality-help"
               >
-                {graphicsQualityOptions.map((option) => (
+                {locGraphicsOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -912,7 +959,7 @@ export function EnhancedFPSCalculator({
 
             <div className="space-y-1 mt-auto">
               <label htmlFor="upscaling-tech" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Upscaling Technology
+                {t.quality.upscaling_label}
               </label>
               <select
                 id="upscaling-tech"
@@ -921,7 +968,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="upscaling-tech-help"
               >
-                {upscalingOptions.map((option) => (
+                {locUpscalingOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -938,14 +985,14 @@ export function EnhancedFPSCalculator({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base font-semibold">
               <Gauge className="w-5 h-5 text-sky-600" />
-              Display Targets
+              {t.display.title}
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Match the monitor refresh and anti-aliasing preference.</p>
+            <p className="text-xs text-muted-foreground">{t.display.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-3 flex-1 flex flex-col">
             <div className="space-y-1">
               <label htmlFor="refresh-rate" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Target Refresh Rate
+                {t.display.refresh_label}
               </label>
               <select
                 id="refresh-rate"
@@ -954,7 +1001,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="refresh-rate-help"
               >
-                {refreshRateOptions.map((option) => (
+                {locRefreshOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -967,7 +1014,7 @@ export function EnhancedFPSCalculator({
 
             <div className="space-y-1 mt-auto">
               <label htmlFor="anti-aliasing" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Anti-Aliasing
+                {t.display.aa_label}
               </label>
               <select
                 id="anti-aliasing"
@@ -976,7 +1023,7 @@ export function EnhancedFPSCalculator({
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 aria-describedby="anti-aliasing-help"
               >
-                {antiAliasingOptions.map((option) => (
+                {locAaOptions.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
                   </option>
@@ -1001,18 +1048,17 @@ export function EnhancedFPSCalculator({
             {isFormComplete ? (
               <>
                 <BarChart3 className="w-5 h-5 mr-2" />
-                Calculate Frame Rate
+                {t.actions.calculate}
               </>
             ) : (
-              'Select CPU, GPU, game, and resolution to continue'
+              t.actions.incomplete
             )}
           </Button>
           <p id={calculateHelpId} className="text-xs text-muted-foreground text-center">
-            Adjust advanced fields anytime and recalculate to refresh your estimate.
+            {t.actions.help}
           </p>
         </CardContent>
       </Card>
     </div>
   );
 }
-

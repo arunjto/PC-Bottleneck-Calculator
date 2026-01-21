@@ -27,6 +27,7 @@ interface CompareProps {
   currentGPU: string;
   currentGame: string;
   currentResolution: string;
+  dict: any;
 }
 
 export default function FPSCompareAndShare({
@@ -34,12 +35,17 @@ export default function FPSCompareAndShare({
   currentGPU,
   currentGame,
   currentResolution,
+  dict
 }: CompareProps) {
   const [selectedCPU, setSelectedCPU] = useState("");
   const [selectedGPU, setSelectedGPU] = useState("");
   const [comparisonResult, setComparisonResult] = useState<string | null>(null);
   const [chartData, setChartData] = useState<any[]>([]);
   const [tips, setTips] = useState<string[]>([]);
+
+  const t = dict?.fps_compare;
+
+  if (!t) return null;
 
   const cpuOptions = allCPUs.map((cpu) => ({
     id: cpu.id,
@@ -59,7 +65,7 @@ export default function FPSCompareAndShare({
 
   const handleCompare = () => {
     if (!selectedCPU || !selectedGPU) {
-      toast.error("Please select CPU and GPU for comparison.");
+      toast.error(t.share.toast_select);
       return;
     }
 
@@ -70,7 +76,7 @@ export default function FPSCompareAndShare({
     const game = getGameById(currentGame);
 
     if (!cpuA || !gpuA || !cpuB || !gpuB || !game) {
-      toast.error("Incomplete data for comparison.");
+      toast.error(t.share.toast_incomplete);
       return;
     }
 
@@ -81,24 +87,28 @@ export default function FPSCompareAndShare({
     const costB = (cpuB.currentPrice || 1) + (gpuB.currentPrice || 1);
 
     const fpsDiff = ((fpsA - fpsB) / fpsB) * 100;
-    const verdict =
-      fpsDiff > 0
-        ? `Your current build is ${fpsDiff.toFixed(1)}% faster than the comparison build.`
-        : fpsDiff < 0
-        ? `The comparison build is ${Math.abs(fpsDiff).toFixed(1)}% faster than your build.`
-        : "Both builds perform about the same.";
+    const absDiff = Math.abs(fpsDiff).toFixed(1);
+
+    let verdict = "";
+    if (fpsDiff > 0) {
+      verdict = t.verdict.faster.replace("{diff}", fpsDiff.toFixed(1));
+    } else if (fpsDiff < 0) {
+      verdict = t.verdict.slower.replace("{diff}", absDiff);
+    } else {
+      verdict = t.verdict.equal;
+    }
 
     setComparisonResult(verdict);
 
     setChartData([
       {
-        name: "Your Build",
+        name: t.chart.your_build,
         fps: fpsA,
         cost: costA,
         fpsPerDollar: (fpsA / costA).toFixed(3),
       },
       {
-        name: "Comparison Build",
+        name: t.chart.comp_build,
         fps: fpsB,
         cost: costB,
         fpsPerDollar: (fpsB / costB).toFixed(3),
@@ -109,36 +119,34 @@ export default function FPSCompareAndShare({
   };
 
   const generateTips = (gpu: string, resolution: string) => {
-    const t: string[] = [];
+    const tipsList: string[] = [];
     if (/4090|5090/i.test(gpu)) {
-      t.push("Enable DLSS 3 or Frame Generation for smoother 4K gameplay.");
-      t.push("Consider higher resolutions to reduce CPU bottleneck.");
+      tipsList.push(t.tips.dlss3);
+      tipsList.push(t.tips.higher_res);
     } else if (/4080|4070/i.test(gpu)) {
-      t.push("Use DLSS Quality mode for best balance of visuals and performance.");
-      t.push("Lock FPS to your monitor refresh rate for stable experience.");
+      tipsList.push(t.tips.dlss_qual);
+      tipsList.push(t.tips.lock_fps);
     } else if (/3060|3070/i.test(gpu)) {
-      t.push("Turn off ray tracing at 4K for better performance.");
-      t.push("Use FSR 2.0 to boost FPS without major visual loss.");
+      tipsList.push(t.tips.no_rt);
+      tipsList.push(t.tips.fsr);
     } else {
-      t.push("Lower shadow and texture quality for +10–15% FPS boost.");
-      t.push("Ensure your GPU drivers are updated.");
+      tipsList.push(t.tips.lower_settings);
+      tipsList.push(t.tips.update_drivers);
     }
 
     if (resolution === "4K")
-      t.push("DLSS or FSR recommended for smooth 4K gameplay.");
+      tipsList.push(t.tips.tips_4k);
     if (resolution === "1080p")
-      t.push("Likely CPU-bound — try higher resolution for balanced load.");
+      tipsList.push(t.tips.tips_1080p);
     if (resolution === "1440p")
-      t.push("Great sweet spot for performance and visuals.");
+      tipsList.push(t.tips.tips_1440p);
 
-    setTips(t);
+    setTips(tipsList);
   };
 
   const share = (platform: string) => {
     const url = encodeURIComponent("https://www.pcbuildcheck.com/fps-calculator");
-    const text = encodeURIComponent(
-      "I compared my gaming PC builds with the FPS Estimator — check your FPS now!"
-    );
+    const text = encodeURIComponent(t.share.text);
 
     switch (platform) {
       case "facebook":
@@ -148,11 +156,11 @@ export default function FPSCompareAndShare({
         window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
         break;
       case "instagram":
-        toast.info("Instagram doesn’t support link shares — copy the link instead!");
+        toast.info(t.share.toast_insta);
         break;
       case "copy":
         navigator.clipboard.writeText("https://www.pcbuildcheck.com/fps-calculator");
-        toast.success("Link copied to clipboard!");
+        toast.success(t.share.toast_copy);
         break;
     }
   };
@@ -164,13 +172,13 @@ export default function FPSCompareAndShare({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl font-semibold">
             <ArrowLeftRight className="w-5 h-5 text-blue-600" />
-            Compare Two Builds
+            {t.title}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold mb-2">Your Current Build</h3>
+              <h3 className="font-semibold mb-2">{t.current_build}</h3>
               <p className="text-sm text-gray-600">
                 CPU: {getCPUById(currentCPU)?.name || "N/A"}
                 <br />
@@ -181,26 +189,26 @@ export default function FPSCompareAndShare({
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">Compare With</h3>
+              <h3 className="font-semibold mb-2">{t.compare_with}</h3>
               <EnhancedSearchableSelect
                 options={cpuOptions}
                 value={selectedCPU}
                 onValueChange={setSelectedCPU}
-                placeholder="Select CPU..."
+                placeholder={dict.fps_calculator.cpu.placeholder}
                 type="cpu"
               />
               <EnhancedSearchableSelect
                 options={gpuOptions}
                 value={selectedGPU}
                 onValueChange={setSelectedGPU}
-                placeholder="Select GPU..."
+                placeholder={dict.fps_calculator.gpu.placeholder}
                 type="gpu"
               />
             </div>
           </div>
 
           <div className="flex justify-center">
-            <Button onClick={handleCompare}>Compare Builds</Button>
+            <Button onClick={handleCompare}>{t.button}</Button>
           </div>
 
           {comparisonResult && (
@@ -216,7 +224,7 @@ export default function FPSCompareAndShare({
         <Card>
           <CardHeader>
             <CardTitle className="text-xl font-semibold">
-              💰 Performance vs Cost
+              💰 {t.chart.title}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -237,7 +245,7 @@ export default function FPSCompareAndShare({
         <Card>
           <CardHeader>
             <CardTitle className="text-xl font-semibold">
-              🎮 Game Optimization Tips
+              🎮 {t.tips.title}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -254,7 +262,7 @@ export default function FPSCompareAndShare({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-            <Share2 className="w-5 h-5" /> Share Your Results
+            <Share2 className="w-5 h-5" /> {t.share.title}
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-3 justify-center">
@@ -268,7 +276,7 @@ export default function FPSCompareAndShare({
             <Instagram className="w-4 h-4 mr-1" /> Instagram
           </Button>
           <Button variant="outline" onClick={() => share("copy")}>
-            <Copy className="w-4 h-4 mr-1" /> Copy Link
+            <Copy className="w-4 h-4 mr-1" /> {t.share.toast_copy.replace('!', '')}
           </Button>
         </CardContent>
       </Card>

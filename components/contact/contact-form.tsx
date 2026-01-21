@@ -22,7 +22,7 @@ const FORMSPREE_REDIRECT =
     ? process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL
     : '/thank-you';
 
-export function ContactForm() {
+export function ContactForm({ dict }: { dict: any }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,6 +32,8 @@ export function ContactForm() {
   const [honeypotValue, setHoneypotValue] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  if (!dict) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +58,7 @@ export function ContactForm() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          subject: formData.subject || 'General Inquiry',
+          subject: formData.subject || dict.form.subjects?.general || 'General Inquiry',
           message: formData.message,
           _gotcha: honeypotValue,
           _redirect: FORMSPREE_REDIRECT || undefined,
@@ -69,13 +71,14 @@ export function ContactForm() {
         const errorMessage =
           result?.errors?.[0]?.message ||
           result?.error ||
-          'Unable to send message via Formspree.';
+          result?.error ||
+          dict.form.error_desc;
         throw new Error(errorMessage);
       }
 
       toast({
-        title: 'Message sent!',
-        description: "Thank you for your message. We'll get back to you within 48 hours.",
+        title: dict.form.success_title,
+        description: dict.form.success_desc,
       });
 
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -87,9 +90,9 @@ export function ContactForm() {
       }
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : 'There was a problem sending your message.';
+        error instanceof Error ? error.message : dict.form.error_desc;
       toast({
-        title: 'Submission failed',
+        title: dict.form.error_title,
         description: message,
         variant: 'destructive',
       });
@@ -115,7 +118,7 @@ export function ContactForm() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Send className="h-5 w-5" />
-                Send us a message
+                {dict.form.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -136,65 +139,74 @@ export function ContactForm() {
                   />
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      placeholder="Your full name"
-                      value={formData.name}
-                      onChange={(e) => handleChange('name', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={formData.email}
-                      onChange={(e) => handleChange('email', e.target.value)}
-                      required
-                    />
-                  </div>
+                {/* Name */}
+                <div>
+                  <Label htmlFor="name">{dict.form.name}</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder={dict.form.name_ph}
+                    value={formData.name}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    required
+                    className="mt-1"
+                  />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
-                  <Select value={formData.subject} onValueChange={(value) => handleChange('subject', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a topic" />
+                {/* Email */}
+                <div>
+                  <Label htmlFor="email">{dict.form.email}</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder={dict.form.email_ph}
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    required
+                    className="mt-1"
+                  />
+                </div>
+
+                {/* Subject */}
+                <div>
+                  <Label htmlFor="subject">{dict.form.subject}</Label>
+                  <Select
+                    value={formData.subject}
+                    onValueChange={(value) => handleChange('subject', value)}
+                  >
+                    <SelectTrigger className="w-full mt-1">
+                      <SelectValue placeholder={dict.form.subject_ph} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="general">General Inquiry</SelectItem>
-                      <SelectItem value="feedback">Feedback</SelectItem>
-                      <SelectItem value="bug">Bug Report</SelectItem>
-                      <SelectItem value="feature">Feature Request</SelectItem>
-                      <SelectItem value="partnership">Partnership</SelectItem>
+                      {dict.form.subjects && Object.entries(dict.form.subjects).map(([key, value]) => (
+                        <SelectItem key={key} value={value as string}>
+                          {value as string}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
+                {/* Message */}
+                <div>
+                  <Label htmlFor="message">{dict.form.message}</Label>
                   <Textarea
                     id="message"
-                    placeholder="Tell us how we can help you..."
-                    rows={6}
+                    placeholder={dict.form.message_ph}
                     value={formData.message}
                     onChange={(e) => handleChange('message', e.target.value)}
+                    rows={5}
                     required
+                    className="mt-1"
                   />
                 </div>
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full h-12 text-lg font-semibold"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? dict.form.sending : dict.form.button}
                 </Button>
               </form>
             </CardContent>
@@ -208,11 +220,11 @@ export function ContactForm() {
               <div className="flex items-start gap-3">
                 <Mail className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-semibold mb-2">Email</h3>
+                  <h3 className="font-semibold mb-2">{dict.info.email_title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    For general inquiries or support, please email us at:
+                    {dict.info.email_desc}
                   </p>
-                  <a 
+                  <a
                     href="mailto:rekhareet07@gmail.com"
                     className="text-primary hover:underline font-medium"
                   >
@@ -221,14 +233,12 @@ export function ContactForm() {
                 </div>
               </div>
             </CardContent>
-          </Card>          
+          </Card>
 
           {/* Response Time */}
           <Card className="border-amber-200 bg-amber-50 dark:bg-amber-950/20">
             <CardContent className="pt-6">
-              <p className="text-sm text-amber-800 dark:text-amber-200">
-                <strong>Response Time:</strong> We do our best to respond to all inquiries within 48 business hours. Thank you for using our tools!
-              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-200" dangerouslySetInnerHTML={{ __html: dict.info.response_time }} />
             </CardContent>
           </Card>
         </div>

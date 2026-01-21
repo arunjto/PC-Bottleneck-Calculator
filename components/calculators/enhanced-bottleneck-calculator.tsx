@@ -25,7 +25,7 @@ const resolutionOptions = [
   { id: '4K', name: '3840×2160 (4K)', tier: 'Premium', specs: 'Ultra HD, 60-120Hz', price: 0 }
 ];
 
-export function EnhancedBottleneckCalculator() {
+export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
   const [selectedCPU, setSelectedCPU] = useState('');
   const [selectedGPU, setSelectedGPU] = useState('');
   const [selectedRAM, setSelectedRAM] = useState('');
@@ -64,7 +64,7 @@ export function EnhancedBottleneckCalculator() {
     const cpu = getCPUById(selectedCPU);
     const gpu = getGPUById(selectedGPU);
     const ram = ramOptions.find(r => r.id === selectedRAM);
-    
+
     if (cpu && gpu && ram) {
       return (
         <ComprehensiveBottleneckResults
@@ -73,6 +73,7 @@ export function EnhancedBottleneckCalculator() {
           ram={ram}
           resolution={selectedResolution}
           onBack={() => setShowResults(false)}
+          dict={dict}
         />
       );
     }
@@ -83,10 +84,10 @@ export function EnhancedBottleneckCalculator() {
       <CardHeader className="text-center">
         <CardTitle className="flex items-center justify-center space-x-2 text-2xl">
           <Calculator className="w-8 h-8 text-blue-600" />
-          <span>Advanced Bottleneck Calculator</span>
+          <span>{dict.calculator.title}</span>
         </CardTitle>
         <p className="text-gray-600 dark:text-gray-400">
-          Analyze your system performance with comprehensive hardware database (2017-2025)
+          {dict.calculator.subtitle}
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -94,13 +95,13 @@ export function EnhancedBottleneckCalculator() {
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
               <Cpu className="w-4 h-4" />
-              <span>Processor (CPU)</span>
+              <span>{dict.calculator.labels.cpu}</span>
             </label>
             <EnhancedSearchableSelect
               options={cpuOptions}
               value={selectedCPU}
               onValueChange={setSelectedCPU}
-              placeholder="Select your CPU..."
+              placeholder={dict.calculator.placeholders.cpu}
               type="cpu"
             />
           </div>
@@ -108,13 +109,13 @@ export function EnhancedBottleneckCalculator() {
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
               <Zap className="w-4 h-4" />
-              <span>Graphics Card (GPU)</span>
+              <span>{dict.calculator.labels.gpu}</span>
             </label>
             <EnhancedSearchableSelect
               options={gpuOptions}
               value={selectedGPU}
               onValueChange={setSelectedGPU}
-              placeholder="Select your GPU..."
+              placeholder={dict.calculator.placeholders.gpu}
               type="gpu"
             />
           </div>
@@ -122,13 +123,13 @@ export function EnhancedBottleneckCalculator() {
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
               <HardDrive className="w-4 h-4" />
-              <span>Memory (RAM)</span>
+              <span>{dict.calculator.labels.ram}</span>
             </label>
             <EnhancedSearchableSelect
               options={ramOptions}
               value={selectedRAM}
               onValueChange={setSelectedRAM}
-              placeholder="Select your RAM..."
+              placeholder={dict.calculator.placeholders.ram}
               type="ram"
             />
           </div>
@@ -136,13 +137,13 @@ export function EnhancedBottleneckCalculator() {
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
               <Monitor className="w-4 h-4" />
-              <span>Gaming Resolution</span>
+              <span>{dict.calculator.labels.resolution}</span>
             </label>
             <EnhancedSearchableSelect
               options={resolutionOptions}
               value={selectedResolution}
               onValueChange={setSelectedResolution}
-              placeholder="Select resolution..."
+              placeholder={dict.calculator.placeholders.resolution}
               type="resolution"
             />
           </div>
@@ -157,17 +158,17 @@ export function EnhancedBottleneckCalculator() {
             {isFormComplete ? (
               <>
                 <Calculator className="w-5 h-5 mr-2" />
-                Analyze My System
+                {dict.calculator.buttons.analyze}
               </>
             ) : (
-              'Please select all components'
+              dict.calculator.buttons.incomplete
             )}
           </Button>
         </div>
 
         {isFormComplete && (
           <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-            <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Ready for Analysis</h3>
+            <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">{dict.calculator.status.ready}</h3>
             <div className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
               <p>✓ CPU: {cpuOptions.find(c => c.id === selectedCPU)?.name}</p>
               <p>✓ GPU: {gpuOptions.find(g => g.id === selectedGPU)?.name}</p>

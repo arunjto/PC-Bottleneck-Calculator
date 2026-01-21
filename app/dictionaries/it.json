@@ -1,0 +1,1011 @@
+{
+    "common": {
+        "title": "Calcolatore Bottleneck PC 2026 - La mia CPU farà da collo di bottiglia alla GPU? (Test Gratuito)",
+        "description": "Calcola i colli di bottiglia del PC, stima gli FPS e determina i requisiti dell'alimentatore",
+        "loading": "Caricamento...",
+        "error": "Si è verificato un errore"
+    },
+    "nav": {
+        "home": "Home",
+        "fps_calculator": "Calcolatore FPS",
+        "psu_calculator": "Calcolatore PSU",
+        "blog": "Blog"
+    },
+    "home": {
+        "hero_title": "Calcolatore Bottleneck PC – Ottimizza le Prestazioni del tuo PC",
+        "hero_subtitle": "Verifica istantaneamente l'equilibrio tra CPU e GPU con il nostro avanzato Calcolatore di Bottleneck PC. Individua i colli di bottiglia, previeni i rallentamenti e costruisci un PC da gaming bilanciato.",
+        "cta_analyze": "Analizza il Mio Sistema",
+        "select_components": "Seleziona i tuoi componenti per analizzare l'equilibrio delle prestazioni del tuo PC in pochi secondi.",
+        "fps_promo_title": "Curioso delle prestazioni in gioco?",
+        "fps_promo_desc": "Stima i tuoi FPS medi nei titoli popolari con il nostro nuovo strumento.",
+        "fps_promo_link": "Prova il Calcolatore FPS →",
+        "faq_title": "Domande Frequenti",
+        "faq_subtitle": "Risposte rapide alle domande comuni sui colli di bottiglia e problemi di prestazioni del PC.",
+        "faqs": [
+            {
+                "q": "Cos'è un collo di bottiglia del PC?",
+                "a": "Un <strong>collo di bottiglia del PC</strong> si verifica quando un componente limita le prestazioni dell'intero sistema. Ad esempio, anche con una GPU di fascia alta, una CPU più debole potrebbe impedirle di raggiungere il suo pieno potenziale."
+            },
+            {
+                "q": "È peggio un collo di bottiglia della CPU o della GPU?",
+                "a": "Per il gaming, un leggero <strong>collo di bottiglia della GPU</strong> va solitamente bene perché significa che la scheda grafica lavora al massimo. Un forte <strong>collo di bottiglia della CPU</strong> è peggiore, in quanto causa spesso stuttering e frame rate incostanti."
+            },
+            {
+                "q": "Quanto è accurato il calcolatore di bottleneck?",
+                "a": "Il nostro <strong>Calcolatore di Bottleneck PC</strong> utilizza stime basate sui dati per fornire un'analisi altamente affidabile. Tuttavia, i risultati reali possono variare a seconda dei giochi, delle applicazioni e degli aggiornamenti dei driver."
+            },
+            {
+                "q": "Anche RAM o archiviazione causano colli di bottiglia?",
+                "a": "Sì. Una <strong>RAM</strong> insufficiente o lenta può causare scatti in carichi di lavoro pesanti. Allo stesso modo, l'uso di un <strong>HDD</strong> invece di un SSD porterà a tempi di caricamento più lenti."
+            },
+            {
+                "q": "CPU e GPU dovrebbero funzionare entrambe al 100%?",
+                "a": "Idealmente, la tua <strong>GPU</strong> dovrebbe essere vicina al pieno utilizzo per il gaming. L'uso della CPU varierà, e non è sempre ideale che raggiunga il 100%. Se la CPU è al massimo ma la GPU è sottoutilizzata, è un chiaro collo di bottiglia della CPU."
+            }
+        ],
+        "update_banner": {
+            "title": "Database Aggiornato!",
+            "description": "Ora con i modelli CPU e GPU 2026 più recenti e dati sulle prestazioni aggiornati.",
+            "badge": "Novità"
+        }
+    },
+    "calculator": {
+        "title": "Calcolatore Avanzato di Bottleneck",
+        "subtitle": "Analizza le prestazioni del tuo sistema con il database hardware completo (2017-2026)",
+        "labels": {
+            "cpu": "Processore (CPU)",
+            "gpu": "Scheda Video (GPU)",
+            "ram": "Memoria (RAM)",
+            "resolution": "Risoluzione Gaming"
+        },
+        "placeholders": {
+            "cpu": "Seleziona la tua CPU...",
+            "gpu": "Seleziona la tua GPU...",
+            "ram": "Seleziona la tua RAM...",
+            "resolution": "Seleziona risoluzione..."
+        },
+        "buttons": {
+            "analyze": "Analizza il Mio Sistema",
+            "incomplete": "Seleziona tutti i componenti"
+        },
+        "status": {
+            "ready": "Pronto per l'Analisi"
+        }
+    },
+    "about": {
+        "title": "Chi Siamo",
+        "intro_p1": "Benvenuto su **PCBuildCheck.com** — il tuo punto di riferimento affidabile per approfondimenti accurati e basati sui dati sulle prestazioni del PC. Siamo un team di costruttori di PC, giocatori e sviluppatori con una missione: *rendere le decisioni hardware complesse semplici, spiegabili e affidabili.*",
+        "intro_p2": "Che tu stia pianificando il tuo prossimo rig da gaming, una workstation per l'editing o una build economica, i nostri strumenti ti aiutano a **capire** le prestazioni — non solo a stimarle — così puoi acquistare e aggiornare con sicurezza.",
+        "mission_title": "La Nostra Missione: Chiarezza di Cui Ti Puoi Fidare",
+        "mission_desc_1": "Costruire o aggiornare un PC non dovrebbe essere un gioco d'azzardo. Con centinaia di CPU, GPU e nuovi hardware rilasciati ogni anno, è facile perdersi tra specifiche e opinioni. **PCBuildCheck** esiste per demistificare le prestazioni combinando dati di benchmark verificati con spiegazioni chiare — aiutandoti a individuare i colli di bottiglia prima che ti costino denaro.",
+        "mission_desc_2": "Crediamo che ogni giocatore, creatore e professionista meriti un PC che funzioni al massimo del suo potenziale. I nostri calcolatori e database ti forniscono **decisioni informate e supportate dai dati** in modo da ottenere le massime prestazioni per ogni euro speso.",
+        "how_title": "Come Funziona: Dati + Test nel Mondo Reale",
+        "how_desc_1": "Utilizziamo un'analisi a più livelli che controlla le istruzioni della CPU, l'IPC (Istruzioni Per Ciclo), l'efficienza dei core e la latenza della cache rispetto alle moderne pipeline di rendering della GPU.",
+        "how_desc_2": "Piuttosto che una semplice \"percentuale di collo di bottiglia\", calcoliamo punteggi separati per il gaming a 1080p, 1440p e 4K, fornendoti un quadro più chiaro delle prestazioni nel mondo reale.",
+        "different_title": "Cosa ci Distingue",
+        "different_list": [
+            "<strong>Trasparenza Prima di Tutto:</strong> Spieghiamo come viene calcolata ogni stima. Vedi la nostra metodologia.",
+            "<strong>Creato da Appassionati:</strong> I nostri algoritmi sono alimentati da benchmark reali, non da promesse di marketing.",
+            "<strong>Design User-First:</strong> Ogni strumento è ottimizzato per velocità, accessibilità e Core Web Vitals.",
+            "<strong>Aggiornamenti Continui:</strong> Aggiungiamo costantemente nuove CPU, GPU e giochi per rimanere precisi con le ultime uscite.",
+            "<strong>Educazione:</strong> Ti aiutiamo a capire <em>perché</em> una configurazione ha determinate prestazioni, non solo il punteggio."
+        ],
+        "promo_title": "Unisciti alla Community",
+        "promo_desc_1": "PCBuildCheck è una comunità in crescita di costruttori, giocatori e creatori. Accogliamo con favore feedback, segnalazioni di bug e suggerimenti sulle funzionalità.",
+        "promo_desc_2": "Hai un suggerimento o hai trovato un problema? [Contattaci](/contact) — ci piacerebbe sentirti.",
+        "promise_title": "La Nostra Promessa",
+        "promise_list": [
+            "<strong>Precisione:</strong> Benchmark e modelli sono affinati con feedback dal mondo reale.",
+            "<strong>Indipendenza:</strong> Non vendiamo hardware né accettiamo classifiche sponsorizzate.",
+            "<strong>Privacy:</strong> I calcoli vengono eseguiti lato client. Non raccogliamo né vendiamo mai i tuoi dati personali.",
+            "<strong>Accessibilità:</strong> I nostri calcolatori sono costruiti per principianti ed esperti."
+        ],
+        "community_title": "Unisciti alla Community",
+        "community_desc": "<strong>PCBuildCheck</strong> è una community in crescita di costruttori, gamer e creatori. Accogliamo feedback, segnalazioni di bug e suggerimenti.",
+        "contact_text": "💬 Hai un suggerimento o hai trovato un problema? <a href=\"/it/contact\">Contattaci</a> — ci piacerebbe sentirti.",
+        "signature": "Costruiamo qualcosa di incredibile insieme.<br /><strong>— Il Team di PCBuildCheck.com</strong>"
+    },
+    "contact": {
+        "title": "Contattaci",
+        "subtitle": "Informazioni, suggerimenti o bug? Ci piacerebbe sentirti.",
+        "form": {
+            "title": "Inviaci un messaggio",
+            "name": "Nome",
+            "name_ph": "Il tuo nome completo",
+            "email": "Email",
+            "email_ph": "tua@email.com",
+            "subject": "Oggetto",
+            "subject_ph": "Seleziona un argomento",
+            "subjects": {
+                "general": "Informazioni Generali",
+                "feedback": "Feedback",
+                "bug": "Segnalazione Bug",
+                "feature": "Richiesta Funzionalità",
+                "partnership": "Collaborazione"
+            },
+            "message": "Messaggio",
+            "message_ph": "Dicci come possiamo aiutarti...",
+            "button": "Invia Messaggio",
+            "sending": "Invio in corso...",
+            "success_title": "Messaggio inviato!",
+            "success_desc": "Grazie per il tuo messaggio. Ti risponderemo entro 48 ore.",
+            "error_title": "Invio fallito",
+            "error_desc": "Si è verificato un problema durante l'invio del messaggio."
+        },
+        "info": {
+            "email_title": "Email",
+            "email_desc": "Per informazioni generali o supporto, inviaci un'email a:",
+            "response_time": "<strong>Tempo di Risposta:</strong> Facciamo del nostro meglio per rispondere entro 48 ore lavorative."
+        }
+    },
+    "privacy": {
+        "title": "Informativa sulla Privacy",
+        "intro": "La tua privacy è importante per noi. Questa politica spiega cosa raccogliamo, come lo usiamo e le tue scelte su <strong>PCBuildCheck.com</strong>.",
+        "last_updated": "Ultimo aggiornamento:",
+        "sections": [
+            {
+                "title": "1. Informazioni che Raccogliamo",
+                "content": "Non raccogliamo informazioni personalmente identificabili a meno che tu non le fornisca volontariamente (es. modulo di contatto). Elaboriamo automaticamente dati tecnici limitati (indirizzo IP, info browser) per sicurezza e analisi."
+            },
+            {
+                "title": "2. Cookie e Local Storage",
+                "content": "Usiamo cookie/local storage per funzionalità essenziali (es. tema scuro) e per ricordare le impostazioni del calcolatore. Questi non memorizzano dati personali."
+            },
+            {
+                "title": "Cookie pubblicitari (se attivati)",
+                "content": "Se integriamo annunci di terze parti, tali partner potrebbero utilizzare cookie."
+            },
+            {
+                "title": "3. Analisi",
+                "content": "Utilizziamo analisi rispettose della privacy per capire l'utilizzo del sito. Dove applicabile, abilitiamo l'anonimizzazione IP."
+            },
+            {
+                "title": "4. Link di Terze Parti",
+                "content": "Potremmo linkare siti esterni. Le loro pratiche sulla privacy sono indipendenti da noi."
+            },
+            {
+                "title": "5. Le Tue Scelte",
+                "content": "<ul><li><strong>Preferenze Cookie:</strong> Gestisci il consenso in qualsiasi momento.</li><li><strong>Accesso e cancellazione:</strong> Puoi richiedere copia o cancellazione dei tuoi dati.</li></ul>"
+            },
+            {
+                "title": "6. Contatti",
+                "content": "Domande? Scrivici a <a href=\"mailto:rekhareet07@gmail.com\">rekhareet07@gmail.com</a>."
+            }
+        ]
+    },
+    "fps": {
+        "title": "Quanti FPS può fare il mio PC? Calcolatore Gratuito e Strumento Bottleneck",
+        "subtitle": "Stima la tua media di Frame Per Secondo (FPS) nei giochi popolari.",
+        "faq_title": "Domande Frequenti",
+        "faq_subtitle": "Risposte rapide alle domande comuni sulla stima degli FPS e sulle prestazioni di gioco.",
+        "faqs": [
+            {
+                "q": "Come funziona il calcolatore FPS?",
+                "a": "Il calcolatore FPS utilizza un database di benchmark dei componenti e dati di ottimizzazione del gioco per stimare gli FPS medi che puoi aspettarti con la combinazione di CPU e GPU selezionata."
+            },
+            {
+                "q": "Perché i miei FPS reali sono diversi dalla stima del calcolatore?",
+                "a": "Gli FPS reali possono variare a causa di fattori come driver, raffreddamento, velocità della RAM, processi in background e impostazioni specifiche del gioco. Il calcolatore fornisce una stima di base per la maggior parte degli utenti."
+            },
+            {
+                "q": "Posso usare il calcolatore FPS per giochi futuri?",
+                "a": "Mentre il calcolatore si basa sui dati attuali dei benchmark, può dare un'idea approssimativa per i titoli in arrivo. Tuttavia, i nuovi motori di gioco e gli aggiornamenti possono causare differenze nelle prestazioni."
+            },
+            {
+                "q": "La risoluzione e le impostazioni grafiche influiscono sui risultati FPS?",
+                "a": "Sì. Eseguire giochi a risoluzioni più elevate (1440p, 4K) o impostazioni ultra richiede più potenza della GPU, il che riduce gli FPS rispetto al gioco a 1080p o impostazioni medie."
+            }
+        ]
+    },
+    "fps_calculator": {
+        "title": "Calcolatore FPS Avanzato",
+        "description": "Stima le prestazioni di gioco con regolazioni estese per memoria, preset di qualità e obiettivi di visualizzazione.",
+        "cpu": {
+            "title": "Processore (CPU)",
+            "subtitle": "Cerca la tua CPU per ancorare la stima.",
+            "label": "Cerca CPU",
+            "placeholder": "Seleziona la tua CPU...",
+            "help": "Inizia a digitare il nome del modello, il numero di core o il livello per filtrare l'elenco.",
+            "selected": "Selezionato:",
+            "clear": "Pulisci",
+            "overclock_label": "Overclock CPU",
+            "overclock_options": {
+                "stock": {
+                    "label": "Clock Standard",
+                    "desc": "Boost predefinito del produttore."
+                },
+                "mild": {
+                    "label": "Leggero (+5%)",
+                    "desc": "Aumento di tensione sicuro per extra frame."
+                },
+                "moderate": {
+                    "label": "Moderato (+8%)",
+                    "desc": "Tuning preciso con raffreddamento adeguato."
+                },
+                "aggressive": {
+                    "label": "Aggressivo (+12%)",
+                    "desc": "Overclock pesante con raffreddamento premium."
+                },
+                "extreme": {
+                    "label": "Estremo (+15%)",
+                    "desc": "Tuning a livello di benchmark, stabilità variabile."
+                }
+            }
+        },
+        "gpu": {
+            "title": "Scheda Grafica (GPU)",
+            "subtitle": "Abbina la GPU che alimenta i tuoi giochi.",
+            "label": "Cerca GPU",
+            "placeholder": "Seleziona la tua GPU...",
+            "help": "Filtra per chipset, capacità VRAM o serie.",
+            "selected": "Selezionato:",
+            "clear": "Pulisci",
+            "overclock_label": "Overclock GPU",
+            "overclock_options": {
+                "stock": {
+                    "label": "Clock Standard",
+                    "desc": "Prestazioni di riferimento."
+                },
+                "mild": {
+                    "label": "Leggero (+5%)",
+                    "desc": "Auto OC o curva leggera."
+                },
+                "moderate": {
+                    "label": "Moderato (+8%)",
+                    "desc": "Tuning manuale con margine termico."
+                },
+                "aggressive": {
+                    "label": "Aggressivo (+12%)",
+                    "desc": "Modifiche significative a tensione e ventole."
+                },
+                "extreme": {
+                    "label": "Estremo (+15%)",
+                    "desc": "OC massimo per sessioni di benchmark."
+                }
+            }
+        },
+        "memory": {
+            "title": "Memoria e Archiviazione",
+            "subtitle": "Imposta capacità di memoria, velocità e tipo di archiviazione.",
+            "ram_size_label": "Quantità RAM",
+            "ram_size_options": {
+                "8gb": {
+                    "label": "8 GB",
+                    "desc": "Gaming entry-level ed esports."
+                },
+                "16gb": {
+                    "label": "16 GB",
+                    "desc": "Consigliato per titoli AAA moderni."
+                },
+                "32gb": {
+                    "label": "32 GB",
+                    "desc": "Ottimo per streaming e creazione contenuti."
+                },
+                "64gb": {
+                    "label": "64 GB+",
+                    "desc": "Multitasking entusiasta e carichi workstation."
+                },
+                "128gb": {
+                    "label": "128 GB",
+                    "desc": "Memoria di livello workstation per creatori pesanti."
+                }
+            },
+            "ram_speed_label": "Velocità RAM (MHz)",
+            "ram_speed_options": {
+                "2666": {
+                    "label": "2666 MHz",
+                    "desc": "Kit DDR4 più vecchi."
+                },
+                "3200": {
+                    "label": "3200 MHz",
+                    "desc": "Prestazioni DDR4 bilanciate."
+                },
+                "3600": {
+                    "label": "3600 MHz",
+                    "desc": "Sweet spot DDR4 ottimizzato."
+                },
+                "4000": {
+                    "label": "4000 MHz",
+                    "desc": "Tuning DDR4 ad alta frequenza."
+                },
+                "4400": {
+                    "label": "4400 MHz",
+                    "desc": "Kit DDR4/DDR5 premium per appassionati."
+                },
+                "4800": {
+                    "label": "4800 MHz",
+                    "desc": "Miglioramento prestazioni DDR5 entry."
+                },
+                "5200": {
+                    "label": "5200 MHz",
+                    "desc": "Memoria DDR5 ad alta velocità."
+                },
+                "6000": {
+                    "label": "6000 MHz",
+                    "desc": "Kit DDR5 top di gamma ottimizzati per il gaming."
+                }
+            },
+            "storage_label": "Tipo Archiviazione",
+            "storage_options": {
+                "hdd": {
+                    "label": "HDD",
+                    "desc": "Caricamento disco rigido standard."
+                },
+                "sata-ssd": {
+                    "label": "SSD SATA",
+                    "desc": "Caricamenti più veloci, prestazioni costanti."
+                },
+                "nvme-ssd": {
+                    "label": "SSD NVMe",
+                    "desc": "Velocità di caricamento e streaming massime."
+                }
+            }
+        },
+        "game": {
+            "title": "Selezione Gioco",
+            "subtitle": "Scegli il titolo e la risoluzione da profilare.",
+            "label": "Cerca Giochi",
+            "placeholder": "Seleziona un gioco...",
+            "help": "Scegli tra grandi esports e uscite AAA impegnative.",
+            "selected": "Selezionato:",
+            "clear": "Pulisci",
+            "resolution_label": "Risoluzione Schermo",
+            "resolution_placeholder": "Seleziona risoluzione...",
+            "resolution_options": {
+                "1080p": {
+                    "name": "1920x1080 (1080p)",
+                    "specs": "Full HD"
+                },
+                "1440p": {
+                    "name": "2560x1440 (1440p)",
+                    "specs": "Quad HD"
+                },
+                "4K": {
+                    "name": "3840x2160 (4K)",
+                    "specs": "Ultra HD"
+                }
+            },
+            "resolution_help_default": "Risoluzioni più alte stressano maggiormente la GPU."
+        },
+        "quality": {
+            "title": "Impostazioni Qualità",
+            "subtitle": "Regola fedeltà visiva e preferenze di upscaling.",
+            "graphics_label": "Qualità Grafica",
+            "graphics_options": {
+                "low": {
+                    "label": "Bassa",
+                    "desc": "Max FPS, visivi minimi."
+                },
+                "medium": {
+                    "label": "Media",
+                    "desc": "Fedeltà e velocità bilanciate."
+                },
+                "high": {
+                    "label": "Alta",
+                    "desc": "Obiettivo visivo predefinito."
+                },
+                "ultra": {
+                    "label": "Ultra",
+                    "desc": "Visivi cinematici con costo."
+                },
+                "ray-tracing": {
+                    "label": "Ray Tracing",
+                    "desc": "Effetti di luce next-gen."
+                },
+                "rt-ultra": {
+                    "label": "RT Ultra",
+                    "desc": "Luci ray-tracing più impostazioni alta fedeltà."
+                },
+                "rt-extreme": {
+                    "label": "RT Estremo",
+                    "desc": "Ray tracing massimizzato per visivi da vetrina."
+                }
+            },
+            "upscaling_label": "Tecnologia Upscaling",
+            "upscaling_options": {
+                "off": {
+                    "label": "Nessuna",
+                    "desc": "Rendering risoluzione nativa."
+                },
+                "nvidia-dlss": {
+                    "label": "NVIDIA DLSS",
+                    "desc": "Modalità DLSS auto per giochi supportati."
+                },
+                "amd-fsr": {
+                    "label": "AMD FSR",
+                    "desc": "Baseline upscaler spaziale agnostico."
+                },
+                "intel-xess": {
+                    "label": "Intel XeSS",
+                    "desc": "Profilo predefinito upscaler AI Intel."
+                },
+                "dlss-quality": {
+                    "label": "DLSS Qualità",
+                    "desc": "Visivi più nitidi con boost AI."
+                },
+                "dlss-balanced": {
+                    "label": "DLSS Bilanciato",
+                    "desc": "Modalità DLSS bilanciata per chiarezza e velocità."
+                },
+                "dlss-performance": {
+                    "label": "DLSS Prestazioni",
+                    "desc": "Massimo boost per 4K e visori VR."
+                },
+                "fsr2": {
+                    "label": "FSR 2.0",
+                    "desc": "Upscaling temporale su GPU."
+                },
+                "fsr-quality": {
+                    "label": "FSR 2.0 Qualità",
+                    "desc": "Preset priorità qualità per AMD FSR 2.0."
+                },
+                "xe-ss": {
+                    "label": "XeSS Bilanciato",
+                    "desc": "Preset Intel XeSS bilanciato."
+                },
+                "xess-quality": {
+                    "label": "XeSS Qualità",
+                    "desc": "Preset qualità per Intel XeSS."
+                }
+            }
+        },
+        "display": {
+            "title": "Obiettivi Display",
+            "subtitle": "Abbina aggiornamento monitor e preferenza anti-aliasing.",
+            "refresh_label": "Refresh Rate Target",
+            "refresh_options": {
+                "60hz": {
+                    "label": "60Hz",
+                    "desc": "Display standard e TV."
+                },
+                "120hz": {
+                    "label": "120Hz",
+                    "desc": "Esperienza fluida ad alto refresh."
+                },
+                "144hz": {
+                    "label": "144Hz",
+                    "desc": "Standard gaming competitivo."
+                },
+                "240hz": {
+                    "label": "240Hz",
+                    "desc": "Gioco azione veloce livello pro."
+                },
+                "360hz": {
+                    "label": "360Hz",
+                    "desc": "Pannelli esports all'avanguardia."
+                }
+            },
+            "aa_label": "Anti-Aliasing",
+            "aa_options": {
+                "off": {
+                    "label": "Off",
+                    "desc": "Immagine più nitida con scalettature."
+                },
+                "fxaa": {
+                    "label": "FXAA",
+                    "desc": "Filtro levigante leggero."
+                },
+                "smaa": {
+                    "label": "SMAA",
+                    "desc": "Chiarezza e costo bilanciati."
+                },
+                "taa": {
+                    "label": "TAA",
+                    "desc": "Miglior fluidità, impatto pesante."
+                },
+                "msaa-2x": {
+                    "label": "MSAA 2x",
+                    "desc": "Multisampling entry per bordi più puliti."
+                },
+                "msaa-4x": {
+                    "label": "MSAA 4x",
+                    "desc": "Bordi più nitidi con costo prestazioni notevole."
+                },
+                "msaa-8x": {
+                    "label": "MSAA 8x",
+                    "desc": "Multisampling premium per linee perfette."
+                },
+                "dlss-aa": {
+                    "label": "DLSS Anti-Aliasing",
+                    "desc": "Passaggio anti-aliasing DLSS per schede NVIDIA RTX."
+                }
+            }
+        },
+        "actions": {
+            "calculate": "Calcola Frame Rate",
+            "incomplete": "Seleziona CPU, GPU, gioco e risoluzione per continuare",
+            "help": "Regola i campi avanzati in qualsiasi momento e ricalcola per aggiornare la stima.",
+            "back": "Torna al Calcolatore"
+        },
+        "results": {
+            "title": "Risultati Analisi FPS",
+            "subtitle": "Prestazioni",
+            "performance_title": "Risultati Prestazioni",
+            "average_fps": "FPS Medi a",
+            "ratings": {
+                "excellent": {
+                    "label": "Eccellente",
+                    "desc": "Gaming fluido ad alto refresh rate"
+                },
+                "very_good": {
+                    "label": "Molto Buono",
+                    "desc": "Ottima esperienza di gioco"
+                },
+                "good": {
+                    "label": "Buono",
+                    "desc": "Giocabile con buona esperienza"
+                },
+                "fair": {
+                    "label": "Discreto",
+                    "desc": "Giocabile ma non ideale"
+                },
+                "poor": {
+                    "label": "Scarso",
+                    "desc": "Non raccomandato"
+                }
+            },
+            "advanced_impact": {
+                "title": "Impatto Impostazioni Avanzate",
+                "baseline": "Stima base (predefiniti):",
+                "impact": "Impatto tuning avanzato:",
+                "refresh_pass": "Gli FPS stimati superano il target {target}, quindi puoi aspettarti un gameplay fluido.",
+                "refresh_fail": "Circa {diff} FPS sotto il target {target}. Considera di abbassare la qualità o abilitare un preset upscaling più forte."
+            }
+        }
+    },
+    "fps_compare": {
+        "title": "Confronta Due Build",
+        "current_build": "La Tua Build Attuale",
+        "compare_with": "Confronta Con",
+        "button": "Confronta Build",
+        "verdict": {
+            "faster": "La tua build attuale è più veloce del {diff}% rispetto alla build di confronto.",
+            "slower": "La build di confronto è più veloce del {diff}% rispetto alla tua build.",
+            "equal": "Le build hanno prestazioni simili."
+        },
+        "chart": {
+            "title": "Prestazioni vs Costo",
+            "your_build": "La Tua Build",
+            "comp_build": "Build Confronto"
+        },
+        "tips": {
+            "title": "Consigli Ottimizzazione Gioco",
+            "dlss3": "Abilita DLSS 3 o Frame Generation per un gameplay 4K più fluido.",
+            "higher_res": "Considera risoluzioni più alte per ridurre il collo di bottiglia della CPU.",
+            "dlss_qual": "Usa la modalità DLSS Quality per il miglior bilanciamento tra grafica e prestazioni.",
+            "lock_fps": "Blocca gli FPS al refresh rate del monitor per un'esperienza stabile.",
+            "no_rt": "Disabilita il ray tracing in 4K per prestazioni migliori.",
+            "fsr": "Usa FSR 2.0 per aumentare gli FPS senza grandi perdite visive.",
+            "lower_settings": "Abbassa la qualità di ombre e texture per un boost del +10–15% FPS.",
+            "update_drivers": "Assicurati che i driver della GPU siano aggiornati.",
+            "tips_4k": "DLSS o FSR consigliati per un gameplay 4K fluido.",
+            "tips_1080p": "Probabilmente limitato dalla CPU — prova una risoluzione più alta.",
+            "tips_1440p": "Ottimo punto d'incontro tra prestazioni e grafica."
+        },
+        "share": {
+            "title": "Condividi i Tuoi Risultati",
+            "text": "Ho confrontato le mie build PC con l' Estimatore FPS — controlla i tuoi FPS ora!",
+            "toast_select": "Seleziona CPU e GPU per il confronto.",
+            "toast_incomplete": "Dati incompleti per il confronto.",
+            "toast_copy": "Link copiato negli appunti!",
+            "toast_insta": "Instagram non supporta la condivisione di link — copia il link invece!"
+        }
+    },
+    "other_games": {
+        "title": "Prestazioni in Altri Giochi",
+        "description": "Basato sulla tua build attuale ({cpu} + {gpu}), ecco le prestazioni previste in altri titoli popolari a {res}.",
+        "badge_scale": "Scala badge per {res}: Eccellente ≥ {exc} FPS · Ottimo ≥ {great} FPS · Buono ≥ {good} FPS · Giocabile ≥ {play} FPS.",
+        "badges": {
+            "excellent": "ECCELLENTE",
+            "great": "OTTIMO",
+            "good": "BUONO",
+            "playable": "GIOCABILE",
+            "upgrade": "AGGIORNAMENTO CONSIGLIATO"
+        },
+        "fps_avg": "FPS (media)"
+    },
+    "footer": {
+        "about": "Chi Siamo",
+        "privacy": "Privacy Policy",
+        "contact": "Contattaci",
+        "follow_fb": "Seguici su Facebook",
+        "follow_ig": "Seguici su Instagram",
+        "copyright": "© 2025 PC Build Check. Tutti i diritti riservati."
+    },
+    "quick_tools": {
+        "title": "Strumenti Rapidi",
+        "bottleneck": {
+            "label": "Collo di Bottiglia",
+            "desc": "Verifica bilanciamento sistema"
+        },
+        "fps_calc": {
+            "label": "Calcolatore FPS",
+            "desc": "Stima prestazioni di gioco"
+        },
+        "psu_calc": {
+            "label": "Calcolatore PSU",
+            "desc": "Calcola fabbisogno energetico"
+        }
+    },
+    "psu_page": {
+        "title": "Calcolatore PSU - Di Quanti Watt ha Bisogno il Mio PC? (Gratuito 2026)",
+        "description": "Calcola il wattaggio dell'alimentatore (PSU) consigliato per il tuo PC. Seleziona CPU e GPU per ottenere una stima del carico e un consiglio sicuro.",
+        "hero_title": "Calcolatore Wattaggio PSU",
+        "hero_subtitle": "Assicurati che il tuo PC abbia abbastanza potenza. Seleziona i componenti principali per ottenere il wattaggio PSU consigliato.",
+        "interlink_title": "Hai sistemato l'alimentazione?",
+        "interlink_desc": "Ora assicurati che CPU e GPU siano bilanciate per le massime prestazioni. Un sistema sbilanciato spreca il potenziale del tuo hardware.",
+        "interlink_btn": "Controlla i Colli di Bottiglia →",
+        "faq_title": "Domande Frequenti",
+        "faq_subtitle": "Risposte rapide alle domande comuni sulla scelta dell'alimentatore giusto.",
+        "faqs": [
+            {
+                "q": "Come determina il calcolatore il wattaggio richiesto?",
+                "a": "Il calcolatore stima il wattaggio analizzando CPU, GPU, RAM, archiviazione e altri componenti. Aggiunge anche un margine di sicurezza per stabilità e aggiornamenti futuri."
+            },
+            {
+                "q": "È dannoso usare un PSU con wattaggio molto superiore?",
+                "a": "No. Un wattaggio superiore non danneggia il PC, fornisce solo margine extra. Il sistema assorbe solo ciò di cui ha bisogno."
+            },
+            {
+                "q": "L'efficienza del PSU (80 Plus) influisce sugli FPS?",
+                "a": "No, l'efficienza non influisce direttamente sugli FPS. Indica quanta energia viene persa come calore. Un PSU più efficiente riduce i consumi e il calore."
+            },
+            {
+                "q": "Sottostimare il wattaggio può danneggiare l'hardware?",
+                "a": "Sì. Un PSU sottodimensionato può causare crash o stressare i componenti. Il calcolatore aiuta a prevenire questo problema raccomandando il wattaggio corretto."
+            }
+        ]
+    },
+    "psu_calculator": {
+        "title": "Calcolatore Avanzato PSU",
+        "subtitle": "Calcola i requisiti di potenza precisi con analisi dell'efficienza",
+        "labels": {
+            "cpu": "Processore (CPU)",
+            "gpu": "Scheda Video (GPU)",
+            "components": "Componenti Aggiuntivi",
+            "efficiency": "Efficienza PSU"
+        },
+        "placeholders": {
+            "cpu": "Seleziona la tua CPU...",
+            "gpu": "Seleziona la tua GPU...",
+            "components": "Seleziona configurazione...",
+            "efficiency": "Seleziona efficienza..."
+        },
+        "button": "Calcola Requisiti PSU",
+        "incomplete": "Seleziona tutti i componenti",
+        "back": "Torna al Calcolatore",
+        "results_title": "Requisiti PSU",
+        "results_subtitle": "Raccomandazioni alimentatore",
+        "power_req_title": "Requisiti di Potenza",
+        "rec_wattage_label": "Wattaggio Consigliato",
+        "certified": "Certificato",
+        "categories": {
+            "min": "Minimo",
+            "rec": "Consigliato",
+            "future": "A Prova di Futuro"
+        },
+        "breakdown": {
+            "title": "Ripartizione Consumo",
+            "cpu": "Potenza CPU",
+            "gpu": "Potenza GPU",
+            "other": "Altri Componenti",
+            "total": "Potenza Totale Sistema",
+            "total_desc": "Consumo base a pieno carico"
+        },
+        "efficiency": {
+            "title": "Analisi Efficienza e Costi",
+            "power_eff": "Efficienza Energetica",
+            "rating_label": "Rating Efficienza",
+            "cost_title": "Costo Energetico Annuo",
+            "cost_desc": "Costo elettrico stimato (4h/giorno gaming)"
+        },
+        "tips": {
+            "title": "Consigli Scelta PSU",
+            "brands_title": "Marche di Qualità",
+            "features_title": "Caratteristiche Chiave",
+            "features_list": [
+                "Cavi modulari consigliati",
+                "80 PLUS Gold o superiore",
+                "Garanzia 5+ anni"
+            ]
+        },
+        "component_options": {
+            "basic": {
+                "name": "Configurazione Base",
+                "desc": "Scheda madre, RAM, 1 SSD, raffreddamento base"
+            },
+            "gaming": {
+                "name": "Configurazione Gaming",
+                "desc": "Illuminazione RGB, ventole multiple, periferiche gaming"
+            },
+            "enthusiast": {
+                "name": "Configurazione Enthusiast",
+                "desc": "Raffreddamento AIO, drive multipli, RGB esteso"
+            },
+            "workstation": {
+                "name": "Configurazione Workstation",
+                "desc": "Drive multipli, raffreddamento professionale, schede extra"
+            }
+        },
+        "efficiency_options": {
+            "80plus": {
+                "desc": "Standard di efficienza base"
+            },
+            "80plus-bronze": {
+                "desc": "Buona efficienza, economica"
+            },
+            "80plus-silver": {
+                "desc": "Efficienza migliore"
+            },
+            "80plus-gold": {
+                "desc": "Alta efficienza, consigliata"
+            },
+            "80plus-platinum": {
+                "desc": "Efficienza molto alta"
+            },
+            "80plus-titanium": {
+                "desc": "Efficienza massima"
+            }
+        }
+    },
+    "psu_guide": {
+        "header_title": "Calcolatore Wattaggio PSU – Trova l'Alimentatore Giusto per il Tuo PC Gaming",
+        "intro": "Scegliere il giusto <strong>Alimentatore (PSU)</strong> è fondamentale per costruire un PC stabile. Un PSU sottodimensionato può causare crash o danni. Il nostro <strong>Calcolatore PSU</strong> rende facile stimare il wattaggio esatto necessario.",
+        "why_title": "Perché usare un Calcolatore di Wattaggio?",
+        "why_desc": "Scegliere un PSU non significa solo prendere il wattaggio più alto. Spendere troppo per un PSU eccessivo è uno spreco, mentre sottostimare rischia l'instabilità. Un <strong>calcolatore</strong> assicura il perfetto equilibrio.",
+        "how_title": "Come Funziona?",
+        "how_desc_1": "Il nostro strumento analizza i requisiti combinati di CPU, GPU e altri componenti. Raccomanda il wattaggio ideale per prevenire colli di bottiglia e garantire stabilità.",
+        "how_desc_2": "Per un'analisi più accurata, abbina questo strumento al nostro <strong>Calcolatore di Bottleneck PC</strong>.",
+        "benefits_title": "Vantaggi del Nostro Calcolatore",
+        "benefits_list": [
+            "<strong>Previene Crash:</strong> Assicura che il PSU regga sessioni di gioco intense.",
+            "<strong>Risparmia Denaro:</strong> Evita di spendere troppo per wattaggi inutili.",
+            "<strong>A Prova di Futuro:</strong> Considera aggiornamenti futuri.",
+            "<strong>Tranquillità:</strong> Costruisci un sistema che funziona senza rischi."
+        ],
+        "conclusion_title": "Costruisci Meglio con il PSU Giusto",
+        "conclusion_desc": "L'alimentatore è la base di un PC affidabile. Con il nostro calcolatore, puoi determinare con precisione la potenza necessaria."
+    },
+    "bottleneck_promo": {
+        "title": "I tuoi FPS sono più bassi del previsto?",
+        "description": "Il bilanciamento hardware potrebbe essere il problema. Un collo di bottiglia del sistema può impedire ai tuoi componenti di raggiungere il massimo potenziale.",
+        "link": "Analizza con il nostro Calcolatore di Collo di Bottiglia →"
+    },
+    "results": {
+        "title": "Risultati Analisi Sistema",
+        "subtitle": "Ripartizione completa delle prestazioni",
+        "back_button": "Torna al Calcolatore",
+        "sections": {
+            "resolution_impact": "Impatto Risoluzione & Benchmark",
+            "gaming_perf": "Valutazione Prestazioni Gaming",
+            "recommendations": "Raccomandazioni Gaming",
+            "config_score": "Punteggio Configurazione",
+            "bottleneck": "Analisi Collo di Bottiglia",
+            "expected_experience": "Esperienza di Gioco Prevista",
+            "market_prices": "Prezzi di Mercato Attuali"
+        },
+        "labels": {
+            "cpu_perf": "Prestazioni CPU",
+            "gpu_perf": "Prestazioni GPU",
+            "cpu_gaming": "Prestazioni Gaming CPU",
+            "gpu_gaming": "Prestazioni Gaming GPU",
+            "gaming_score": "Punteggio Gaming",
+            "system_balance": "Bilanciamento Sistema",
+            "upgrade_priority": "Priorità Aggiornamento",
+            "rec_game_types": "Tipi di Gioco Consigliati",
+            "ram_score": "Memoria (RAM)",
+            "storage_score": "Archiviazione",
+            "overall_rating": "Valutazione Complessiva",
+            "cpu_util": "Utilizzo CPU",
+            "gpu_util": "Utilizzo GPU",
+            "perf_impact": "Impatto Prestazioni",
+            "esports": "Titoli Esports",
+            "aaa": "Titoli AAA",
+            "optimization_tips": "Consigli Ottimizzazione",
+            "graphics_settings": "Impostazioni Grafiche",
+            "system_opt": "Ottimizzazione Sistema",
+            "total_system_value": "Valore Totale Sistema",
+            "estimated_total": "Totale stimato",
+            "power_reqs": "Requisiti Energetici",
+            "rec_psu": "PSU Consigliato",
+            "final_rec": "Riepilogo Raccomandazioni"
+        },
+        "ratings": {
+            "excellent": "Eccellente",
+            "very_good": "Molto Buono",
+            "good": "Buono",
+            "fair": "Discreto",
+            "poor": "Scarso",
+            "well_balanced": "Sistema Ben Bilanciato",
+            "bottleneck_warning": "Collo di Bottiglia",
+            "maxed_out": "Massimo",
+            "optimal": "Ottimale"
+        },
+        "system_config": {
+            "title": "Configurazione Sistema",
+            "game_reqs": "Requisiti Gioco",
+            "cpu_demand": "Domanda CPU:",
+            "gpu_demand": "Domanda GPU:",
+            "ram_req": "RAM Richiesta:",
+            "storage": "Archiviazione:",
+            "optimizations": "Ottimizzazioni Disponibili",
+            "ram_desc": {
+                "excellent": "Capacità eccellente per multitasking",
+                "very_good": "Ottimo per gaming moderno",
+                "good": "Standard per gaming",
+                "fair": "Minimo per giochi moderni"
+            },
+            "storage_desc": "SSD moderno consigliato per i migliori tempi di caricamento",
+            "overall_desc": {
+                "balanced": "Perfetto per gaming e produttività",
+                "imbalance": "Buone prestazioni con margine di miglioramento"
+            }
+        },
+        "recommendations": {
+            "all_games": {
+                "label": "Tutti i Giochi",
+                "desc": "Il tuo sistema può gestire qualsiasi gioco a impostazioni alte",
+                "list": [
+                    "Titoli AAA a impostazioni Ultra",
+                    "Esports competitivi a 240+ FPS",
+                    "VR gaming",
+                    "Content creation"
+                ]
+            },
+            "aaa_esports": {
+                "label": "AAA & Esports",
+                "desc": "Ottimo per la maggior parte dei giochi moderni",
+                "list": [
+                    "Titoli AAA a impostazioni Alte",
+                    "Esports a 144+ FPS",
+                    "Streaming mentre giochi"
+                ]
+            },
+            "esports_casual": {
+                "label": "Esports & Casual",
+                "desc": "Buono per gaming competitivo e casual",
+                "list": [
+                    "Esports a 60-144 FPS",
+                    "Vecchi titoli AAA",
+                    "Giochi Indie"
+                ]
+            },
+            "casual": {
+                "label": "Casual Gaming",
+                "desc": "Più adatto per giochi meno esigenti",
+                "list": [
+                    "Esports a 60 FPS",
+                    "Giochi Indie",
+                    "Titoli vecchi"
+                ]
+            },
+            "upgrade_priority": {
+                "cpu_title": "Priorità: Aggiorna CPU",
+                "cpu_desc": "La tua CPU limita la GPU del {val}%",
+                "gpu_title": "Priorità: Aggiorna GPU",
+                "gpu_desc": "La tua GPU è il fattore limitante del {val}%",
+                "balanced_title": "Ben Bilanciato",
+                "balanced_desc": "Nessun aggiornamento immediato necessario",
+                "ram_title": "Considera: Più RAM",
+                "ram_desc": "16GB raccomandati per gaming moderno"
+            }
+        },
+        "bottleneck_analysis": {
+            "balanced_title": "I tuoi componenti sono ben abbinati",
+            "bottleneck_title": "Il tuo {type} limita le prestazioni complessive",
+            "balanced_desc": "Nessuna perdita di prestazioni significativa. I tuoi componenti lavorano insieme in modo efficiente.",
+            "bottleneck_desc": "Il collo di bottiglia {type} può ridurre le prestazioni di gioco di circa {val}% in scenari {scenario}.",
+            "cpu_scenario": "CPU-intensive",
+            "gpu_scenario": "graficamente intensi"
+        },
+        "market": {
+            "current_price": "Prezzo attuale di mercato",
+            "view_specs": "Vedi Specifiche",
+            "official_page": "Pagina Ufficiale {brand}",
+            "launch_price": "Prezzo lancio: ${val}",
+            "cpu_price": "Prezzo CPU",
+            "gpu_price": "Prezzo GPU",
+            "combined": "CPU + GPU + RAM combinati"
+        }
+    },
+    "guide": {
+        "title": "Comprendere i Colli di Bottiglia del PC: Una Guida Completa a un Sistema Bilanciato",
+        "intro": "Benvenuto nella risorsa definitiva per l'analisi delle prestazioni del PC. Un <strong>collo di bottiglia</strong> è il concetto più importante da capire quando si costruisce o si aggiorna un PC da gaming. Si verifica quando uno dei tuoi componenti è troppo lento per tenere il passo con gli altri, creando di fatto un \"ingorgo\" che limita il potenziale dell'intero sistema. Il nostro <strong>Calcolatore di Bottleneck PC</strong> è progettato per identificare istantaneamente questi problemi.",
+        "intro_p2": "Prevenendo i <strong>colli di bottiglia</strong>, ti assicuri che ogni euro speso in hardware si traduca direttamente nelle <strong>prestazioni</strong> che ti aspetti. Un <strong>PC bilanciato</strong> è un PC potente, efficiente ed economico.",
+        "cpu_section": {
+            "title": "Cos'è un Collo di Bottiglia della CPU?",
+            "subtitle": "(Il Collo di Bottiglia \"Cattivo\")",
+            "description": "Un <strong>collo di bottiglia della CPU</strong> si verifica quando il processore (CPU) non riesce a elaborare dati e istruzioni abbastanza velocemente da tenere la scheda grafica (GPU) completamente occupata. Questo è il tipo di <strong>collo di bottiglia</strong> più comune e problematico per i gamer, poiché porta a prestazioni incoerenti che non possono essere risolte semplicemente abbassando le impostazioni grafiche.",
+            "symptoms_title": "Sintomi Comuni:",
+            "symptoms_list": [
+                "<strong>Stuttering</strong> o gameplay a scatti, specialmente durante l'azione intensa.",
+                "Bassi <strong>FPS</strong> in <strong>giochi CPU-intensive</strong> (Valorant, Counter-Strike 2, titoli strategici).",
+                "<strong>L'utilizzo della GPU</strong> è basso (60–70%) mentre i core della CPU sono al 100%."
+            ]
+        },
+        "gpu_section": {
+            "title": "Cos'è un Collo di Bottiglia della GPU?",
+            "subtitle": "(Il Collo di Bottiglia \"Buono\")",
+            "description": "Un <strong>collo di bottiglia della GPU</strong>, noto anche come \"GPU limited\", si verifica quando la scheda grafica funziona alla massima capacità (99–100% di utilizzo). Detta il tuo <strong>frame rate</strong> massimo perché sta lavorando il più duramente possibile per renderizzare le immagini.",
+            "description_p2": "<strong class=\"text-green-800 dark:text-green-300\">Questo è generalmente ideale per il gaming.</strong> Significa che stai utilizzando appieno il tuo investimento GPU, specialmente nei titoli AAA a 1440p/4K con impostazioni ultra."
+        },
+        "action_plan": {
+            "title": "Come Risolvere un Collo di Bottiglia: Il Tuo Piano d'Azione",
+            "description": "Una volta che il nostro calcolatore identifica un <strong>collo di bottiglia</strong>, ecco i passaggi più efficaci per affrontarlo."
+        },
+        "cpu_solutions": {
+            "title": "Affrontare un Collo di Bottiglia CPU",
+            "intro": "Se la tua CPU è l'anello debole, riduci il suo carico di lavoro o aumenta le sue prestazioni.",
+            "immediate_fixes_title": "Soluzioni Immediate:",
+            "immediate_fixes_list": [
+                "<strong>Chiudi App in Background:</strong> Chiudi browser/app di streaming prima di giocare.",
+                "<strong>Abbassa Impostazioni CPU-Pesanti:</strong> Riduci fisica, densità folla, distanza visuale.",
+                "<strong>Aumenta la Risoluzione:</strong> Sposta il carico sulla GPU, bilanciando il carico."
+            ],
+            "long_term_fixes_title": "Soluzioni Hardware a Lungo Termine:",
+            "long_term_fixes_list": [
+                "<strong>Overclocking:</strong> Con il raffreddamento, aspettati un boost CPU del 5–15%.",
+                "<strong>Aggiorna CPU:</strong> Scegline una che corrisponda alla tua GPU secondo i risultati del calcolatore."
+            ],
+            "example_title": "Esempio Reale: Aggiornare la CPU per una GPU Moderna",
+            "example_desc": "Un utente passa a una <strong>NVIDIA RTX 4070</strong> ma mantiene un vecchio <strong>Ryzen 5 3600</strong>.",
+            "example_issue": "A 1440p/4K si comporta decentemente, ma negli esports a 1080p compaiono scatti indipendentemente dalle impostazioni.",
+            "example_solution": "<strong>La Soluzione:</strong> Questo è un collo di bottiglia della CPU. Passare a un <strong>Ryzen 5 7600X</strong> o <strong>Intel Core i5-14600K</strong> ripristina l'equilibrio, lasciando brillare la RTX 4070."
+        },
+        "gpu_solutions": {
+            "title": "Gestire un Collo di Bottiglia GPU",
+            "intro": "Questa è spesso una <strong>cosa positiva</strong>. L'obiettivo non è rimuoverlo, ma ottimizzare per il tuo target FPS.",
+            "levers_title": "Leve per Più FPS:",
+            "levers_list": [
+                "Abbassa le impostazioni GPU (texture, ombre, ray tracing).",
+                "Abilita DLSS/FSR/XeSS per enormi guadagni.",
+                "Riduci la risoluzione (es. 4K → 1440p).",
+                "Aggiorna GPU per più margine."
+            ],
+            "example_title": "Esempio Reale: Superare un Limite GPU di Fascia Media",
+            "example_desc": "Un <strong>Ryzen 5 5600X</strong> è abbinato a una vecchia <strong>GTX 1660 Super</strong>.",
+            "example_issue": "A 1440p, la CPU gestisce la logica, ma la GPU raggiunge il 100% e fatica a mantenere FPS fluidi.",
+            "example_solution": "<strong>La Soluzione:</strong> Aggiorna a una <strong>RTX 4060</strong> o <strong>RX 7700 XT</strong> per un gaming stabile e di alta qualità a 1440p."
+        },
+        "final_section": {
+            "title": "Come il Nostro Calcolatore Porta a un PC Bilanciato",
+            "description": "Il nostro strumento analizza le relazioni tra i componenti così non devi farlo tu. Inserendo le tue parti, ottieni un'analisi istantanea basata sui dati per:",
+            "benefits_list": [
+                "<strong>Costruire Meglio:</strong> Evita di abbinare una GPU di fascia alta con una CPU debole.",
+                "<strong>Aggiornare con Fiducia:</strong> Sappi quale parte offre i maggiori guadagni.",
+                "<strong>Risparmiare Denaro:</strong> Non spendere troppo per componenti limitati."
+            ],
+            "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Pronto a controllare la tua build?</strong> Usa il calcolatore per assicurarti che il tuo PC sia perfettamente bilanciato per le prestazioni."
+        }
+    },
+    "fps_guide": {
+        "title": "Comprendere le Tue Prestazioni di Gioco: Il Calcolatore FPS",
+        "intro": "Nel mondo del PC gaming, i <strong>Frame Per Secondo (FPS)</strong> sono la misura definitiva delle prestazioni. Rappresentano quante immagini singole il tuo computer può visualizzare ogni secondo, traducendosi direttamente nella fluidità del tuo gameplay. Un FPS alto e stabile significa un'esperienza fluida e reattiva, mentre un FPS basso porta a scatti e lag.",
+        "why_estimate": {
+            "title": "Perché Stimare i Tuoi FPS?",
+            "content": "Conoscere le tue potenziali <strong>prestazioni di gioco</strong> prima di acquistare un nuovo gioco o aggiornare un componente è fondamentale. Ti permette di prendere decisioni informate, gestire le aspettative ed evitare la delusione di un acquisto che il tuo PC non può gestire."
+        },
+        "how_works": {
+            "title": "Come Funziona il Calcolatore FPS?",
+            "content": "Il nostro calcolatore utilizza un modello sofisticato basato su migliaia di benchmark reali. Considera tre fattori chiave:",
+            "list": [
+                "<strong>La Potenza della Tua CPU:</strong> Il processore gestisce la logica del gioco, la fisica e l'IA. In molti titoli eSports, la CPU è il motore principale di alti frame rate.",
+                "<strong>La Potenza della Tua GPU:</strong> La scheda grafica è responsabile del rendering delle immagini. Nei titoli AAA graficamente intensi, la GPU fa il lavoro più pesante.",
+                "<strong>La Tua Risoluzione Target:</strong> Giocare in 4K richiede alla GPU di renderizzare quattro volte più pixel rispetto al 1080p, il che ha un impatto enorme sugli FPS finali."
+            ]
+        },
+        "low_fps": {
+            "title": "FPS Bassi? I Tuoi Prossimi Passi per una Migliore Esperienza di Gioco",
+            "step1": {
+                "title": "Passo 1: Diagnostica il Problema Principale con il Nostro Calcolatore di Bottleneck",
+                "p1": "Prima di considerare un aggiornamento, devi sapere <em>perché</em> i tuoi FPS sono bassi. La tua potente GPU è frenata da una vecchia CPU? O la tua GPU semplicemente non è abbastanza forte per le impostazioni desiderate?",
+                "p2": "Il nostro <a href=\"/it\" class=\"text-primary hover:underline\">Calcolatore di Bottleneck PC</a> è lo strumento diagnostico perfetto. Analizza la sinergia tra la tua CPU e GPU per individuare l'anello debole esatto nel tuo sistema."
+            },
+            "step2": {
+                "title": "Passo 2: Assicurati di Avere Abbastanza Potenza per un Aggiornamento",
+                "p1": "Se stai pianificando un aggiornamento della GPU per aumentare i tuoi FPS, c'è un passaggio critico che non puoi ignorare: il tuo Alimentatore (PSU). Le moderne schede grafiche possono essere molto avide di energia.",
+                "p2": "Usa il nostro <a href=\"/it/psu-calculator\" class=\"text-primary hover:underline\">Calcolatore Wattaggio PSU</a> per assicurarti che il tuo alimentatore possa gestire qualsiasi nuovo hardware tu stia considerando."
+            }
+        }
+    }
+}

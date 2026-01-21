@@ -1,16 +1,27 @@
 import Link from 'next/link';
 import { Facebook, Instagram } from 'lucide-react';
+import { getLocalizedPath } from '@/lib/path-translations';
 
-export function Footer() {
+export function Footer({ dict, lang }: { dict: any; lang: string }) {
+  // Fallback to avoid crashes if dict is missing (during build or transition)
+  const t = dict || {
+    about: 'About Us',
+    privacy: 'Privacy Policy',
+    contact: 'Contact Us',
+    follow_fb: 'Follow us on Facebook',
+    follow_ig: 'Follow us on Instagram',
+    copyright: '© 2025 PC Build Check. All rights reserved.'
+  };
+
   const footerLinks = [
-    { href: '/about', label: 'About Us' },
-    { href: '/privacy', label: 'Privacy Policy' },
-    { href: '/contact', label: 'Contact Us' },
+    { href: getLocalizedPath(lang as any, 'about'), label: t.about },
+    { href: getLocalizedPath(lang as any, 'privacy'), label: t.privacy },
+    { href: getLocalizedPath(lang as any, 'contact'), label: t.contact },
   ];
 
   const socialLinks = [
-    { href: 'https://facebook.com', icon: Facebook, label: 'Follow us on Facebook' },
-    { href: 'https://instagram.com', icon: Instagram, label: 'Follow us on Instagram' },
+    { href: 'https://facebook.com', icon: Facebook, label: t.follow_fb },
+    { href: 'https://instagram.com', icon: Instagram, label: t.follow_ig },
   ];
 
   return (
@@ -26,7 +37,7 @@ export function Footer() {
           </Link>
         ))}
       </div>
-      
+
       <div className="flex justify-center gap-7 my-5">
         {socialLinks.map((social) => (
           <Link
@@ -42,7 +53,7 @@ export function Footer() {
         ))}
       </div>
 
-      <p>© 2025 PC Build Check. All rights reserved.</p>
+      <p>{t.copyright}</p>
     </footer>
   );
 }
