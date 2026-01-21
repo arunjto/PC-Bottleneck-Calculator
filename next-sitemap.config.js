@@ -3,6 +3,7 @@ module.exports = {
   siteUrl: 'https://www.pcbuildcheck.com',
   generateRobotsTxt: true,
   sitemapSize: 5000,
+  exclude: ['*/thank-you'],
 
   robotsTxtOptions: {
     policies: [
