@@ -1,11 +1,24 @@
 "use client";
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic'; // Dynamic import
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
-import { ComprehensiveBottleneckResults } from './comprehensive-bottleneck-results';
 import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-database';
 import { Cpu, Zap, HardDrive, Monitor, Calculator } from 'lucide-react';
+
+// Dynamically load the heavy results component
+const ComprehensiveBottleneckResults = dynamic(
+  () => import('./comprehensive-bottleneck-results').then(mod => mod.ComprehensiveBottleneckResults),
+  {
+    loading: () => (
+      <div className="w-full h-96 flex items-center justify-center bg-gray-50 dark:bg-gray-800 rounded-lg animate-pulse">
+        <p className="text-gray-500">Calculating performance metrics...</p>
+      </div>
+    ),
+    ssr: false // Results are client-side only anyway
+  }
+);
 
 const ramOptions = [
   { id: '8gb-ddr4-2400', name: '8GB DDR4-2400', tier: 'Entry-Level', specs: '8GB, 2400MHz, DDR4', price: 35 },

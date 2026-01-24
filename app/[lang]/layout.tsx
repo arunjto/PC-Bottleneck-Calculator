@@ -2,13 +2,14 @@
 import '@/app/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script'; // Import Script
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { QuickToolsBar } from '@/components/layout/quick-tools-bar';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], display: 'swap' }); // Add display swap
 
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
   const locale = params.lang === 'it' ? 'it_IT' : 'en_US';
@@ -70,15 +71,7 @@ export default async function RootLayout({
   return (
     <html lang={params.lang} suppressHydrationWarning>
       <head>
-        {/* ✅ AdSense: must be a real <script> in <head> so crawlers see it in View Source */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9111916848868133"
-          crossOrigin="anonymous"
-        ></script>
-
-        {/* (Optional) AdSense meta verification also helps */}
-        {/* <meta name="google-adsense-account" content="ca-pub-9111916848868133" /> */}
+        {/* AdSense optimized with Next.js Script */}
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -107,6 +100,14 @@ export default async function RootLayout({
             </div>
           </TooltipProvider>
         </ThemeProvider>
+
+        {/* AdSense Script moved to body/afterInteractive */}
+        <Script
+          id="adsbygoogle-init"
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9111916848868133"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );
