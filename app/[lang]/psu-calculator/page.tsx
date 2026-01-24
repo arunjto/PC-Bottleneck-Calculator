@@ -1,10 +1,26 @@
 import { Metadata } from 'next';
-import { EnhancedPSUCalculator } from '@/components/calculators/enhanced-psu-calculator'
+import dynamic from 'next/dynamic';
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { PsuContent } from '@/components/content/psu-guide-content';
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
+
+// Dynamically import EnhancedPSUCalculator
+const EnhancedPSUCalculator = dynamic(
+  () => import('@/components/calculators/enhanced-psu-calculator'),
+  {
+    loading: () => (
+      <div className="w-full max-w-4xl mx-auto h-[500px] bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 animate-pulse flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto" />
+          <div className="h-4 w-48 bg-slate-200 dark:bg-slate-800 rounded mx-auto" />
+        </div>
+      </div>
+    ),
+    ssr: false // Client-side interactive component
+  }
+);
 
 type Props = {
   params: { lang: Locale };

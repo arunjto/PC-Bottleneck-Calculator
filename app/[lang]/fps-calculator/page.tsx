@@ -1,8 +1,29 @@
 import { Metadata } from "next";
-import FpsCalculatorClient from "./FpsCalculatorClient";
+import dynamic from "next/dynamic";
 import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { constructMetadataAlternates } from "@/lib/seo";
+
+// Dynamically import FpsCalculatorClient
+const FpsCalculatorClient = dynamic(
+  () => import("./FpsCalculatorClient"),
+  {
+    loading: () => (
+      <div className="py-8 px-4">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <div className="text-center space-y-4">
+            <div className="h-12 w-3/4 bg-slate-200 dark:bg-slate-800 rounded mx-auto animate-pulse" />
+            <div className="h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded mx-auto animate-pulse" />
+          </div>
+          <div className="h-[600px] w-full bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 animate-pulse flex items-center justify-center">
+            <div className="text-gray-400">Loading Calculator...</div>
+          </div>
+        </div>
+      </div>
+    ),
+    ssr: false
+  }
+);
 
 export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }) {
   const dict = await getDictionary(lang);
@@ -22,7 +43,7 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
       title: `${dict.fps.title} | PCBuildCheck`,
       description: dict.fps.subtitle,
       url: `https://www.pcbuildcheck.com/${lang}/fps-calculator`,
-      images: ['https://www.pcbuildcheck.com/og-image-fps.png'], // Ensure you have this image or use default
+      images: ['https://www.pcbuildcheck.com/og-image-fps.png'],
       type: 'website',
     },
   };
