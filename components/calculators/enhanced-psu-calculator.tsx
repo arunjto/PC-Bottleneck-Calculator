@@ -402,3 +402,5 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
     </Card>
   );
 }
+
+export default EnhancedPSUCalculator;
