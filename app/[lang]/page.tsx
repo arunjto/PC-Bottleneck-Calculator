@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { EnhancedBottleneckCalculator } from '@/components/calculators/enhanced-bottleneck-calculator';
+import dynamic from 'next/dynamic';
 import { UpdateBanner } from '@/components/ui/update-banner';
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { ContentGuide } from '@/components/content/content-guide';
@@ -8,6 +8,22 @@ import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
+
+// Dynamically import EnhancedBottleneckCalculator
+const EnhancedBottleneckCalculator = dynamic(
+  () => import('@/components/calculators/enhanced-bottleneck-calculator'),
+  {
+    loading: () => (
+      <div className="w-full max-w-4xl mx-auto h-[600px] bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 animate-pulse flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto" />
+          <div className="h-4 w-48 bg-slate-200 dark:bg-slate-800 rounded mx-auto" />
+        </div>
+      </div>
+    ),
+    ssr: false
+  }
+);
 
 export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }) {
   const dict = await getDictionary(lang);

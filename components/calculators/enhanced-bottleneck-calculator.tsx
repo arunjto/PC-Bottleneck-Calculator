@@ -194,3 +194,5 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
     </Card>
   );
 }
+
+export default EnhancedBottleneckCalculator;
