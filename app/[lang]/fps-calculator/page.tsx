@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { constructMetadataAlternates } from "@/lib/seo";
+import { FpsGuideContent } from "@/components/content/fps-guide-content";
+import { FAQSection } from "@/components/faq/faq-section";
 
 // Dynamically import FpsCalculatorClient
 const FpsCalculatorClient = dynamic(
@@ -92,6 +94,12 @@ export default async function FpsCalculatorPage({ params: { lang } }: { params: 
         dangerouslySetInnerHTML={{ __html: JSON.stringify([schemaData, breadcrumbSchema]) }}
       />
       <FpsCalculatorClient dict={dict} lang={lang} />
+      <div className="max-w-7xl mx-auto py-8 px-4">
+        <FpsGuideContent dict={dict} />
+      </div>
+      <div className="max-w-4xl mx-auto px-4 pb-12">
+        <FAQSection title={dict.fps.faq_title} items={dict.fps.faqs} />
+      </div>
     </>
   );
 }
