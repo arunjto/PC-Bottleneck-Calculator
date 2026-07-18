@@ -38,6 +38,26 @@ const resolutionOptions = [
   { id: '4K', name: '3840×2160 (4K)', tier: 'Premium', specs: 'Ultra HD, 60-120Hz', price: 0 }
 ];
 
+// These options are static. Preparing them once avoids rebuilding the arrays
+// every time a selection changes and the calculator re-renders.
+const cpuOptions = allCPUs.map(cpu => ({
+  id: cpu.id,
+  name: cpu.name,
+  tier: cpu.tier,
+  benchmarkScore: cpu.benchmarkScore,
+  specs: `${cpu.cores}C/${cpu.threads}T, ${cpu.boostClock}GHz, ${cpu.tdp}W`,
+  price: cpu.currentPrice
+}));
+
+const gpuOptions = allGPUs.map(gpu => ({
+  id: gpu.id,
+  name: gpu.name,
+  tier: gpu.tier,
+  benchmarkScore: gpu.benchmarkScore,
+  specs: `${gpu.vram}GB VRAM, ${gpu.boostClock}MHz, ${gpu.tdp}W`,
+  price: gpu.currentPrice
+}));
+
 export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
   const [selectedCPU, setSelectedCPU] = useState('');
   const [selectedGPU, setSelectedGPU] = useState('');
@@ -45,25 +65,11 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
   const [selectedResolution, setSelectedResolution] = useState('');
   const [showResults, setShowResults] = useState(false);
 
-  // Transform CPU data for the select component
-  const cpuOptions = allCPUs.map(cpu => ({
-    id: cpu.id,
-    name: cpu.name,
-    tier: cpu.tier,
-    benchmarkScore: cpu.benchmarkScore,
-    specs: `${cpu.cores}C/${cpu.threads}T, ${cpu.boostClock}GHz, ${cpu.tdp}W`,
-    price: cpu.currentPrice
-  }));
-
-  // Transform GPU data for the select component
-  const gpuOptions = allGPUs.map(gpu => ({
-    id: gpu.id,
-    name: gpu.name,
-    tier: gpu.tier,
-    benchmarkScore: gpu.benchmarkScore,
-    specs: `${gpu.vram}GB VRAM, ${gpu.boostClock}MHz, ${gpu.tdp}W`,
-    price: gpu.currentPrice
-  }));
+  // Stable IDs for label/input association
+  const cpuId = 'calc-cpu-select';
+  const gpuId = 'calc-gpu-select';
+  const ramId = 'calc-ram-select';
+  const resolutionId = 'calc-resolution-select';
 
   const handleAnalyze = () => {
     if (selectedCPU && selectedGPU && selectedRAM && selectedResolution) {
@@ -80,14 +86,17 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
 
     if (cpu && gpu && ram) {
       return (
-        <ComprehensiveBottleneckResults
-          cpu={cpu}
-          gpu={gpu}
-          ram={ram}
-          resolution={selectedResolution}
-          onBack={() => setShowResults(false)}
-          dict={dict}
-        />
+        // aria-live="polite" announces to screen readers that results are now available
+        <div aria-live="polite" aria-atomic="true">
+          <ComprehensiveBottleneckResults
+            cpu={cpu}
+            gpu={gpu}
+            ram={ram}
+            resolution={selectedResolution}
+            onBack={() => setShowResults(false)}
+            dict={dict}
+          />
+        </div>
       );
     }
   }
@@ -96,7 +105,7 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="flex items-center justify-center space-x-2 text-2xl">
-          <Calculator className="w-8 h-8 text-blue-600" />
+          <Calculator className="w-8 h-8 text-blue-600" aria-hidden="true" />
           <span>{dict.calculator.title}</span>
         </CardTitle>
         <p className="text-gray-600 dark:text-gray-400">
@@ -106,11 +115,12 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              <Cpu className="w-4 h-4" />
+            <label htmlFor={cpuId} className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <Cpu className="w-4 h-4" aria-hidden="true" />
               <span>{dict.calculator.labels.cpu}</span>
             </label>
             <EnhancedSearchableSelect
+              id={cpuId}
               options={cpuOptions}
               value={selectedCPU}
               onValueChange={setSelectedCPU}
@@ -120,11 +130,12 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              <Zap className="w-4 h-4" />
+            <label htmlFor={gpuId} className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <Zap className="w-4 h-4" aria-hidden="true" />
               <span>{dict.calculator.labels.gpu}</span>
             </label>
             <EnhancedSearchableSelect
+              id={gpuId}
               options={gpuOptions}
               value={selectedGPU}
               onValueChange={setSelectedGPU}
@@ -134,11 +145,12 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              <HardDrive className="w-4 h-4" />
+            <label htmlFor={ramId} className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <HardDrive className="w-4 h-4" aria-hidden="true" />
               <span>{dict.calculator.labels.ram}</span>
             </label>
             <EnhancedSearchableSelect
+              id={ramId}
               options={ramOptions}
               value={selectedRAM}
               onValueChange={setSelectedRAM}
@@ -148,11 +160,12 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              <Monitor className="w-4 h-4" />
+            <label htmlFor={resolutionId} className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <Monitor className="w-4 h-4" aria-hidden="true" />
               <span>{dict.calculator.labels.resolution}</span>
             </label>
             <EnhancedSearchableSelect
+              id={resolutionId}
               options={resolutionOptions}
               value={selectedResolution}
               onValueChange={setSelectedResolution}

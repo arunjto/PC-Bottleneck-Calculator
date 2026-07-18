@@ -19,8 +19,10 @@ import {
   getCPUById,
   getGPUById,
   getGameById,
-  estimateFPS,
 } from "@/lib/hardware-database";
+import { estimateFPS } from '@/lib/fps-model';
+import type { Locale } from "@/i18n-config";
+import { getLocalizedPath } from "@/lib/path-translations";
 
 interface CompareProps {
   currentCPU: string;
@@ -28,6 +30,7 @@ interface CompareProps {
   currentGame: string;
   currentResolution: string;
   dict: any;
+  lang: string;
 }
 
 export default function FPSCompareAndShare({
@@ -35,7 +38,8 @@ export default function FPSCompareAndShare({
   currentGPU,
   currentGame,
   currentResolution,
-  dict
+  dict,
+  lang,
 }: CompareProps) {
   const [selectedCPU, setSelectedCPU] = useState("");
   const [selectedGPU, setSelectedGPU] = useState("");
@@ -145,7 +149,8 @@ export default function FPSCompareAndShare({
   };
 
   const share = (platform: string) => {
-    const url = encodeURIComponent("https://www.pcbuildcheck.com/fps-calculator");
+    const shareUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang as Locale, 'fps-calculator')}`;
+    const url = encodeURIComponent(shareUrl);
     const text = encodeURIComponent(t.share.text);
 
     switch (platform) {
@@ -159,7 +164,7 @@ export default function FPSCompareAndShare({
         toast.info(t.share.toast_insta);
         break;
       case "copy":
-        navigator.clipboard.writeText("https://www.pcbuildcheck.com/fps-calculator");
+        navigator.clipboard.writeText(shareUrl);
         toast.success(t.share.toast_copy);
         break;
     }
@@ -191,6 +196,7 @@ export default function FPSCompareAndShare({
             <div>
               <h3 className="font-semibold mb-2">{t.compare_with}</h3>
               <EnhancedSearchableSelect
+                id="fps-comparison-cpu-select"
                 options={cpuOptions}
                 value={selectedCPU}
                 onValueChange={setSelectedCPU}
@@ -198,6 +204,7 @@ export default function FPSCompareAndShare({
                 type="cpu"
               />
               <EnhancedSearchableSelect
+                id="fps-comparison-gpu-select"
                 options={gpuOptions}
                 value={selectedGPU}
                 onValueChange={setSelectedGPU}

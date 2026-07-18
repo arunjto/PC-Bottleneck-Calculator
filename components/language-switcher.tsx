@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,49 +9,45 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { i18n } from '@/i18n-config';
-import { Globe } from 'lucide-react';
-
+import { i18n, Locale } from '@/i18n-config';
 import { getCanonicalPath, getLocalizedPath } from '@/lib/path-translations';
-import { Locale } from '@/i18n-config';
+import { getSiteChromeCopy } from '@/lib/site-i18n';
+
+const languageOptions: Record<Locale, { label: string; flag: string }> = {
+    en: { label: 'English', flag: '/flags/en.svg' },
+    it: { label: 'Italiano', flag: '/flags/it.svg' },
+    fr: { label: 'Français', flag: '/flags/fr.svg' },
+    de: { label: 'Deutsch', flag: '/flags/de.svg' },
+    es: { label: 'Español', flag: '/flags/es.svg' },
+};
 
 export function LanguageSwitcher() {
     const pathname = usePathname();
     const router = useRouter();
 
-    const currentLocale = pathname?.split('/')[1] || i18n.defaultLocale;
+    const currentLocale = (pathname?.split('/')[1] || i18n.defaultLocale) as Locale;
+    const currentLanguage = languageOptions[currentLocale] ?? languageOptions[i18n.defaultLocale];
+    const copy = getSiteChromeCopy(currentLocale);
 
     const redirectToLocale = (newLocale: string) => {
         if (!pathname) return '/';
 
-        // Remove locale from path to get the rest
-        // e.g. /it/chi-siamo -> /chi-siamo
+        // Remove locale from path to get the rest, e.g. /it/chi-siamo -> /chi-siamo.
         const segments = pathname.split('/');
-        // segments[0] is empty, segments[1] is locale
         const pathAfterLocale = segments.slice(2).join('/');
 
-        // Find canonical path for current page
-        // e.g. /chi-siamo -> 'about'
-        // If pathAfterLocale is empty, we are at home.
         if (!pathAfterLocale) {
             router.push(`/${newLocale}`);
             return;
         }
 
-        const canonicalPath = getCanonicalPath(currentLocale as Locale, pathAfterLocale);
+        const canonicalPath = getCanonicalPath(currentLocale, pathAfterLocale);
 
-        // If we found a canonical path (e.g. 'about'), translate it to new locale
         if (canonicalPath) {
             const newPath = getLocalizedPath(newLocale as Locale, canonicalPath);
             router.push(newPath);
             return;
         }
-
-        // Fallback: mostly for non-localized paths or if something fails, just try strictly swapping locale.
-        // But since we have strict redirects, this might 404 if not careful.
-        // However, if getCanonicalPath returns null, it might mean the path is NOT localized in the current locale
-        // (e.g. it was just /en/about which matches canonical directly).
-        // Let's try to assume current path IS canonical if lookup failed.
 
         const targetPath = getLocalizedPath(newLocale as Locale, pathAfterLocale);
         router.push(targetPath);
@@ -59,9 +56,21 @@ export function LanguageSwitcher() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-slate-700/50">
-                    <Globe className="h-5 w-5" />
-                    <span className="sr-only">Switch Language</span>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-slate-700/50"
+                    aria-label={`${copy.switchLanguage}: ${currentLanguage.label}`}
+                >
+                    <Image
+                        src={currentLanguage.flag}
+                        alt=""
+                        width={24}
+                        height={16}
+                        className="h-4 w-6 rounded-[2px] border border-white/30 object-cover shadow-sm"
+                        aria-hidden="true"
+                    />
+                    <span className="sr-only">{copy.switchLanguage}</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -69,9 +78,17 @@ export function LanguageSwitcher() {
                     <DropdownMenuItem
                         key={locale}
                         onClick={() => redirectToLocale(locale)}
-                        className={locale === currentLocale ? 'font-bold' : ''}
+                        className={`gap-3 ${locale === currentLocale ? 'font-bold' : ''}`}
                     >
-                        {locale === 'en' ? 'English' : locale === 'it' ? 'Italiano' : locale === 'fr' ? 'Français' : locale === 'de' ? 'Deutsch' : 'Español'}
+                        <Image
+                            src={languageOptions[locale].flag}
+                            alt=""
+                            width={24}
+                            height={16}
+                            className="h-4 w-6 rounded-[2px] border border-border object-cover shadow-sm"
+                            aria-hidden="true"
+                        />
+                        <span>{languageOptions[locale].label}</span>
                     </DropdownMenuItem>
                 ))}
             </DropdownMenuContent>

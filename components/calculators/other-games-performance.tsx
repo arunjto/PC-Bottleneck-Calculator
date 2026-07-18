@@ -5,9 +5,9 @@ import {
   getCPUById,
   getGPUById,
   getGameById,
-  estimateFPS,
   allGames,
 } from '@/lib/hardware-database';
+import { estimateFPS } from '@/lib/fps-model';
 import { MonitorPlay } from 'lucide-react';
 import type { Game } from '@/lib/hardware-database';
 

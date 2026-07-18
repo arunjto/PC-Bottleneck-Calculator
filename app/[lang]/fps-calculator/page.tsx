@@ -1,36 +1,21 @@
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
+import FpsCalculatorClient from "./FpsCalculatorClient";
 import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { constructMetadataAlternates } from "@/lib/seo";
 import { FpsGuideContent } from "@/components/content/fps-guide-content";
 import { FAQSection } from "@/components/faq/faq-section";
+import { JsonLd } from "@/components/seo/json-ld";
+import { getLocalizedPath } from "@/lib/path-translations";
+import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from "@/lib/structured-data";
 
-// Dynamically import FpsCalculatorClient
-const FpsCalculatorClient = dynamic(
-  () => import("./FpsCalculatorClient"),
-  {
-    loading: () => (
-      <div className="py-8 px-4">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="text-center space-y-4">
-            <div className="h-12 w-3/4 bg-slate-200 dark:bg-slate-800 rounded mx-auto animate-pulse" />
-            <div className="h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded mx-auto animate-pulse" />
-          </div>
-          <div className="h-[600px] w-full bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 animate-pulse flex items-center justify-center">
-            <div className="text-gray-400">Loading Calculator...</div>
-          </div>
-        </div>
-      </div>
-    ),
-    ssr: false
-  }
-);
-
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }) {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const title = dict.fps.title;
+  const pageUrl = constructMetadataAlternates(lang, '/fps-calculator').canonical;
   return {
-    title: `${dict.fps.title} | PCBuildCheck`,
+    title,
     description: dict.fps.subtitle,
     keywords: [
       "FPS calculator",
@@ -42,63 +27,62 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
     ],
     alternates: constructMetadataAlternates(lang, '/fps-calculator'),
     openGraph: {
-      title: `${dict.fps.title} | PCBuildCheck`,
+      title,
       description: dict.fps.subtitle,
-      url: `https://www.pcbuildcheck.com/${lang}/fps-calculator`,
+      url: pageUrl,
       images: ['https://www.pcbuildcheck.com/og-image-fps.png'],
       type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: dict.fps.subtitle,
+      images: ['https://www.pcbuildcheck.com/og-image-fps.png'],
     },
   };
 }
 
-export default async function FpsCalculatorPage({ params: { lang } }: { params: { lang: Locale } }) {
+export default async function FpsCalculatorPage({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
 
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "FPS Calculator",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": dict.fps.subtitle
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": `https://www.pcbuildcheck.com/${lang}`
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "FPS Calculator",
-        "item": `https://www.pcbuildcheck.com/${lang}/fps-calculator`
-      }
-    ]
-  };
+  const pageUrl = `${SITE_URL}${getLocalizedPath(lang, '/fps-calculator')}`;
+  const schemaData = createSchemaGraph([
+    createWebPageSchema({
+      pageUrl,
+      name: dict.fps.title,
+      description: dict.fps.subtitle,
+      lang,
+      image: `${SITE_URL}/og-image-fps.png`,
+      mainEntityId: `${pageUrl}#application`,
+      hasPartId: `${pageUrl}#faq`,
+    }),
+    createWebApplicationSchema({ pageUrl, name: dict.fps.title, description: dict.fps.subtitle, lang }),
+    createBreadcrumbSchema(pageUrl, [
+      { name: 'Home', url: `${SITE_URL}/${lang}` },
+      { name: dict.fps.title, url: pageUrl },
+    ]),
+    createFaqSchema(pageUrl, dict.fps.faqs),
+  ]);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify([schemaData, breadcrumbSchema]) }}
-      />
-      <FpsCalculatorClient dict={dict} lang={lang} />
-      <div className="max-w-7xl mx-auto py-8 px-4">
-        <FpsGuideContent dict={dict} />
+      <JsonLd data={schemaData} />
+      <div className="overflow-x-clip py-8 px-4">
+        <header className="mx-auto mb-8 max-w-4xl space-y-3 text-center">
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{dict.fps.title}</h1>
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{dict.fps.subtitle}</p>
+        </header>
+        <FpsCalculatorClient dict={dict} lang={lang} />
       </div>
-      <div className="max-w-4xl mx-auto px-4 pb-12">
-        <FAQSection title={dict.fps.faq_title} items={dict.fps.faqs} />
+      {/* Below-the-fold content: deferred rendering on mobile */}
+      <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 900px' }}>
+        <div className="max-w-7xl mx-auto py-8 px-4">
+          <FpsGuideContent dict={dict} />
+        </div>
+        <div className="max-w-4xl mx-auto px-4 pb-12">
+          <FAQSection title={dict.fps.faq_title} items={dict.fps.faqs} />
+        </div>
       </div>
     </>
   );

@@ -64,6 +64,11 @@ export function middleware(request: NextRequest) {
         const locale = match[1] as Locale;
         const pathSegment = match[2] || '';
 
+        // Skip path translation for blog routes — blog uses its own routing
+        if (pathSegment.startsWith('blog')) {
+          return NextResponse.next();
+        }
+
         // Case A: User visits a localized path (e.g., /it/chi-siamo)
         // We need to rewrite it to the internal path (e.g., /it/about) so Next.js can find the file.
         const canonicalPath = getCanonicalPath(locale, pathSegment);
@@ -109,7 +114,7 @@ export function middleware(request: NextRequest) {
         if (targetPath !== pathname && targetPath !== `/${locale}/${pathSegment}`) {
             // If function returned a mapped path that is different from current,
             // it implies current pathSegment IS a canonical key that should be translated.
-            return NextResponse.redirect(new URL(targetPath, request.url));
+            return NextResponse.redirect(new URL(targetPath, request.url), 308);
         }
     }
 

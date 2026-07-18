@@ -15,7 +15,7 @@
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted-foreground: 0 0% 38%;  /* ≥4.5:1 contrast on white — WCAG AA */
     --accent: 45 100% 50%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
@@ -44,7 +44,7 @@
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted-foreground: 0 0% 68%;  /* ≥4.5:1 contrast on near-black bg */
     --accent: 45 100% 50%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 62.8% 30.6%;
@@ -95,9 +95,16 @@
   background: hsl(var(--muted-foreground));
 }
 
-/* Smooth transitions for theme changes */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+/* Smooth transitions for theme changes — scoped to interactive elements only */
+/* Avoid global * { transition } as it blocks rendering for every element (major LCP/TBT killer) */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+.transition-theme {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Focus styles */
@@ -120,4 +127,51 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ============================================
+   Blog / MDX Article Styles
+   ============================================ */
+
+/* Prose overrides for blog articles */
+.blog-prose {
+  @apply prose prose-slate dark:prose-invert max-w-none;
+  @apply prose-headings:font-bold prose-headings:tracking-tight;
+  @apply prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline;
+  @apply prose-img:rounded-xl prose-img:shadow-md;
+  @apply prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50/50 dark:prose-blockquote:bg-blue-950/30 prose-blockquote:rounded-r-lg prose-blockquote:py-1 prose-blockquote:px-4;
+  @apply prose-code:before:content-none prose-code:after:content-none;
+  @apply prose-pre:rounded-xl prose-pre:shadow-lg;
+  @apply prose-table:overflow-hidden prose-table:rounded-lg;
+  @apply prose-th:bg-slate-100 dark:prose-th:bg-slate-800;
+}
+
+/* Inline code (not in pre blocks) */
+.blog-prose :not(pre) > code {
+  @apply bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+/* Syntax highlighting overrides */
+.blog-prose pre {
+  @apply !bg-[#282c34] border border-slate-700/50;
+}
+
+.blog-prose pre > code {
+  @apply text-sm;
+}
+
+/* Heading anchors from rehype-autolink-headings */
+.blog-prose h2,
+.blog-prose h3,
+.blog-prose h4 {
+  scroll-margin-top: 5rem;
+}
+
+/* Reading progress bar */
+.reading-progress-bar {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--accent)) 100%
+  );
 }

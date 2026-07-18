@@ -26,7 +26,8 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react';
-import { CPU, GPU, calculateBottleneckPercentage, getBottleneckType, estimateFPS, calculatePSURequirement, allGames } from '@/lib/hardware-database';
+import { CPU, GPU, calculateRelativeScoreGap, getBottleneckType, calculatePSURequirement, allGames } from '@/lib/hardware-database';
+import { estimateFPS } from '@/lib/fps-model';
 
 interface ComprehensiveBottleneckResultsProps {
   cpu: CPU & { officialUrl?: string };
@@ -86,11 +87,12 @@ export function ComprehensiveBottleneckResults({
   };
   const mkt = results.market || {
     current_price: '', view_specs: '', official_page: '', launch_price: '',
-    cpu_price: '', gpu_price: '', combined: '', view_specs_fallback: 'View Specs'
+    cpu_price: '', gpu_price: '', combined: '', view_specs_fallback: 'View Specs',
+    price_disclaimer: 'Prices are approximate USD reference values and may vary by retailer, region, condition, and availability.'
   };
 
 
-  const bottleneckPercentage = calculateBottleneckPercentage(cpu, gpu);
+  const relativeScoreGap = calculateRelativeScoreGap(cpu, gpu);
   const bottleneckType = getBottleneckType(cpu, gpu);
   const psuRequirement = calculatePSURequirement(cpu, gpu);
 
@@ -218,7 +220,7 @@ export function ComprehensiveBottleneckResults({
               <span>{results.back_button}</span>
             </Button>
             <div className="text-center">
-              <h1 className="text-2xl font-bold">{results.title}</h1>
+              <h2 className="text-2xl font-bold">{results.title}</h2>
               <p className="text-gray-600 dark:text-gray-400">{results.subtitle}</p>
             </div>
             <div className="w-32" /> {/* Spacer for centering */}
@@ -254,13 +256,13 @@ export function ComprehensiveBottleneckResults({
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm">{labels.cpu_perf}</span>
-                    <span className="font-medium">{impact.cpuScore}%</span>
+                    <span className="font-medium">{impact.cpuScore}</span>
                   </div>
                   <Progress value={impact.cpuScore} className="h-2" />
 
                   <div className="flex justify-between items-center">
                     <span className="text-sm">{labels.gpu_perf}</span>
-                    <span className="font-medium">{impact.gpuScore}%</span>
+                    <span className="font-medium">{impact.gpuScore}</span>
                   </div>
                   <Progress value={impact.gpuScore} className="h-2" />
 
@@ -335,7 +337,7 @@ export function ComprehensiveBottleneckResults({
                 <>
                   <AlertTriangle className="w-5 h-5 text-yellow-600" />
                   <span className="text-yellow-600 font-medium">
-                    {bottleneckPercentage}% {bottleneckType} {ratings.bottleneck_warning}
+                    {relativeScoreGap}% {bottleneckType} {ratings.bottleneck_warning}
                   </span>
                 </>
               )}
@@ -384,7 +386,7 @@ export function ComprehensiveBottleneckResults({
                       <span className="font-medium text-red-900 dark:text-red-100">{upg.cpu_title}</span>
                     </div>
                     <p className="text-sm text-red-800 dark:text-red-200">
-                      {upg.cpu_desc?.replace('{val}', bottleneckPercentage.toString())}
+                      {upg.cpu_desc?.replace('{val}', relativeScoreGap.toString())}
                     </p>
                   </div>
                 )}
@@ -396,7 +398,7 @@ export function ComprehensiveBottleneckResults({
                       <span className="font-medium text-red-900 dark:text-red-100">{upg.gpu_title}</span>
                     </div>
                     <p className="text-sm text-red-800 dark:text-red-200">
-                      {upg.gpu_desc?.replace('{val}', bottleneckPercentage.toString())}
+                      {upg.gpu_desc?.replace('{val}', relativeScoreGap.toString())}
                     </p>
                   </div>
                 )}
@@ -491,7 +493,7 @@ export function ComprehensiveBottleneckResults({
           <div className="space-y-6">
             <div className="text-center">
               <div className="text-3xl font-bold mb-2">
-                {bottleneckPercentage}% {bottleneckType} {ratings.bottleneck_warning}
+                {relativeScoreGap}% {bottleneckType} {ratings.bottleneck_warning}
               </div>
               <p className="text-gray-600 dark:text-gray-400">
                 {bottleneckType === 'Balanced'
@@ -536,7 +538,7 @@ export function ComprehensiveBottleneckResults({
                   ? bot.balanced_desc
                   : bot.bottleneck_desc
                     ?.replace('{type}', bottleneckType)
-                    .replace('{val}', bottleneckPercentage.toString())
+                    .replace('{val}', relativeScoreGap.toString())
                     .replace('{scenario}', bottleneckType === 'CPU' ? bot.cpu_scenario : bot.gpu_scenario)
                 }
               </p>
@@ -624,7 +626,7 @@ export function ComprehensiveBottleneckResults({
                   <ul className="space-y-1 text-gray-600 dark:text-gray-400">
                     <li>• Close background applications</li>
                     <li>• Enable Game Mode in Windows</li>
-                    <li>• Consider overclocking if cooling allows</li>
+                    <li>• Review CPU-heavy settings and background tasks</li>
                   </ul>
                 </div>
               </div>
@@ -804,6 +806,10 @@ export function ComprehensiveBottleneckResults({
                 <div className="text-gray-600 dark:text-gray-400">RAM</div>
               </div>
             </div>
+
+            <p className="mt-4 border-t border-amber-200 pt-3 text-xs leading-5 text-amber-800 dark:border-amber-800 dark:text-amber-200">
+              {mkt.price_disclaimer || 'Prices are approximate USD reference values and may vary by retailer, region, condition, and availability.'}
+            </p>
           </div>
 
           <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -816,7 +822,7 @@ export function ComprehensiveBottleneckResults({
               <span className="font-bold">{psuRequirement}W</span>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Includes 20% safety margin for stable operation
+              {labels.psu_estimate_note}
             </p>
           </div>
         </CardContent>
@@ -833,12 +839,12 @@ export function ComprehensiveBottleneckResults({
         <CardContent>
           <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
             <h3 className="font-bold text-lg mb-2 text-green-900 dark:text-green-100">
-              System Verdict: {bottleneckType === 'Balanced' ? 'Excellent Build' : 'Upgrade Recommended'}
+              System Verdict: {bottleneckType === 'Balanced' ? 'Similar normalized scores' : 'Review workload benchmarks'}
             </h3>
             <p className="text-green-800 dark:text-green-200 mb-4">
               {bottleneckType === 'Balanced'
-                ? 'Your system is well balanced and ready for modern gaming. You can expect smooth performance in most games with high settings.'
-                : `Your system has a significant ${bottleneckType} bottleneck that is holding back performance. Consider upgrading your ${bottleneckType} to unlock the full potential of your build.`
+                ? 'The CPU and GPU normalized comparison scores are close. Real results still vary by game, settings, drivers, cooling, and the rest of the system.'
+                : `The ${bottleneckType} has the lower normalized comparison score. This does not measure lost FPS or prove that an upgrade is needed; verify with benchmarks for your games and settings.`
               }
             </p>
             <div className="grid grid-cols-3 gap-4 text-center">

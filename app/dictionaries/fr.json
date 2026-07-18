@@ -9,7 +9,11 @@
         "home": "Accueil",
         "fps_calculator": "Calculateur FPS",
         "psu_calculator": "Calculateur PSU",
-        "blog": "Blog"
+        "blog": "Blog",
+        "author": "Auteur",
+        "about": "À propos",
+        "contact": "Contactez-nous",
+        "privacy": "Politique de confidentialité"
     },
     "home": {
         "hero_title": "Calculateur de Goulot d'Étranglement PC – Optimisez Votre Performance",
@@ -28,11 +32,11 @@
             },
             {
                 "q": "Est-ce qu'un goulot d'étranglement CPU ou GPU est pire ?",
-                "a": "Pour le jeu, un léger <strong>goulot d'étranglement GPU</strong> est généralement acceptable car cela signifie que votre carte graphique travaille à fond. Un fort <strong>goulot d'étranglement CPU</strong> est pire, car il provoque souvent des saccades et des fréquences d'images incohérentes."
+                "a": "Aucun n'est intrinsèquement pire. Le composant limitant change selon jeu, scène, résolution et réglages. Comparez FPS, frame times, charge par cœur, GPU, températures et limites avant de conclure."
             },
             {
                 "q": "Quelle est la précision du calculateur de goulot d'étranglement ?",
-                "a": "Notre <strong>Calculateur de Goulot d'Étranglement PC</strong> utilise des estimations basées sur des données pour fournir une analyse très fiable. Cependant, les résultats réels peuvent varier en fonction des jeux, des applications et des mises à jour des pilotes."
+                "a": "Notre <strong>Calculateur de Goulot d'Étranglement PC</strong> fournit une comparaison indicative à partir de scores normalisés. Ce n'est pas un benchmark mesuré et les résultats varient selon le jeu, les réglages, les pilotes, le refroidissement et le reste du système."
             },
             {
                 "q": "La RAM ou le stockage causent-ils aussi des goulots d'étranglement ?",
@@ -40,7 +44,7 @@
             },
             {
                 "q": "Le CPU et le GPU devraient-ils tourner à 100% ?",
-                "a": "Idéalement, votre <strong>GPU</strong> devrait être proche de l'utilisation maximale pour le jeu. L'utilisation du CPU variera, et il n'est pas toujours idéal qu'il atteigne 100%. Si le CPU est au maximum mais que le GPU est sous-utilisé, c'est un goulot d'étranglement CPU clair."
+                "a": "Il n'existe pas d'utilisation idéale universelle. Une forte charge GPU peut être normale, tandis que l'utilisation CPU globale peut masquer un cœur saturé. Utilisez-la comme indice avec frame times, limites, températures et tests répétés."
             }
         ],
         "update_banner": {
@@ -74,32 +78,32 @@
     },
     "about": {
         "title": "À Propos de Nous",
-        "intro_p1": "Bienvenue sur <strong>PCBuildCheck.com</strong> — votre centre de confiance pour des informations précises et basées sur des données sur les performances PC. Nous sommes une équipe de constructeurs de PC, de joueurs et de développeurs avec une seule mission : <em>rendre les décisions matérielles complexes simples, explicables et fiables.</em>",
-        "intro_p2": "Que vous planifiiez votre prochaine configuration de jeu, une station de travail de montage ou un assemblage économique, nos outils vous aident à <strong>comprendre</strong> la performance — pas seulement à l'estimer — afin que vous puissiez acheter et mettre à niveau en toute confiance.",
+        "intro_p1": "<strong>PCBuildCheck.com</strong> est un projet indépendant maintenu par Arun Kumar Yadav. Il vise à faciliter la comparaison et la compréhension des spécifications publiées et des estimations de planification.",
+        "intro_p2": "Pour un PC gaming, une station de travail ou une configuration économique, utilisez les outils pour une première sélection, puis vérifiez la documentation du fabricant et des benchmarks adaptés à votre usage.",
         "mission_title": "Notre Mission : Une Clarté de Confiance",
-        "mission_desc_1": "Construire ou mettre à niveau un PC ne devrait pas être un jeu de devinettes. Avec des centaines de CPU, GPU et nouveaux matériels sortant chaque année, il est facile de se perdre dans les spécifications et les opinions. <strong>PCBuildCheck</strong> existe pour démystifier la performance en combinant des données de référence vérifiées avec des explications claires — vous aidant à repérer les goulots d'étranglement avant qu'ils ne vous coûtent de l'argent.",
-        "mission_desc_2": "Nous croyons que chaque joueur, créateur et professionnel mérite un PC qui fonctionne à son plein potentiel. Nos calculateurs et bases de données vous permettent de prendre des <strong>décisions informées et étayées par des données</strong> afin d'obtenir une performance maximale pour chaque dollar dépensé.",
-        "how_title": "Comment Ça Marche : Données + Tests Réels",
-        "how_desc_1": "Nous utilisons une analyse multicouche qui vérifie les instructions CPU, l'IPC (Instructions Par Cycle), l'efficacité des cœurs et la latence du cache par rapport aux pipelines de rendu GPU modernes.",
-        "how_desc_2": "Plutôt qu'un simple \"pourcentage de goulot d'étranglement\", nous calculons des scores séparés pour le jeu en 1080p, 1440p et 4K, vous donnant une image plus claire de la performance réelle.",
+        "mission_desc_1": "Construire ou mettre à niveau un PC ne devrait pas être un jeu de devinettes. <strong>PCBuildCheck</strong> combine des spécifications publiées par les fabricants, des scores internes normalisés et des explications claires pour comparer des configurations avant l'achat.",
+        "mission_desc_2": "L'objectif est de rendre visibles les hypothèses et limites pour comparer plus prudemment. Les outils ne garantissent ni compatibilité, ni FPS, ni valeur, ni bénéfice précis d'une mise à niveau.",
+        "how_title": "Comment Ça Marche : Spécifications + Estimations",
+        "how_desc_1": "Le calculateur compare des scores internes normalisés de CPU et de GPU. Les estimations FPS appliquent des facteurs simples de résolution et de charge du jeu ; les estimations PSU ajoutent une marge aux consommations publiées.",
+        "how_desc_2": "Il s'agit d'estimations de planification, pas de mesures en laboratoire ni de garanties. Jeux, réglages, pilotes, refroidissement, RAM, tâches en arrière-plan et limites de puissance peuvent modifier les résultats.",
         "different_title": "Ce Qui Nous Différencie",
         "different_list": [
             "<strong>Transparence d'Abord :</strong> Nous expliquons comment chaque estimation est calculée. Voir notre méthodologie.",
-            "<strong>Construit par des Passionnés :</strong> Nos algorithmes sont propulsés par de vrais benchmarks, pas des promesses marketing.",
+            "<strong>Modèles fondés sur les spécifications :</strong> Les scores internes normalisés et facteurs généraux servent à la planification; ils ne proviennent pas de notre propre laboratoire.",
             "<strong>Conception Centrée Utilisateur :</strong> Chaque outil est optimisé pour la vitesse, l'accessibilité et les Core Web Vitals.",
-            "<strong>Mises à Jour Continues :</strong> Nous ajoutons constamment de nouveaux CPU, GPU et jeux pour rester précis avec les dernières sorties.",
+            "<strong>Mises à jour documentées :</strong> Nous ajoutons et révisons les entrées, mais spécifications et logiciels peuvent changer entre deux vérifications.",
             "<strong>Éducation plutôt que Devinettes :</strong> Nous vous aidons à apprendre <em>pourquoi</em> une configuration fonctionne d'une certaine manière — pas juste son score."
         ],
         "promise_title": "Notre Promesse",
         "promise_list": [
-            "<strong>Précision :</strong> Les benchmarks et modèles sont affinés avec des retours réels.",
+            "<strong>Corrections :</strong> Nous examinons les erreurs signalées et publions les limites de nos estimations.",
             "<strong>Indépendance :</strong> Nous ne vendons pas de matériel et n'acceptons pas de classements sponsorisés.",
-            "<strong>Confidentialité :</strong> Les calculs s'exécutent côté client. Nous ne collectons ni ne vendons jamais vos données personnelles.",
+            "<strong>Confidentialité :</strong> Les entrées du calculateur sont traitées dans le navigateur et ne sont pas envoyées comme données de configuration. Consultez la Politique de confidentialité pour l'analytics et les cookies.",
             "<strong>Accessibilité :</strong> Nos calculateurs sont conçus pour les débutants comme pour les experts."
         ],
         "community_title": "Rejoignez la Communauté",
         "community_desc": "<strong>PCBuildCheck</strong> est une communauté grandissante de constructeurs, joueurs et créateurs. Nous accueillons les retours, rapports de bugs et suggestions de fonctionnalités.",
-        "contact_text": "💬 Une suggestion ou un problème trouvé ? <a href=\"/contact\">Contactez-nous</a> — nous serions ravis de vous lire.",
+        "contact_text": "💬 Une suggestion ou un problème trouvé ? <a href=\"/fr/contact\">Contactez-nous</a> — nous serions ravis de vous lire.",
         "signature": "Construisons quelque chose d'incroyable ensemble.<br /><strong>— L'Équipe de PCBuildCheck.com</strong>"
     },
     "contact": {
@@ -205,11 +209,11 @@
             "config_score": "Score de Configuration",
             "bottleneck": "Analyse de Goulot d'Étranglement",
             "expected_experience": "Expérience de Jeu Attendue",
-            "market_prices": "Prix du Marché Actuels"
+            "market_prices": "Prix de Référence"
         },
         "labels": {
-            "cpu_perf": "Performance CPU",
-            "gpu_perf": "Performance GPU",
+            "cpu_perf": "Score CPU normalisé",
+            "gpu_perf": "Score GPU normalisé",
             "cpu_gaming": "Performance Jeu CPU",
             "gpu_gaming": "Performance Jeu GPU",
             "gaming_score": "Score de Jeu",
@@ -227,10 +231,11 @@
             "optimization_tips": "Conseils d'Optimisation",
             "graphics_settings": "Paramètres Graphiques",
             "system_opt": "Optimisation Système",
-            "total_system_value": "Valeur Totale Système",
+            "total_system_value": "Coût Estimé des Composants Sélectionnés",
             "estimated_total": "Total estimé",
-            "power_reqs": "Besoins en Puissance",
-            "rec_psu": "PSU Recommandée",
+            "power_reqs": "Estimation de Planification PSU",
+            "rec_psu": "Puissance de planification",
+            "psu_estimate_note": "Estimation de planification avec 20% de marge. Avant l'achat, vérifiez les exigences de puissance et de connecteurs du fabricant du GPU et du partenaire de la carte.",
             "final_rec": "Résumé de Recommandation"
         },
         "ratings": {
@@ -240,7 +245,7 @@
             "fair": "Moyen",
             "poor": "Mauvais",
             "well_balanced": "Système Bien Équilibré",
-            "bottleneck_warning": "Goulot d'Étranglement",
+            "bottleneck_warning": "écart relatif des scores",
             "maxed_out": "Au Max",
             "optimal": "Optimal"
         },
@@ -303,38 +308,39 @@
                 ]
             },
             "upgrade_priority": {
-                "cpu_title": "Priorité : Mettre à niveau le CPU",
-                "cpu_desc": "Votre CPU limite la performance GPU de {val}%",
-                "gpu_title": "Priorité : Mettre à niveau le GPU",
-                "gpu_desc": "Votre GPU est le facteur limitant de {val}%",
+                "cpu_title": "Examiner les charges limitées par le CPU",
+                "cpu_desc": "Le score normalisé du CPU est inférieur de {val}% au score du composant le plus élevé. Vérifiez des benchmarks propres à vos jeux avant toute mise à niveau.",
+                "gpu_title": "Examiner les charges limitées par le GPU",
+                "gpu_desc": "Le score normalisé du GPU est inférieur de {val}% au score du composant le plus élevé. Vérifiez des benchmarks propres à vos jeux avant toute mise à niveau.",
                 "balanced_title": "Bien Équilibré",
-                "balanced_desc": "Pas de mise à niveau immédiate requise",
+                "balanced_desc": "Les scores normalisés sont proches; vérifiez vos jeux avant de changer de matériel",
                 "ram_title": "Considérez : Plus de RAM",
                 "ram_desc": "16Go recommandés pour le jeu moderne"
             }
         },
         "bottleneck_analysis": {
             "balanced_title": "Vos composants système sont bien assortis",
-            "bottleneck_title": "Votre {type} limite la performance globale",
-            "balanced_desc": "Pas de perte de performance significative. Vos composants travaillent ensemble efficacement.",
-            "bottleneck_desc": "Le goulot d'étranglement {type} peut réduire la performance globale de jeu d'environ {val}% dans les scénarios {scenario}.",
+            "bottleneck_title": "Le composant {type} a le score normalisé le plus faible",
+            "balanced_desc": "Les scores normalisés sont proches. Cela ne garantit pas des performances égales dans chaque jeu ou charge.",
+            "bottleneck_desc": "Le chiffre de {val}% est l'écart relatif entre des scores CPU et GPU normalisés en interne, pas une perte de FPS mesurée. Le composant {type} au score inférieur peut limiter certaines charges {scenario}.",
             "cpu_scenario": "intensifs en CPU",
             "gpu_scenario": "intensifs en graphismes"
         },
         "market": {
-            "current_price": "Prix du marché actuel",
+            "current_price": "Prix de référence estimé",
             "view_specs": "Voir Spécifications",
             "official_page": "Page Produit Officielle {brand}",
             "launch_price": "Prix de lancement : ${val}",
             "cpu_price": "Prix CPU",
             "gpu_price": "Prix GPU",
-            "combined": "CPU + GPU + RAM combinés"
+            "combined": "CPU + GPU + RAM combinés",
+            "price_disclaimer": "Les prix sont des valeurs de référence approximatives en USD et peuvent varier selon le revendeur, la région, l’état et la disponibilité."
         }
     },
     "guide": {
         "title": "Comprendre les Goulots d'Étranglement PC : Un Guide Complet pour un Système Équilibré",
-        "intro": "Bienvenue sur la ressource ultime pour l'analyse des performances PC. Un <strong>goulot d'étranglement</strong> est le concept le plus important à comprendre lors de la construction ou de la mise à niveau d'un PC de jeu. Il se produit lorsqu'un de vos composants est trop lent pour suivre les autres, créant effectivement un \"bouchon\" qui limite le potentiel de tout votre système. Notre <strong>Calculateur de Goulot d'Étranglement PC</strong> est conçu pour identifier instantanément ces problèmes pour vous.",
-        "intro_p2": "En évitant les <strong>goulots d'étranglement</strong>, vous vous assurez que chaque dollar dépensé en matériel se traduit directement par les <strong>performances</strong> que vous attendez. Un <strong>PC équilibré</strong> est un PC puissant, efficace et rentable.",
+        "intro": "Un <strong>goulot d'étranglement</strong> décrit une charge où un composant atteint sa limite avant un autre. Le composant limitant varie selon le jeu, la résolution, les réglages, les pilotes et les tâches en arrière-plan. Notre <strong>Calculateur de Goulot d'Étranglement PC</strong> compare des scores CPU et GPU normalisés en interne pour établir une présélection à vérifier.",
+        "intro_p2": "La comparaison peut montrer des associations très déséquilibrées, mais elle ne prédit pas chaque charge et ne garantit pas les FPS. Vérifiez les achats importants avec des benchmarks adaptés à vos jeux et réglages.",
         "cpu_section": {
             "title": "Qu'est-ce qu'un Goulot d'Étranglement CPU ?",
             "subtitle": "(Le \"Mauvais\" Goulot d'Étranglement)",
@@ -348,9 +354,9 @@
         },
         "gpu_section": {
             "title": "Qu'est-ce qu'un Goulot d'Étranglement GPU ?",
-            "subtitle": "(Le \"Bon\" Goulot d'Étranglement)",
-            "description": "Un <strong>goulot d'étranglement GPU</strong>, aussi connu comme étant \"limité par le GPU\", se produit lorsque votre carte graphique fonctionne à pleine capacité (99–100% d'utilisation). Cela dicte votre <strong>taux d'images</strong> maximum car elle travaille aussi dur que possible pour rendre les visuels.",
-            "description_p2": "<strong class=\"text-green-800 dark:text-green-300\">C'est généralement idéal pour le jeu.</strong> Cela signifie que vous utilisez pleinement votre investissement GPU, surtout dans les jeux AAA en 1440p/4K avec des paramètres ultra."
+            "subtitle": "(Une limite propre à la charge)",
+            "description": "Un test est <strong>limité par la GPU</strong> lorsque la charge graphique atteint sa limite avant le CPU. Une forte utilisation et des FPS sensibles aux réglages sont des indices, mais aucun pourcentage ne le prouve seul.",
+            "description_p2": "Vérifiez frame times, fréquences, températures, limites de puissance, pilotes et une scène reproductible sans limite FPS. Le résultat n'est pas automatiquement bon ou mauvais; il dépend de votre objectif."
         },
         "action_plan": {
             "title": "Comment Réparer un Goulot d'Étranglement : Votre Plan d'Action",
@@ -363,12 +369,12 @@
             "immediate_fixes_list": [
                 "<strong>Fermer les Applis en Arrière-plan :</strong> Fermez les navigateurs/applis de streaming avant de jouer.",
                 "<strong>Baisser les Paramètres Lourds en CPU :</strong> Réduisez la physique, la densité de foule, la distance de vue.",
-                "<strong>Augmenter la Résolution :</strong> Déplace la charge de travail vers le GPU, équilibrant la charge."
+                "<strong>Tester Plusieurs Résolutions :</strong> Une résolution supérieure augmente généralement la charge GPU et réduit les FPS; la comparaison aide à voir quel composant atteint sa limite en premier."
             ],
             "long_term_fixes_title": "Solutions Matérielles à Long Terme :",
             "long_term_fixes_list": [
-                "<strong>Overclocking :</strong> Avec un bon refroidissement, attendez-vous à un boost CPU de 5–15%.",
-                "<strong>Mettre à Niveau le CPU :</strong> Choisissez-en un qui correspond à votre GPU selon les résultats du calculateur."
+                "<strong>Mesurer Avant de Mettre à Niveau :</strong> Comparez les temps d'image et l'utilisation par cœur dans les jeux que vous utilisez réellement.",
+                "<strong>Envisager le Matériel Après les Tests :</strong> Comparez benchmarks propres aux jeux, coût de la plateforme et temps d'image mesurés avant de choisir un CPU."
             ],
             "example_title": "Exemple Réel : Mise à Niveau CPU pour un GPU Moderne",
             "example_desc": "Un utilisateur passe à une <strong>NVIDIA RTX 4070</strong> mais garde un vieux <strong>Ryzen 5 3600</strong>.",
@@ -398,7 +404,7 @@
                 "<strong>Mettre à Niveau avec Confiance :</strong> Sachez quelle pièce donne les plus gros gains.",
                 "<strong>Économiser de l'Argent :</strong> Ne dépensez pas trop sur des composants bridés."
             ],
-            "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Prêt à vérifier votre build ?</strong> Utilisez le calculateur pour vous assurer que votre PC est parfaitement équilibré pour la performance."
+            "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Prêt à comparer votre build ?</strong> Utilisez le calculateur pour comparer des scores normalisés, puis vérifiez avec des benchmarks adaptés."
         }
     },
     "fps_guide": {
@@ -410,7 +416,7 @@
         },
         "how_works": {
             "title": "Comment Fonctionne le Calculateur FPS ?",
-            "content": "Notre calculateur utilise un modèle sophistiqué basé sur des milliers de benchmarks réels. Il prend en compte trois facteurs clés :",
+            "content": "Notre calculateur fournit une estimation indicative à partir de scores CPU et GPU normalisés. Il prend en compte trois facteurs clés :",
             "list": [
                 "<strong>Puissance de votre CPU :</strong> Le processeur gère la logique du jeu, la physique et l'IA. Dans de nombreux titres eSports, le CPU est le moteur principal des fréquences d'images élevées.",
                 "<strong>Puissance de votre GPU :</strong> La carte graphique est responsable du rendu des visuels. Dans les titres AAA graphiquement intenses, le GPU fait le plus gros du travail.",
@@ -422,7 +428,7 @@
             "step1": {
                 "title": "Étape 1 : Diagnostiquer le Problème Central avec Notre Calculateur de Goulot d'Étranglement",
                 "p1": "Avant d'envisager une mise à niveau, vous devez savoir <em>pourquoi</em> vos FPS sont bas. Est-ce que votre GPU puissant est freiné par un vieux CPU ? Ou est-ce que votre GPU n'est simplement pas assez fort pour vos paramètres souhaités ?",
-                "p2": "Notre <a href=\"/fr\" class=\"text-primary hover:underline\">Calculateur de Goulot d'Étranglement PC</a> est l'outil de diagnostic parfait. Il analyse la synergie entre votre CPU et GPU pour identifier le maillon faible exact de votre système."
+                "p2": "Notre <a href=\"/fr\" class=\"text-primary hover:underline\">Calculateur de Goulot d'Étranglement PC</a> compare des scores CPU et GPU normalisés en interne. Utilisez l'écart relatif comme indice de planification, pas comme perte de FPS mesurée ni diagnostic définitif."
             },
             "step2": {
                 "title": "Étape 2 : Assurez-vous d'Avoir Assez de Puissance pour une Mise à Niveau",
@@ -441,30 +447,7 @@
             "placeholder": "Sélectionnez votre CPU...",
             "help": "Commencez à taper un nom de modèle, nombre de cœurs ou niveau pour filtrer la liste.",
             "selected": "Sélectionné :",
-            "clear": "Effacer",
-            "overclock_label": "Overclock CPU",
-            "overclock_options": {
-                "stock": {
-                    "label": "Fréquences d'usine",
-                    "desc": "Boost par défaut du fabricant."
-                },
-                "mild": {
-                    "label": "Léger (+5%)",
-                    "desc": "Augmentation de tension sûre pour des images supplémentaires."
-                },
-                "moderate": {
-                    "label": "Modéré (+8%)",
-                    "desc": "Réglage affiné avec un refroidissement adéquat."
-                },
-                "aggressive": {
-                    "label": "Agressif (+12%)",
-                    "desc": "Overclocking lourd avec refroidissement premium."
-                },
-                "extreme": {
-                    "label": "Extrême (+15%)",
-                    "desc": "Réglage niveau benchmark, stabilité variable."
-                }
-            }
+            "clear": "Effacer"
         },
         "gpu": {
             "title": "Carte Graphique (GPU)",
@@ -473,30 +456,7 @@
             "placeholder": "Sélectionnez votre GPU...",
             "help": "Filtrer par chipset, capacité VRAM ou série.",
             "selected": "Sélectionné :",
-            "clear": "Effacer",
-            "overclock_label": "Overclock GPU",
-            "overclock_options": {
-                "stock": {
-                    "label": "Fréquences d'usine",
-                    "desc": "Performance de référence."
-                },
-                "mild": {
-                    "label": "Léger (+5%)",
-                    "desc": "Auto OC ou réglage de courbe doux."
-                },
-                "moderate": {
-                    "label": "Modéré (+8%)",
-                    "desc": "Réglage manuel avec marge thermique."
-                },
-                "aggressive": {
-                    "label": "Agressif (+12%)",
-                    "desc": "Ajustements significatifs de tension et courbe de ventilation."
-                },
-                "extreme": {
-                    "label": "Extrême (+15%)",
-                    "desc": "OC au max pour sessions de benchmark."
-                }
-            }
+            "clear": "Effacer"
         },
         "memory": {
             "title": "Mémoire & Stockage",
@@ -746,7 +706,7 @@
             }
         },
         "actions": {
-            "calculate": "Calculer Fréquence d'Images",
+            "calculate": "Estimer la Fréquence d'Images",
             "incomplete": "Sélectionnez CPU, GPU, jeu et résolution pour continuer",
             "help": "Ajustez les champs avancés à tout moment et recalculez pour rafraîchir votre estimation.",
             "back": "Retour au Calculateur"
@@ -754,36 +714,42 @@
         "results": {
             "title": "Résultats d'Analyse FPS",
             "subtitle": "Performance",
-            "performance_title": "Résultats de Performance",
-            "average_fps": "FPS Moyens à",
+            "performance_title": "Scénario de performance estimé",
+            "average_fps": "FPS estimés à",
+            "fps_range": "Plage de FPS moyens estimée",
+            "midpoint": "Point médian de planification",
+            "one_percent_low": "1 % low estimé",
+            "likely_limit": "Facteur limitant probable",
+            "estimate_notice_title": "Estimation de planification — pas un benchmark mesuré",
+            "estimate_notice": "Cette plage utilise un profil par jeu, une mise à l'échelle CPU/GPU séparée, la résolution, la qualité, la VRAM, la RAM et l'upscaling pris en charge. Elle n'est pas mesurée sur le matériel choisi et peut varier selon version, pilotes, refroidissement, réglages et scène.",
             "ratings": {
                 "excellent": {
                     "label": "Excellent",
-                    "desc": "Jeu fluide à haut taux de rafraîchissement"
+                    "desc": "Sortie du modèle d'au moins 120 FPS"
                 },
                 "very_good": {
                     "label": "Très Bon",
-                    "desc": "Super expérience de jeu"
+                    "desc": "Sortie du modèle entre 90 et 119 FPS"
                 },
                 "good": {
                     "label": "Bon",
-                    "desc": "Jouable avec bonne expérience"
+                    "desc": "Sortie du modèle entre 60 et 89 FPS"
                 },
                 "fair": {
                     "label": "Moyen",
-                    "desc": "Jouable mais pas idéal"
+                    "desc": "Sortie du modèle entre 30 et 59 FPS"
                 },
                 "poor": {
                     "label": "Pauvre",
-                    "desc": "Non recommandé"
+                    "desc": "Sortie du modèle sous 30 FPS"
                 }
             },
             "advanced_impact": {
-                "title": "Impact Paramètres Avancés",
+                "title": "Entrées du scénario sélectionné",
                 "baseline": "Estimation de base (défaut) :",
-                "impact": "Impact réglage avancé :",
-                "refresh_pass": "Les FPS estimés dépassent la cible {target}, attendez-vous à un jeu fluide.",
-                "refresh_fail": "Environ {diff} FPS sous la cible {target}. Considérez baisser la qualité ou activer une mise à l'échelle plus forte."
+                "impact": "Écart modélisé par rapport aux valeurs par défaut :",
+                "refresh_pass": "La sortie du modèle dépasse la cible {target}. Vérifiez avec des benchmarks avant de vous y fier.",
+                "refresh_fail": "La sortie du modèle est environ {diff} FPS sous la cible {target}. Comparez préréglages et upscaling dans des benchmarks mesurés."
             },
             "system_config": {
                 "title": "Configuration Système",
@@ -818,11 +784,11 @@
             "dlss_qual": "Utilisez le mode Qualité DLSS pour le meilleur équilibre visuel/performance.",
             "lock_fps": "Verrouillez les FPS à votre taux de rafraîchissement moniteur pour la stabilité.",
             "no_rt": "Désactivez le ray tracing en 4K pour une meilleure performance.",
-            "fsr": "Utilisez FSR 2.0 pour booster les FPS sans perte visuelle majeure.",
-            "lower_settings": "Baissez la qualité des ombres et textures pour un gain de +10–15% FPS.",
+            "fsr": "Comparez les modes d'upscaling disponibles; FPS et qualité varient selon le jeu.",
+            "lower_settings": "Baissez un réglage graphique à la fois et mesurez FPS et frame times.",
             "update_drivers": "Assurez-vous que vos pilotes GPU sont à jour.",
-            "tips_4k": "DLSS ou FSR recommandés pour un jeu fluide en 4K.",
-            "tips_1080p": "Probablement limité par le CPU — essayez une résolution plus élevée.",
+            "tips_4k": "En 4K, comparez rendu natif et upscaling disponible dans vos jeux.",
+            "tips_1080p": "En 1080p, testez plusieurs préréglages et examinez cœurs CPU, GPU et frame times.",
             "tips_1440p": "Excellent point d'équilibre pour performance et visuels."
         },
         "share": {
@@ -872,9 +838,9 @@
     },
     "psu_page": {
         "title": "Calculateur PSU - De Combien de Watts Mon PC a-t-il Besoin ? (Gratuit 2026)",
-        "description": "Calculez la puissance recommandée de l'alimentation (PSU) pour votre PC. Sélectionnez votre CPU et GPU pour obtenir une estimation de la charge et une recommandation de PSU sûre.",
+        "description": "Estimez une plage de planification PSU à partir des puissances publiées du CPU et du GPU, d'une allocation pour les autres composants et d'une marge configurable.",
         "hero_title": "Calculateur de Puissance PSU",
-        "hero_subtitle": "Assurez-vous que votre PC a assez de puissance. Sélectionnez vos composants principaux pour obtenir une puissance PSU recommandée.",
+        "hero_subtitle": "Sélectionnez vos composants pour estimer la charge et une plage PSU, puis vérifiez les exigences des fabricants.",
         "interlink_title": "Votre alimentation est triée ?",
         "interlink_desc": "Maintenant, assurez-vous que votre CPU et GPU sont bien assortis. Un système déséquilibré peut gaspiller le potentiel de votre matériel.",
         "interlink_btn": "Vérifier les Goulots d'Étranglement →",
@@ -883,25 +849,25 @@
         "faqs": [
             {
                 "q": "Comment le calculateur PSU détermine-t-il la puissance requise ?",
-                "a": "Le calculateur PSU estime la puissance en analysant votre CPU, GPU, RAM, stockage, refroidissement et composants additionnels. Il ajoute aussi une marge de sécurité recommandée pour la stabilité et les futures mises à niveau."
+                "a": "Le calculateur combine les puissances publiées du CPU et du GPU avec une allocation générale pour les autres composants, puis applique 15–50% de marge. Il s'agit d'une estimation de planification, pas d'une mesure ni d'une certification électrique."
             },
             {
                 "q": "Est-ce mauvais d'utiliser une PSU avec beaucoup plus de puissance que nécessaire ?",
-                "a": "Non. Une PSU de plus haute puissance n'endommagera pas votre PC — elle fournit simplement une marge supplémentaire. Votre système ne tire que ce dont il a besoin. Pour une meilleure efficacité, visez 50–70% d'utilisation de la charge."
+                "a": "Une PSU compatible et correctement installée n'impose pas toute sa puissance nominale au PC. L'efficacité et la compatibilité dépendent du modèle, de la charge et des connecteurs; vérifiez la documentation du fabricant."
             },
             {
                 "q": "L'efficacité de la PSU (certification 80 Plus) affecte-t-elle les performances de jeu ?",
-                "a": "Les cotes d'efficacité PSU n'affectent pas directement les FPS. Au lieu de cela, elles montrent combien de puissance est gaspillée en chaleur. Une PSU plus efficace réduit la consommation d'électricité et aide à garder votre PC plus frais."
+                "a": "La classe d'efficacité ne détermine pas directement les FPS. Elle décrit l'efficacité de conversion dans des conditions de test précises; le résultat réel varie selon la charge, la tension secteur et le modèle."
             },
             {
                 "q": "Sous-estimer la puissance PSU peut-il causer des dommages matériels ?",
-                "a": "Oui. Utiliser une PSU sous-alimentée peut causer des plantages, des échecs de démarrage ou stresser les composants avec le temps. Le calculateur PSU aide à prévenir cela en recommandant la bonne puissance pour votre construction."
+                "a": "Une PSU inadéquate ou de mauvaise qualité peut contribuer à des arrêts ou à de l'instabilité. Utilisez l'estimation comme point de départ et vérifiez la puissance minimale, les connecteurs et les instructions du fabricant du GPU et du partenaire de la carte."
             }
         ]
     },
     "psu_calculator": {
         "title": "Calculateur PSU Avancé",
-        "subtitle": "Calculez les besoins précis en puissance avec analyse d'efficacité",
+        "subtitle": "Estimez la charge du système et comparez plusieurs marges PSU",
         "labels": {
             "cpu": "Processeur (CPU)",
             "gpu": "Carte Graphique (GPU)",
@@ -917,30 +883,36 @@
         "button": "Calculer les Besoins PSU",
         "incomplete": "Veuillez sélectionner tous les composants",
         "back": "Retour au Calculateur",
-        "results_title": "Besoins PSU",
-        "results_subtitle": "Recommandations d'alimentation",
-        "power_req_title": "Besoins en Puissance",
-        "rec_wattage_label": "Puissance PSU Recommandée",
-        "certified": "Certifié",
+        "results_title": "Estimation de Planification PSU",
+        "results_subtitle": "Puissances publiées et marge configurable",
+        "power_req_title": "Plage PSU Estimée",
+        "rec_wattage_label": "Puissance de Planification",
+        "selected_efficiency": "Préférence d'efficacité sélectionnée",
+        "estimate_notice_title": "Estimation de planification, pas certification de sécurité",
+        "estimate_notice": "Cette estimation utilise les puissances publiées du CPU et du GPU plus une allocation générale. Elle ne modélise pas entièrement les pics transitoires, les limites d'usine, l'âge ou la qualité de la PSU, les rails ni les connecteurs.",
+        "vendor_check": "Avant l'achat, vérifiez la puissance minimale et les connecteurs exigés par le fabricant du GPU et le partenaire de la carte.",
         "categories": {
-            "min": "Minimum",
-            "rec": "Recommandé",
-            "future": "Futur-Proof"
+            "min": "Estimation à marge réduite",
+            "min_desc": "Charge calculée plus 15% de marge; ce n'est pas un conseil d'achat.",
+            "rec": "Estimation de planification",
+            "rec_desc": "Charge calculée plus 30% de marge, arrondie à une puissance PSU courante.",
+            "future": "Estimation à marge supérieure",
+            "future_desc": "Charge calculée plus 50% de marge pour planifier de possibles mises à niveau."
         },
         "breakdown": {
             "title": "Répartition de la Consommation",
             "cpu": "Puissance CPU",
             "gpu": "Puissance GPU",
             "other": "Autres Composants",
-            "total": "Puissance Totale Système",
-            "total_desc": "Consommation de base à pleine charge"
+            "total": "Charge estimée des composants",
+            "total_desc": "Somme des valeurs CPU/GPU publiées et de l'allocation choisie; ce n'est pas une mesure à la prise"
         },
         "efficiency": {
-            "title": "Analyse Efficacité & Coût",
-            "power_eff": "Efficacité Énergétique",
-            "rating_label": "Note d'Efficacité",
-            "cost_title": "Coût Annuel Électricité",
-            "cost_desc": "Coût estimé annuel (4h/jour de jeu)"
+            "title": "Préférence d'Efficacité",
+            "power_eff": "Classe d'efficacité sélectionnée",
+            "rating_label": "Valeur indicative de la classe",
+            "cost_title": "Limite importante sur l'efficacité",
+            "cost_desc": "La classe sélectionnée est une préférence d'achat, pas la certification d'une PSU précise. L'efficacité et le coût réels varient selon le modèle, la charge, la tension secteur, l'usage et le prix de l'énergie."
         },
         "tips": {
             "title": "Conseils de Sélection PSU",
@@ -993,21 +965,21 @@
     },
     "psu_guide": {
         "header_title": "Calculateur de Puissance PSU – Trouvez la Bonne Alimentation",
-        "intro": "Choisir la bonne <strong>Unité d'Alimentation (PSU)</strong> est critique pour construire un PC de jeu stable et futur. Une PSU sous-alimentée peut causer des plantages, des arrêts aléatoires ou même des dommages à long terme. Notre <strong>Calculateur PSU</strong> facilite l'estimation de la puissance exacte dont votre système a besoin.",
+        "intro": "Choisir une <strong>Unité d'Alimentation (PSU)</strong> adaptée exige plus que l'addition des watts. Une unité inadéquate ou de mauvaise qualité peut contribuer à des arrêts ou à de l'instabilité. Notre <strong>Calculateur PSU</strong> fournit une estimation de planification et ne remplace pas les instructions du fabricant.",
         "why_title": "Pourquoi Utiliser un Calculateur de Puissance PSU ?",
-        "why_desc": "Choisir une PSU, ce n'est pas juste prendre la puissance la plus élevée. Surdépenser gaspille de l'argent, tandis que sous-estimer risque l'instabilité. Un <strong>calculateur de puissance PSU</strong> assure l'équilibre parfait entre coût, efficacité et performance.",
+        "why_desc": "Outre la puissance, les connecteurs, la qualité, le format, l'efficacité, la réponse aux pics et la garantie comptent. Un <strong>calculateur de puissance PSU</strong> réduit la plage à étudier, mais ne certifie ni compatibilité ni sécurité.",
         "how_title": "Comment Fonctionne le Calculateur PSU ?",
-        "how_desc_1": "Notre outil analyse les besoins combinés de votre CPU, GPU, RAM, stockage et périphériques. Il recommande ensuite la puissance PSU idéale pour éviter les goulots d'étranglement et assurer la stabilité.",
-        "how_desc_2": "Pour l'analyse la plus précise, jumelez cet outil avec notre <strong>Calculateur de Goulot d'Étranglement PC</strong>.",
+        "how_desc_1": "L'outil ajoute les puissances publiées du CPU et du GPU à une allocation générale pour les autres composants, puis affiche des estimations avec 15%, 30% et 50% de marge. Il ne modélise pas complètement les pics, les connecteurs, l'âge ou la qualité de la PSU.",
+        "how_desc_2": "Utilisez le résultat pour établir une présélection, puis vérifiez les exigences du fabricant du GPU et du partenaire de la carte. Le <strong>Calculateur de Goulot d'Étranglement PC</strong> compare des scores relatifs et ne valide pas la compatibilité électrique.",
         "benefits_title": "Avantages d'Utiliser Notre Calculateur PSU",
         "benefits_list": [
-            "<strong>Prévenir les Plantages :</strong> Assurez que votre PSU gère vos sessions de jeu intenses.",
-            "<strong>Économiser de l'Argent :</strong> Évitez de dépenser trop pour une puissance inutile.",
-            "<strong>Préparer le Futur :</strong> Anticipez les mises à niveau comme les GPU ou le stockage.",
-            "<strong>Tranquillité d'Esprit :</strong> Construisez un système qui tourne sans risque."
+            "<strong>Commencer par une plage :</strong> Comparez plusieurs puissances PSU sans traiter un chiffre comme exact.",
+            "<strong>Comparer les marges :</strong> Voyez comment différentes réserves modifient l'estimation.",
+            "<strong>Planifier les mises à niveau :</strong> Évaluez si de futurs composants augmenteront la charge.",
+            "<strong>Vérifier avant l'achat :</strong> Confirmez puissance, connecteurs, format et qualité du modèle avec la documentation et des tests indépendants."
         ],
         "conclusion_title": "Construisez Plus Intelligemment avec la Bonne PSU",
-        "conclusion_desc": "La PSU est la fondation d'un PC fiable. Avec notre <strong>Calculateur de Puissance PSU</strong>, déterminez précisément vos besoins avant d'acheter."
+        "conclusion_desc": "La PSU est importante pour un PC fiable. Utilisez le calculateur pour une estimation préliminaire, puis vérifiez la carte graphique exacte, le modèle de PSU, les connecteurs et les exigences des fabricants avant l'achat."
     },
     "bottleneck_promo": {
         "title": "Vos FPS sont plus bas que prévu ?",

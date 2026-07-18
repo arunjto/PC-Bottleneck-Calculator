@@ -101,22 +101,21 @@ export const calculatorData = {
   gpus: {
     // 2025 Latest GPUs
     "NVIDIA GeForce RTX 5090": { score: 140, tier: 'enthusiast' as const, vram: 32, powerConsumption: 500, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
-    "NVIDIA GeForce RTX 5080": { score: 120, tier: 'enthusiast' as const, vram: 16, powerConsumption: 350, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
+    "NVIDIA GeForce RTX 5080": { score: 120, tier: 'enthusiast' as const, vram: 16, powerConsumption: 360, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
     "NVIDIA GeForce RTX 5070 Ti": { score: 105, tier: 'enthusiast' as const, vram: 16, powerConsumption: 300, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
     "NVIDIA GeForce RTX 5070": { score: 95, tier: 'enthusiast' as const, vram: 12, powerConsumption: 250, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
-    "NVIDIA GeForce RTX 5060 Ti": { score: 85, tier: 'high-end' as const, vram: 16, powerConsumption: 200, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
-    "NVIDIA GeForce RTX 5060": { score: 75, tier: 'mid-range' as const, vram: 8, powerConsumption: 150, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
+    "NVIDIA GeForce RTX 5060 Ti": { score: 85, tier: 'high-end' as const, vram: 16, powerConsumption: 180, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
+    "NVIDIA GeForce RTX 5060": { score: 75, tier: 'mid-range' as const, vram: 8, powerConsumption: 145, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
     "NVIDIA GeForce RTX 5050": { score: 65, tier: 'mid-range' as const, vram: 8, powerConsumption: 120, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
     
     // AMD 2025 GPUs
-    "AMD Radeon RX 9070 XT": { score: 102, tier: 'enthusiast' as const, vram: 16, powerConsumption: 320, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
-    "AMD Radeon RX 9070": { score: 92, tier: 'high-end' as const, vram: 12, powerConsumption: 280, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
-    "AMD Radeon RX 9060 XT": { score: 82, tier: 'high-end' as const, vram: 12, powerConsumption: 200, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
+    "AMD Radeon RX 9070 XT": { score: 102, tier: 'enthusiast' as const, vram: 16, powerConsumption: 304, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
+    "AMD Radeon RX 9070": { score: 92, tier: 'high-end' as const, vram: 16, powerConsumption: 220, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
+    "AMD Radeon RX 9060 XT": { score: 82, tier: 'high-end' as const, vram: 16, powerConsumption: 160, releaseYear: 2025, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
     
     // Intel 2024-2025 GPUs
-    "Intel Arc Battlemage 24GB": { score: 94, tier: 'high-end' as const, vram: 24, powerConsumption: 250, releaseYear: 2024, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
-    "Intel Arc B770": { score: 78, tier: 'mid-range' as const, vram: 16, powerConsumption: 225, releaseYear: 2024, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
     "Intel Arc B580": { score: 68, tier: 'mid-range' as const, vram: 12, powerConsumption: 190, releaseYear: 2024, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
+    "Intel Arc B570": { score: 61, tier: 'mid-range' as const, vram: 10, powerConsumption: 150, releaseYear: 2024, imageUrl: "https://images.pexels.com/photos/7887807/pexels-photo-7887807.jpeg?auto=compress&cs=tinysrgb&w=400" },
     
     // 2022-2024 NVIDIA GPUs
     "NVIDIA GeForce RTX 4090": { score: 100, tier: 'enthusiast' as const, vram: 24, powerConsumption: 450, releaseYear: 2022, imageUrl: "https://i.imgur.com/z2x4UG9.png" },
@@ -261,15 +260,14 @@ export const marketPrices = {
     "NVIDIA GeForce RTX 5080": 999,
     "NVIDIA GeForce RTX 5070 Ti": 749,
     "NVIDIA GeForce RTX 5070": 549,
-    "NVIDIA GeForce RTX 5060 Ti": 399,
+    "NVIDIA GeForce RTX 5060 Ti": 379,
     "NVIDIA GeForce RTX 5060": 299,
-    "NVIDIA GeForce RTX 5050": 199,
-    "AMD Radeon RX 9070 XT": 679,
+    "NVIDIA GeForce RTX 5050": 249,
+    "AMD Radeon RX 9070 XT": 599,
     "AMD Radeon RX 9070": 549,
-    "AMD Radeon RX 9060 XT": 399,
-    "Intel Arc Battlemage 24GB": 549,
-    "Intel Arc B770": 329,
+    "AMD Radeon RX 9060 XT": 349,
     "Intel Arc B580": 249,
+    "Intel Arc B570": 219,
     "NVIDIA GeForce RTX 4090": 1599,
     "AMD Radeon RX 7900 XTX": 999,
     "NVIDIA GeForce RTX 4080 Super": 999,
@@ -381,9 +379,9 @@ export const psuData = {
   },
   gpus: {
     "NVIDIA GeForce RTX 5090": 500, "NVIDIA GeForce RTX 5080": 350, "NVIDIA GeForce RTX 5070 Ti": 300,
-    "NVIDIA GeForce RTX 5070": 250, "NVIDIA GeForce RTX 5060 Ti": 200, "NVIDIA GeForce RTX 5060": 150,
-    "NVIDIA GeForce RTX 5050": 120, "AMD Radeon RX 9070 XT": 320, "AMD Radeon RX 9070": 280,
-    "AMD Radeon RX 9060 XT": 200, "Intel Arc Battlemage 24GB": 250, "Intel Arc B770": 225, "Intel Arc B580": 190,
+    "NVIDIA GeForce RTX 5070": 250, "NVIDIA GeForce RTX 5060 Ti": 180, "NVIDIA GeForce RTX 5060": 145,
+    "NVIDIA GeForce RTX 5050": 130, "AMD Radeon RX 9070 XT": 304, "AMD Radeon RX 9070": 220,
+    "AMD Radeon RX 9060 XT": 160, "Intel Arc B580": 190, "Intel Arc B570": 150,
     "NVIDIA GeForce RTX 4090": 450, "AMD Radeon RX 7900 XTX": 355, "NVIDIA GeForce RTX 3090 Ti": 450,
     "AMD Radeon RX 6950 XT": 335, "NVIDIA GeForce RTX 4080 Super": 320, "AMD Radeon RX 7900 XT": 315,
     "NVIDIA GeForce RTX 4070 Ti Super": 285, "NVIDIA GeForce RTX 3080": 320, "AMD Radeon RX 6800 XT": 300,

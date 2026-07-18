@@ -8,21 +8,31 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Mail, Send, User, Phone, MapPin } from 'lucide-react';
+import { Mail, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/sonner';
+import { Locale } from '@/i18n-config';
+import { getLocalizedPath } from '@/lib/path-translations';
 
 const FORMSPREE_ENDPOINT =
   process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ??
   (process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID
     ? `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID}`
     : '');
-const FORMSPREE_REDIRECT =
+const CUSTOM_FORMSPREE_REDIRECT =
   process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL && process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL.trim() !== ''
     ? process.env.NEXT_PUBLIC_FORMSPREE_REDIRECT_URL
-    : '/thank-you';
+    : '';
 
-export function ContactForm({ dict }: { dict: any }) {
+const SYSTEM_COPY: Record<Locale, { missingTitle: string; missingDescription: string; company: string; general: string }> = {
+  en: { missingTitle: 'Form configuration missing', missingDescription: 'Please configure the contact form before submitting.', company: 'Company', general: 'General inquiry' },
+  it: { missingTitle: 'Configurazione del modulo mancante', missingDescription: 'Configura il modulo di contatto prima dell’invio.', company: 'Azienda', general: 'Richiesta generale' },
+  fr: { missingTitle: 'Configuration du formulaire manquante', missingDescription: 'Configurez le formulaire de contact avant l’envoi.', company: 'Entreprise', general: 'Demande générale' },
+  de: { missingTitle: 'Formularkonfiguration fehlt', missingDescription: 'Konfigurieren Sie das Kontaktformular vor dem Absenden.', company: 'Unternehmen', general: 'Allgemeine Anfrage' },
+  es: { missingTitle: 'Falta la configuración del formulario', missingDescription: 'Configura el formulario de contacto antes de enviarlo.', company: 'Empresa', general: 'Consulta general' },
+};
+
+export function ContactForm({ dict, lang }: { dict: any; lang: Locale }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,6 +42,8 @@ export function ContactForm({ dict }: { dict: any }) {
   const [honeypotValue, setHoneypotValue] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const systemCopy = SYSTEM_COPY[lang] ?? SYSTEM_COPY.en;
+  const redirectUrl = CUSTOM_FORMSPREE_REDIRECT || getLocalizedPath(lang, 'thank-you');
 
   if (!dict) return null;
 
@@ -39,8 +51,8 @@ export function ContactForm({ dict }: { dict: any }) {
     e.preventDefault();
     if (!FORMSPREE_ENDPOINT) {
       toast({
-        title: 'Form configuration missing',
-        description: 'Please configure NEXT_PUBLIC_FORMSPREE_FORM_ID in your environment.',
+        title: systemCopy.missingTitle,
+        description: systemCopy.missingDescription,
         variant: 'destructive',
       });
       return;
@@ -58,10 +70,10 @@ export function ContactForm({ dict }: { dict: any }) {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          subject: formData.subject || dict.form.subjects?.general || 'General Inquiry',
+          subject: formData.subject || dict.form.subjects?.general || systemCopy.general,
           message: formData.message,
           _gotcha: honeypotValue,
-          _redirect: FORMSPREE_REDIRECT || undefined,
+          _redirect: redirectUrl,
         }),
       });
 
@@ -70,7 +82,6 @@ export function ContactForm({ dict }: { dict: any }) {
       if (!response.ok) {
         const errorMessage =
           result?.errors?.[0]?.message ||
-          result?.error ||
           result?.error ||
           dict.form.error_desc;
         throw new Error(errorMessage);
@@ -84,10 +95,8 @@ export function ContactForm({ dict }: { dict: any }) {
       setFormData({ name: '', email: '', subject: '', message: '' });
       setHoneypotValue('');
 
-      if (FORMSPREE_REDIRECT) {
-        window.location.assign(FORMSPREE_REDIRECT);
-        return;
-      }
+      window.location.assign(redirectUrl);
+      return;
     } catch (error) {
       const message =
         error instanceof Error ? error.message : dict.form.error_desc;
@@ -126,7 +135,7 @@ export function ContactForm({ dict }: { dict: any }) {
                 {/* Formspree honeypot for spam protection */}
                 <div className="hidden" aria-hidden="true">
                   <Label htmlFor="company" className="sr-only">
-                    Company
+                    {systemCopy.company}
                   </Label>
                   <Input
                     id="company"

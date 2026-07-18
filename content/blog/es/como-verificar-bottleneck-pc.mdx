@@ -1,0 +1,151 @@
+---
+title: "Cómo verificar los bottlenecks de tu PC: Guía paso a paso"
+description: "Aprende a identificar bottlenecks de CPU, GPU y RAM en tu PC. Nuestra guía completa te lleva a través de la detección, análisis y optimización."
+date: "2026-07-15"
+updated: "2026-07-15"
+author: "Arun Kumar Yadav"
+category: "Guías"
+tags: ["Bottleneck", "Rendimiento PC", "CPU", "GPU", "Optimización"]
+coverImage: "/images/blog/check-pc-bottleneck.png"
+excerpt: "¿Tu PC no rinde como esperabas? Aprende a detectar y solucionar bottlenecks de CPU, GPU y RAM con nuestra guía completa paso a paso."
+featured: true
+readingTime: 6
+---
+
+## ¿Qué es un bottleneck de PC?
+
+Un **bottleneck** ocurre cuando un componente de tu sistema limita el rendimiento de otro, impidiendo que tu PC alcance su máximo potencial. Piénsalo como una autopista que se estrecha de cuatro carriles a uno — sin importar qué tan rápidos sean los autos, todos tienen que frenar en el punto de estrangulamiento.
+
+En PCs de gaming, los bottlenecks más comunes involucran la **CPU**, la **GPU** y la **RAM**. Cuando estos componentes no están equilibrados, experimentarás FPS más bajos, tartamudeo y rendimiento general pobre — incluso si uno de tus componentes es de gama alta.
+
+## Señales de que tienes un bottleneck
+
+Antes de sumergirte en herramientas de diagnóstico, observa estos síntomas reveladores:
+
+- **FPS bajos a pesar de tener una GPU potente** — probablemente un bottleneck de CPU
+- **Uso de GPU constantemente por debajo del 80–90 %** durante el juego — la CPU no la alimenta lo suficientemente rápido
+- **Tartamudeo frecuente o caídas de fotogramas** — podría estar relacionado con CPU, RAM o almacenamiento
+- **Uno o varios núcleos de CPU se saturan repetidamente mientras la GPU tiene margen** — puede indicar una carga limitada por CPU tras excluir otras causas
+- **Juegos que se cuelgan o ralentizan al abrir otras apps** — a menudo un bottleneck de RAM
+- **Tiempos de carga largos** a pesar de tener un SSD — potencialmente un problema de almacenamiento o RAM
+
+## Paso a paso: Cómo detectar un bottleneck
+
+### Paso 1: Usa el Administrador de tareas de Windows
+
+El punto de partida más simple está integrado en Windows. Así es como:
+
+1. Presiona `Ctrl + Shift + Esc` para abrir el Administrador de tareas
+2. Haz clic en la pestaña **Rendimiento**
+3. Inicia un juego exigente y juega unos minutos
+4. Presiona Alt-Tab para volver al Administrador de tareas y observa:
+
+| Componente | Qué buscar | Indicador de bottleneck |
+|---|---|---|
+| CPU | Uso general, por núcleo y frecuencias | Uno o varios núcleos saturados mientras empeora el frame time |
+| GPU | Uso, frecuencias, potencia y temperatura | Uso cercano al máximo y FPS que mejoran al reducir ajustes exigentes para GPU |
+| Memoria | Uso, memoria comprometida y paginación | Presión de capacidad o paginación que coincide con tirones |
+| Disco | Tiempo activo y respuesta | Latencia alta sostenida que coincide con pausas al cargar recursos |
+
+> El Administrador de tareas proporciona una visión rápida, pero para datos más detallados, necesitarás una herramienta de monitoreo dedicada.
+
+### Paso 2: Usa MSI Afterburner + RivaTuner
+
+**MSI Afterburner** combinado con **RivaTuner Statistics Server** (RTSS) te ofrece una superposición en tiempo real mostrando estadísticas de hardware durante el juego. Este es el estándar de oro para la detección de bottlenecks.
+
+1. Descarga e instala [MSI Afterburner](https://www.msi.com/Landing/afterburner) (gratis)
+2. Abre **Configuración** → pestaña **Monitoreo**
+3. Activa estas métricas y marca **Mostrar en pantalla** para cada una:
+   - `Uso de GPU`
+   - `Temperatura de GPU`
+   - `Uso de CPU` (por núcleo si está disponible)
+   - `Framerate`
+   - `Uso de RAM`
+   - `Frame time`
+4. Inicia tu juego y monitorea la superposición
+
+**Cómo leer la superposición:**
+
+- **Uno o varios núcleos de CPU saturados mientras la GPU tiene margen** → posible límite de CPU; revisa el límite de FPS, los hilos del juego y las tareas en segundo plano
+- **GPU muy utilizada y FPS sensibles a los ajustes gráficos** → posible límite de GPU; por sí solo no demuestra que todo el sistema esté sano
+- **Picos de frame time** → revisa controladores, temperaturas, memoria, almacenamiento, red y procesos en segundo plano antes de atribuirlos a un componente
+
+```
+Ejemplo: Sistema saludable vs con bottleneck
+
+Saludable (limitado por GPU):
+  Uso CPU: 45 %  |  Uso GPU: 98 %  |  FPS: 120  |  Frametime: 8,3 ms
+
+Bottleneck CPU:
+  Uso CPU: 97 %  |  Uso GPU: 55 %  |  FPS: 65   |  Frametime: 15,4 ms
+
+Bottleneck RAM:
+  Uso CPU: 70 %  |  Uso GPU: 75 %  |  FPS: 80   |  Frametime: 12,5 ms (con picos a 35 ms)
+```
+
+### Paso 3: Usa la calculadora PC Build Check
+
+Para un análisis rápido y completo sin instalar software, usa nuestra **calculadora de bottleneck gratuita**:
+
+1. Selecciona tu **CPU** del menú desplegable
+2. Selecciona tu **GPU** del menú desplegable
+3. Elige tu **configuración de RAM** (cantidad y velocidad)
+4. Selecciona tu **resolución objetivo** (1080p, 1440p o 4K)
+5. Haz clic en **Calcular** para ver el análisis de bottleneck
+
+La calculadora te muestra el porcentaje estimado de bottleneck e identifica qué componente es el factor limitante.
+
+<CalculatorLink href="/es">Prueba la calculadora PC Build Check</CalculatorLink>
+
+<Callout type="warning" title="Cuidado con el thermal throttling">Los límites de temperatura dependen del modelo. Compara temperaturas y frecuencias con la documentación del fabricante. Antes de realizar mantenimiento interno, apaga y desenchufa el equipo, sigue el manual y nunca abras una fuente de alimentación. Si no estás seguro, acude a un técnico cualificado.</Callout>
+
+## Cómo solucionar un bottleneck de CPU
+
+Un bottleneck de CPU significa que tu procesador no puede seguir el ritmo de tu GPU. Así es como abordarlo:
+
+1. **Baja las configuraciones intensivas para CPU** — Reduce distancias de dibujado, cantidad de NPCs, calidad de física y configuraciones de simulación
+2. **Prueba varias resoluciones** — Una resolución más alta suele aumentar la carga de la GPU y reducir los FPS; usa la comparación para ver qué componente llega primero a su límite
+3. **Activa DLSS o FSR** — Estas trasladan el trabajo de renderizado a hardware de IA dedicado u optimizan la carga de GPU
+4. **Prueba con ajustes de fábrica** — Desactiva temporalmente el overclock para que la comparación sea estable y repetible
+5. **Cierra aplicaciones en segundo plano** — Navegadores con muchas pestañas, superposiciones de Discord y software de streaming consumen ciclos de CPU
+6. **Considera actualizar la CPU solo después de probar** — Compara benchmarks independientes de tus juegos, ajustes objetivo y coste de plataforma
+
+## Cómo solucionar un bottleneck de GPU
+
+Un resultado limitado por GPU significa que la carga gráfica alcanza primero su límite en esa prueba. Un uso alto puede ser normal en escenas exigentes, pero no demuestra por sí solo que temperaturas, alimentación, controladores y frame times sean correctos. Si quieres más FPS:
+
+1. **Baja las configuraciones gráficas** — Reduce sombras, anti-aliasing, efectos volumétricos y post-procesado
+2. **Baja tu resolución** — Cambia de 4K a 1440p, o de 1440p a 1080p
+3. **Compara los modos DLSS / FSR / XeSS disponibles** — Pueden aumentar los FPS, pero la calidad y latencia varían según juego, modo y resolución
+4. **Actualiza los controladores de tu GPU** — Las nuevas versiones de controladores a menudo incluyen optimizaciones específicas por juego
+5. **Considera actualizar la GPU solo después de probar** — Confirma el límite con benchmarks repetibles y revisa costes, alimentación y espacio del chasis
+
+## Cómo solucionar un bottleneck de RAM
+
+Los bottlenecks de RAM son menos comunes pero pueden causar tartamudeo severo:
+
+| Problema | Solución |
+|---|---|
+| RAM insuficiente (8 GB en 2026) | Actualizar a 16 GB o 32 GB |
+| Velocidad de RAM lenta | Actualizar a DDR5-6000+ o DDR4-3600 |
+| Perfil XMP/EXPO/DOCP | Tratarlo como ajuste opcional de memoria y comprobar compatibilidad y estabilidad |
+| Configuración single-channel | Agregar un segundo módulo para dual-channel |
+| Problemas de timing de RAM | Usar CPU-Z para verificar que los timings coincidan con las especificaciones |
+
+Los perfiles XMP, EXPO y DOCP cambian la configuración de memoria y pueden quedar fuera de la especificación de memoria estándar del procesador. La mejora varía mucho según la carga y la plataforma. Consulta la documentación de la CPU y la placa base, guarda una referencia de los ajustes originales y vuelve a los valores predeterminados si aparece inestabilidad.
+
+## Tabla de solución de problemas rápida
+
+| Síntoma | Causa probable | Primer paso |
+|---|---|---|
+| FPS bajos, uso de GPU por debajo de su intervalo habitual | Varias causas posibles | Revisar límites, V-Sync, núcleos CPU, frecuencias, temperaturas y frame times |
+| FPS bajos, uso GPU al 99 % | Limitación GPU | Bajar gráficos o actualizar GPU |
+| Tartamudeo con FPS normales | RAM o almacenamiento | Verificar uso RAM, activar XMP |
+| Caídas de FPS en escenas concurridas | Bottleneck CPU | Bajar configuraciones NPC/física |
+| Temperaturas altas, frecuencias reducidas | Posible problema térmico | Comparar con los límites del fabricante; usar un técnico cualificado para mantenimiento interno si es necesario |
+
+## Conclusión
+
+Identificar un bottleneck es el primer paso para optimizar el rendimiento de tu PC. Comienza con herramientas gratuitas como el Administrador de tareas y MSI Afterburner, luego usa nuestra calculadora de bottleneck para un análisis completo. Recuerda: un **sistema limitado por la GPU es saludable** — significa que tus otros componentes están siguiendo el ritmo. Los verdaderos problemas surgen cuando tu CPU o RAM no pueden alimentar tu GPU lo suficientemente rápido.
+
+El monitoreo regular y las verificaciones periódicas del hardware te ayudarán a anticiparte a los problemas de rendimiento y tomar decisiones de actualización informadas.

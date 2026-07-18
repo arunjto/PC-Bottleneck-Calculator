@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import dynamic from 'next/dynamic';
+import EnhancedBottleneckCalculator from '@/components/calculators/enhanced-bottleneck-calculator';
 import { UpdateBanner } from '@/components/ui/update-banner';
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { ContentGuide } from '@/components/content/content-guide';
@@ -8,25 +8,14 @@ import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
+import { getToolsPageCopy } from '@/lib/tools-page-i18n';
+import { JsonLd } from '@/components/seo/json-ld';
+import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
 
-// Dynamically import EnhancedBottleneckCalculator
-const EnhancedBottleneckCalculator = dynamic(
-  () => import('@/components/calculators/enhanced-bottleneck-calculator'),
-  {
-    loading: () => (
-      <div className="w-full max-w-4xl mx-auto h-[600px] bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 animate-pulse flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto" />
-          <div className="h-4 w-48 bg-slate-200 dark:bg-slate-800 rounded mx-auto" />
-        </div>
-      </div>
-    ),
-    ssr: false
-  }
-);
-
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }) {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const alternates = constructMetadataAlternates(lang);
   return {
     title: dict.common.title,
     description: dict.common.description,
@@ -37,137 +26,51 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
       'system optimization',
       'balanced PC build'
     ],
-    alternates: constructMetadataAlternates(lang),
+    alternates,
+    openGraph: {
+      title: dict.common.title,
+      description: dict.common.description,
+      url: alternates.canonical,
+      images: [`${SITE_URL}/og-image.png`],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: dict.common.title,
+      description: dict.common.description,
+      images: [`${SITE_URL}/og-image.png`],
+    },
   };
 }
 
-export default async function HomePage({ params: { lang } }: { params: { lang: Locale } }) {
+export default async function HomePage({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.pcbuildcheck.com/#org",
-        "name": "PC Build Check",
-        "url": "https://www.pcbuildcheck.com/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.pcbuildcheck.com/logo.png",
-          "width": 512,
-          "height": 512
-        }
-        // "sameAs": ["https://twitter.com/yourbrand","https://www.youtube.com/@yourbrand"] // add if real
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.pcbuildcheck.com/#website",
-        "url": "https://www.pcbuildcheck.com/",
-        "name": "PC Build Check",
-        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
-        "inLanguage": lang
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://www.pcbuildcheck.com/#webpage",
-        "url": "https://www.pcbuildcheck.com/",
-        "name": dict.common.title,
-        "isPartOf": { "@id": "https://www.pcbuildcheck.com/#website" },
-        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
-        "description": dict.common.description,
-        "inLanguage": lang,
-        "primaryImageOfPage": {
-          "@type": "ImageObject",
-          "url": "https://www.pcbuildcheck.com/og-image.png"
-        },
-        "datePublished": "2025-10-01",
-        "dateModified": "2025-11-06",
-        "mainEntity": { "@id": "https://www.pcbuildcheck.com/#app" },
-        "hasPart": { "@id": "https://www.pcbuildcheck.com/#faq" }
-      },
-      {
-        "@type": "WebApplication",
-        "@id": "https://www.pcbuildcheck.com/#app",
-        "name": "PC Bottleneck Calculator",
-        "url": "https://www.pcbuildcheck.com/",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "All",
-        "isAccessibleForFree": true,
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "description": "Check CPU and GPU bottlenecks instantly for gaming and productivity."
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://www.pcbuildcheck.com/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://www.pcbuildcheck.com/"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://www.pcbuildcheck.com/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is a PC bottleneck?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A PC bottleneck happens when one component limits the performance of the whole system. For example, even with a high-end GPU, a weaker CPU may prevent it from reaching full potential."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is a CPU or GPU bottleneck worse?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For gaming, a mild GPU bottleneck is usually fine because it means your graphics card is working fully. A strong CPU bottleneck is worse, as it often causes stuttering and inconsistent frame rates."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How accurate is the bottleneck calculator?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Our PC Bottleneck Calculator uses data-driven estimates to provide a highly reliable analysis. Still, real-world results can vary depending on games, applications, and driver updates."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do RAM or storage also cause bottlenecks?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Insufficient or slow RAM can cause stutters in heavy workloads. Similarly, using an HDD instead of an SSD will lead to slower loading times."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Should CPU and GPU both run at 100%?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ideally, your GPU should be close to full utilization for gaming. CPU usage will vary, and it’s not always ideal for it to hit 100%. If CPU is maxed out but GPU is underutilized, that’s a clear CPU bottleneck."
-            }
-          }
-        ]
-      }
-    ]
-  };
+  const toolsCopy = getToolsPageCopy(lang);
+  const pageUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang, '')}`;
+  const schemaData = createSchemaGraph([
+    createWebPageSchema({
+      pageUrl,
+      name: dict.common.title,
+      description: dict.common.description,
+      lang,
+      image: `${SITE_URL}/og-image.png`,
+      mainEntityId: `${pageUrl}#application`,
+      hasPartId: `${pageUrl}#faq`,
+    }),
+    createWebApplicationSchema({
+      pageUrl,
+      name: dict.home.hero_title,
+      description: dict.common.description,
+      lang,
+    }),
+    createBreadcrumbSchema(pageUrl, [{ name: 'Home', url: pageUrl }]),
+    createFaqSchema(pageUrl, dict.home.faqs),
+  ]);
 
   return (
     <div className="py-8 px-4">
-      {/* ✅ Schema JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-      />
+      <JsonLd data={schemaData} />
 
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Hero Section */}
@@ -184,20 +87,34 @@ export default async function HomePage({ params: { lang } }: { params: { lang: L
         </div>
 
         <UpdateBanner dict={dict.home.update_banner} />
-        <EnhancedBottleneckCalculator dict={dict} />
-
-        <InterlinkBox
-          title={dict.home.fps_promo_title}
-          description={dict.home.fps_promo_desc}
-          href={getLocalizedPath(lang, 'fps-calculator')}
-          linkText={dict.home.fps_promo_link}
-          variant="primary"
+        <EnhancedBottleneckCalculator
+          dict={{ calculator: dict.calculator, results: dict.results }}
         />
 
-        <ContentGuide dict={dict} />
+        {/* Below-the-fold: deferred rendering via content-visibility for mobile performance */}
+        <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 1200px' }}>
+          <InterlinkBox
+            title={dict.home.fps_promo_title}
+            description={dict.home.fps_promo_desc}
+            href={getLocalizedPath(lang, 'fps-calculator')}
+            linkText={dict.home.fps_promo_link}
+            variant="primary"
+          />
 
-        {/* FAQ Section */}
-        <section className="prose prose-slate dark:prose-invert max-w-none relative prose-headings:font-semibold prose-strong:text-blue-600 dark:prose-strong:text-blue-400">
+          <div className="mt-6">
+            <InterlinkBox
+              title={toolsCopy.hubTitle}
+              description={toolsCopy.hubDescription}
+              href={`/${lang}/tools`}
+              linkText={toolsCopy.viewAllTools}
+              variant="accent"
+            />
+          </div>
+
+          <ContentGuide dict={dict} />
+
+          {/* FAQ Section */}
+          <section className="prose prose-slate dark:prose-invert max-w-none relative prose-headings:font-semibold prose-strong:text-blue-600 dark:prose-strong:text-blue-400">
           <header className="relative mb-8 p-8 bg-gradient-to-br from-indigo-50 to-pink-50 dark:from-indigo-900/20 dark:to-pink-900/20 rounded-2xl border border-indigo-200/50 dark:border-indigo-800/50 overflow-hidden">
             <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-indigo-100/50 to-pink-100/50 dark:from-indigo-800/30 dark:to-pink-800/30 rounded-full -ml-16 -mt-16"></div>
             <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tr from-pink-100/50 to-indigo-100/50 dark:from-pink-800/30 dark:to-indigo-800/30 rounded-full -mr-12 -mb-12"></div>
@@ -227,7 +144,8 @@ export default async function HomePage({ params: { lang } }: { params: { lang: L
               </details>
             ))}
           </div>
-        </section>
+          </section>
+        </div>
       </div>
     </div>
   );

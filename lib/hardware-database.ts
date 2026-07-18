@@ -1,5 +1,15 @@
-// Comprehensive Hardware Database (2017-2025)
+// Comprehensive Hardware Database (2017-2026)
 // Excludes Apple Silicon as requested
+
+export const HARDWARE_DATABASE_UPDATED = '2026-07-18';
+
+/**
+ * Scores are a 0-100 planning index normalized within each component class.
+ * They blend current-generation gaming and general performance positioning;
+ * they are not raw benchmark results and CPU scores must not be interpreted as
+ * directly equivalent to GPU scores outside the calculator's balance model.
+ */
+export const HARDWARE_SCORE_METHODOLOGY_VERSION = '2026.07';
 
 export interface CPU {
   id: string;
@@ -26,13 +36,14 @@ export interface CPU {
 export interface GPU {
   id: string;
   name: string;
-  brand: 'NVIDIA' | 'AMD';
+  brand: 'NVIDIA' | 'AMD' | 'Intel';
   series: string;
   vram: number; // GB
   baseClock: number; // MHz
   boostClock: number; // MHz
   cudaCores?: number; // NVIDIA only
   streamProcessors?: number; // AMD only
+  xeCores?: number; // Intel only
   tdp: number; // Watts
   benchmarkScore: number; // Relative performance score
   releaseYear: number;
@@ -59,7 +70,48 @@ export interface Game {
 // === CPU & GPU arrays (URLs fixed & validated fallbacks) ===
 
 export const intelCPUs: CPU[] = [
-  // 14th Gen Meteor Lake (2024-2025)
+  // Core Ultra 200S / Arrow Lake desktop processors
+  {
+    id: 'core-ultra-7-270k-plus', name: 'Intel Core Ultra 7 270K Plus', brand: 'Intel', series: 'Core Ultra 200S Plus',
+    baseClock: 3.7, boostClock: 5.5, cores: 24, threads: 24, tdp: 125, benchmarkScore: 94,
+    releaseYear: 2026, launchPrice: 349, currentPrice: 349, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
+    socket: 'LGA1851', architecture: 'Arrow Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/sku/245692/intel-core-ultra-7-processor-270k-plus-36m-cache-up-to-5-50-ghz/specifications.html'
+  },
+  {
+    id: 'core-ultra-5-250k-plus', name: 'Intel Core Ultra 5 250K Plus', brand: 'Intel', series: 'Core Ultra 200S Plus',
+    baseClock: 3.8, boostClock: 5.3, cores: 18, threads: 18, tdp: 125, benchmarkScore: 88,
+    releaseYear: 2026, launchPrice: 289, currentPrice: 289, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
+    socket: 'LGA1851', architecture: 'Arrow Lake Refresh',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/processors/core-ultra/series-2.html'
+  },
+  {
+    id: 'core-ultra-9-285k', name: 'Intel Core Ultra 9 285K', brand: 'Intel', series: 'Core Ultra 200S',
+    baseClock: 3.7, boostClock: 5.7, cores: 24, threads: 24, tdp: 125, benchmarkScore: 97,
+    releaseYear: 2024, launchPrice: 589, currentPrice: 589, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
+    socket: 'LGA1851', architecture: 'Arrow Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/sku/241060/intel-core-ultra-9-processor-285k-36m-cache-up-to-5-70-ghz/specifications.html'
+  },
+  {
+    id: 'core-ultra-7-265k', name: 'Intel Core Ultra 7 265K', brand: 'Intel', series: 'Core Ultra 200S',
+    baseClock: 3.9, boostClock: 5.5, cores: 20, threads: 20, tdp: 125, benchmarkScore: 92,
+    releaseYear: 2024, launchPrice: 394, currentPrice: 394, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
+    socket: 'LGA1851', architecture: 'Arrow Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/docs/processors/core-ultra/core-ultra-desktop-processors-series-2-brief.html'
+  },
+  {
+    id: 'core-ultra-5-245k', name: 'Intel Core Ultra 5 245K', brand: 'Intel', series: 'Core Ultra 200S',
+    baseClock: 4.2, boostClock: 5.2, cores: 14, threads: 14, tdp: 125, benchmarkScore: 84,
+    releaseYear: 2024, launchPrice: 309, currentPrice: 309, tier: 'Mid-Range', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg',
+    socket: 'LGA1851', architecture: 'Arrow Lake',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/docs/processors/core-ultra/core-ultra-desktop-processors-series-2-brief.html'
+  },
+  // 14th Gen Raptor Lake Refresh
   {
     id: 'i9-14900KS',
     name: 'Intel Core i9-14900KS',
@@ -483,6 +535,48 @@ export const intelCPUs: CPU[] = [
 ];
 
 export const amdCPUs: CPU[] = [
+  {
+    id: 'ryzen-7-9850x3d', name: 'AMD Ryzen 7 9850X3D', brand: 'AMD', series: 'Ryzen 9000X3D',
+    baseClock: 4.7, boostClock: 5.6, cores: 8, threads: 16, tdp: 120, benchmarkScore: 100,
+    releaseYear: 2026, launchPrice: 499, currentPrice: 499, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg', socket: 'AM5', architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/newsroom/press-releases/2026-1-5-amd-expands-ai-leadership-across-client-graphics-.html'
+  },
+  {
+    id: 'ryzen-9-9950x3d', name: 'AMD Ryzen 9 9950X3D', brand: 'AMD', series: 'Ryzen 9000X3D',
+    baseClock: 4.3, boostClock: 5.7, cores: 16, threads: 32, tdp: 170, benchmarkScore: 100,
+    releaseYear: 2025, launchPrice: 699, currentPrice: 699, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg', socket: 'AM5', architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9950x3d.html'
+  },
+  {
+    id: 'ryzen-9-9900x3d', name: 'AMD Ryzen 9 9900X3D', brand: 'AMD', series: 'Ryzen 9000X3D',
+    baseClock: 4.4, boostClock: 5.5, cores: 12, threads: 24, tdp: 120, benchmarkScore: 96,
+    releaseYear: 2025, launchPrice: 599, currentPrice: 599, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg', socket: 'AM5', architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9900x3d.html'
+  },
+  {
+    id: 'ryzen-7-9800x3d', name: 'AMD Ryzen 7 9800X3D', brand: 'AMD', series: 'Ryzen 9000X3D',
+    baseClock: 4.7, boostClock: 5.2, cores: 8, threads: 16, tdp: 120, benchmarkScore: 95,
+    releaseYear: 2024, launchPrice: 479, currentPrice: 479, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg', socket: 'AM5', architecture: 'Zen 5',
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9800x3d.html'
+  },
+  {
+    id: 'ryzen-7-7800x3d', name: 'AMD Ryzen 7 7800X3D', brand: 'AMD', series: 'Ryzen 7000X3D',
+    baseClock: 4.2, boostClock: 5.0, cores: 8, threads: 16, tdp: 120, benchmarkScore: 88,
+    releaseYear: 2023, launchPrice: 449, currentPrice: 449, tier: 'High-End', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg', socket: 'AM5', architecture: 'Zen 4',
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-7-7800x3d.html'
+  },
+  {
+    id: 'ryzen-7-5700x3d', name: 'AMD Ryzen 7 5700X3D', brand: 'AMD', series: 'Ryzen 5000X3D',
+    baseClock: 3.0, boostClock: 4.1, cores: 8, threads: 16, tdp: 105, benchmarkScore: 76,
+    releaseYear: 2024, launchPrice: 249, currentPrice: 249, tier: 'Mid-Range', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg', socket: 'AM4', architecture: 'Zen 3',
+    officialUrl: 'https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-7-5700x3d.html'
+  },
   {
     id: 'ryzen-9-9950X',
     name: 'AMD Ryzen 9 9950X',
@@ -956,7 +1050,7 @@ export const nvidiaGPUs: GPU[] = [
     baseClock: 2295,
     boostClock: 2620,
     cudaCores: 10752,
-    tdp: 400,
+    tdp: 360,
     benchmarkScore: 92,
     releaseYear: 2025,
     launchPrice: 999,
@@ -1002,6 +1096,66 @@ export const nvidiaGPUs: GPU[] = [
     launchPrice: 549,
     currentPrice: 549,
     tier: 'Mid-Range',
+    category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
+    architecture: 'Blackwell',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/'
+  },
+  {
+    id: 'rtx-5060-Ti',
+    name: 'NVIDIA GeForce RTX 5060 Ti',
+    brand: 'NVIDIA',
+    series: 'RTX 50',
+    vram: 16,
+    baseClock: 2410,
+    boostClock: 2570,
+    cudaCores: 4608,
+    tdp: 180,
+    benchmarkScore: 71,
+    releaseYear: 2025,
+    launchPrice: 379,
+    currentPrice: 379,
+    tier: 'Mid-Range',
+    category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
+    architecture: 'Blackwell',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/'
+  },
+  {
+    id: 'rtx-5060',
+    name: 'NVIDIA GeForce RTX 5060',
+    brand: 'NVIDIA',
+    series: 'RTX 50',
+    vram: 8,
+    baseClock: 2280,
+    boostClock: 2500,
+    cudaCores: 3840,
+    tdp: 145,
+    benchmarkScore: 64,
+    releaseYear: 2025,
+    launchPrice: 299,
+    currentPrice: 299,
+    tier: 'Budget',
+    category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
+    architecture: 'Blackwell',
+    officialUrl: 'https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/'
+  },
+  {
+    id: 'rtx-5050',
+    name: 'NVIDIA GeForce RTX 5050',
+    brand: 'NVIDIA',
+    series: 'RTX 50',
+    vram: 8,
+    baseClock: 2310,
+    boostClock: 2570,
+    cudaCores: 2560,
+    tdp: 130,
+    benchmarkScore: 58,
+    releaseYear: 2025,
+    launchPrice: 249,
+    currentPrice: 249,
+    tier: 'Budget',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'Blackwell',
@@ -1569,46 +1723,104 @@ export const nvidiaGPUs: GPU[] = [
   }
 ];
 
+export const intelGPUs: GPU[] = [
+  {
+    id: 'arc-b580', name: 'Intel Arc B580 12GB', brand: 'Intel', series: 'Arc B-Series',
+    vram: 12, baseClock: 2670, boostClock: 2670, xeCores: 20, tdp: 190, benchmarkScore: 66,
+    releaseYear: 2024, launchPrice: 249, currentPrice: 249, tier: 'Budget', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg', architecture: 'Xe2 Battlemage',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/sku/241598/intel-arc-b580-graphics/specifications.html'
+  },
+  {
+    id: 'arc-b570', name: 'Intel Arc B570 10GB', brand: 'Intel', series: 'Arc B-Series',
+    vram: 10, baseClock: 2500, boostClock: 2500, xeCores: 18, tdp: 150, benchmarkScore: 61,
+    releaseYear: 2025, launchPrice: 219, currentPrice: 219, tier: 'Budget', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg', architecture: 'Xe2 Battlemage',
+    officialUrl: 'https://www.intel.com/content/www/us/en/products/details/discrete-gpus/arc/desktop/b-series.html'
+  }
+];
+
 export const amdGPUs: GPU[] = [
   {
-    id: 'rx-8800-XT',
-    name: 'AMD Radeon RX 8800 XT',
+    id: 'rx-9070-gre', name: 'AMD Radeon RX 9070 GRE', brand: 'AMD', series: 'RX 9000',
+    vram: 12, baseClock: 2220, boostClock: 2790, streamProcessors: 3072, tdp: 220, benchmarkScore: 76,
+    releaseYear: 2026, launchPrice: 549, currentPrice: 549, tier: 'Mid-Range', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg', architecture: 'RDNA 4',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070-gre.html'
+  },
+  {
+    id: 'rx-9060-xt-8gb', name: 'AMD Radeon RX 9060 XT 8GB', brand: 'AMD', series: 'RX 9000',
+    vram: 8, baseClock: 2530, boostClock: 3130, streamProcessors: 2048, tdp: 150, benchmarkScore: 67,
+    releaseYear: 2025, launchPrice: 299, currentPrice: 299, tier: 'Budget', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg', architecture: 'RDNA 4',
+    officialUrl: 'https://www.amd.com/en/products/specifications/graphics.html'
+  },
+  {
+    id: 'rx-9060', name: 'AMD Radeon RX 9060', brand: 'AMD', series: 'RX 9000',
+    vram: 8, baseClock: 2400, boostClock: 2990, streamProcessors: 1792, tdp: 132, benchmarkScore: 62,
+    releaseYear: 2026, launchPrice: 279, currentPrice: 279, tier: 'Budget', category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg', architecture: 'RDNA 4',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9060.html'
+  },
+  {
+    id: 'rx-9070-XT',
+    name: 'AMD Radeon RX 9070 XT',
     brand: 'AMD',
-    series: 'RX 8000',
+    series: 'RX 9000',
     vram: 16,
-    baseClock: 2100,
-    boostClock: 2400,
+    baseClock: 2400,
+    boostClock: 2970,
     streamProcessors: 4096,
-    tdp: 250,
+    tdp: 304,
     benchmarkScore: 89,
     releaseYear: 2025,
-    launchPrice: 649,
-    currentPrice: 649,
+    launchPrice: 599,
+    currentPrice: 599,
     tier: 'High-End',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'RDNA 4',
-    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070xt.html'
   },
   {
-    id: 'rx-8700-XT',
-    name: 'AMD Radeon RX 8700 XT',
+    id: 'rx-9070',
+    name: 'AMD Radeon RX 9070',
     brand: 'AMD',
-    series: 'RX 8000',
-    vram: 12,
-    baseClock: 2171,
-    boostClock: 2544,
+    series: 'RX 9000',
+    vram: 16,
+    baseClock: 2070,
+    boostClock: 2520,
     streamProcessors: 3584,
-    tdp: 245,
+    tdp: 220,
     benchmarkScore: 81,
     releaseYear: 2025,
-    launchPrice: 449,
-    currentPrice: 449,
+    launchPrice: 549,
+    currentPrice: 549,
     tier: 'Mid-Range',
     category: 'Desktop',
     imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
     architecture: 'RDNA 4',
-    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon.html'
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070.html'
+  },
+  {
+    id: 'rx-9060-XT-16gb',
+    name: 'AMD Radeon RX 9060 XT 16GB',
+    brand: 'AMD',
+    series: 'RX 9000',
+    vram: 16,
+    baseClock: 2530,
+    boostClock: 3130,
+    streamProcessors: 2048,
+    tdp: 160,
+    benchmarkScore: 68,
+    releaseYear: 2025,
+    launchPrice: 349,
+    currentPrice: 349,
+    tier: 'Mid-Range',
+    category: 'Desktop',
+    imageUrl: 'https://images.pexels.com/photos/1029757/pexels-photo-1029757.jpeg',
+    architecture: 'RDNA 4',
+    officialUrl: 'https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9060xt.html'
   },
   {
     id: 'rx-7900-XTX',
@@ -2335,8 +2547,47 @@ export const modernGames: Game[] = [
 
 // Combined hardware arrays
 export const allCPUs = [...intelCPUs, ...amdCPUs].sort((a, b) => b.benchmarkScore - a.benchmarkScore);
-export const allGPUs = [...nvidiaGPUs, ...amdGPUs].sort((a, b) => b.benchmarkScore - a.benchmarkScore);
+export const allGPUs = [...nvidiaGPUs, ...amdGPUs, ...intelGPUs].sort((a, b) => b.benchmarkScore - a.benchmarkScore);
 export const allGames = modernGames.sort((a, b) => b.releaseYear - a.releaseYear);
+
+export interface HardwareDatabaseValidation {
+  cpuCount: number;
+  gpuCount: number;
+  errors: string[];
+}
+
+/** Validate structural invariants that could otherwise corrupt selectors or calculations. */
+export function validateHardwareDatabase(): HardwareDatabaseValidation {
+  const errors: string[] = [];
+
+  const validateCollection = (kind: 'CPU' | 'GPU', items: Array<CPU | GPU>) => {
+    const ids = new Set<string>();
+    const names = new Set<string>();
+
+    for (const item of items) {
+      if (ids.has(item.id)) errors.push(`${kind}: duplicate id "${item.id}"`);
+      if (names.has(item.name)) errors.push(`${kind}: duplicate name "${item.name}"`);
+      ids.add(item.id);
+      names.add(item.name);
+
+      if (!/^[A-Za-z0-9][A-Za-z0-9-]*$/.test(item.id)) errors.push(`${kind}: invalid id "${item.id}"`);
+      if (item.benchmarkScore < 1 || item.benchmarkScore > 100) errors.push(`${kind}: score out of range for "${item.name}"`);
+      if (item.tdp <= 0) errors.push(`${kind}: non-positive power value for "${item.name}"`);
+      if (item.releaseYear < 2010 || item.releaseYear > 2026) errors.push(`${kind}: invalid release year for "${item.name}"`);
+      if (!item.officialUrl?.startsWith('https://')) errors.push(`${kind}: missing official HTTPS source for "${item.name}"`);
+    }
+  };
+
+  validateCollection('CPU', allCPUs);
+  validateCollection('GPU', allGPUs);
+
+  return { cpuCount: allCPUs.length, gpuCount: allGPUs.length, errors };
+}
+
+const hardwareDatabaseValidation = validateHardwareDatabase();
+if (hardwareDatabaseValidation.errors.length > 0) {
+  throw new Error(`Invalid hardware database:\n${hardwareDatabaseValidation.errors.join('\n')}`);
+}
 
 // Helper functions
 export function getCPUById(id: string): CPU | undefined {
@@ -2364,7 +2615,11 @@ export function getGamesByCategory(category: string): Game[] {
 }
 
 // Performance calculation helpers
-export function calculateBottleneckPercentage(cpu: CPU, gpu: GPU): number {
+/**
+ * Returns the relative gap between the internally normalized CPU and GPU
+ * comparison scores. This is not a measured percentage of lost performance.
+ */
+export function calculateRelativeScoreGap(cpu: CPU, gpu: GPU): number {
   const cpuScore = cpu.benchmarkScore;
   const gpuScore = gpu.benchmarkScore;
   
@@ -2381,27 +2636,6 @@ export function getBottleneckType(cpu: CPU, gpu: GPU): 'CPU' | 'GPU' | 'Balanced
   if (difference <= 5) return 'Balanced';
   if (cpu.benchmarkScore < gpu.benchmarkScore) return 'CPU';
   return 'GPU';
-}
-
-export function estimateFPS(cpu: CPU, gpu: GPU, game: Game, resolution: string): number {
-  const baseScore = Math.min(cpu.benchmarkScore, gpu.benchmarkScore);
-  
-  // Resolution multipliers
-  const resolutionMultiplier = {
-    '1080p': 1.0,
-    '1440p': 0.7,
-    '4K': 0.4
-  }[resolution] || 1.0;
-  
-  // Game demand multipliers
-  const demandMultiplier = {
-    'Low': 1.2,
-    'Medium': 1.0,
-    'High': 0.8,
-    'Extreme': 0.6
-  }[game.gpuDemand] || 1.0;
-  
-  return Math.round(baseScore * resolutionMultiplier * demandMultiplier * 1.5);
 }
 
 export function calculatePSURequirement(cpu: CPU, gpu: GPU): number {
