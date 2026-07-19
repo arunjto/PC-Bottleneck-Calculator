@@ -28,6 +28,11 @@ type ConsentPreferences = Record<OptionalConsentKey, boolean>;
 const STORAGE_KEY = 'pcbuildcheck-consent-preferences';
 
 const DEFAULT_PREFERENCES: ConsentPreferences = {
+  analytics: false,
+  advertising: false,
+};
+
+const ACCEPT_ALL_PREFERENCES: ConsentPreferences = {
   analytics: true,
   advertising: true,
 };
@@ -45,7 +50,7 @@ const OPTIONAL_FIELDS: {
   {
     key: 'advertising',
     label: 'Advertising cookies',
-    description: 'Allow more relevant ads and affiliate tracking support.',
+    description: 'Allow optional advertising storage when advertising is enabled.',
   },
 ];
 
@@ -77,7 +82,14 @@ export function ConsentManagerButton({
 
   const persistPreferences = useCallback((next: ConsentPreferences) => {
     if (typeof window === 'undefined') return;
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      window.dispatchEvent(
+        new CustomEvent('pcbuildcheck:consent-changed', { detail: next })
+      );
+    } catch {
+      // Storage can be unavailable in private browsing or hardened browsers.
+    }
   }, []);
 
   const handleClick = useCallback(
@@ -107,6 +119,12 @@ export function ConsentManagerButton({
   }, [persistPreferences, preferences]);
 
   const handleAcceptAll = useCallback(() => {
+    setPreferences(ACCEPT_ALL_PREFERENCES);
+    persistPreferences(ACCEPT_ALL_PREFERENCES);
+    setDialogOpen(false);
+  }, [persistPreferences]);
+
+  const handleRejectAll = useCallback(() => {
     setPreferences(DEFAULT_PREFERENCES);
     persistPreferences(DEFAULT_PREFERENCES);
     setDialogOpen(false);
@@ -169,6 +187,9 @@ export function ConsentManagerButton({
           </div>
 
           <DialogFooter className="gap-2 pt-4">
+            <Button type="button" variant="ghost" onClick={handleRejectAll}>
+              Reject optional
+            </Button>
             <Button type="button" variant="outline" onClick={handleSave}>
               Save preferences
             </Button>

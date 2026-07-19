@@ -35,6 +35,7 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
             currentGame={currentBuild.game}
             currentResolution={currentBuild.resolution}
             dict={dict}
+            lang={lang}
           />
         </>
       )}

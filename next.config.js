@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // Keep production tracing inside this app when a parent folder also has a lockfile.
+  outputFileTracingRoot: __dirname,
   images: {
-    // unoptimized: true, // Enabled image optimization
-    domains: ['i.imgur.com', 'images.pexels.com']
+    formats: ['image/avif', 'image/webp'], // Serve modern image formats on mobile
+    remotePatterns: [
+      { protocol: 'https', hostname: 'i.imgur.com' },
+      { protocol: 'https', hostname: 'images.pexels.com' },
+    ],
+    minimumCacheTTL: 86400, // Cache optimized images for 24 hours
   },
   experimental: {
-    // optimizeCss: true, // Disabled to fix missing styles
+    optimizeCss: true, // Inline critical CSS → eliminates render-blocking stylesheet
   },
   // Ensure CSS is properly handled
   compiler: {

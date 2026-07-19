@@ -5,29 +5,34 @@ import { MotionWrapper } from '@/components/ui/motion-wrapper';
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
+import Link from 'next/link';
+import { getLocalizedPath } from '@/lib/path-translations';
 
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }) {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const description = dict.about.intro_p1.replace(/<[^>]*>/g, '').slice(0, 155);
+  const url = `https://www.pcbuildcheck.com${getLocalizedPath(lang, 'about')}`;
   return {
-    title: `${dict.about.title} – PCBuildCheck (PC Performance & Bottleneck Calculator)`,
-    description: dict.about.intro_p1.replace(/<[^>]*>/g, ''),
+    title: dict.about.title,
+    description,
     alternates: constructMetadataAlternates(lang, '/about'),
     openGraph: {
-      title: `${dict.about.title} – PCBuildCheck`,
-      description: dict.about.intro_p1.replace(/<[^>]*>/g, ''),
-      url: 'https://www.pcbuildcheck.com/about',
+      title: dict.about.title,
+      description,
+      url,
       siteName: 'PCBuildCheck',
       type: 'website',
       images: ['https://www.pcbuildcheck.com/og-image.png'],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${dict.about.title} – PCBuildCheck`,
-      description: dict.about.intro_p1.replace(/<[^>]*>/g, ''),
+      title: dict.about.title,
+      description,
       images: ['https://www.pcbuildcheck.com/og-image.png'],
     },
     robots: { index: true, follow: true },
-    authors: [{ name: 'PCBuildCheck Team', url: 'https://www.pcbuildcheck.com' }],
+    authors: [{ name: 'Arun Kumar Yadav', url: 'https://www.pcbuildcheck.com/en/author' }],
   };
 }
 
@@ -69,41 +74,26 @@ const WEBSITE_SCHEMA = {
 // (3) Added mainEntityOfPage, inLanguage, and image width/height
 // AboutPage schema moved inside component to access dynamic lang
 
-// Breadcrumb schema (Home → About)
-const BREADCRUMB_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: 'https://www.pcbuildcheck.com/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'About',
-      item: 'https://www.pcbuildcheck.com/about',
-    },
-  ],
-};
+// Breadcrumb schema (Home → About) — built inside component to use lang param
+// See BREADCRUMB_SCHEMA usage in AboutPage component below
 
 // ---------- PAGE COMPONENT ----------
 
-export default async function AboutPage({ params: { lang } }: { params: { lang: Locale } }) {
+export default async function AboutPage({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const aboutUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang, 'about')}`;
 
   // AboutPage schema (page identity)
   const ABOUT_SCHEMA = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    '@id': 'https://www.pcbuildcheck.com/about#about',
+    '@id': `${aboutUrl}#about`,
     name: 'About PCBuildCheck',
-    url: 'https://www.pcbuildcheck.com/about',
+    url: aboutUrl,
     isPartOf: { '@id': 'https://www.pcbuildcheck.com/#website' },
     about: { '@id': 'https://www.pcbuildcheck.com/#org' },
-    mainEntityOfPage: 'https://www.pcbuildcheck.com/about',
+    mainEntityOfPage: aboutUrl,
     inLanguage: lang,
     description:
       'PCBuildCheck is a transparent, data-driven PC performance and bottleneck calculator built by gamers, creators, and developers.',
@@ -113,6 +103,26 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
       width: 1200,
       height: 630,
     },
+  };
+
+  // Locale-aware breadcrumb schema
+  const BREADCRUMB_SCHEMA = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `https://www.pcbuildcheck.com/${lang}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'About',
+        item: aboutUrl,
+      },
+    ],
   };
   return (
     <div className="py-8 px-4">
@@ -134,10 +144,10 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
         <nav aria-label="Breadcrumb" className="text-sm text-slate-600 mb-4">
           <ol className="flex gap-1 items-center">
             <li>
-              <a href="/" className="hover:underline">Home</a>
+              <a href={`/${lang}`} className="hover:underline">Home</a>
             </li>
-            <li aria-hidden className="px-1">›</li>
-            <li className="text-slate-900 font-medium">About</li>
+            <li aria-hidden="true" className="px-1">›</li>
+            <li className="text-slate-900 font-medium" aria-current="page">About</li>
           </ol>
         </nav>
 
@@ -182,6 +192,19 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
                     <li key={index} dangerouslySetInnerHTML={{ __html: item }} />
                   ))}
                 </ul>
+
+                <p className="mt-4">
+                  <Link
+                    href={getLocalizedPath(lang, 'methodology')}
+                    className="font-semibold text-primary hover:underline"
+                  >
+                    {lang === 'it' ? 'Leggi la metodologia completa' :
+                     lang === 'fr' ? 'Lire la méthodologie complète' :
+                     lang === 'de' ? 'Vollständige Methodik lesen' :
+                     lang === 'es' ? 'Leer la metodología completa' :
+                     'Read the full methodology'}
+                  </Link>
+                </p>
 
                 <h2 className="text-2xl font-bold text-primary border-b-2 border-border pb-3 mt-10 mb-6">
                   {dict.about.promise_title}

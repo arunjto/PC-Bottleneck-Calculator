@@ -5,17 +5,21 @@ import { ConsentManagerButton } from '@/components/privacy/manage-consent-button
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
+import { getLocalizedPath } from '@/lib/path-translations';
 
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const description = dict.privacy.intro.replace(/<[^>]*>?/gm, '').slice(0, 155);
+  const url = `https://www.pcbuildcheck.com${getLocalizedPath(lang, 'privacy')}`;
   return {
-    title: `${dict.privacy.title} — PCBuildCheck`,
-    description: dict.privacy.intro.replace(/<[^>]*>?/gm, ''), // Strip HTML tags
+    title: dict.privacy.title,
+    description,
     alternates: constructMetadataAlternates(lang, '/privacy'),
     openGraph: {
-      title: `${dict.privacy.title} — PCBuildCheck`,
-      description: dict.privacy.intro.replace(/<[^>]*>?/gm, ''),
-      url: `https://www.pcbuildcheck.com/${lang}/privacy`,
+      title: dict.privacy.title,
+      description,
+      url,
       siteName: 'PCBuildCheck',
       type: 'website',
       images: ['https://www.pcbuildcheck.com/og-image.png'],
@@ -23,8 +27,11 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
   };
 }
 
-export default async function PrivacyPage({ params: { lang } }: { params: { lang: Locale } }) {
+export default async function PrivacyPage({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const privacyUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang, 'privacy')}`;
+  const updatedDate = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date('2026-07-14T00:00:00Z'));
 
   // JSON-LD Schemas (keeping mostly static/english for now as they are structural, 
   // but could be localized if strictly needed. Google understands English schema well.)
@@ -39,14 +46,12 @@ export default async function PrivacyPage({ params: { lang } }: { params: { lang
   const PRIVACY_SCHEMA = {
     '@context': 'https://schema.org',
     '@type': 'PrivacyPolicy',
-    '@id': 'https://www.pcbuildcheck.com/privacy#policy',
-    url: `https://www.pcbuildcheck.com/${lang}/privacy`,
+    '@id': `${privacyUrl}#policy`,
+    url: privacyUrl,
     isPartOf: { '@id': 'https://www.pcbuildcheck.com/#website' },
     inLanguage: lang,
-    name: `${dict.privacy.title} — PCBuildCheck`,
+    name: dict.privacy.title,
     description: dict.privacy.intro.replace(/<[^>]*>?/gm, ''),
-    datePublished: '2024-05-12',
-    dateModified: '2025-11-08',
   };
 
   const BREADCRUMB_SCHEMA = {
@@ -54,7 +59,7 @@ export default async function PrivacyPage({ params: { lang } }: { params: { lang
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.pcbuildcheck.com/${lang}` },
-      { '@type': 'ListItem', position: 2, name: 'Privacy', item: `https://www.pcbuildcheck.com/${lang}/privacy` },
+      { '@type': 'ListItem', position: 2, name: 'Privacy', item: privacyUrl },
     ],
   };
 
@@ -81,7 +86,7 @@ export default async function PrivacyPage({ params: { lang } }: { params: { lang
                 <h1 className="text-4xl font-bold text-primary mb-2">{dict.privacy.title}</h1>
                 <p className="text-muted-foreground italic mb-8">
                   {dict.privacy.last_updated}{' '}
-                  <time dateTime="2025-11-08">November 8, 2025</time>
+                  <time dateTime="2026-07-14">{updatedDate}</time>
                 </p>
 
                 <p className="leading-7" dangerouslySetInnerHTML={{ __html: dict.privacy.intro }} />

@@ -1,23 +1,20 @@
 // app/layout.tsx
 import '@/app/globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import Script from 'next/script'; // Import Script
+import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { QuickToolsBar } from '@/components/layout/quick-tools-bar';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' }); // Add display swap
-
-export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
-  const locale = params.lang === 'it' ? 'it_IT' : 'en_US';
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  const locale = lang === 'it' ? 'it_IT' : lang === 'fr' ? 'fr_FR' : lang === 'de' ? 'de_DE' : lang === 'es' ? 'es_ES' : 'en_US';
 
   return {
     metadataBase: new URL('https://www.pcbuildcheck.com'),
     title: {
-      template: '%s | PC Bottleneck Calculator',
+      template: '%s | PCBuildCheck',
       default: 'PC Bottleneck Calculator - Optimize CPU & GPU Performance'
     },
     description:
@@ -47,13 +44,16 @@ export async function generateMetadata({ params }: { params: { lang: string } })
         'Free tools to analyze CPU/GPU bottlenecks, estimate gaming FPS, and calculate PSU requirements.'
     },
     manifest: '/manifest.json',
-    viewport: 'width=device-width, initial-scale=1'
   };
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 // app/[lang]/layout.tsx
 import { i18n } from '@/i18n-config';
-import { getDictionary } from '@/get-dictionary';
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -64,16 +64,28 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }) {
-  const dict = await getDictionary(params.lang as any);
+  const { lang } = await params;
+  const adsConfigured =
+    process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true' &&
+    process.env.NEXT_PUBLIC_GOOGLE_CERTIFIED_CMP_CONFIGURED === 'true';
 
   return (
-    <html lang={params.lang} suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
-        {/* AdSense optimized with Next.js Script */}
+        {adsConfigured && (
+          <>
+            <link
+              rel="preconnect"
+              href="https://pagead2.googlesyndication.com"
+              crossOrigin="anonymous"
+            />
+            <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+          </>
+        )}
       </head>
-      <body className={inter.className}>
+      <body className="font-sans" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider>
             <div className="flex flex-col min-h-screen">
@@ -83,31 +95,24 @@ export default async function RootLayout({
               >
                 Skip to main content
               </a>
-              <a
-                href="#quick-tools"
-                className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:border focus:border-primary focus:text-foreground"
-              >
-                Skip to quick tools
-              </a>
-              <Navbar lang={params.lang} />
-              <div id="quick-tools" tabIndex={-1}>
-                <QuickToolsBar dict={dict.quick_tools} lang={params.lang} />
-              </div>
+              <Navbar lang={lang} />
               <main id="main-content" tabIndex={-1} className="flex-grow">
                 {children}
               </main>
-              <Footer dict={dict.footer} lang={params.lang} />
+              <Footer lang={lang} />
             </div>
           </TooltipProvider>
         </ThemeProvider>
 
-        {/* AdSense Script moved to body/afterInteractive */}
-        <Script
-          id="adsbygoogle-init"
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9111916848868133"
-          crossOrigin="anonymous"
-        />
+        {/* AdSense — lazyOnload ensures it doesn't block interactivity on mobile */}
+        {adsConfigured && (
+          <Script
+            id="adsbygoogle-init"
+            strategy="lazyOnload"
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9111916848868133"
+            crossOrigin="anonymous"
+          />
+        )}
       </body>
     </html>
   );

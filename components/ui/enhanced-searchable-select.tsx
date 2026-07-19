@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useId } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Check, ChevronDown, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -20,6 +20,8 @@ interface EnhancedSearchableSelectProps {
   onValueChange: (value: string) => void;
   placeholder: string;
   type: 'cpu' | 'gpu' | 'ram' | 'resolution' | 'game';
+  /** DOM id forwarded to the trigger element — links <label htmlFor> to this combobox */
+  id: string;
   labelId?: string;
   descriptionId?: string;
 }
@@ -65,6 +67,7 @@ export function EnhancedSearchableSelect({
   onValueChange,
   placeholder,
   type,
+  id,
   labelId,
   descriptionId,
 }: EnhancedSearchableSelectProps) {
@@ -73,8 +76,7 @@ export function EnhancedSearchableSelect({
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const generatedId = useId();
-  const listboxId = `${generatedId}-listbox`;
+  const listboxId = `${id}-listbox`;
 
   const filteredOptions = options.filter(
     (option) =>
@@ -153,95 +155,96 @@ export function EnhancedSearchableSelect({
       className={cn('relative w-full', isOpen ? 'z-50' : 'z-10')}
     >
       <Tooltip>
-          <TooltipTrigger asChild>
-            <div
-              className={cn(
-                'flex h-12 w-full items-center justify-between rounded-lg border border-input bg-gradient-to-r from-background to-muted/20 px-3 py-2 text-sm cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
-                isOpen && 'border-primary ring-2 ring-primary/20 shadow-lg'
-              )}
-              onClick={() => setIsOpen(!isOpen)}
-              onKeyDown={handleKeyDown}
-              tabIndex={0}
-              role="combobox"
-              aria-expanded={isOpen}
-              aria-haspopup="listbox"
-              aria-label={labelId ? undefined : `${placeholder}. Press Enter or Space to open dropdown. Use arrow keys to navigate.`}
-              aria-labelledby={labelId}
-              aria-describedby={descriptionId}
-              aria-controls={listboxId}
-              aria-activedescendant={highlightedIndex >= 0 ? `option-${filteredOptions[highlightedIndex]?.id}` : undefined}
-            >
-              <div className="flex items-center space-x-3 flex-1 min-w-0">
-                <span className="text-lg flex-shrink-0">{getTypeIcon(type)}</span>
-                {selectedOption ? (
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2">
-                      <span className="font-medium text-foreground truncate">
-                        {selectedOption.name}
-                      </span>
-                      <span
-                        className={cn(
-                          'px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0',
-                          getTierColor(selectedOption.tier)
-                        )}
-                      >
-                        {selectedOption.tier}
-                      </span>
-                    </div>
-                    <div className="text-xs text-muted-foreground truncate mt-0.5">
-                      {selectedOption.specs}
-                    </div>
+        <TooltipTrigger asChild>
+          {/* id prop links <label htmlFor="..."> to this combobox trigger */}
+          <div
+            id={id}
+            className={cn(
+              'flex h-12 w-full items-center justify-between rounded-lg border border-input bg-gradient-to-r from-background to-muted/20 px-3 py-2 text-sm cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+              isOpen && 'border-primary ring-2 ring-primary/20 shadow-lg'
+            )}
+            onClick={() => setIsOpen(!isOpen)}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+            role="combobox"
+            aria-expanded={isOpen}
+            aria-haspopup="listbox"
+            aria-label={labelId ? undefined : `${placeholder}. Press Enter or Space to open dropdown. Use arrow keys to navigate.`}
+            aria-labelledby={labelId}
+            aria-describedby={descriptionId}
+            aria-controls={isOpen ? listboxId : undefined}
+            aria-activedescendant={highlightedIndex >= 0 ? `option-${filteredOptions[highlightedIndex]?.id}` : undefined}
+          >
+            <div className="flex items-center space-x-3 flex-1 min-w-0">
+              <span className="text-lg flex-shrink-0" aria-hidden="true">{getTypeIcon(type)}</span>
+              {selectedOption ? (
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center space-x-2">
+                    <span className="font-medium text-foreground truncate">
+                      {selectedOption.name}
+                    </span>
+                    <span
+                      className={cn(
+                        'px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0',
+                        getTierColor(selectedOption.tier)
+                      )}
+                    >
+                      {selectedOption.tier}
+                    </span>
                   </div>
-                ) : (
-                  <span className="text-muted-foreground flex-1 truncate">{placeholder}</span>
-                )}
-              </div>
-              <ChevronDown
-                className={cn('h-4 w-4 text-muted-foreground transition-transform duration-200', isOpen && 'rotate-180')}
-              />
+                  <div className="text-xs text-muted-foreground truncate mt-0.5">
+                    {selectedOption.specs}
+                  </div>
+                </div>
+              ) : (
+                <span className="text-muted-foreground flex-1 truncate">{placeholder}</span>
+              )}
             </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            Press Enter or Space to open. Use Arrow keys to navigate, Enter to select, Esc to close. Type to search.
-          </TooltipContent>
-        </Tooltip>
+            <ChevronDown
+              className={cn('h-4 w-4 text-muted-foreground transition-transform duration-200', isOpen && 'rotate-180')}
+              aria-hidden="true"
+            />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          Press Enter or Space to open. Use Arrow keys to navigate, Enter to select, Esc to close. Type to search.
+        </TooltipContent>
+      </Tooltip>
 
       {isOpen && (
         <div className="absolute z-50 w-full mt-2 bg-popover border border-border rounded-lg shadow-xl animate-in fade-in-0 zoom-in-95">
           <div className="p-3 border-b border-border relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
             <Tooltip>
               <TooltipTrigger asChild>
                 <input
-                ref={inputRef}
-                type="text"
-                placeholder={`Search ${type.toUpperCase()}s...`}
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setHighlightedIndex(-1);
-                }}
-                onKeyDown={handleKeyDown}
-                className="w-full pl-10 pr-4 py-2 text-sm bg-background border border-input rounded-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200"
-                aria-label={labelId ? undefined : `Search ${type}s. Type to filter, use arrow keys to navigate results.`}
-                aria-labelledby={labelId}
-                aria-describedby={descriptionId}
-              />
+                  ref={inputRef}
+                  type="text"
+                  placeholder={`Search ${type.toUpperCase()}s...`}
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setHighlightedIndex(-1);
+                  }}
+                  onKeyDown={handleKeyDown}
+                  className="w-full pl-10 pr-4 py-2 text-sm bg-background border border-input rounded-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200"
+                  aria-label={`Search ${type}s. Type to filter, use arrow keys to navigate results.`}
+                />
               </TooltipTrigger>
               <TooltipContent>
                 Type to filter options. Use Arrow keys to navigate results.
               </TooltipContent>
             </Tooltip>
           </div>
-          <div 
-            className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent" 
+          <div
+            className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent"
             role="listbox"
             id={listboxId}
             aria-label={`List of available ${type}s`}
           >
             {filteredOptions.length === 0 ? (
               <div className="p-4 text-center text-muted-foreground text-sm">
-                No {type}s found matching "{searchTerm}"
+                No {type}s found matching &quot;{searchTerm}&quot;
               </div>
             ) : (
               <div className="p-1">
@@ -261,7 +264,7 @@ export function EnhancedSearchableSelect({
                     aria-label={`${option.name}, ${option.tier} tier, ${option.specs}`}
                   >
                     <div className="flex items-center space-x-3 flex-1 min-w-0">
-                      <span className="text-base flex-shrink-0">{getTypeIcon(type)}</span>
+                      <span className="text-base flex-shrink-0" aria-hidden="true">{getTypeIcon(type)}</span>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
                           <span className="font-medium text-sm truncate">{option.name}</span>
@@ -273,7 +276,7 @@ export function EnhancedSearchableSelect({
                         {option.benchmarkScore && <div className="text-xs text-primary font-medium mt-0.5">Score: {option.benchmarkScore}/100</div>}
                       </div>
                     </div>
-                    {value === option.id && <Check className="h-4 w-4 text-primary" />}
+                    {value === option.id && <Check className="h-4 w-4 text-primary" aria-hidden="true" />}
                   </div>
                 ))}
               </div>
@@ -284,4 +287,3 @@ export function EnhancedSearchableSelect({
     </div>
   );
 }
-

@@ -32,12 +32,9 @@ import {
 import { 
   CPU, 
   GPU, 
-  calculateBottleneckPercentage, 
-  getBottleneckType, 
-  estimateFPS, 
-  calculatePSURequirement, 
   allGames 
 } from '@/lib/hardware-database';
+import { estimateFPS } from '@/lib/fps-model';
 
 interface ComprehensiveBottleneckResultsProps {
   cpu: CPU & { officialUrl?: string };
@@ -77,10 +74,6 @@ export function ComprehensiveBottleneckResults({
   resolution, 
   onBack 
 }: ComprehensiveBottleneckResultsProps) {
-  const bottleneckPercentage = calculateBottleneckPercentage(cpu, gpu);
-  const bottleneckType = getBottleneckType(cpu, gpu);
-  const psuRequirement = calculatePSURequirement(cpu, gpu);
-
   // Resolution impact calculations
   const resolutions = ['1080p', '1440p', '4K'];
   const resolutionImpact = resolutions.map(res => {
@@ -113,7 +106,7 @@ export function ComprehensiveBottleneckResults({
               <span>Back to Calculator</span>
             </Button>
             <div className="text-center">
-              <h1 className="text-2xl font-bold">System Analysis Results</h1>
+              <h2 className="text-2xl font-bold">System Analysis Results</h2>
               <p className="text-gray-600 dark:text-gray-400">Comprehensive performance breakdown</p>
             </div>
             <div className="w-32" /> {/* Spacer for centering */}

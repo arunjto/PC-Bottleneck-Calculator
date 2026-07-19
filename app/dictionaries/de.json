@@ -9,7 +9,11 @@
         "home": "Startseite",
         "fps_calculator": "FPS Rechner",
         "psu_calculator": "Netzteil Rechner",
-        "blog": "Blog"
+        "blog": "Blog",
+        "author": "Autor",
+        "about": "Über uns",
+        "contact": "Kontakt",
+        "privacy": "Datenschutzrichtlinie"
     },
     "home": {
         "hero_title": "PC Flaschenhals Rechner – Optimieren Sie Ihre PC-Leistung",
@@ -28,11 +32,11 @@
             },
             {
                 "q": "Ist ein CPU- oder GPU-Flaschenhals schlimmer?",
-                "a": "Für Gaming ist ein milder <strong>GPU-Flaschenhals</strong> meist in Ordnung, da dies bedeutet, dass Ihre Grafikkarte voll arbeitet. Ein starker <strong>CPU-Flaschenhals</strong> ist schlimmer, da er oft zu Rucklern und instabilen Bildraten führt."
+                "a": "Keiner ist grundsätzlich schlimmer. Die begrenzende Komponente ändert sich mit Spiel, Szene, Auflösung und Einstellungen. Vergleichen Sie FPS, Frame Times, Kernauslastung, GPU, Temperaturen und Limits."
             },
             {
                 "q": "Wie genau ist der Flaschenhals-Rechner?",
-                "a": "Unser <strong>PC Flaschenhals Rechner</strong> nutzt datengestützte Schätzungen für eine hochzuverlässige Analyse. Dennoch können reale Ergebnisse je nach Spiel, Anwendung und Treiber-Updates variieren."
+                "a": "Unser <strong>PC-Flaschenhals-Rechner</strong> liefert einen Richtwert aus normalisierten Komponentenwerten. Er ist kein gemessener Benchmark; Ergebnisse variieren je nach Spiel, Einstellungen, Treibern, Kühlung und restlichem System."
             },
             {
                 "q": "Verursachen RAM oder Speicher auch Flaschenhälse?",
@@ -40,7 +44,7 @@
             },
             {
                 "q": "Sollten CPU und GPU beide bei 100% laufen?",
-                "a": "Idealerweise sollte Ihre <strong>GPU</strong> beim Spielen nahe an der vollen Auslastung sein. Die CPU-Nutzung variiert und es ist nicht immer ideal, dass sie 100% erreicht. Wenn die CPU ausgelastet ist, aber die GPU nicht, ist das ein klarer CPU-Flaschenhals."
+                "a": "Es gibt keine universell ideale Auslastung. Hohe GPU-Last kann normal sein, während die CPU-Gesamtauslastung einen gesättigten Kern verbirgt. Nutzen Sie Auslastung nur als Hinweis neben Frame Times, Limits, Temperaturen und Wiederholungstests."
             }
         ],
         "update_banner": {
@@ -74,27 +78,27 @@
     },
     "about": {
         "title": "Über Uns",
-        "intro_p1": "Willkommen bei <strong>PCBuildCheck.com</strong> — Ihrer vertrauenswürdigen Zentrale für genaue, datengestützte PC-Leistungseinblicke. Wir sind ein Team aus PC-Buildern, Gamern und Entwicklern mit einer Mission: <em>komplexe Hardware-Entscheidungen einfach, erklärbar und zuverlässig zu machen.</em>",
-        "intro_p2": "Egal, ob Sie Ihren nächsten Gaming-PC, eine Workstation für Videobearbeitung oder einen Budget-Build planen, unsere Tools helfen Ihnen, Leistung zu <strong>verstehen</strong> — nicht nur zu schätzen — damit Sie mit Zuversicht kaufen und aufrüsten können.",
+        "intro_p1": "<strong>PCBuildCheck.com</strong> ist ein unabhängiges Projekt von Arun Kumar Yadav. Es soll veröffentlichte Hardwaredaten und Planungsschätzungen leichter vergleichbar und verständlich machen.",
+        "intro_p2": "Nutzen Sie die Tools für eine erste Auswahl eines Gaming-PCs, einer Workstation oder eines Budget-Builds und prüfen Sie danach Herstellerunterlagen sowie passende unabhängige Benchmarks.",
         "mission_title": "Unsere Mission: Klarheit, der Sie vertrauen können",
-        "mission_desc_1": "Einen PC zu bauen oder aufzurüsten sollte kein Ratespiel sein. Mit Hunderten von CPUs, GPUs und jährlich neuer Hardware verliert man sich leicht in technischen Daten und Meinungen. <strong>PCBuildCheck</strong> existiert, um Leistung zu entmystifizieren, indem wir verifizierte Benchmark-Daten mit klaren Erklärungen kombinieren — und Ihnen helfen, Flaschenhälse zu erkennen, bevor sie Geld kosten.",
-        "mission_desc_2": "Wir glauben, dass jeder Gamer, Creator und Profi einen PC verdient, der sein volles Potenzial ausschöpft. Unsere Rechner und Datenbanken ermöglichen Ihnen <strong>informierte, datengestützte Entscheidungen</strong>, damit Sie maximale Leistung für jeden ausgegebenen Euro erhalten.",
-        "how_title": "Wie es funktioniert: Daten + Praxistests",
-        "how_desc_1": "Wir verwenden eine mehrschichtige Analyse, die CPU-Befehle, IPC (Befehle pro Takt), Kerneffizienz und Cache-Latenz gegen moderne GPU-Rendering-Pipelines prüft.",
-        "how_desc_2": "Statt eines einfachen \"Flaschenhals-Prozentsatzes\" berechnen wir separate Werte für 1080p, 1440p und 4K-Gaming und geben Ihnen so ein klareres Bild der realen Leistung.",
+        "mission_desc_1": "Einen PC zu bauen oder aufzurüsten sollte kein Ratespiel sein. <strong>PCBuildCheck</strong> kombiniert veröffentlichte Herstellerdaten, intern normalisierte Komponentenwerte und klare Erklärungen, damit Sie mögliche Konfigurationen vor dem Kauf vergleichen können.",
+        "mission_desc_2": "Ziel ist es, Annahmen und Grenzen sichtbar zu machen. Die Tools garantieren weder Kompatibilität noch FPS, Wert oder einen bestimmten Nutzen eines Upgrades.",
+        "how_title": "Wie es funktioniert: Herstellerdaten + Schätzungen",
+        "how_desc_1": "Der Rechner vergleicht intern normalisierte CPU- und GPU-Werte. FPS-Schätzungen wenden einfache Faktoren für Auflösung und Spielanforderung an; Netzteil-Schätzungen addieren Reserve zu veröffentlichten Leistungswerten.",
+        "how_desc_2": "Dies sind Planungswerte, keine Labormessungen oder Garantien. Spiele, Einstellungen, Treiber, Kühlung, RAM, Hintergrundaufgaben und Leistungsgrenzen können Ergebnisse deutlich verändern.",
         "different_title": "Was uns unterscheidet",
         "different_list": [
             "<strong>Transparenz zuerst:</strong> Wir erklären, wie jede Schätzung berechnet wird. Sehen Sie unsere Methodik.",
-            "<strong>Von Enthusiasten gebaut:</strong> Unsere Algorithmen basieren auf echten Benchmarks, nicht auf Marketing-Versprechen.",
+            "<strong>Spezifikationsbasierte Modelle:</strong> Interne normalisierte Werte und allgemeine Faktoren sind Planungshilfen, keine Ergebnisse aus einem eigenen Testlabor.",
             "<strong>Nutzerorientiertes Design:</strong> Jedes Tool ist auf Geschwindigkeit, Zugänglichkeit und Core Web Vitals optimiert.",
-            "<strong>Ständige Updates:</strong> Wir fügen ständig neue CPUs, GPUs und Spiele hinzu, um mit den neuesten Releases akkurat zu bleiben.",
+            "<strong>Dokumentierte Updates:</strong> Wir ergänzen und prüfen Einträge, doch Spezifikationen und Software können sich zwischen Prüfungen ändern.",
             "<strong>Bildung statt Raten:</strong> Wir helfen Ihnen zu lernen, <em>warum</em> eine Konfiguration so abschneidet, wie sie es tut — nicht nur, wie viele Punkte sie erzielt."
         ],
         "promise_title": "Unser Versprechen",
         "promise_list": [
-            "<strong>Genauigkeit:</strong> Benchmarks und Modelle werden mit Feedback aus der Praxis verfeinert.",
+            "<strong>Korrekturen:</strong> Wir prüfen gemeldete Fehler und veröffentlichen die Grenzen unserer Schätzungen.",
             "<strong>Unabhängigkeit:</strong> Wir verkaufen keine Hardware und akzeptieren keine gesponserten Rankings.",
-            "<strong>Datenschutz:</strong> Berechnungen laufen clientseitig. Wir sammeln oder verkaufen niemals Ihre persönlichen Daten.",
+            "<strong>Datenschutz:</strong> Rechner-Eingaben werden im Browser verarbeitet und nicht als Build-Daten gesendet. Details zu Analyse und Cookies stehen in der Datenschutzerklärung.",
             "<strong>Zugänglichkeit:</strong> Unsere Rechner sind für Anfänger und Experten gleichermaßen gebaut."
         ],
         "community_title": "Treten Sie der Community bei",
@@ -205,11 +209,11 @@
             "config_score": "Konfigurations-Bewertung",
             "bottleneck": "Flaschenhals-Analyse",
             "expected_experience": "Erwartetes Gaming-Erlebnis",
-            "market_prices": "Aktuelle Marktpreise"
+            "market_prices": "Referenzpreise"
         },
         "labels": {
-            "cpu_perf": "CPU-Leistung",
-            "gpu_perf": "GPU-Leistung",
+            "cpu_perf": "Normalisierter CPU-Wert",
+            "gpu_perf": "Normalisierter GPU-Wert",
             "cpu_gaming": "CPU-Gaming-Leistung",
             "gpu_gaming": "GPU-Gaming-Leistung",
             "gaming_score": "Gaming-Score",
@@ -227,10 +231,11 @@
             "optimization_tips": "Optimierungstipps",
             "graphics_settings": "Grafikeinstellungen",
             "system_opt": "Systemoptimierung",
-            "total_system_value": "Gesamtsystemwert",
+            "total_system_value": "Geschätzte Kosten der Ausgewählten Komponenten",
             "estimated_total": "Geschätzter Gesamtbetrag",
-            "power_reqs": "Strombedarf",
-            "rec_psu": "Empfohlenes Netzteil",
+            "power_reqs": "Netzteil-Planungsschätzung",
+            "rec_psu": "Planungs-Wattzahl",
+            "psu_estimate_note": "Planungsschätzung mit 20% Spielraum. Prüfen Sie vor dem Kauf die Watt- und Anschlussanforderungen des GPU-Herstellers und Board-Partners.",
             "final_rec": "Zusammenfassung der Empfehlung"
         },
         "ratings": {
@@ -240,7 +245,7 @@
             "fair": "Fair",
             "poor": "Schlecht",
             "well_balanced": "Gut abgestimmtes System",
-            "bottleneck_warning": "Flaschenhals",
+            "bottleneck_warning": "relative Punktedifferenz",
             "maxed_out": "Ausgereizt",
             "optimal": "Optimal"
         },
@@ -303,38 +308,39 @@
                 ]
             },
             "upgrade_priority": {
-                "cpu_title": "Priorität: CPU aufrüsten",
-                "cpu_desc": "Ihre CPU begrenzt die GPU-Leistung um {val}%",
-                "gpu_title": "Priorität: GPU aufrüsten",
-                "gpu_desc": "Ihre GPU ist der limitierende Faktor um {val}%",
+                "cpu_title": "CPU-limitierte Workloads prüfen",
+                "cpu_desc": "Der normalisierte CPU-Wert liegt {val}% unter dem höheren Komponentenwert. Prüfen Sie spielspezifische Benchmarks, bevor Sie ein Upgrade erwägen.",
+                "gpu_title": "GPU-limitierte Workloads prüfen",
+                "gpu_desc": "Der normalisierte GPU-Wert liegt {val}% unter dem höheren Komponentenwert. Prüfen Sie spielspezifische Benchmarks, bevor Sie ein Upgrade erwägen.",
                 "balanced_title": "Gut abgestimmt",
-                "balanced_desc": "Keine sofortigen Upgrades nötig",
+                "balanced_desc": "Die normalisierten Werte liegen nahe beieinander; prüfen Sie Ihre Spiele vor einem Hardwarewechsel",
                 "ram_title": "Erwägen Sie: Mehr RAM",
                 "ram_desc": "16GB für modernes Gaming empfohlen"
             }
         },
         "bottleneck_analysis": {
             "balanced_title": "Ihre Systemkomponenten sind gut abgestimmt",
-            "bottleneck_title": "Ihr(e) {type} begrenzt die Gesamtleistung",
-            "balanced_desc": "Kein signifikanter Leistungsverlust. Ihre Komponenten arbeiten effizient zusammen.",
-            "bottleneck_desc": "Der {type}-Flaschenhals kann die gesamte Gaming-Leistung in {scenario} Szenarien um ca. {val}% reduzieren.",
+            "bottleneck_title": "Die Komponente {type} hat den niedrigeren normalisierten Vergleichswert",
+            "balanced_desc": "Die normalisierten Werte liegen nahe beieinander. Das garantiert nicht in jedem Spiel oder Workload gleiche Leistung.",
+            "bottleneck_desc": "Die {val}% sind die relative Differenz zwischen intern normalisierten CPU- und GPU-Werten, kein gemessener FPS-Verlust. Die niedriger bewertete Komponente {type} kann manche {scenario} Workloads begrenzen.",
             "cpu_scenario": "CPU-intensiven",
             "gpu_scenario": "Grafik-intensiven"
         },
         "market": {
-            "current_price": "Aktueller Marktpreis",
+            "current_price": "Geschätzter Referenzpreis",
             "view_specs": "Spezifikationen ansehen",
             "official_page": "Offizielle {brand} Produktseite",
             "launch_price": "Einführungspreis: ${val}",
             "cpu_price": "CPU Preis",
             "gpu_price": "GPU Preis",
-            "combined": "CPU + GPU + RAM kombiniert"
+            "combined": "CPU + GPU + RAM kombiniert",
+            "price_disclaimer": "Die Preise sind ungefähre USD-Referenzwerte und können je nach Händler, Region, Zustand und Verfügbarkeit abweichen."
         }
     },
     "guide": {
         "title": "PC-Flaschenhälse verstehen: Ein kompletter Guide für ein ausgewogenes System",
-        "intro": "Willkommen bei der ultimativen Ressource für PC-Leistungsanalysen. Ein <strong>Flaschenhals</strong> ist das wichtigste Konzept, das man beim Bau oder Upgrade eines Gaming-PCs verstehen muss. Er entsteht, wenn eine Ihrer Komponenten zu langsam ist, um mit den anderen Schritt zu halten, und so effektiv einen \"Stau\" erzeugt, der das Potenzial Ihres gesamten Systems begrenzt. Unser <strong>PC-Flaschenhals-Rechner</strong> ist darauf ausgelegt, diese Probleme sofort für Sie zu identifizieren.",
-        "intro_p2": "Indem Sie <strong>Flaschenhälse</strong> verhindern, stellen Sie sicher, dass jeder Euro, den Sie für Hardware ausgeben, sich direkt in der erwarteten <strong>Leistung</strong> niederschlägt. Ein <strong>ausgewogener PC</strong> ist ein leistungsstarker, effizienter und kostengünstiger PC.",
+        "intro": "Ein <strong>Flaschenhals</strong> beschreibt einen Workload, bei dem eine Komponente vor einer anderen ihr Limit erreicht. Welche Komponente limitiert, hängt von Spiel, Auflösung, Einstellungen, Treibern und Hintergrundaktivität ab. Unser <strong>PC-Flaschenhals-Rechner</strong> vergleicht intern normalisierte CPU- und GPU-Werte für eine Vorauswahl, die weiter geprüft werden muss.",
+        "intro_p2": "Der Wertevergleich kann deutlich unausgewogene Kombinationen aufzeigen, sagt aber nicht jeden Workload voraus und garantiert keine Bildrate. Prüfen Sie wichtige Käufe mit Benchmarks für Ihre Spiele und Einstellungen.",
         "cpu_section": {
             "title": "Was ist ein CPU-Flaschenhals?",
             "subtitle": "(Der \"schlechte\" Flaschenhals)",
@@ -348,9 +354,9 @@
         },
         "gpu_section": {
             "title": "Was ist ein GPU-Flaschenhals?",
-            "subtitle": "(Der \"gute\" Flaschenhals)",
-            "description": "Ein <strong>GPU-Flaschenhals</strong>, auch bekannt als \"GPU-limitiert\", tritt auf, wenn Ihre Grafikkarte bei voller Kapazität läuft (99–100% Auslastung). Sie diktiert Ihre maximale <strong>Bildrate</strong>, weil sie so hart wie möglich arbeitet, um die Visuals zu rendern.",
-            "description_p2": "<strong class=\"text-green-800 dark:text-green-300\">Dies ist im Allgemeinen ideal für Gaming.</strong> Es bedeutet, dass Sie Ihre GPU-Investition voll ausnutzen, besonders in AAA-Spielen bei 1440p/4K mit Ultra-Einstellungen."
+            "subtitle": "(Ein workload-spezifisches Limit)",
+            "description": "Ein Test ist <strong>GPU-limitiert</strong>, wenn die Grafiklast vor der CPU ihr Limit erreicht. Hohe Auslastung und FPS-Änderungen bei geringerer Qualität sind Hinweise, doch kein einzelner Prozentwert beweist dies.",
+            "description_p2": "Prüfen Sie Frame Times, Taktraten, Temperaturen, Leistungsgrenzen, Treiber und eine wiederholbare Szene ohne FPS-Cap. Das Ergebnis ist nicht automatisch gut oder schlecht, sondern hängt vom Ziel ab."
         },
         "action_plan": {
             "title": "Wie man einen Flaschenhals behebt: Ihr Aktionsplan",
@@ -363,12 +369,12 @@
             "immediate_fixes_list": [
                 "<strong>Hintergrund-Apps schließen:</strong> Beenden Sie Browser/Streaming-Apps vor dem Spielen.",
                 "<strong>CPU-lastige Einstellungen senken:</strong> Reduzieren Sie Physik, Bevölkerungsdichte, Sichtweite.",
-                "<strong>Auflösung erhöhen:</strong> Verlagert die Last auf die GPU und gleicht die Belastung aus."
+                "<strong>Mehrere Auflösungen testen:</strong> Eine höhere Auflösung erhöht meist die GPU-Last und senkt die FPS; der Vergleich zeigt, welche Komponente zuerst ihr Limit erreicht."
             ],
             "long_term_fixes_title": "Langfristige Hardware-Lösungen:",
             "long_term_fixes_list": [
-                "<strong>Übertakten:</strong> Mit Kühlung erwarten Sie einen 5–15% CPU-Boost.",
-                "<strong>CPU aufrüsten:</strong> Wählen Sie eine, die zu Ihrer GPU passt, gemäß den Rechnerergebnissen."
+                "<strong>Vor dem Upgrade messen:</strong> Vergleichen Sie Framezeiten und die Auslastung einzelner Kerne in Ihren tatsächlich genutzten Spielen.",
+                "<strong>Hardware erst nach Tests erwägen:</strong> Vergleichen Sie spielspezifische Benchmarks, Plattformkosten und gemessene Framezeiten vor der CPU-Wahl."
             ],
             "example_title": "Beispiel aus der Praxis: CPU-Upgrade für eine moderne GPU",
             "example_desc": "Ein Nutzer rüstet auf eine <strong>NVIDIA RTX 4070</strong> auf, behält aber einen älteren <strong>Ryzen 5 3600</strong>.",
@@ -398,7 +404,7 @@
                 "<strong>Mit Vertrauen aufzurüsten:</strong> Wissen Sie, welches Teil den größten Gewinn bringt.",
                 "<strong>Geld zu sparen:</strong> Geben Sie nicht zu viel für ausgebremste Komponenten aus."
             ],
-            "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Bereit, Ihren Build zu prüfen?</strong> Nutzen Sie den Rechner, um sicherzustellen, dass Ihr PC perfekt für Leistung ausbalanciert ist."
+            "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Bereit für den Build-Vergleich?</strong> Vergleichen Sie normalisierte Werte und prüfen Sie das Ergebnis danach mit passenden Benchmarks."
         }
     },
     "fps_guide": {
@@ -410,7 +416,7 @@
         },
         "how_works": {
             "title": "Wie funktioniert der FPS-Rechner?",
-            "content": "Unser Rechner verwendet ein ausgeklügeltes Modell, das auf Tausenden von realen Benchmarks basiert. Er berücksichtigt drei Schlüsselfaktoren:",
+            "content": "Unser Rechner liefert einen Richtwert aus normalisierten CPU- und GPU-Werten. Er berücksichtigt drei Schlüsselfaktoren:",
             "list": [
                 "<strong>Die Leistung Ihrer CPU:</strong> Der Prozessor übernimmt die Spiellogik, Physik und KI. In vielen eSports-Titeln ist die CPU der Haupttreiber für hohe Bildraten.",
                 "<strong>Die Leistung Ihrer GPU:</strong> Die Grafikkarte ist für das Rendern der Visuals verantwortlich. In grafisch intensiven AAA-Titeln übernimmt die GPU die schwerste Arbeit.",
@@ -422,7 +428,7 @@
             "step1": {
                 "title": "Schritt 1: Diagnose des Kernproblems mit unserem Flaschenhals-Rechner",
                 "p1": "Bevor Sie ein Upgrade in Betracht ziehen, müssen Sie wissen, <em>warum</em> Ihre FPS niedrig sind. Wird Ihre leistungsstarke GPU von einer älteren CPU ausgebremst? Oder ist Ihre GPU einfach nicht stark genug für Ihre gewünschten Einstellungen?",
-                "p2": "Unser <a href=\"/de\" class=\"text-primary hover:underline\">PC-Flaschenhals-Rechner</a> ist das perfekte Diagnosetool. Er analysiert die Synergie zwischen Ihrer CPU und GPU, um das genaue schwache Glied in Ihrem System zu finden."
+                "p2": "Unser <a href=\"/de\" class=\"text-primary hover:underline\">PC-Flaschenhals-Rechner</a> vergleicht intern normalisierte CPU- und GPU-Werte. Nutzen Sie die relative Differenz als Planungshinweis, nicht als gemessenen FPS-Verlust oder endgültige Diagnose."
             },
             "step2": {
                 "title": "Schritt 2: Sicherstellen, dass Sie genug Leistung für ein Upgrade haben",
@@ -441,30 +447,7 @@
             "placeholder": "Wählen Sie Ihre CPU...",
             "help": "Tippen Sie Modellnamen, Kernanzahl oder Stufe ein, um die Liste zu filtern.",
             "selected": "Ausgewählt:",
-            "clear": "Leeren",
-            "overclock_label": "CPU Übertaktung",
-            "overclock_options": {
-                "stock": {
-                    "label": "Standard-Takt",
-                    "desc": "Hersteller-Standard-Boost."
-                },
-                "mild": {
-                    "label": "Mild (+5%)",
-                    "desc": "Sichere Spannungserhöhung für extra Frames."
-                },
-                "moderate": {
-                    "label": "Moderat (+8%)",
-                    "desc": "Abgestimmtes Tuning mit ausreichender Kühlung."
-                },
-                "aggressive": {
-                    "label": "Aggressiv (+12%)",
-                    "desc": "Starkes Übertakten mit Premium-Kühlung."
-                },
-                "extreme": {
-                    "label": "Extrem (+15%)",
-                    "desc": "Benchmark-Level Tuning, Stabilität variiert."
-                }
-            }
+            "clear": "Leeren"
         },
         "gpu": {
             "title": "Grafikkarte (GPU)",
@@ -473,30 +456,7 @@
             "placeholder": "Wählen Sie Ihre GPU...",
             "help": "Filtern Sie nach Chipsatz, VRAM-Kapazität oder Serie.",
             "selected": "Ausgewählt:",
-            "clear": "Leeren",
-            "overclock_label": "GPU Übertaktung",
-            "overclock_options": {
-                "stock": {
-                    "label": "Standard-Takt",
-                    "desc": "Referenzleistung."
-                },
-                "mild": {
-                    "label": "Mild (+5%)",
-                    "desc": "Auto-OC oder sanfte Kurvenanpassung."
-                },
-                "moderate": {
-                    "label": "Moderat (+8%)",
-                    "desc": "Manuelles Tuning mit Temperaturspielraum."
-                },
-                "aggressive": {
-                    "label": "Aggressiv (+12%)",
-                    "desc": "Signifikante Spannungs- und Lüfterkurvenanpassungen."
-                },
-                "extreme": {
-                    "label": "Extrem (+15%)",
-                    "desc": "Maximales OC für Benchmark-Sessions."
-                }
-            }
+            "clear": "Leeren"
         },
         "memory": {
             "title": "Speicher & Storage",
@@ -746,7 +706,7 @@
             }
         },
         "actions": {
-            "calculate": "Bildrate berechnen",
+            "calculate": "Bildrate schätzen",
             "incomplete": "Wählen Sie CPU, GPU, Spiel und Auflösung, um fortzufahren",
             "help": "Passen Sie erweiterte Felder jederzeit an und berechnen Sie neu, um Ihre Schätzung zu aktualisieren.",
             "back": "Zurück zum Rechner"
@@ -754,36 +714,42 @@
         "results": {
             "title": "FPS Analyse Ergebnisse",
             "subtitle": "Leistung",
-            "performance_title": "Leistungsergebnisse",
-            "average_fps": "Durchschnittl. FPS bei",
+            "performance_title": "Geschätztes Leistungsszenario",
+            "average_fps": "Geschätzte FPS bei",
+            "fps_range": "Geschätzter durchschnittlicher FPS-Bereich",
+            "midpoint": "Planungsmittelwert",
+            "one_percent_low": "Geschätztes 1%-Low",
+            "likely_limit": "Wahrscheinlicher begrenzender Faktor",
+            "estimate_notice_title": "Planungsschätzung — kein gemessener Benchmark",
+            "estimate_notice": "Der Bereich nutzt ein Profil je Spiel, getrennte CPU-/GPU-Skalierung, Auflösung, Qualität, VRAM, RAM und unterstütztes Upscaling. Er wurde nicht mit der ausgewählten Hardware gemessen und kann je nach Version, Treibern, Kühlung, Einstellungen und Szene abweichen.",
             "ratings": {
                 "excellent": {
                     "label": "Exzellent",
-                    "desc": "Flüssiges High-Refresh-Rate Gaming"
+                    "desc": "Modellausgabe von mindestens 120 FPS"
                 },
                 "very_good": {
                     "label": "Sehr Gut",
-                    "desc": "Großartiges Gaming-Erlebnis"
+                    "desc": "Modellausgabe zwischen 90 und 119 FPS"
                 },
                 "good": {
                     "label": "Gut",
-                    "desc": "Spielbar mit guter Erfahrung"
+                    "desc": "Modellausgabe zwischen 60 und 89 FPS"
                 },
                 "fair": {
                     "label": "Fair",
-                    "desc": "Spielbar, aber nicht ideal"
+                    "desc": "Modellausgabe zwischen 30 und 59 FPS"
                 },
                 "poor": {
                     "label": "Schlecht",
-                    "desc": "Nicht empfohlen"
+                    "desc": "Modellausgabe unter 30 FPS"
                 }
             },
             "advanced_impact": {
-                "title": "Einfluss erweiterter Einstellungen",
+                "title": "Eingaben des ausgewählten Szenarios",
                 "baseline": "Basis-Schätzung (Standard):",
-                "impact": "Einfluss erweitertes Tuning:",
-                "refresh_pass": "Geschätzte FPS übertreffen das {target} Ziel, erwarten Sie flüssiges Gameplay.",
-                "refresh_fail": "Etwa {diff} FPS unter dem {target} Ziel. Ziehen Sie niedrigere Qualität oder stärkeres Upscaling in Betracht."
+                "impact": "Modellierte Abweichung von Standardwerten:",
+                "refresh_pass": "Die Modellausgabe liegt über dem Ziel {target}. Prüfen Sie Benchmarks, bevor Sie sich darauf verlassen.",
+                "refresh_fail": "Die Modellausgabe liegt etwa {diff} FPS unter dem Ziel {target}. Vergleichen Sie Presets und Upscaling in gemessenen Benchmarks."
             }
         }
     },
@@ -809,11 +775,11 @@
             "dlss_qual": "Nutzen Sie den DLSS Qualitäts-Modus für die beste Balance aus Visuals und Leistung.",
             "lock_fps": "Begrenzen Sie die FPS auf Ihre Monitor-Bildwiederholrate für ein stabiles Erlebnis.",
             "no_rt": "Schalten Sie Raytracing bei 4K aus für bessere Leistung.",
-            "fsr": "Nutzen Sie FSR 2.0 um FPS ohne großen visuellen Verlust zu steigern.",
-            "lower_settings": "Senken Sie Schatten- und Texturqualität für +10–15% FPS-Schub.",
+            "fsr": "Vergleichen Sie unterstützte Upscaling-Modi; FPS und Bildqualität variieren je Spiel.",
+            "lower_settings": "Senken Sie jeweils eine Grafikeinstellung und messen Sie FPS und Frame Times.",
             "update_drivers": "Stellen Sie sicher, dass Ihre GPU-Treiber aktuell sind.",
-            "tips_4k": "DLSS oder FSR für flüssiges 4K-Gameplay empfohlen.",
-            "tips_1080p": "Wahrscheinlich CPU-limitiert — versuchen Sie eine höhere Auflösung für eine ausgeglichene Last.",
+            "tips_4k": "Vergleichen Sie bei 4K natives Rendering und unterstütztes Upscaling in Ihren Spielen.",
+            "tips_1080p": "Testen Sie bei 1080p mehrere Presets und prüfen Sie CPU-Kerne, GPU und Frame Times.",
             "tips_1440p": "Großartiger Sweet Spot für Leistung und Visuals."
         },
         "share": {
@@ -863,9 +829,9 @@
     },
     "psu_page": {
         "title": "Netzteil Rechner - Wie viel Watt braucht mein PC? (Kostenlos 2026)",
-        "description": "Berechnen Sie die empfohlene Netzteil-Wattzahl (PSU) für Ihren PC-Build. Wählen Sie Ihren CPU und GPU, um eine geschätzte Last und eine sichere Netzteil-Empfehlung zu erhalten.",
+        "description": "Schätzen Sie einen Netzteil-Planungsbereich aus veröffentlichten CPU- und GPU-Leistungswerten, einer Pauschale für weitere Komponenten und konfigurierbarem Spielraum.",
         "hero_title": "Netzteil Watt Rechner",
-        "hero_subtitle": "Stellen Sie sicher, dass Ihr PC genug Strom hat. Wählen Sie Ihre Kernkomponenten, um eine empfohlene Netzteil-Wattzahl zu erhalten.",
+        "hero_subtitle": "Wählen Sie Ihre Komponenten, um Last und Netzteil-Planungsbereich zu schätzen, und prüfen Sie danach die Herstelleranforderungen.",
         "interlink_title": "Haben Sie Ihre Stromversorgung geklärt?",
         "interlink_desc": "Stellen Sie nun sicher, dass CPU und GPU ein ausgewogenes Match für Spitzenleistung sind. Ein unausgewogenes System kann das Potenzial Ihrer Hardware verschwenden.",
         "interlink_btn": "Auf Flaschenhälse prüfen →",
@@ -874,25 +840,25 @@
         "faqs": [
             {
                 "q": "Wie bestimmt der Netzteil-Rechner die erforderliche Wattzahl?",
-                "a": "Der Netzteil-Rechner schätzt die Wattzahl durch Analyse Ihrer CPU, GPU, RAM, Speichergeräte, Kühlung und zusätzlicher Komponenten. Er fügt auch eine empfohlene Sicherheitsmarge für Stabilität und zukünftige Upgrades hinzu."
+                "a": "Der Rechner kombiniert veröffentlichte CPU- und GPU-Leistungswerte mit einer allgemeinen Pauschale für weitere Komponenten und wendet 15–50% Spielraum an. Das ist eine Planungsschätzung, keine elektrische Messung oder Zertifizierung."
             },
             {
                 "q": "Ist es schlecht, ein Netzteil mit viel höherer Wattzahl als nötig zu nutzen?",
-                "a": "Nein. Ein Netzteil mit höherer Wattzahl schadet Ihrem PC nicht — es bietet einfach extra Spielraum. Ihr System zieht nur so viel, wie es benötigt. Für beste Effizienz zielen Sie auf 50–70% Auslastung."
+                "a": "Ein kompatibles, korrekt installiertes Netzteil zwingt dem PC nicht seine volle Nennleistung auf. Effizienz und Kompatibilität hängen von Modell, Last und Anschlüssen ab; prüfen Sie die Herstellerdokumentation."
             },
             {
                 "q": "Beeinflusst die Netzteil-Effizienz (80 Plus Rating) die Gaming-Leistung?",
-                "a": "Netzteil-Effizienz-Ratings beeinflussen FPS nicht direkt. Sie zeigen stattdessen, wie viel Strom als Wärme verschwendet wird. Ein effizienteres Netzteil reduziert den Stromverbrauch und hilft, Ihren PC kühler zu halten."
+                "a": "Die Effizienzklasse bestimmt die FPS nicht direkt. Sie beschreibt die Umwandlungseffizienz unter festgelegten Testbedingungen; der tatsächliche Wert hängt von Last, Netzspannung und Modell ab."
             },
             {
                 "q": "Kann eine zu niedrige Netzteil-Wattzahl Hardwareschäden verursachen?",
-                "a": "Ja. Ein unterdimensioniertes Netzteil kann zu Abstürzen, Startfehlern oder Komponentenstress führen. Der Netzteil-Rechner hilft dies zu verhindern, indem er die korrekte Wattzahl für Ihren Build empfiehlt."
+                "a": "Ein ungeeignetes oder minderwertiges Netzteil kann zu Abschaltungen oder Instabilität beitragen. Nutzen Sie die Schätzung als Ausgangspunkt und prüfen Sie Mindestleistung, Anschlüsse und Hinweise des GPU-Herstellers und Board-Partners."
             }
         ]
     },
     "psu_calculator": {
         "title": "Fortschrittlicher Netzteil Rechner",
-        "subtitle": "Berechnen Sie präzise Stromanforderungen mit Effizienzanalyse",
+        "subtitle": "Schätzen Sie die Systemlast und vergleichen Sie verschiedene Netzteil-Spielräume",
         "labels": {
             "cpu": "Prozessor (CPU)",
             "gpu": "Grafikkarte (GPU)",
@@ -908,30 +874,36 @@
         "button": "Netzteil-Bedarf berechnen",
         "incomplete": "Bitte wählen Sie alle Komponenten",
         "back": "Zurück zum Rechner",
-        "results_title": "Netzteil-Anforderungen",
-        "results_subtitle": "Netzteil Empfehlungen",
-        "power_req_title": "Strombedarf",
-        "rec_wattage_label": "Empfohlene Netzteil-Wattzahl",
-        "certified": "Zertifiziert",
+        "results_title": "Netzteil-Planungsschätzung",
+        "results_subtitle": "Veröffentlichte Leistungswerte plus konfigurierbarer Spielraum",
+        "power_req_title": "Geschätzter Netzteil-Planungsbereich",
+        "rec_wattage_label": "Planungs-Wattzahl",
+        "selected_efficiency": "Gewählte Effizienzpräferenz",
+        "estimate_notice_title": "Planungsschätzung, keine Sicherheitszertifizierung",
+        "estimate_notice": "Die Schätzung nutzt veröffentlichte CPU- und GPU-Werte plus eine allgemeine Pauschale. Lastspitzen, Werkslimits, Alter oder Qualität des Netzteils, Stromschienen und Anschlüsse werden nicht vollständig abgebildet.",
+        "vendor_check": "Prüfen Sie vor dem Kauf die Mindestleistung und Anschlussanforderungen des GPU-Herstellers und Board-Partners.",
         "categories": {
-            "min": "Minimum",
-            "rec": "Empfohlen",
-            "future": "Zukunftssicher"
+            "min": "Schätzung mit kleinem Spielraum",
+            "min_desc": "Berechnete Last plus 15% Spielraum; keine Kaufempfehlung.",
+            "rec": "Planungsschätzung",
+            "rec_desc": "Berechnete Last plus 30% Spielraum, auf eine übliche Netzteilgröße gerundet.",
+            "future": "Schätzung mit größerem Spielraum",
+            "future_desc": "Berechnete Last plus 50% Spielraum zur Planung möglicher Upgrades."
         },
         "breakdown": {
             "title": "Stromverbrauchs-Aufschlüsselung",
             "cpu": "CPU Strom",
             "gpu": "GPU Strom",
             "other": "Andere Komponenten",
-            "total": "Gesamt-Systemstrom",
-            "total_desc": "Basis-Stromverbrauch unter Volllast"
+            "total": "Geschätzte Komponentenlast",
+            "total_desc": "Summe veröffentlichter CPU/GPU-Werte und der gewählten Pauschale; keine Messung an der Steckdose"
         },
         "efficiency": {
-            "title": "Effizienz & Kostenanalyse",
-            "power_eff": "Stromeffizienz",
-            "rating_label": "Effizienz-Rating",
-            "cost_title": "Jährliche Stromkosten",
-            "cost_desc": "Geschätzte jährliche Stromkosten (4h/Tag Gaming)"
+            "title": "Effizienzpräferenz",
+            "power_eff": "Gewählte Effizienzklasse",
+            "rating_label": "Ungefährer Klassenwert",
+            "cost_title": "Wichtige Effizienzgrenze",
+            "cost_desc": "Die gewählte Klasse ist eine Kaufpräferenz, keine Zertifizierung eines bestimmten Netzteils. Tatsächliche Effizienz und Stromkosten hängen von Modell, Last, Netzspannung, Nutzung und Strompreis ab."
         },
         "tips": {
             "title": "Netzteil Auswahl-Tipps",
@@ -984,21 +956,21 @@
     },
     "psu_guide": {
         "header_title": "Netzteil Watt Rechner – Finden Sie das richtige Netzteil für Ihren Gaming-PC",
-        "intro": "Die Wahl des richtigen <strong>Netzteils (PSU)</strong> ist entscheidend für den Bau eines stabilen und zukunftssicheren Gaming-PCs. Ein zu schwaches Netzteil kann zu Abstürzen, zufälligen Abschaltungen oder sogar langfristigen Schäden an Ihren Komponenten führen. Unser <strong>Netzteil-Rechner</strong> macht es einfach, die genaue Wattzahl zu schätzen, die Ihr System benötigt, egal ob Sie einen neuen Build planen oder Ihre Grafikkarte aufrüsten.",
+        "intro": "Die Wahl eines geeigneten <strong>Netzteils (PSU)</strong> erfordert mehr als das Addieren von Wattzahlen. Ein ungeeignetes oder minderwertiges Gerät kann zu Abschaltungen oder Instabilität beitragen. Unser <strong>Netzteil-Rechner</strong> liefert eine Planungsschätzung und ersetzt keine Herstellerangaben.",
         "why_title": "Warum einen Netzteil Watt Rechner nutzen?",
-        "why_desc": "Ein Netzteil auszuwählen heißt nicht nur, die höchste Wattzahl zu nehmen, die man finden kann. Zu viel für ein unnötig starkes Netzteil auszugeben verschwendet Geld, während Unterschätzung Systeminstabilität riskiert. Ein <strong>Netzteil Watt Rechner</strong> stellt sicher, dass Sie die perfekte Balance zwischen Kosten, Effizienz und Leistung finden.",
+        "why_desc": "Neben der Wattzahl zählen Anschlüsse, Qualität, Formfaktor, Effizienz, Reaktion auf Lastspitzen und Garantie. Ein <strong>Netzteil Watt Rechner</strong> grenzt den zu prüfenden Bereich ein, zertifiziert aber weder Kompatibilität noch Sicherheit.",
         "how_title": "Wie funktioniert der Netzteil-Rechner?",
-        "how_desc_1": "Unser Tool analysiert den kombinierten Strombedarf Ihrer CPU, GPU, RAM, Speichergeräte und Peripherie. Dann empfiehlt es die ideale Netzteil-Wattzahl, um Engpässe zu vermeiden und langfristige Stabilität zu sichern. So können Sie sicher kaufen, ohne für extra Strom zu zahlen, den Sie nie nutzen.",
-        "how_desc_2": "Für die genaueste Analyse nutzen Sie dieses Tool zusammen mit unserem <strong>PC Flaschenhals Rechner</strong>. Er identifiziert schwache Glieder in Ihrem System, damit Sie wissen, ob Ihr nächstes Upgrade GPU, CPU oder Netzteil sein sollte.",
+        "how_desc_1": "Das Tool addiert veröffentlichte CPU- und GPU-Leistungswerte zu einer allgemeinen Pauschale für weitere Komponenten und zeigt Schätzungen mit 15%, 30% und 50% Spielraum. Lastspitzen, Anschlüsse, Alter und Qualität des Netzteils werden nicht vollständig modelliert.",
+        "how_desc_2": "Nutzen Sie das Ergebnis für eine Vorauswahl und prüfen Sie danach die Anforderungen des GPU-Herstellers und Board-Partners. Der <strong>PC Flaschenhals Rechner</strong> vergleicht relative Werte und bestätigt keine elektrische Kompatibilität.",
         "benefits_title": "Vorteile unseres Netzteil-Rechners",
         "benefits_list": [
-            "<strong>Abstürze & Instabilität vermeiden:</strong> Stellen Sie sicher, dass Ihr Netzteil Ihre anspruchsvollsten Gaming-Sessions bewältigen kann.",
-            "<strong>Geld sparen:</strong> Vermeiden Sie Ausgaben für ein unnötig starkes Netzteil.",
-            "<strong>Zukunftssicherer Build:</strong> Planen Sie kommende Upgrades wie GPUs oder zusätzlichen Speicher ein.",
-            "<strong>Sorgenfreiheit:</strong> Bauen Sie ein System, das unter Volllast ohne Risiko reibungslos läuft."
+            "<strong>Mit einem Bereich beginnen:</strong> Vergleichen Sie mehrere Netzteilgrößen, statt eine Zahl als exakt zu behandeln.",
+            "<strong>Spielraum vergleichen:</strong> Sehen Sie, wie verschiedene Reserven die Schätzung verändern.",
+            "<strong>Upgrades planen:</strong> Prüfen Sie, ob spätere Komponenten die Last erhöhen.",
+            "<strong>Vor dem Kauf prüfen:</strong> Bestätigen Sie Wattzahl, Anschlüsse, Formfaktor und Modellqualität anhand von Dokumentation und unabhängigen Tests."
         ],
         "conclusion_title": "Klug bauen mit dem richtigen Netzteil",
-        "conclusion_desc": "Das Netzteil ist das Fundament eines zuverlässigen Gaming-Rigs. Mit unserem <strong>Netzteil Watt Rechner</strong> können Sie genau bestimmen, wie viel Strom Ihr System benötigt, bevor Sie kaufen. Kombinieren Sie es mit unserem <strong>FPS Rechner</strong>, um zu sehen, wie Ihre Hardware in reale Gaming-Leistung übersetzt wird, und erreichen Sie die perfekte Balance zwischen Strom und Gameplay."
+        "conclusion_desc": "Das Netzteil ist wichtig für einen zuverlässigen PC. Nutzen Sie den Rechner für eine vorläufige Schätzung und prüfen Sie vor dem Kauf die genaue Grafikkarte, das Netzteilmodell, die Anschlüsse und Herstelleranforderungen."
     },
     "bottleneck_promo": {
         "title": "Sind Ihre FPS niedriger als erwartet?",

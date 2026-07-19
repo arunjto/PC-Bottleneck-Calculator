@@ -1,33 +1,23 @@
 import { Metadata } from 'next';
-import dynamic from 'next/dynamic';
+import EnhancedPSUCalculator from '@/components/calculators/enhanced-psu-calculator';
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { PsuContent } from '@/components/content/psu-guide-content';
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
-
-// Dynamically import EnhancedPSUCalculator
-const EnhancedPSUCalculator = dynamic(
-  () => import('@/components/calculators/enhanced-psu-calculator'),
-  {
-    loading: () => (
-      <div className="w-full max-w-4xl mx-auto h-[500px] bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 animate-pulse flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-12 h-12 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto" />
-          <div className="h-4 w-48 bg-slate-200 dark:bg-slate-800 rounded mx-auto" />
-        </div>
-      </div>
-    ),
-    ssr: false // Client-side interactive component
-  }
-);
+import { JsonLd } from '@/components/seo/json-ld';
+import { getLocalizedPath } from '@/lib/path-translations';
+import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
 
 type Props = {
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const dict = await getDictionary(params.lang);
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+  const pageUrl = constructMetadataAlternates(lang, '/psu-calculator').canonical;
+  const socialImage = `${SITE_URL}/og-image.png`;
 
   return {
     title: dict.psu_page.title,
@@ -38,118 +28,51 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'PC wattage',
       'system power requirements'
     ],
-    alternates: constructMetadataAlternates(params.lang, '/psu-calculator'),
+    alternates: constructMetadataAlternates(lang, '/psu-calculator'),
     openGraph: {
       title: dict.psu_page.title,
       description: dict.psu_page.description,
-      url: `https://www.pcbuildcheck.com/${params.lang}/psu-calculator`,
+      url: pageUrl,
       type: 'website',
-      images: ['https://www.pcbuildcheck.com/og-image-psu.png'],
+      images: [socialImage],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: dict.psu_page.title,
+      description: dict.psu_page.description,
+      images: [socialImage],
     },
   };
 }
 
-export default async function PsuCalculatorPage({ params: { lang } }: Props) {
+export default async function PsuCalculatorPage({ params }: Props) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const t = dict.psu_page;
 
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.pcbuildcheck.com/#org",
-        "name": "PC Build Check",
-        "url": "https://www.pcbuildcheck.com/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.pcbuildcheck.com/logo.png",
-          "width": 512,
-          "height": 512
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.pcbuildcheck.com/#website",
-        "url": "https://www.pcbuildcheck.com/",
-        "name": "PC Build Check",
-        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
-        "inLanguage": lang
-      },
-      {
-        "@type": "WebPage",
-        "@id": `https://www.pcbuildcheck.com/${lang}/psu-calculator/#webpage`,
-        "url": `https://www.pcbuildcheck.com/${lang}/psu-calculator`,
-        "name": t.title,
-        "description": t.description,
-        "isPartOf": { "@id": "https://www.pcbuildcheck.com/#website" },
-        "publisher": { "@id": "https://www.pcbuildcheck.com/#org" },
-        "inLanguage": lang,
-        "primaryImageOfPage": {
-          "@type": "ImageObject",
-          "url": "https://www.pcbuildcheck.com/og-image-psu.png"
-        },
-        "datePublished": "2025-10-01",
-        "dateModified": "2025-11-06",
-        "breadcrumb": { "@id": `https://www.pcbuildcheck.com/${lang}/psu-calculator/#breadcrumbs` },
-        "mainEntity": { "@id": `https://www.pcbuildcheck.com/${lang}/psu-calculator/#app` },
-        "hasPart": { "@id": `https://www.pcbuildcheck.com/${lang}/psu-calculator/#faq` }
-      },
-      {
-        "@type": "WebApplication",
-        "@id": `https://www.pcbuildcheck.com/${lang}/psu-calculator/#app`,
-        "name": "PSU Calculator",
-        "url": `https://www.pcbuildcheck.com/${lang}/psu-calculator`,
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Windows, Linux, macOS",
-        "isAccessibleForFree": true,
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "description": t.description
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": `https://www.pcbuildcheck.com/${lang}/psu-calculator/#breadcrumbs`,
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": `https://www.pcbuildcheck.com/${lang}`
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "PSU Calculator",
-            "item": `https://www.pcbuildcheck.com/${lang}/psu-calculator`
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": `https://www.pcbuildcheck.com/${lang}/psu-calculator/#faq`,
-        "mainEntity": t.faqs.map((faq: any) => ({
-          "@type": "Question",
-          "name": faq.q,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": faq.a
-          }
-        }))
-      }
-    ]
-  };
+  const pageUrl = `${SITE_URL}${getLocalizedPath(lang, '/psu-calculator')}`;
+  const schemaData = createSchemaGraph([
+    createWebPageSchema({
+      pageUrl,
+      name: t.title,
+      description: t.description,
+      lang,
+      image: `${SITE_URL}/og-image.png`,
+      mainEntityId: `${pageUrl}#application`,
+      hasPartId: `${pageUrl}#faq`,
+    }),
+    createWebApplicationSchema({ pageUrl, name: t.title, description: t.description, lang }),
+    createBreadcrumbSchema(pageUrl, [
+      { name: 'Home', url: `${SITE_URL}/${lang}` },
+      { name: t.title, url: pageUrl },
+    ]),
+    createFaqSchema(pageUrl, t.faqs),
+  ]);
 
   return (
     <div className="py-8 px-4">
       {/* ✅ Schema JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-      />
+      <JsonLd data={schemaData} />
 
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center space-y-4">

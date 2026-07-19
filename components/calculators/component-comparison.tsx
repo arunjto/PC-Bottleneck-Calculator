@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
@@ -53,7 +54,7 @@ export function ComponentComparison() {
           <Card className="border-2 border-blue-200 dark:border-blue-800">
             <CardHeader className="pb-3">
               <div className="flex items-center space-x-3">
-                <img src={cpu1.imageUrl} alt={cpu1.name} className="w-12 h-12 rounded object-cover" />
+                <Image src={cpu1.imageUrl} alt={cpu1.name} width={48} height={48} sizes="48px" className="h-12 w-12 rounded object-cover" />
                 <div>
                   <CardTitle className="text-lg">{cpu1.name}</CardTitle>
                   <Badge variant="secondary">{cpu1.tier}</Badge>
@@ -94,7 +95,7 @@ export function ComponentComparison() {
           <Card className="border-2 border-green-200 dark:border-green-800">
             <CardHeader className="pb-3">
               <div className="flex items-center space-x-3">
-                <img src={cpu2.imageUrl} alt={cpu2.name} className="w-12 h-12 rounded object-cover" />
+                <Image src={cpu2.imageUrl} alt={cpu2.name} width={48} height={48} sizes="48px" className="h-12 w-12 rounded object-cover" />
                 <div>
                   <CardTitle className="text-lg">{cpu2.name}</CardTitle>
                   <Badge variant="secondary">{cpu2.tier}</Badge>
@@ -210,7 +211,7 @@ export function ComponentComparison() {
           <Card className="border-2 border-blue-200 dark:border-blue-800">
             <CardHeader className="pb-3">
               <div className="flex items-center space-x-3">
-                <img src={gpu1.imageUrl} alt={gpu1.name} className="w-12 h-12 rounded object-cover" />
+                <Image src={gpu1.imageUrl} alt={gpu1.name} width={48} height={48} sizes="48px" className="h-12 w-12 rounded object-cover" />
                 <div>
                   <CardTitle className="text-lg">{gpu1.name}</CardTitle>
                   <Badge variant="secondary">{gpu1.tier}</Badge>
@@ -251,7 +252,7 @@ export function ComponentComparison() {
           <Card className="border-2 border-green-200 dark:border-green-800">
             <CardHeader className="pb-3">
               <div className="flex items-center space-x-3">
-                <img src={gpu2.imageUrl} alt={gpu2.name} className="w-12 h-12 rounded object-cover" />
+                <Image src={gpu2.imageUrl} alt={gpu2.name} width={48} height={48} sizes="48px" className="h-12 w-12 rounded object-cover" />
                 <div>
                   <CardTitle className="text-lg">{gpu2.name}</CardTitle>
                   <Badge variant="secondary">{gpu2.tier}</Badge>
@@ -391,6 +392,7 @@ export function ComponentComparison() {
                     First CPU
                   </label>
                   <EnhancedSearchableSelect
+                    id="component-comparison-cpu-1"
                     options={cpuOptions}
                     value={selectedCPU1}
                     onValueChange={setSelectedCPU1}
@@ -404,6 +406,7 @@ export function ComponentComparison() {
                     Second CPU
                   </label>
                   <EnhancedSearchableSelect
+                    id="component-comparison-cpu-2"
                     options={cpuOptions}
                     value={selectedCPU2}
                     onValueChange={setSelectedCPU2}
@@ -423,6 +426,7 @@ export function ComponentComparison() {
                     First GPU
                   </label>
                   <EnhancedSearchableSelect
+                    id="component-comparison-gpu-1"
                     options={gpuOptions}
                     value={selectedGPU1}
                     onValueChange={setSelectedGPU1}
@@ -436,6 +440,7 @@ export function ComponentComparison() {
                     Second GPU
                   </label>
                   <EnhancedSearchableSelect
+                    id="component-comparison-gpu-2"
                     options={gpuOptions}
                     value={selectedGPU2}
                     onValueChange={setSelectedGPU2}

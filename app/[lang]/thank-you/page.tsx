@@ -2,15 +2,22 @@ import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
 
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }) {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   return {
     title: 'Thank You - PCBuildCheck',
     description: 'Thanks for reaching out to PCBuildCheck. We will respond shortly.',
     alternates: constructMetadataAlternates(lang, '/thank-you'),
+    // Noindex: thin utility page — excluded from sitemap is not sufficient on its own
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 
-export default async function ThankYouPage({ params: { lang } }: { params: { lang: Locale } }) {
+export default async function ThankYouPage({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4 py-16">
       <div className="max-w-2xl text-center space-y-6">
@@ -42,4 +49,3 @@ export default async function ThankYouPage({ params: { lang } }: { params: { lan
     </div>
   );
 }
-

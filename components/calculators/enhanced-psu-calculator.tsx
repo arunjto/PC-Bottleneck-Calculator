@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
-import { allCPUs, allGPUs, getCPUById, getGPUById, calculatePSURequirement } from '@/lib/hardware-database';
+import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-database';
 import { Zap, Battery, Shield, TrendingUp, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
@@ -86,44 +86,34 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
     const efficiency = psuEfficiencyRatings.find(e => e.id === selectedEfficiency);
 
     if (cpu && gpu && components && efficiency) {
-      const basePower = cpu.tdp + gpu.tdp + components.power;
-      const recommendedPSU = Math.round(basePower * 1.3); // 30% headroom
-      const minimumPSU = Math.round(basePower * 1.15); // 15% headroom
-      const futureProofPSU = Math.round(basePower * 1.5); // 50% headroom
+      const estimatedLoad = cpu.tdp + gpu.tdp + components.power;
+      const lowerHeadroomEstimate = Math.round(estimatedLoad * 1.15);
+      const planningEstimate = Math.round(estimatedLoad * 1.3);
+      const upgradeHeadroomEstimate = Math.round(estimatedLoad * 1.5);
 
       const commonPSUWattages = [450, 500, 550, 600, 650, 700, 750, 800, 850, 1000, 1200, 1500];
-      const recommendedWattage = commonPSUWattages.find(w => w >= recommendedPSU) || recommendedPSU;
+      const planningWattage = commonPSUWattages.find(w => w >= planningEstimate) || planningEstimate;
 
       const getPSURecommendations = () => {
         return [
           {
             category: t.categories.min,
-            wattage: minimumPSU,
-            description: 'Bare minimum for stable operation', // Note: This string was not in my dict plan. I might need to keep it or add it.
-            // Wait, I missed these specific descriptions in the dict plan. 
-            // I'll leave them english for now or map them?
-            // "Bare minimum for stable operation"
-            // Let's check my dict plan... I did not add these.
-            // I will use `t.categories.min` for the title.
-            // I should just hardcode the description replacement to a generic localized string if possible, or add it to the dict.
-            // I'll add "desc_min", "desc_rec", "desc_future" to dict in a follow up or just use english for descriptions momentarily.
-            // Actually, I can use: t.categories.min_desc?
-            // I'll skip localizing the *inner* descriptions of recommendations for this step and focus on UI labels.
-            // Or better, I will assume I will add them to dict and use them. `t.categories.min_desc`.
+            wattage: lowerHeadroomEstimate,
+            description: t.categories.min_desc,
             color: 'text-red-600',
             icon: AlertTriangle
           },
           {
             category: t.categories.rec,
-            wattage: recommendedWattage,
-            description: 'Optimal balance of power and efficiency',
+            wattage: planningWattage,
+            description: t.categories.rec_desc,
             color: 'text-green-600',
             icon: CheckCircle
           },
           {
             category: t.categories.future,
-            wattage: futureProofPSU,
-            description: 'Room for upgrades and overclocking',
+            wattage: upgradeHeadroomEstimate,
+            description: t.categories.future_desc,
             color: 'text-blue-600',
             icon: TrendingUp
           }
@@ -136,7 +126,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
         <div className="w-full max-w-4xl mx-auto space-y-6">
           <Card>
             <CardHeader>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
                 <Button
                   variant="outline"
                   onClick={() => setShowResults(false)}
@@ -146,10 +136,10 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
                   <span>{t.back}</span>
                 </Button>
                 <div className="text-center">
-                  <h1 className="text-2xl font-bold">{t.results_title}</h1>
+                  <h2 className="text-2xl font-bold">{t.results_title}</h2>
                   <p className="text-gray-600 dark:text-gray-400">{t.results_subtitle}</p>
                 </div>
-                <div className="w-32" />
+                <div className="hidden w-32 sm:block" aria-hidden="true" />
               </div>
             </CardHeader>
           </Card>
@@ -164,13 +154,19 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
             </CardHeader>
             <CardContent>
               <div className="text-center mb-6">
-                <div className="text-5xl font-bold text-yellow-600 mb-2">{recommendedWattage}W</div>
+                <div className="text-5xl font-bold text-yellow-600 mb-2">{planningWattage}W</div>
                 <div className="text-xl text-gray-600 dark:text-gray-400 mb-4">
                   {t.rec_wattage_label}
                 </div>
                 <Badge variant="secondary" className="text-lg px-4 py-2">
-                  {efficiency.name} Certified
+                  {t.selected_efficiency}: {efficiency.name}
                 </Badge>
+              </div>
+
+              <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100">
+                <p className="font-semibold">{t.estimate_notice_title}</p>
+                <p className="mt-1">{t.estimate_notice}</p>
+                <p className="mt-2 font-medium">{t.vendor_check}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -215,7 +211,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
                       <span className="font-medium">{t.breakdown.cpu}</span>
                       <span className="font-bold">{cpu.tdp}W</span>
                     </div>
-                    <Progress value={(cpu.tdp / basePower) * 100} className="h-2" />
+                    <Progress value={(cpu.tdp / estimatedLoad) * 100} className="h-2" />
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{cpu.name}</p>
                   </div>
 
@@ -224,7 +220,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
                       <span className="font-medium">{t.breakdown.gpu}</span>
                       <span className="font-bold">{gpu.tdp}W</span>
                     </div>
-                    <Progress value={(gpu.tdp / basePower) * 100} className="h-2" />
+                    <Progress value={(gpu.tdp / estimatedLoad) * 100} className="h-2" />
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{gpu.name}</p>
                   </div>
 
@@ -233,7 +229,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
                       <span className="font-medium">{t.breakdown.other}</span>
                       <span className="font-bold">{components.power}W</span>
                     </div>
-                    <Progress value={(components.power / basePower) * 100} className="h-2" />
+                    <Progress value={(components.power / estimatedLoad) * 100} className="h-2" />
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{components.description}</p>
                   </div>
                 </div>
@@ -241,7 +237,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
                 <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-semibold">{t.breakdown.total}</span>
-                    <span className="font-bold text-lg">{basePower}W</span>
+                    <span className="font-bold text-lg">{estimatedLoad}W</span>
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">
                     {t.breakdown.total_desc}
@@ -278,10 +274,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
                 <div className="space-y-4">
                   <h3 className="font-semibold">{t.efficiency.cost_title}</h3>
                   <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                    <div className="text-2xl font-bold text-yellow-600 mb-1">
-                      ${Math.round((basePower * 0.12 * 4 * 365) / 1000)}
-                    </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
                       {t.efficiency.cost_desc}
                     </p>
                   </div>
@@ -334,6 +327,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
               {t.labels.cpu}
             </label>
             <EnhancedSearchableSelect
+              id="psu-cpu-select"
               options={cpuOptions}
               value={selectedCPU}
               onValueChange={setSelectedCPU}
@@ -347,6 +341,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
               {t.labels.gpu}
             </label>
             <EnhancedSearchableSelect
+              id="psu-gpu-select"
               options={gpuOptions}
               value={selectedGPU}
               onValueChange={setSelectedGPU}
@@ -360,6 +355,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
               {t.labels.components}
             </label>
             <EnhancedSearchableSelect
+              id="psu-components-select"
               options={componentOptions}
               value={selectedComponents}
               onValueChange={setSelectedComponents}
@@ -373,6 +369,7 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
               {t.labels.efficiency}
             </label>
             <EnhancedSearchableSelect
+              id="psu-efficiency-select"
               options={efficiencyOptions}
               value={selectedEfficiency}
               onValueChange={setSelectedEfficiency}

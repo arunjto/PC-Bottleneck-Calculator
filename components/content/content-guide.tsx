@@ -1,18 +1,10 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function ContentGuide({ dict }: { dict: any }) {
   if (!dict) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-    >
+    <div>
       <Card className="shadow-lg">
         <CardContent className="pt-6">
           <article className="prose prose-slate dark:prose-invert max-w-none relative prose-headings:font-semibold prose-strong:text-blue-600 dark:prose-strong:text-blue-400">
@@ -153,6 +145,6 @@ export function ContentGuide({ dict }: { dict: any }) {
 
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }

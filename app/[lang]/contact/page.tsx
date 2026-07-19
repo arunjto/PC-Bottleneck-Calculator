@@ -4,23 +4,26 @@ import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 
-export async function generateMetadata({ params: { lang } }: { params: { lang: Locale } }) {
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
+  const alternates = constructMetadataAlternates(lang, '/contact');
   return {
-    title: `${dict.contact.title} - PC Performance Calculator`,
+    title: dict.contact.title,
     description: dict.contact.subtitle,
-    alternates: constructMetadataAlternates(lang, '/contact'),
+    alternates,
     openGraph: {
-      title: `${dict.contact.title} - PC Performance Calculator`,
+      title: dict.contact.title,
       description: dict.contact.subtitle,
-      url: `https://www.pcbuildcheck.com/${lang}/contact`,
+      url: alternates.canonical,
       type: 'website',
       images: ['https://www.pcbuildcheck.com/og-image.png'],
     },
   };
 }
 
-export default async function ContactPage({ params: { lang } }: { params: { lang: Locale } }) {
+export default async function ContactPage({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   return (
     <div className="py-8 px-4">
@@ -34,7 +37,7 @@ export default async function ContactPage({ params: { lang } }: { params: { lang
           </p>
         </div>
 
-        <ContactForm dict={dict.contact} />
+        <ContactForm dict={dict.contact} lang={lang} />
       </div>
       <script
         type="application/ld+json"
@@ -44,7 +47,7 @@ export default async function ContactPage({ params: { lang } }: { params: { lang
             '@type': 'ContactPage',
             name: dict.contact.title,
             description: dict.contact.subtitle,
-            url: `https://www.pcbuildcheck.com/${lang}/contact`,
+            url: constructMetadataAlternates(lang, '/contact').canonical,
             mainEntity: {
               '@type': 'Organization',
               name: 'PCBuildCheck',

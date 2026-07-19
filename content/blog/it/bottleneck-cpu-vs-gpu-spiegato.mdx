@@ -1,0 +1,199 @@
+---
+title: "Bottleneck CPU vs GPU: Qual è la differenza e come risolverlo"
+description: "Comprendi la differenza tra bottleneck CPU e GPU, come influenzano le prestazioni di gioco e cosa puoi fare per risolverli."
+date: "2026-07-14"
+author: "Arun Kumar Yadav"
+category: "Hardware"
+tags: ["CPU", "GPU", "Bottleneck", "Gaming", "Prestazioni"]
+coverImage: "/images/blog/cpu-vs-gpu-bottleneck.png"
+excerpt: "Bottleneck CPU o GPU? Scopri le differenze chiave, come ciascuno influenza i tuoi FPS di gioco e le migliori strategie per risolverli."
+featured: false
+readingTime: 7
+---
+
+## Introduzione
+
+Ogni PC da gaming si basa su un delicato equilibrio tra i suoi componenti principali. Quando quell'equilibrio si rompe — quando una parte non riesce a tenere il passo con il resto — ottieni un **bottleneck**. Il risultato sono FPS più bassi, gameplay a scatti e un'esperienza frustrante, anche se hai speso bene per il tuo hardware.
+
+I due tipi più comuni sono i **bottleneck della CPU** e i **bottleneck della GPU**, e capire la differenza tra loro è fondamentale per diagnosticare i problemi di prestazioni e prendere decisioni intelligenti sugli aggiornamenti. In questa guida, spiegheremo esattamente cosa significa ciascun tipo, come individuarli e cosa fare al riguardo.
+
+## Cos'è un bottleneck della CPU?
+
+Un **bottleneck della CPU** si verifica quando il processore non riesce a elaborare la logica di gioco, la fisica, l'IA e altri calcoli abbastanza velocemente da alimentare la GPU con i frame da renderizzare. La GPU finisce per restare inattiva in attesa che la CPU finisca il suo lavoro, risultando in un utilizzo inferiore e FPS ridotti.
+
+### Sintomi di un bottleneck della CPU
+
+- **L'utilizzo GPU è sotto l'intervallo atteso per quella scena** dopo aver escluso cap, V-Sync, menu e carichi leggeri
+- **Uno o più core CPU raggiungono ripetutamente la piena attività** mentre il frame time peggiora
+- **Gli FPS non migliorano** quando abbassi le impostazioni grafiche o la risoluzione
+- **Scatti e cali di frame** in scene intensive per la CPU (aree affollate, momenti con molta fisica)
+- **Gli FPS cambiano poco abbassando la risoluzione** — può essere un indizio di un limite lato CPU, ma va confrontato con frame time, utilizzo per core e limiti del gioco
+
+### Cause comuni
+
+- Abbinare una GPU di fascia alta con una CPU vecchia o economica
+- Giocare giochi intensivi per la CPU come *Cities: Skylines 2*, *Civilization VI* o grandi modpack di *Minecraft*
+- Eseguire attività in background che consumano risorse CPU (streaming, registrazione, schede del browser)
+- CPU più vecchie con basso IPC (istruzioni per ciclo di clock) o pochi core
+
+> Un bottleneck della CPU è come avere uno chef gourmet (GPU) che aspetta gli ingredienti da un fornitore lento (CPU). Lo chef può cucinare incredibilmente veloce, ma solo se gli ingredienti arrivano in tempo.
+
+## Cos'è un bottleneck della GPU?
+
+Un **bottleneck della GPU** si verifica quando la scheda grafica è il componente che lavora alla massima capacità mentre la CPU ha margine da offrire. La GPU non riesce a renderizzare i frame abbastanza velocemente alla risoluzione e alle impostazioni date.
+
+Ecco il punto chiave: **un bottleneck della GPU è in realtà normale e desiderabile**. Significa che la CPU e la RAM stanno tenendo il passo, e la GPU è pienamente utilizzata. Stai ottenendo le massime prestazioni che la tua scheda grafica può offrire.
+
+### Sintomi di un bottleneck della GPU
+
+- **L'utilizzo GPU è vicino al massimo nella scena testata** mentre frequenze e potenza si comportano normalmente
+- **Nessun core CPU è ripetutamente saturo** durante gli stessi picchi di frame time
+- **Gli FPS aumentano quando abbassi le impostazioni grafiche** o riduci la risoluzione
+- **Gli FPS diminuiscono prevedibilmente** quando attivi il ray tracing o aumenti l'anti-aliasing
+- **Le prestazioni scalano linearmente** con i cambiamenti di risoluzione
+
+### Cause comuni
+
+- Giocare ad alte risoluzioni (4K o ultrawide) con impostazioni visive esigenti
+- Attivare funzionalità ad alta intensità come ray tracing, ombre ultra o nebbia volumetrica
+- Usare una GPU vecchia o di fascia media con una CPU moderna potente
+- Non usare tecnologie di upscaling come DLSS, FSR o XeSS
+
+## Bottleneck CPU vs GPU: Confronto fianco a fianco
+
+| Aspetto | Bottleneck CPU | Bottleneck GPU |
+|---|---|---|
+| **Utilizzo GPU** | Spesso sotto l'intervallo atteso dopo aver escluso cap e carichi leggeri | Spesso vicino al massimo nella scena testata |
+| **Utilizzo CPU** | Uno o più core possono essere saturi | Nessun core ripetutamente saturo durante lo stesso problema |
+| **Abbassare la grafica aiuta?** | No | Sì |
+| **Cosa mostra il test di risoluzione?** | Gli FPS possono cambiare poco se il limite è lato CPU | Gli FPS spesso aumentano riducendo il carico grafico |
+| **È una prova definitiva?** | No — verificare frame time, singoli core e cap FPS | No — verificare temperature, alimentazione e driver |
+| **Comune in** | Esport/CPU vecchie + GPU nuove | Gaming 4K / GPU vecchie |
+| **È un problema?** | Solo se impedisce l'esperienza target | Solo se impedisce l'esperienza target |
+| **Passo successivo** | Verificare core e benchmark del gioco | Confrontare impostazioni GPU e benchmark del gioco |
+
+## Come identificare quale bottleneck hai
+
+Segui questo semplice processo diagnostico per determinare il tipo di bottleneck:
+
+### Metodo 1: Monitorare durante il gioco
+
+1. Installa **MSI Afterburner** con **RivaTuner Statistics Server**
+2. Attiva il display on-screen per utilizzo CPU, utilizzo GPU, FPS e frame time
+3. Gioca un gioco esigente per almeno 10 minuti
+4. Osserva i pattern di utilizzo:
+
+```
+Pattern Bottleneck CPU:
+┌──────────────────────────────────┐
+│  Utilizzo CPU:  ██████████████ 97%  │
+│  Utilizzo GPU:  ████████       55%  │
+│  FPS:           62                  │
+│  Frame Time:    16.1ms              │
+└──────────────────────────────────┘
+
+Pattern Bottleneck GPU (Sano):
+┌──────────────────────────────────┐
+│  Utilizzo CPU:  ██████         42%  │
+│  Utilizzo GPU:  ██████████████ 98%  │
+│  FPS:           144                 │
+│  Frame Time:    6.9ms               │
+└──────────────────────────────────┘
+```
+
+### Metodo 2: Il test della risoluzione
+
+Questo è un test rapido e affidabile:
+
+1. Imposta il gioco a **720p, impostazioni minime**
+2. Registra gli FPS
+3. Imposta il gioco alla **tua risoluzione nativa, impostazioni massime**
+4. Registra gli FPS
+5. Confronta:
+   - Se gli FPS sono **simili in entrambe le impostazioni** → Bottleneck CPU
+   - Se gli FPS **calano significativamente** con impostazioni più alte → Bottleneck GPU
+
+### Metodo 3: Usa un calcolatore di bottleneck
+
+Il modo più veloce per verificare la compatibilità è con uno strumento dedicato. Inserisci la tua CPU e GPU e ottieni un'analisi istantanea del bilanciamento del tuo sistema.
+
+<CalculatorLink href="/it/calcolatore-fps">Controlla il tuo build con il nostro Calcolatore FPS</CalculatorLink>
+
+<Callout type="info" title="Il limite cambia con il carico">Ogni PC ha un componente che raggiunge per primo il proprio limite in uno specifico gioco, scena e impostazione. Non esiste una soglia percentuale universale che dimostri prestazioni perse: usa più test ripetibili prima di decidere un upgrade.</Callout>
+
+## Come risolvere un bottleneck della CPU
+
+Se la tua CPU sta frenando la GPU, ecco le opzioni dal più semplice al più impegnativo:
+
+### Ottimizzazioni software
+
+- **Chiudi le applicazioni in background** — Browser, Discord e software di streaming rubano tutti cicli della CPU
+- **Abbassa le impostazioni intensive per la CPU** — Densità NPC, distanza di visuale, qualità fisica, velocità di simulazione
+- **Aggiorna il gioco e i driver del chipset** — Le patch spesso includono ottimizzazioni CPU
+- **Mantieni la priorità predefinita del processo** — Una priorità elevata può ridurre la reattività di altri servizi e non è un test affidabile del bottleneck
+
+### Soluzioni hardware
+
+- **Controlla la configurazione della memoria** — Confrontala con la documentazione di CPU e scheda madre; tratta XMP/EXPO/DOCP come tuning opzionale e verifica la stabilità
+- **Esegui la diagnosi a impostazioni di fabbrica** — Disattiva temporaneamente l'overclock per ottenere confronti stabili e ripetibili
+- **Valuta un upgrade CPU solo dopo i test** — Confronta benchmark attuali dei tuoi giochi, impostazioni target e costo totale della piattaforma
+
+| Criterio | Cosa confrontare | Perché conta |
+|---|---|---|---|
+| Prestazioni nei giochi | Test indipendenti recenti per giochi e risoluzione | La classifica cambia per motore e impostazioni |
+| Costo piattaforma | CPU, scheda madre, memoria e dissipatore | Il prezzo della sola CPU non mostra il valore totale |
+| Frame time | Medie e percentili bassi | La fluidità può contare più degli FPS medi |
+| Percorso di upgrade | Supporto socket e requisiti firmware | Determina costi e compatibilità futuri |
+
+## Come risolvere un bottleneck della GPU
+
+Un test limitato dalla GPU indica che il carico grafico raggiunge prima il limite in quello scenario. Se vuoi più frame, confronta queste opzioni e ripeti il test:
+
+### Ottimizzazioni software
+
+- **Prova DLSS / FSR / XeSS se supportati** — L'upscaling può aumentare gli FPS, ma qualità e vantaggi dipendono da gioco, modalità e risoluzione
+- **Abbassa la qualità delle ombre** — Le ombre sono una delle impostazioni più intensive per la GPU
+- **Riduci l'anti-aliasing** — Passa da MSAA a TAA o FXAA
+- **Disattiva o riduci il ray tracing** — L'RT è estremamente intensivo per la GPU
+- **Usa il benchmark integrato del gioco** — Trova l'equilibrio ottimale tra qualità visiva e prestazioni
+
+### Soluzioni hardware
+
+- **Valuta un upgrade GPU solo dopo i test** — Confronta benchmark indipendenti, costo totale, requisiti PSU e spazio nel case
+- **Controlla il raffreddamento solo se i dati lo indicano** — Confronta temperature e frequenze con la guida del modello; segui i manuali o usa assistenza qualificata
+- **Mantieni le impostazioni di fabbrica durante la diagnosi** — Se le frequenze calano con temperatura o potenza, usa indicazioni specifiche del produttore
+
+## Quando dovresti aggiornare?
+
+Non ogni bottleneck giustifica un aggiornamento. Ecco un framework pratico:
+
+**Valuta un upgrade CPU se:**
+- Test ripetibili mostrano uno o più core saturi mentre la GPU ha margine, dopo aver escluso cap e altre cause
+- Hai già abbassato le impostazioni intensive per la CPU
+- Benchmark indipendenti mostrano che un upgrade supportato raggiunge i tuoi obiettivi di FPS e frame time
+- Giochi giochi pesanti per la CPU (strategia, simulazione, MMO con grandi conteggi giocatori)
+
+**Valuta un upgrade GPU se:**
+- Test ripetibili mostrano che la GPU limita l'obiettivo alle impostazioni che userai
+- Stai passando a un monitor a risoluzione più alta (es. 1080p → 1440p)
+- La tua GPU non supporta funzionalità moderne che desideri (ray tracing, DLSS/FSR)
+- La pressione VRAM misurata causa scatti ripetibili, riduzione delle texture o problemi di allocazione
+
+**Valuta una modifica della memoria se:**
+- Il monitoraggio mostra pressione di capacità, paging o picchi di frame time legati alla memoria
+- La disposizione di canali e moduli non corrisponde alla documentazione di CPU e scheda madre
+- Test indipendenti di una configurazione supportata mostrano un vantaggio significativo per il tuo carico
+
+## Domande frequenti
+
+### Un bottleneck può danneggiare i componenti?
+
+Un bottleneck, da solo, descrive quale parte limita uno specifico carico e non è una diagnosi di danno. Controlla comunque temperature, frequenze, alimentazione ed errori rispetto alla documentazione del modello; utilizzo elevato da solo non prova che tutto sia corretto.
+
+### Un divario del 10% nel calcolatore è grave?
+
+Un risultato del 10% è un divario relativo tra punteggi normalizzati, non una perdita di prestazioni misurata. Non esiste una soglia universale buona o cattiva. Valuta modifiche solo quando benchmark ripetibili mostrano che il sistema non raggiunge il tuo obiettivo.
+
+### La percentuale di bottleneck cambia per gioco?
+
+**Sì.** Giochi, scene, risoluzioni e impostazioni sollecitano componenti diversi. Il divario relativo del sito non è una misura per gioco, quindi testa i titoli e le impostazioni che usi davvero.

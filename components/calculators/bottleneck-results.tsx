@@ -37,9 +37,9 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
 
   const getBottleneckMessage = () => {
     if (bottleneck.component === 'None') {
-      return 'Your system is well balanced.';
+      return 'The normalized CPU and GPU scores are close.';
     }
-    return `${bottleneck.component} is the limiting factor.`;
+    return `${bottleneck.component} has the lower normalized comparison score.`;
   };
 
   // Performance scoring functions
@@ -138,7 +138,7 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
                 } as React.CSSProperties}
               />
               <div className="absolute inset-0 flex items-center justify-center font-bold text-sm">
-                {bottleneck.percentage.toFixed(1)}% {bottleneck.component !== 'None' ? bottleneck.component : ''}
+                {bottleneck.percentage.toFixed(1)}% {bottleneck.component !== 'None' ? `${bottleneck.component} relative score gap` : 'relative score gap'}
               </div>
             </div>
             <p className="text-lg font-semibold">
@@ -220,8 +220,7 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
           </div>
           <div className="bg-muted/50 p-4 rounded-lg">
             <p className="text-sm text-muted-foreground">
-              <strong>Key Insight:</strong> Higher resolutions (1440p, 4K) put significantly more stress on the GPU, while CPU performance remains relatively consistent. 
-              At 4K, most systems become GPU-limited, making graphics card upgrades more impactful than CPU upgrades.
+              <strong>Key Insight:</strong> Higher resolutions usually increase GPU workload and reduce FPS, but the result varies by game, settings, drivers, and hardware. Compare measured benchmarks before deciding which component to change.
             </p>
           </div>
         </CardContent>
@@ -303,8 +302,8 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
             </h4>
             <p className="text-sm leading-relaxed">
               {bottleneck.component === 'None' ? 
-                'Your CPU and GPU are excellently balanced, ensuring optimal performance across all gaming scenarios. Neither component is holding back the other, maximizing your investment.' :
-                `Your ${bottleneck.component} is ${bottleneck.percentage.toFixed(1)}% weaker than your ${bottleneck.component === 'CPU' ? 'GPU' : 'CPU'}. This means your ${bottleneck.component === 'CPU' ? 'graphics card' : 'processor'} is not reaching its full potential, limiting performance in ${bottleneck.component === 'CPU' ? 'CPU-intensive games and multitasking scenarios' : 'graphics-intensive games and high-resolution gaming'}.`
+                'The internally normalized CPU and GPU comparison scores are close. Real performance can still differ by game, settings, drivers, cooling, and background activity.' :
+                `The ${bottleneck.component} has the lower internally normalized comparison score, with a relative gap of ${bottleneck.percentage.toFixed(1)}%. This is not measured FPS loss and does not prove that an upgrade is required.`
               }
             </p>
           </div>
@@ -381,20 +380,20 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
 
           {bottleneck.component !== 'None' && (
             <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
-              <h5 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">🔧 Upgrade Recommendations</h5>
+              <h5 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">What to verify before upgrading</h5>
               <ul className="text-sm space-y-1 text-amber-700 dark:text-amber-300">
                 {bottleneck.component === 'CPU' && (
                   <>
-                    <li>• <strong>Priority:</strong> Upgrade CPU to eliminate {bottleneck.percentage.toFixed(1)}% bottleneck</li>
-                    <li>• <strong>Impact:</strong> Will improve frame consistency and reduce stuttering</li>
-                    <li>• <strong>Budget Option:</strong> Consider a mid-range CPU upgrade first</li>
+                    <li>• Compare per-core utilization and frame-time data in your games</li>
+                    <li>• Check game-specific CPU benchmarks at your target settings</li>
+                    <li>• Include motherboard and memory costs before considering an upgrade</li>
                   </>
                 )}
                 {bottleneck.component === 'GPU' && (
                   <>
-                    <li>• <strong>Priority:</strong> GPU upgrade will provide the biggest performance boost</li>
-                    <li>• <strong>Impact:</strong> Higher frame rates and better visual quality</li>
-                    <li>• <strong>Alternative:</strong> Lower resolution/settings can improve performance without upgrading</li>
+                    <li>• Compare GPU utilization and frame-time data in your games</li>
+                    <li>• Test lower graphics settings or resolution before changing hardware</li>
+                    <li>• Check independent benchmarks for the exact GPU and workload</li>
                   </>
                 )}
               </ul>
@@ -503,7 +502,7 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h4 className="font-semibold">Main Limiting Component</h4>
+              <h4 className="font-semibold">Lower Normalized Score</h4>
               <div className={`p-4 rounded-lg border-2 ${
                 bottleneck.component === 'None' ? 'border-green-500 bg-green-50 dark:bg-green-900/20' :
                 bottleneck.component === 'CPU' ? 'border-red-500 bg-red-50 dark:bg-red-900/20' :
@@ -517,33 +516,27 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
                     {bottleneck.component === 'None' ? 'Balanced' : bottleneck.component}
                   </div>
                   <p className="text-sm">
-                    {bottleneck.component === 'None' ? 'No significant bottleneck detected' :
-                     `${bottleneck.percentage.toFixed(1)}% performance limitation`}
+                    {bottleneck.component === 'None' ? 'Similar normalized component scores' :
+                     `${bottleneck.percentage.toFixed(1)}% relative score gap`}
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-semibold">Impact Assessment</h4>
+              <h4 className="font-semibold">Score Comparison</h4>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                  <span className="text-sm">Gaming Impact:</span>
-                  <Badge variant={bottleneck.percentage > 10 ? 'destructive' : bottleneck.percentage > 5 ? 'secondary' : 'default'}>
-                    {bottleneck.percentage > 10 ? 'High' : bottleneck.percentage > 5 ? 'Moderate' : 'Minimal'}
-                  </Badge>
+                  <span className="text-sm">Relative score gap:</span>
+                  <Badge variant="secondary">{bottleneck.percentage.toFixed(1)}%</Badge>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                  <span className="text-sm">Productivity Impact:</span>
-                  <Badge variant={bottleneck.component === 'CPU' && bottleneck.percentage > 15 ? 'destructive' : 'default'}>
-                    {bottleneck.component === 'CPU' && bottleneck.percentage > 15 ? 'Noticeable' : 'Minimal'}
-                  </Badge>
+                  <span className="text-sm">Lower normalized score:</span>
+                  <Badge variant="default">{bottleneck.component === 'None' ? 'Neither' : bottleneck.component}</Badge>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                  <span className="text-sm">Upgrade Priority:</span>
-                  <Badge variant={bottleneck.percentage > 10 ? 'destructive' : 'default'}>
-                    {bottleneck.percentage > 10 ? 'High' : bottleneck.percentage > 5 ? 'Medium' : 'Low'}
-                  </Badge>
+                  <span className="text-sm">Next step:</span>
+                  <Badge variant="default">Benchmark your workloads</Badge>
                 </div>
               </div>
             </div>
@@ -551,12 +544,9 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
 
           {bottleneck.component !== 'None' && (
             <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-              <h5 className="font-semibold text-red-800 dark:text-red-200 mb-2">⚠️ Performance Impact Details</h5>
+              <h5 className="font-semibold text-red-800 dark:text-red-200 mb-2">What the score gap means</h5>
               <p className="text-sm text-red-700 dark:text-red-300">
-                {bottleneck.component === 'CPU' ? 
-                  `Your CPU is limiting your GPU's potential by ${bottleneck.percentage.toFixed(1)}%. This may cause frame drops, stuttering, and inconsistent performance, especially in CPU-intensive games or when multitasking.` :
-                  `Your GPU is the limiting factor by ${bottleneck.percentage.toFixed(1)}%. While this is normal for gaming, upgrading your graphics card would provide the most significant performance improvement.`
-                }
+                {`The ${bottleneck.percentage.toFixed(1)}% value is the relative difference between internal normalized CPU and GPU scores. It is not a benchmark, measured FPS loss, or automatic upgrade recommendation.`}
               </p>
             </div>
           )}
@@ -640,8 +630,8 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
                 <ul className="text-sm space-y-1 text-amber-700 dark:text-amber-300">
                   {bottleneck.component === 'CPU' && <li>• Close background applications</li>}
                   <li>• Keep drivers updated</li>
-                  {cpu.info.score >= 85 && <li>• Consider mild CPU overclocking</li>}
-                  {gpu.info.score >= 80 && <li>• Enable GPU overclocking</li>}
+                  {cpu.info.score >= 85 && <li>• Review CPU-heavy settings and background tasks</li>}
+                  {gpu.info.score >= 80 && <li>• Compare graphics settings and recent driver behavior</li>}
                 </ul>
               </div>
             </div>
@@ -721,8 +711,8 @@ export function BottleneckResults({ results, onReset }: BottleneckResultsProps) 
           
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {bottleneck.component === 'None' ? 
-              `Your system is excellently balanced and ready for ${settings.resolution} gaming. You can expect smooth performance in most titles with ${gameRecs.settings.toLowerCase()}. This is an optimal configuration that maximizes your hardware investment.` :
-              `Your ${bottleneck.component.toLowerCase()} is creating a ${bottleneck.percentage.toFixed(1)}% bottleneck. Consider upgrading your ${bottleneck.component.toLowerCase()} to unlock your system's full potential and achieve better performance in ${bottleneck.component === 'CPU' ? 'CPU-intensive games and multitasking' : 'graphics-intensive games and higher resolutions'}.`
+              `The normalized CPU and GPU scores are close for this ${settings.resolution} planning comparison. Verify expected performance with benchmarks for your games and settings.` :
+              `The ${bottleneck.component.toLowerCase()} has the lower normalized score, with a ${bottleneck.percentage.toFixed(1)}% relative gap. Test your exact games and settings before deciding whether any hardware change is worthwhile.`
             }
           </p>
 
