@@ -56,6 +56,7 @@ export default async function ToolPage({ params }: { params: Promise<PageParams>
   const content = getToolContent(tool.slug, lang);
   const copy = getToolsPageCopy(lang);
   const path = getToolPath(lang, tool.slug);
+  const toolsPath = getLocalizedPath(lang, 'tools');
   const pageUrl = 'https://www.pcbuildcheck.com' + path;
   const data: ToolDatasets = {
     cpus: allCPUs.map((cpu) => ({ id: cpu.id, name: cpu.name, score: cpu.benchmarkScore, tdp: cpu.tdp, cores: cpu.cores })),
@@ -99,7 +100,7 @@ export default async function ToolPage({ params }: { params: Promise<PageParams>
         '@id': pageUrl + '#breadcrumbs',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: copy.home, item: 'https://www.pcbuildcheck.com/' + lang },
-          { '@type': 'ListItem', position: 2, name: copy.tools, item: 'https://www.pcbuildcheck.com/' + lang + '/tools' },
+          { '@type': 'ListItem', position: 2, name: copy.tools, item: 'https://www.pcbuildcheck.com' + toolsPath },
           { '@type': 'ListItem', position: 3, name: content.title, item: pageUrl },
         ],
       },
@@ -128,7 +129,7 @@ export default async function ToolPage({ params }: { params: Promise<PageParams>
           <ol className="flex flex-wrap items-center gap-2">
             <li><Link href={getLocalizedPath(lang, '')} className="hover:text-primary hover:underline">{copy.home}</Link></li>
             <li aria-hidden="true">/</li>
-            <li><Link href={'/' + lang + '/tools'} className="hover:text-primary hover:underline">{copy.tools}</Link></li>
+            <li><Link href={toolsPath} className="hover:text-primary hover:underline">{copy.tools}</Link></li>
             <li aria-hidden="true">/</li>
             <li aria-current="page" className="font-medium text-foreground">{content.title}</li>
           </ol>
@@ -203,7 +204,7 @@ export default async function ToolPage({ params }: { params: Promise<PageParams>
               <h2 id="related-tools-title" className="text-3xl font-semibold">{copy.relatedTools}</h2>
               <p className="mt-2 text-muted-foreground">{copy.relatedDescription}</p>
             </div>
-            <Link href={'/' + lang + '/tools'} className="font-semibold text-primary hover:underline">{copy.viewAllTools}</Link>
+            <Link href={toolsPath} className="font-semibold text-primary hover:underline">{copy.viewAllTools}</Link>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {related.map((item) => (

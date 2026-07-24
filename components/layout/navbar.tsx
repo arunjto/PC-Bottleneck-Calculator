@@ -16,7 +16,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
 
   const navLinks = [
     { href: `/${lang}`, label: t.home },
-    { href: `/${lang}/tools`, label: t.tools },
+    { href: getLocalizedPath(lang as Locale, 'tools'), label: t.tools },
     { href: getLocalizedPath(lang as Locale, 'fps-calculator'), label: t.fpsCalculator },
     { href: getLocalizedPath(lang as Locale, 'psu-calculator'), label: t.psuCalculator },
     { href: `/${lang}/blog`, label: t.blog },

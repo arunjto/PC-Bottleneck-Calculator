@@ -40,6 +40,13 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // A localized public URL is rewritten once to its internal App Router path.
+    // Do not run localization again for that internal rewrite or it will redirect
+    // back to the same public URL.
+    if (request.headers.get('x-pcbuildcheck-localized-rewrite') === '1') {
+        return NextResponse.next();
+    }
+
     // 1. Check if there is any supported locale in the pathname
     const pathnameIsMissingLocale = i18n.locales.every(
         (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
@@ -75,7 +82,11 @@ export function middleware(request: NextRequest) {
         if (canonicalPath) {
             const url = request.nextUrl.clone();
             url.pathname = `/${locale}/${canonicalPath}`;
-            return NextResponse.rewrite(url);
+            const requestHeaders = new Headers(request.headers);
+            requestHeaders.set('x-pcbuildcheck-localized-rewrite', '1');
+            return NextResponse.rewrite(url, {
+                request: { headers: requestHeaders },
+            });
         }
 
         // Case B: User visits an internal path directly (e.g., /it/about)

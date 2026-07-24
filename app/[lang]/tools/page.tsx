@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
 export default async function ToolsHubPage({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params;
   const copy = getToolsPageCopy(lang);
-  const pageUrl = 'https://www.pcbuildcheck.com/' + lang + '/tools';
+  const pageUrl = 'https://www.pcbuildcheck.com' + getLocalizedPath(lang, 'tools');
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [

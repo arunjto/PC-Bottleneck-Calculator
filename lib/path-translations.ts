@@ -1,4 +1,5 @@
 import { Locale } from '@/i18n-config';
+import pathTranslationsData from '@/lib/path-translations.json';
 
 type PathTranslations = {
     [key in Locale]: {
@@ -8,73 +9,7 @@ type PathTranslations = {
 
 // Mapping of internal paths (keys) to localized paths (values)
 // Keys must match the file system structure relative to app/[lang]/
-export const pathTranslations: PathTranslations = {
-    en: {
-        'about': 'about',
-        'fps-calculator': 'fps-calculator',
-        'psu-calculator': 'psu-calculator',
-        'contact': 'contact',
-        'privacy': 'privacy',
-        'thank-you': 'thank-you',
-        'terms': 'terms',
-        'disclaimer': 'disclaimer',
-        'cookie-policy': 'cookie-policy',
-        'author': 'author',
-        'methodology': 'methodology',
-    },
-    it: {
-        'about': 'chi-siamo',
-        'fps-calculator': 'calcolatore-fps',
-        'psu-calculator': 'calcolatore-psu',
-        'contact': 'contatti',
-        'privacy': 'privacy',
-        'thank-you': 'grazie',
-        'terms': 'termini',
-        'disclaimer': 'avvertenza',
-        'cookie-policy': 'politica-cookie',
-        'author': 'autore',
-        'methodology': 'metodologia',
-    },
-    fr: {
-        'about': 'a-propos',
-        'fps-calculator': 'calculateur-fps',
-        'psu-calculator': 'calculateur-alimentation',
-        'contact': 'contact',
-        'privacy': 'confidentialite',
-        'thank-you': 'merci',
-        'terms': 'conditions',
-        'disclaimer': 'avertissement',
-        'cookie-policy': 'politique-cookies',
-        'author': 'auteur',
-        'methodology': 'methodologie',
-    },
-    de: {
-        'about': 'ueber-uns',
-        'fps-calculator': 'fps-rechner',
-        'psu-calculator': 'netzteil-rechner',
-        'contact': 'kontakt',
-        'privacy': 'datenschutz',
-        'thank-you': 'danke',
-        'terms': 'agb',
-        'disclaimer': 'haftungsausschluss',
-        'cookie-policy': 'cookie-richtlinie',
-        'author': 'autor',
-        'methodology': 'methodik',
-    },
-    es: {
-        'about': 'sobre-nosotros',
-        'fps-calculator': 'calculadora-fps',
-        'psu-calculator': 'calculadora-psu',
-        'contact': 'contacto',
-        'privacy': 'privacidad',
-        'thank-you': 'gracias',
-        'terms': 'terminos',
-        'disclaimer': 'aviso-legal',
-        'cookie-policy': 'politica-cookies',
-        'author': 'autor',
-        'methodology': 'metodologia',
-    },
-};
+export const pathTranslations = pathTranslationsData as PathTranslations;
 
 /**
  * Returns the localized path for a given locale and canonical path.

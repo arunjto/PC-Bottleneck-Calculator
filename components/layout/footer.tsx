@@ -26,7 +26,7 @@ export function Footer({ lang }: { dict?: unknown; lang: string }) {
 
   const footerLinks = [
     { href: `/${lang}`, label: t.home, icon: Home },
-    { href: `/${lang}/tools`, label: t.tools, icon: Wrench },
+    { href: getLocalizedPath(locale, 'tools'), label: t.tools, icon: Wrench },
     { href: `/${lang}/blog`, label: t.blog, icon: BookOpen },
     { href: getLocalizedPath(locale, 'about'), label: t.about, icon: Info },
     { href: getLocalizedPath(locale, 'methodology'), label: t.methodology, icon: FlaskConical },

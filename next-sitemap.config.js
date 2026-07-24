@@ -1,62 +1,11 @@
-const publicPaths = {
-  en: {},
-  it: {
-    about: 'chi-siamo',
-    'fps-calculator': 'calcolatore-fps',
-    'psu-calculator': 'calcolatore-psu',
-    contact: 'contatti',
-    'thank-you': 'grazie',
-    terms: 'termini',
-    disclaimer: 'avvertenza',
-    'cookie-policy': 'politica-cookie',
-    author: 'autore',
-    methodology: 'metodologia',
-  },
-  fr: {
-    about: 'a-propos',
-    'fps-calculator': 'calculateur-fps',
-    'psu-calculator': 'calculateur-alimentation',
-    privacy: 'confidentialite',
-    'thank-you': 'merci',
-    terms: 'conditions',
-    disclaimer: 'avertissement',
-    'cookie-policy': 'politique-cookies',
-    author: 'auteur',
-    methodology: 'methodologie',
-  },
-  de: {
-    about: 'ueber-uns',
-    'fps-calculator': 'fps-rechner',
-    'psu-calculator': 'netzteil-rechner',
-    contact: 'kontakt',
-    privacy: 'datenschutz',
-    'thank-you': 'danke',
-    terms: 'agb',
-    disclaimer: 'haftungsausschluss',
-    'cookie-policy': 'cookie-richtlinie',
-    author: 'autor',
-    methodology: 'methodik',
-  },
-  es: {
-    about: 'sobre-nosotros',
-    'fps-calculator': 'calculadora-fps',
-    'psu-calculator': 'calculadora-psu',
-    contact: 'contacto',
-    privacy: 'privacidad',
-    'thank-you': 'gracias',
-    terms: 'terminos',
-    disclaimer: 'aviso-legal',
-    'cookie-policy': 'politica-cookies',
-    author: 'autor',
-    methodology: 'metodologia',
-  },
-};
+const publicPaths = require('./lib/path-translations.json');
 
 function toPublicPath(route) {
-  const match = route.match(/^\/([a-z]{2})\/([^/]+)$/);
+  const match = route.match(/^\/([a-z]{2})(?:\/(.+))?$/);
   if (!match) return route;
-  const [, locale, segment] = match;
-  const localized = publicPaths[locale]?.[segment];
+  const [, locale, canonicalPath] = match;
+  if (!canonicalPath) return route;
+  const localized = publicPaths[locale]?.[canonicalPath];
   return localized ? `/${locale}/${localized}` : route;
 }
 

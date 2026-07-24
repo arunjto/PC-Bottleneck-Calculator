@@ -105,7 +105,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Loc
             <InterlinkBox
               title={toolsCopy.hubTitle}
               description={toolsCopy.hubDescription}
-              href={`/${lang}/tools`}
+              href={getLocalizedPath(lang, 'tools')}
               linkText={toolsCopy.viewAllTools}
               variant="accent"
             />

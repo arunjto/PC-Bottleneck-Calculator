@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n-config';
+import { getLocalizedPath } from '@/lib/path-translations';
 
 export const TOOL_SLUGS = [
   'gpu-upgrade-calculator',
@@ -533,5 +534,5 @@ export function getToolContent(slug: ToolSlug, locale: Locale): ToolContent {
 }
 
 export function getToolPath(locale: Locale, slug: ToolSlug): string {
-  return `/${locale}/tools/${slug}`;
+  return getLocalizedPath(locale, `tools/${slug}`);
 }
