@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import dynamic from 'next/dynamic'; // Dynamic import
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -64,6 +64,8 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
   const [selectedRAM, setSelectedRAM] = useState('');
   const [selectedResolution, setSelectedResolution] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   // Stable IDs for label/input association
   const cpuId = 'calc-cpu-select';
@@ -73,11 +75,56 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
 
   const handleAnalyze = () => {
     if (selectedCPU && selectedGPU && selectedRAM && selectedResolution) {
-      setShowResults(true);
+      startTransition(() => setShowResults(true));
     }
   };
 
   const isFormComplete = selectedCPU && selectedGPU && selectedRAM && selectedResolution;
+
+  // Warm the result chunk while the user configures the build, avoiding a
+  // download-and-parse delay on the Analyze interaction.
+  useEffect(() => {
+    if (selectedCPU || selectedGPU || selectedRAM || selectedResolution) {
+      void import('./comprehensive-bottleneck-results');
+    }
+  }, [selectedCPU, selectedGPU, selectedRAM, selectedResolution]);
+
+  useEffect(() => {
+    if (!showResults) return;
+
+    const scrollToResults = () => {
+      const resultsRegion = resultsRef.current;
+      if (!resultsRegion) return;
+
+      const top = resultsRegion.getBoundingClientRect().top + window.scrollY - 64;
+      const targetTop = Math.max(0, top);
+      window.scrollTo(0, targetTop);
+      document.documentElement.scrollTop = targetTop;
+      document.body.scrollTop = targetTop;
+    };
+
+    const frameId = window.requestAnimationFrame(scrollToResults);
+    const settleTimeoutId = window.setTimeout(scrollToResults, 150);
+    const dynamicResultTimeoutId = window.setTimeout(scrollToResults, 600);
+    const finalTimeoutId = window.setTimeout(scrollToResults, 1000);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.clearTimeout(settleTimeoutId);
+      window.clearTimeout(dynamicResultTimeoutId);
+      window.clearTimeout(finalTimeoutId);
+    };
+  }, [showResults]);
+
+  const selectedSummary = useMemo(
+    () => ({
+      cpu: cpuOptions.find(c => c.id === selectedCPU)?.name,
+      gpu: gpuOptions.find(g => g.id === selectedGPU)?.name,
+      ram: ramOptions.find(r => r.id === selectedRAM)?.name,
+      resolution: resolutionOptions.find(r => r.id === selectedResolution)?.name,
+    }),
+    [selectedCPU, selectedGPU, selectedRAM, selectedResolution]
+  );
 
   if (showResults) {
     const cpu = getCPUById(selectedCPU);
@@ -87,7 +134,7 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
     if (cpu && gpu && ram) {
       return (
         // aria-live="polite" announces to screen readers that results are now available
-        <div aria-live="polite" aria-atomic="true">
+        <div ref={resultsRef} className="scroll-mt-16 [overflow-anchor:none]" aria-live="polite" aria-atomic="true">
           <ComprehensiveBottleneckResults
             cpu={cpu}
             gpu={gpu}
@@ -178,13 +225,13 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
         <div className="pt-4">
           <Button
             onClick={handleAnalyze}
-            disabled={!isFormComplete}
+            disabled={!isFormComplete || isPending}
             className="w-full py-3 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 transition-all duration-300 transform hover:scale-[1.02] disabled:hover:scale-100"
           >
             {isFormComplete ? (
               <>
                 <Calculator className="w-5 h-5 mr-2" />
-                {dict.calculator.buttons.analyze}
+                {isPending ? 'Preparing results…' : dict.calculator.buttons.analyze}
               </>
             ) : (
               dict.calculator.buttons.incomplete
@@ -196,10 +243,10 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
           <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
             <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">{dict.calculator.status.ready}</h3>
             <div className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-              <p>✓ CPU: {cpuOptions.find(c => c.id === selectedCPU)?.name}</p>
-              <p>✓ GPU: {gpuOptions.find(g => g.id === selectedGPU)?.name}</p>
-              <p>✓ RAM: {ramOptions.find(r => r.id === selectedRAM)?.name}</p>
-              <p>✓ Resolution: {resolutionOptions.find(r => r.id === selectedResolution)?.name}</p>
+              <p>✓ CPU: {selectedSummary.cpu}</p>
+              <p>✓ GPU: {selectedSummary.gpu}</p>
+              <p>✓ RAM: {selectedSummary.ram}</p>
+              <p>✓ Resolution: {selectedSummary.resolution}</p>
             </div>
           </div>
         )}

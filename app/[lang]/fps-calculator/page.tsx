@@ -4,6 +4,7 @@ import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { constructMetadataAlternates } from "@/lib/seo";
 import { FpsGuideContent } from "@/components/content/fps-guide-content";
+import { CalculatorMethodology } from "@/components/content/calculator-methodology";
 import { FAQSection } from "@/components/faq/faq-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getLocalizedPath } from "@/lib/path-translations";
@@ -74,6 +75,9 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{dict.fps.subtitle}</p>
         </header>
         <FpsCalculatorClient dict={dict} lang={lang} />
+        <div className="mx-auto mt-8 max-w-4xl">
+          <CalculatorMethodology lang={lang} variant="fps" />
+        </div>
       </div>
       {/* Below-the-fold content: deferred rendering on mobile */}
       <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 900px' }}>

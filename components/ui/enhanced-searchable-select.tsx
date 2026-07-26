@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { Check, ChevronDown, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 export interface Option {
   id: string;
@@ -77,15 +76,27 @@ export function EnhancedSearchableSelect({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listboxId = `${id}-listbox`;
+  const deferredSearchTerm = useDeferredValue(searchTerm);
+  const normalizedSearchTerm = deferredSearchTerm.trim().toLowerCase();
 
-  const filteredOptions = options.filter(
-    (option) =>
-      option.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      option.tier.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      option.specs.toLowerCase().includes(searchTerm.toLowerCase())
+  // Defer filtering and avoid mounting hundreds of rows on lower-end phones.
+  const matchingOptions = useMemo(
+    () =>
+      options.filter(
+        (option) =>
+          option.name.toLowerCase().includes(normalizedSearchTerm) ||
+          option.tier.toLowerCase().includes(normalizedSearchTerm) ||
+          option.specs.toLowerCase().includes(normalizedSearchTerm)
+      ),
+    [normalizedSearchTerm, options]
   );
+  const filteredOptions = useMemo(() => matchingOptions.slice(0, 60), [matchingOptions]);
+  const hasMoreOptions = matchingOptions.length > filteredOptions.length;
 
-  const selectedOption = options.find((option) => option.id === value);
+  const selectedOption = useMemo(
+    () => options.find((option) => option.id === value),
+    [options, value]
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -154,10 +165,8 @@ export function EnhancedSearchableSelect({
       ref={containerRef}
       className={cn('relative w-full', isOpen ? 'z-50' : 'z-10')}
     >
-      <Tooltip>
-        <TooltipTrigger asChild>
-          {/* id prop links <label htmlFor="..."> to this combobox trigger */}
-          <div
+      {/* id prop links <label htmlFor="..."> to this combobox trigger */}
+      <div
             id={id}
             className={cn(
               'flex h-12 w-full items-center justify-between rounded-lg border border-input bg-gradient-to-r from-background to-muted/20 px-3 py-2 text-sm cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
@@ -173,7 +182,7 @@ export function EnhancedSearchableSelect({
             aria-labelledby={labelId}
             aria-describedby={descriptionId}
             aria-controls={isOpen ? listboxId : undefined}
-            aria-activedescendant={highlightedIndex >= 0 ? `option-${filteredOptions[highlightedIndex]?.id}` : undefined}
+            aria-activedescendant={highlightedIndex >= 0 ? `${id}-option-${filteredOptions[highlightedIndex]?.id}` : undefined}
           >
             <div className="flex items-center space-x-3 flex-1 min-w-0">
               <span className="text-lg flex-shrink-0" aria-hidden="true">{getTypeIcon(type)}</span>
@@ -204,20 +213,13 @@ export function EnhancedSearchableSelect({
               className={cn('h-4 w-4 text-muted-foreground transition-transform duration-200', isOpen && 'rotate-180')}
               aria-hidden="true"
             />
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          Press Enter or Space to open. Use Arrow keys to navigate, Enter to select, Esc to close. Type to search.
-        </TooltipContent>
-      </Tooltip>
+      </div>
 
       {isOpen && (
         <div className="absolute z-50 w-full mt-2 bg-popover border border-border rounded-lg shadow-xl animate-in fade-in-0 zoom-in-95">
           <div className="p-3 border-b border-border relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <input
+            <input
                   ref={inputRef}
                   type="text"
                   placeholder={`Search ${type.toUpperCase()}s...`}
@@ -229,12 +231,7 @@ export function EnhancedSearchableSelect({
                   onKeyDown={handleKeyDown}
                   className="w-full pl-10 pr-4 py-2 text-sm bg-background border border-input rounded-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200"
                   aria-label={`Search ${type}s. Type to filter, use arrow keys to navigate results.`}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                Type to filter options. Use Arrow keys to navigate results.
-              </TooltipContent>
-            </Tooltip>
+            />
           </div>
           <div
             className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent"
@@ -251,7 +248,7 @@ export function EnhancedSearchableSelect({
                 {filteredOptions.map((option, index) => (
                   <div
                     key={option.id}
-                    id={`option-${option.id}`}
+                    id={`${id}-option-${option.id}`}
                     className={cn(
                       'flex items-center justify-between p-3 rounded-md cursor-pointer transition-all duration-150',
                       highlightedIndex === index && 'bg-accent text-accent-foreground',
@@ -279,6 +276,11 @@ export function EnhancedSearchableSelect({
                     {value === option.id && <Check className="h-4 w-4 text-primary" aria-hidden="true" />}
                   </div>
                 ))}
+                {hasMoreOptions && (
+                  <div className="px-3 py-2 text-center text-xs text-muted-foreground" role="status">
+                    Showing the first 60 matches. Refine your search to see more.
+                  </div>
+                )}
               </div>
             )}
           </div>

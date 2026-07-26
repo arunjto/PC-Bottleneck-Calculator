@@ -168,14 +168,6 @@ export function EnhancedFPSCalculator({
   const [showResults, setShowResults] = useState(false);
   const resultsRegionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (showResults) {
-      requestAnimationFrame(() => {
-        resultsRegionRef.current?.focus();
-      });
-    }
-  }, [showResults]);
-
   if (!t) return null;
 
   // Localization Helpers
@@ -415,7 +407,7 @@ export function EnhancedFPSCalculator({
           aria-live="polite"
           aria-label={t.results.title}
           tabIndex={-1}
-          className="w-full max-w-4xl mx-auto space-y-6 focus:outline-none"
+          className="scroll-mt-16 w-full max-w-4xl mx-auto space-y-6 focus:outline-none [overflow-anchor:none]"
         >
           <Card>
             <CardHeader>

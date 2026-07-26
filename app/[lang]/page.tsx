@@ -3,6 +3,7 @@ import EnhancedBottleneckCalculator from '@/components/calculators/enhanced-bott
 import { UpdateBanner } from '@/components/ui/update-banner';
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { ContentGuide } from '@/components/content/content-guide';
+import { CalculatorMethodology } from '@/components/content/calculator-methodology';
 
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
@@ -87,9 +88,12 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Loc
         </div>
 
         <UpdateBanner dict={dict.home.update_banner} />
-        <EnhancedBottleneckCalculator
-          dict={{ calculator: dict.calculator, results: dict.results }}
-        />
+        <div className="[overflow-anchor:none]">
+          <EnhancedBottleneckCalculator
+            dict={{ calculator: dict.calculator, results: dict.results }}
+          />
+        </div>
+        <CalculatorMethodology lang={lang} variant="bottleneck" />
 
         {/* Below-the-fold: deferred rendering via content-visibility for mobile performance */}
         <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 1200px' }}>

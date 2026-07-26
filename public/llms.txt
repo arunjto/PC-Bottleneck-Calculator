@@ -1,0 +1,18 @@
+# PC Build Check
+
+PC Build Check provides preliminary PC component balance estimates, FPS estimates,
+power-supply guidance, and educational resources. Results are planning aids rather
+than measured benchmarks or compatibility guarantees.
+
+## Main tools
+
+- [PC Bottleneck Calculator](https://www.pcbuildcheck.com/en)
+- [FPS Calculator](https://www.pcbuildcheck.com/en/fps-calculator)
+- [PSU Calculator](https://www.pcbuildcheck.com/en/psu-calculator)
+- [PC Tools](https://www.pcbuildcheck.com/en/tools)
+
+## Reference content
+
+- [Methodology](https://www.pcbuildcheck.com/en/methodology)
+- [PC Hardware Guides](https://www.pcbuildcheck.com/en/blog)
+- [About PC Build Check](https://www.pcbuildcheck.com/en/about)

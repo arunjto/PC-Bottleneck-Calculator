@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import EnhancedPSUCalculator from '@/components/calculators/enhanced-psu-calculator';
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { PsuContent } from '@/components/content/psu-guide-content';
+import { CalculatorMethodology } from '@/components/content/calculator-methodology';
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
@@ -85,6 +86,7 @@ export default async function PsuCalculatorPage({ params }: Props) {
         </div>
 
         <EnhancedPSUCalculator dict={dict} />
+        <CalculatorMethodology lang={lang} variant="psu" />
         <PsuContent dict={dict.psu_guide} />
 
         <InterlinkBox

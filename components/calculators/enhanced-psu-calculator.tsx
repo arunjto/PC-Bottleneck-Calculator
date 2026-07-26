@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
@@ -15,6 +15,29 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
   const [selectedComponents, setSelectedComponents] = useState('');
   const [selectedEfficiency, setSelectedEfficiency] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const resultsRegionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showResults) return;
+
+    const frameId = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const resultsRegion = resultsRegionRef.current;
+        if (!resultsRegion) return;
+
+        const top = resultsRegion.getBoundingClientRect().top + window.scrollY - 64;
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 'auto'
+            : 'smooth',
+        });
+        resultsRegion.focus({ preventScroll: true });
+      });
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, [showResults]);
 
   const t = dict?.psu_calculator;
   if (!t) return null;
@@ -123,7 +146,14 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
       const psuRecommendations = getPSURecommendations();
 
       return (
-        <div className="w-full max-w-4xl mx-auto space-y-6">
+        <div
+          ref={resultsRegionRef}
+          role="region"
+          aria-live="polite"
+          aria-label={t.results_title}
+          tabIndex={-1}
+          className="scroll-mt-16 w-full max-w-4xl mx-auto space-y-6 focus:outline-none"
+        >
           <Card>
             <CardHeader>
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">

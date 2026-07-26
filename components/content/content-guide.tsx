@@ -46,7 +46,7 @@ export function ContentGuide({ dict }: { dict: any }) {
             {/* GPU Bottleneck */}
             <section aria-labelledby="gpu-bottleneck" className="mb-8">
               <h3 id="gpu-bottleneck" className="text-2xl text-green-700 dark:text-green-400 flex items-center gap-2">
-                {dict.guide.gpu_section.title} <span className="text-lg font-normal text-green-600 dark:text-green-500">{dict.guide.gpu_section.subtitle}</span>
+                {dict.guide.gpu_section.title} <span className="text-lg font-normal text-green-700 dark:text-green-400">{dict.guide.gpu_section.subtitle}</span>
               </h3>
               <div className="bg-green-50/50 dark:bg-green-900/20 border-l-4 border-green-500 dark:border-green-400 rounded-r-xl p-6">
                 <p className="text-justify leading-7" dangerouslySetInnerHTML={{ __html: dict.guide.gpu_section.description }} />
