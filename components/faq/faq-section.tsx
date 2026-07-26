@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import {
   Accordion,
   AccordionContent,
@@ -23,13 +22,7 @@ export function FAQSection({ title = "Frequently Asked Questions", items }: FAQS
   if (!items || items.length === 0) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="py-8"
-    >
+    <div className="py-8">
       <Card className="shadow-lg border-primary/10">
         <CardHeader>
           <CardTitle className="text-2xl text-center text-primary">{title}</CardTitle>
@@ -49,6 +42,6 @@ export function FAQSection({ title = "Frequently Asked Questions", items }: FAQS
           </Accordion>
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }

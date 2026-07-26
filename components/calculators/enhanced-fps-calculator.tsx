@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
@@ -138,6 +138,54 @@ const antiAliasingOptions: ModifierOption[] = [
   { id: "dlss-aa", label: "DLSS Anti-Aliasing", description: "DLSS anti-aliasing pass for NVIDIA RTX cards.", multiplier: 1.06 },
 ];
 
+const cpuOptions = allCPUs.map((cpu) => ({
+  id: cpu.id,
+  name: cpu.name,
+  tier: cpu.tier,
+  specs: `${cpu.cores}C/${cpu.threads}T, ${cpu.boostClock}GHz`,
+  price: cpu.currentPrice,
+}));
+
+const gpuOptions = allGPUs.map((gpu) => ({
+  id: gpu.id,
+  name: gpu.name,
+  tier: gpu.tier,
+  specs: `${gpu.vram}GB VRAM, ${gpu.boostClock}MHz`,
+  price: gpu.currentPrice,
+}));
+
+const gameOptions = allGames.map((game) => ({
+  id: game.id,
+  name: game.name,
+  tier: game.category,
+  specs: `${game.releaseYear}, ${game.cpuDemand} CPU / ${game.gpuDemand} GPU demand`,
+  price: 0,
+}));
+
+function localizeModifierOptions(
+  options: ModifierOption[],
+  category: any,
+  key: string
+) {
+  return options.map((option) => ({
+    ...option,
+    label: category?.[key]?.[option.id]?.label ?? option.label,
+    description: category?.[key]?.[option.id]?.desc ?? option.description,
+  }));
+}
+
+function localizeBasicOptions(
+  options: BasicOption[],
+  category: any,
+  key: string
+) {
+  return options.map((option) => ({
+    ...option,
+    label: category?.[key]?.[option.id]?.label ?? option.label,
+    description: category?.[key]?.[option.id]?.desc ?? option.description,
+  }));
+}
+
 export function EnhancedFPSCalculator({
   onBuildChange,
   dict
@@ -168,37 +216,36 @@ export function EnhancedFPSCalculator({
   const [showResults, setShowResults] = useState(false);
   const resultsRegionRef = useRef<HTMLDivElement>(null);
 
+  const localizedOptions = useMemo(
+    () => ({
+      ramSizes: localizeModifierOptions(ramSizeOptions, t?.memory, 'ram_size_options'),
+      ramSpeeds: localizeModifierOptions(ramSpeedOptions, t?.memory, 'ram_speed_options'),
+      storageTypes: localizeModifierOptions(storageTypeOptions, t?.memory, 'storage_options'),
+      graphicsQualities: localizeModifierOptions(graphicsQualityOptions, t?.quality, 'graphics_options'),
+      upscalingModes: localizeModifierOptions(upscalingOptions, t?.quality, 'upscaling_options'),
+      antiAliasingModes: localizeModifierOptions(antiAliasingOptions, t?.display, 'aa_options'),
+      refreshRates: localizeBasicOptions(refreshRateOptions, t?.display, 'refresh_options'),
+      resolutions: resolutionOptions.map((option) => ({
+        ...option,
+        name: t?.game?.resolution_options?.[option.id]?.name ?? option.name,
+        specs: t?.game?.resolution_options?.[option.id]?.specs ?? option.specs,
+      })),
+    }),
+    [t]
+  );
+
   if (!t) return null;
 
-  // Localization Helpers
-  const getLocOption = (options: ModifierOption[], category: any, key: string) => {
-    return options.map(opt => ({
-      ...opt,
-      label: category?.[key]?.[opt.id]?.label ?? opt.label,
-      description: category?.[key]?.[opt.id]?.desc ?? opt.description
-    }));
-  };
-
-  const getLocBasicOption = (options: BasicOption[], category: any, key: string) => {
-    return options.map(opt => ({
-      ...opt,
-      label: category?.[key]?.[opt.id]?.label ?? opt.label,
-      description: category?.[key]?.[opt.id]?.desc ?? opt.description
-    }));
-  };
-
-  const locRamSizeOptions = getLocOption(ramSizeOptions, t.memory, 'ram_size_options');
-  const locRamSpeedOptions = getLocOption(ramSpeedOptions, t.memory, 'ram_speed_options');
-  const locStorageOptions = getLocOption(storageTypeOptions, t.memory, 'storage_options');
-  const locGraphicsOptions = getLocOption(graphicsQualityOptions, t.quality, 'graphics_options');
-  const locUpscalingOptions = getLocOption(upscalingOptions, t.quality, 'upscaling_options');
-  const locAaOptions = getLocOption(antiAliasingOptions, t.display, 'aa_options');
-  const locRefreshOptions = getLocBasicOption(refreshRateOptions, t.display, 'refresh_options');
-  const locResolutionOptions = resolutionOptions.map(opt => ({
-    ...opt,
-    name: t.game.resolution_options[opt.id]?.name ?? opt.name,
-    specs: t.game.resolution_options[opt.id]?.specs ?? opt.specs
-  }));
+  const {
+    ramSizes: locRamSizeOptions,
+    ramSpeeds: locRamSpeedOptions,
+    storageTypes: locStorageOptions,
+    graphicsQualities: locGraphicsOptions,
+    upscalingModes: locUpscalingOptions,
+    antiAliasingModes: locAaOptions,
+    refreshRates: locRefreshOptions,
+    resolutions: locResolutionOptions,
+  } = localizedOptions;
 
   const resetDisplayedResults = () => {
     setShowResults(false);
@@ -272,30 +319,6 @@ export function EnhancedFPSCalculator({
 
   const getBasicOption = (options: BasicOption[], id: string) =>
     options.find((option) => option.id === id) ?? options[0];
-
-  const cpuOptions = allCPUs.map((cpu) => ({
-    id: cpu.id,
-    name: cpu.name,
-    tier: cpu.tier,
-    specs: `${cpu.cores}C/${cpu.threads}T, ${cpu.boostClock}GHz`,
-    price: cpu.currentPrice,
-  }));
-
-  const gpuOptions = allGPUs.map((gpu) => ({
-    id: gpu.id,
-    name: gpu.name,
-    tier: gpu.tier,
-    specs: `${gpu.vram}GB VRAM, ${gpu.boostClock}MHz`,
-    price: gpu.currentPrice,
-  }));
-
-  const gameOptions = allGames.map((game) => ({
-    id: game.id,
-    name: game.name,
-    tier: game.category,
-    specs: `${game.releaseYear}, ${game.cpuDemand} CPU / ${game.gpuDemand} GPU demand`,
-    price: 0,
-  }));
 
   const handleCalculate = () => {
     if (!selectedCPU || !selectedGPU || !selectedGame || !selectedResolution) {
@@ -642,10 +665,10 @@ export function EnhancedFPSCalculator({
     <div className="w-full max-w-7xl mx-auto space-y-6">
       <Card className="border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/40">
         <CardHeader className="text-center space-y-3">
-          <CardTitle className="flex items-center justify-center gap-2 text-2xl font-semibold">
+          <h2 className="flex items-center justify-center gap-2 text-2xl font-semibold leading-none tracking-tight">
             <Gamepad2 className="w-8 h-8 text-green-600" />
             <span>{t.title}</span>
-          </CardTitle>
+          </h2>
           <p className="text-sm text-muted-foreground">
             {t.description}
           </p>

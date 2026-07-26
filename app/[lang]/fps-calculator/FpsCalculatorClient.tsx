@@ -1,9 +1,37 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useLayoutEffect, useRef, useState } from "react";
 import { EnhancedFPSCalculator } from "@/components/calculators/enhanced-fps-calculator";
-import FPSCompareAndShare from "@/components/calculators/FPS-Compare-And-Share";
-import { OtherGamesPerformance } from "@/components/calculators/other-games-performance";
+
+const OtherGamesPerformance = dynamic(
+  () =>
+    import("@/components/calculators/other-games-performance").then(
+      (module) => module.OtherGamesPerformance
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        aria-hidden="true"
+        className="mx-auto mt-6 h-48 max-w-7xl animate-pulse rounded-xl border border-slate-200/70 bg-slate-100/60 dark:border-slate-800/60 dark:bg-slate-900/40"
+      />
+    ),
+  }
+);
+
+const FPSCompareAndShare = dynamic(
+  () => import("@/components/calculators/FPS-Compare-And-Share"),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        aria-hidden="true"
+        className="mx-auto mt-6 h-64 max-w-4xl animate-pulse rounded-xl border border-slate-200/70 bg-slate-100/60 dark:border-slate-800/60 dark:bg-slate-900/40"
+      />
+    ),
+  }
+);
 
 export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: string }) {
   const calculatorRegionRef = useRef<HTMLDivElement>(null);
@@ -52,7 +80,10 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
 
       {/* ⚖️ Step 2: Compare & Share (only appears after FPS is calculated) */}
       {currentBuild && (
-        <>
+        <div
+          className="space-y-6"
+          style={{ contentVisibility: "auto", containIntrinsicSize: "0 900px" }}
+        >
           <OtherGamesPerformance
             cpuId={currentBuild.cpu}
             gpuId={currentBuild.gpu}
@@ -68,7 +99,7 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
             dict={dict}
             lang={lang}
           />
-        </>
+        </div>
       )}
     </>
   );
