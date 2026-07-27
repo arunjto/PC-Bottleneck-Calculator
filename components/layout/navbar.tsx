@@ -1,6 +1,3 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -11,7 +8,6 @@ import { Locale } from '@/i18n-config';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
 
 export function Navbar({ lang }: { lang: string; dict?: unknown }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = getSiteChromeCopy(lang);
 
   const navLinks = [
@@ -27,7 +23,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#1e293b]/95 backdrop-blur-md text-white shadow-lg">
+    <header className="sticky top-0 z-50 bg-[#1e293b] text-white shadow-lg xl:bg-[#1e293b]/95 xl:backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
           {/* Brand */}
@@ -62,47 +58,38 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
           <div className="flex items-center gap-2 flex-shrink-0">
             <LanguageSwitcher />
             <ThemeToggle lang={lang} />
-            {/* Mobile hamburger */}
-            <button
-              type="button"
-              className="xl:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white transition-colors"
-              aria-controls="mobile-menu"
-              aria-expanded={mobileMenuOpen}
-              aria-label={mobileMenuOpen ? t.closeMenu : t.openMenu}
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
-            >
-              {mobileMenuOpen ? (
-                <X className="h-5 w-5" aria-hidden="true" />
-              ) : (
-                <Menu className="h-5 w-5" aria-hidden="true" />
-              )}
-            </button>
+            <details className="group xl:hidden">
+              <summary
+                aria-controls="mobile-menu"
+                aria-label={t.mobileNavigation}
+                className="inline-flex cursor-pointer list-none items-center justify-center rounded-md p-2 text-gray-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white [&::-webkit-details-marker]:hidden"
+              >
+                <Menu className="h-5 w-5 group-open:hidden" aria-hidden="true" />
+                <X className="hidden h-5 w-5 group-open:block" aria-hidden="true" />
+              </summary>
+
+              <nav
+                id="mobile-menu"
+                aria-label={t.mobileNavigation}
+                className="fixed inset-x-0 top-14 border-t border-slate-600/50 bg-[#1e293b] shadow-lg"
+              >
+                <ul className="mx-auto max-w-7xl space-y-1 px-4 py-3 sm:px-6 lg:px-8">
+                  {navLinks.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="block rounded-md px-3 py-2.5 text-sm font-medium text-gray-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </details>
           </div>
         </div>
       </div>
-
-      {/* Mobile dropdown menu */}
-      {mobileMenuOpen && (
-        <nav
-          id="mobile-menu"
-          aria-label={t.mobileNavigation}
-          className="xl:hidden border-t border-slate-600/50 bg-[#1e293b]"
-        >
-          <ul className="px-4 py-3 space-y-1">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="block px-3 py-2.5 rounded-md text-sm font-medium text-gray-200 hover:bg-white/10 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
     </header>
   );
 }

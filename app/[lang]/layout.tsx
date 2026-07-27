@@ -5,7 +5,6 @@ import Script from 'next/script';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { TooltipProvider } from '@/components/ui/tooltip';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -87,21 +86,19 @@ export default async function RootLayout({
       </head>
       <body className="font-sans" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TooltipProvider>
-            <div className="flex flex-col min-h-screen">
-              <a
-                href="#main-content"
-                className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:border focus:border-primary focus:text-foreground"
-              >
-                Skip to main content
-              </a>
-              <Navbar lang={lang} />
-              <main id="main-content" tabIndex={-1} className="flex-grow">
-                {children}
-              </main>
-              <Footer lang={lang} />
-            </div>
-          </TooltipProvider>
+          <div className="flex flex-col min-h-screen">
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:border focus:border-primary focus:text-foreground"
+            >
+              Skip to main content
+            </a>
+            <Navbar lang={lang} />
+            <main id="main-content" tabIndex={-1} className="flex-grow">
+              {children}
+            </main>
+            <Footer lang={lang} />
+          </div>
         </ThemeProvider>
 
         {/* AdSense — lazyOnload ensures it doesn't block interactivity on mobile */}
