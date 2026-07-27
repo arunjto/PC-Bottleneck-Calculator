@@ -94,7 +94,7 @@ const COPY: Record<Locale, ToolsPageCopy> = {
     hubTitle: 'Kostenlose PC-Rechner und Upgrade-Tools',
     hubDescription: 'GPU-, CPU-, Speicher-, Display-, Einstellungs- und Laufwerks-Upgrades transparent planen.',
     hubIntro: 'Wähle ein passendes Tool. Jedes Ergebnis zeigt Methode, Annahmen und Grenzen zur Prüfung vor einem Hardwarekauf.',
-    home: 'Startseite', tools: 'Tools', openTool: 'Rechner öffnen', formula: 'Verwendete Formel oder Modell', methodology: 'Berechnungsmethodik',
+    home: 'Startseite', tools: 'Werkzeuge', openTool: 'Rechner öffnen', formula: 'Verwendete Formel oder Modell', methodology: 'Berechnungsmethodik',
     methodologyIntro: 'Die Berechnung läuft im Browser. Schätzungen nutzen transparente Regeln und normalisierte Hardwaredaten; sie sind keine Labor-Benchmarks.',
     calculationSteps: 'Berechnungsschritte', limitations: 'Annahmen und Grenzen', resultMeaning: 'Ergebnis richtig einordnen',
     relatedTools: 'Verwandte PC-Tools', relatedDescription: 'Fahre mit dem Rechner für den nächsten Teil derselben Upgrade-Entscheidung fort.',

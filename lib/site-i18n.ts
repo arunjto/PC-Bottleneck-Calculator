@@ -116,7 +116,7 @@ const SITE_CHROME_COPY: Record<Locale, SiteChromeCopy> = {
   },
   de: {
     home: 'Startseite',
-    tools: 'Tools',
+    tools: 'Werkzeuge',
     fpsCalculator: 'FPS-Rechner',
     psuCalculator: 'Netzteil-Rechner',
     blog: 'Blog',
