@@ -73,6 +73,10 @@ export default async function RootLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-9111916848868133"
+        />
         {adsConfigured && (
           <>
             <link
