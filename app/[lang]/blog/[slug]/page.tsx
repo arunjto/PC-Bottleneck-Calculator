@@ -73,7 +73,7 @@ export async function generateMetadata({
       canonical: url,
       languages: Object.fromEntries(
         [
-          ...i18n.locales.map((locale) => [
+          ...(post.locales ?? [...i18n.locales]).map((locale) => [
             locale,
             `${SITE_URL}/${locale}/blog/${getLocalizedBlogSlug(locale, canonicalSlug)}`,
           ]),

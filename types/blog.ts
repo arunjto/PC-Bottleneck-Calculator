@@ -34,6 +34,8 @@ export interface BlogPostMeta {
   category: string;
   /** Tags for taxonomy and related-post matching */
   tags: string[];
+  /** Locales in which this post is genuinely available */
+  locales?: string[];
   /** Path to cover/hero image (relative to /public) */
   coverImage?: string;
   /** Short excerpt for cards and search */

@@ -7,11 +7,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Clock } from "lucide-react";
-import { parseISO } from "date-fns";
 
 import CategoryBadge from "@/components/blog/category-badge";
 import type { BlogPostMeta } from "@/types/blog";
 import { getBlogCopy } from "@/lib/blog-i18n";
+import { formatEditorialDate } from "@/lib/date";
 
 /** Props for FeaturedPostCard */
 interface FeaturedPostCardProps {
@@ -38,7 +38,7 @@ export default function FeaturedPostCard({
 }: FeaturedPostCardProps) {
   const postUrl = `/${lang}/blog/${post.slug}`;
   const copy = getBlogCopy(lang);
-  const formattedDate = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(parseISO(post.date));
+  const formattedDate = formatEditorialDate(post.date, lang);
 
   return (
     <article className="group relative overflow-hidden rounded-2xl shadow-md">
