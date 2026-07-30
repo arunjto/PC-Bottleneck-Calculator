@@ -24,7 +24,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
 
   return (
     <header className="sticky top-0 z-50 bg-[#1e293b] text-white shadow-lg xl:bg-[#1e293b]/95 xl:backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1536px] px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
           {/* Brand */}
           <Link
@@ -42,12 +42,12 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden xl:flex items-center gap-1" aria-label={t.mainNavigation}>
+          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1" aria-label={t.mainNavigation}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-1.5 text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+                className="shrink-0 whitespace-nowrap rounded-md px-2 py-1.5 text-[13px] font-medium text-gray-200 transition-colors hover:bg-white/10 hover:text-white 2xl:px-3 2xl:text-sm"
               >
                 {link.label}
               </Link>
