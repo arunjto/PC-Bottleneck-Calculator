@@ -8,6 +8,7 @@ import { getAuthorCopy } from '@/lib/author-i18n';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
+import { formatEditorialDate } from '@/lib/date';
 import { Facebook, Instagram, Globe, MapPin, GraduationCap, Briefcase } from 'lucide-react';
 
 const AUTHOR_IMAGE = 'https://www.pcbuildcheck.com/author-arun-kumar-yadav.jpg';
@@ -48,13 +49,6 @@ export default async function AuthorPage({ params }: { params: Promise<{ lang: L
   const contactPath = getLocalizedPath(lang, 'contact');
   const authorUrl = `https://www.pcbuildcheck.com${authorPath}`;
   const recentPosts = getAllPosts(lang).slice(0, 5);
-  const dateFormatter = new Intl.DateTimeFormat(lang, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
-
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -158,7 +152,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ lang: L
                         </Link>
                         {post.date && (
                           <span className="text-muted-foreground text-sm ml-2">
-                            — {dateFormatter.format(new Date(post.date))}
+                            — {formatEditorialDate(post.date, lang)}
                           </span>
                         )}
                       </li>

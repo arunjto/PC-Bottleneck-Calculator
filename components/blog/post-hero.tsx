@@ -8,11 +8,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, Calendar, RefreshCw, User } from "lucide-react";
-import { parseISO } from "date-fns";
 
 import CategoryBadge from "@/components/blog/category-badge";
 import type { BlogPostMeta } from "@/types/blog";
 import { getBlogCopy } from "@/lib/blog-i18n";
+import { formatEditorialDate } from "@/lib/date";
 import { getLocalizedPath } from "@/lib/path-translations";
 import type { Locale } from "@/i18n-config";
 
@@ -36,10 +36,9 @@ interface PostHeroProps {
  */
 export default function PostHero({ post, lang = "en" }: PostHeroProps) {
   const copy = getBlogCopy(lang);
-  const dateFormatter = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
-  const formattedDate = dateFormatter.format(parseISO(post.date));
+  const formattedDate = formatEditorialDate(post.date, lang);
   const formattedUpdated = post.updated
-    ? dateFormatter.format(parseISO(post.updated))
+    ? formatEditorialDate(post.updated, lang)
     : null;
 
   return (

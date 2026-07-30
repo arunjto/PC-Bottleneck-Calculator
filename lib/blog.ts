@@ -7,9 +7,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { format } from 'date-fns';
 import { getLocalizedBlogSlug, getCanonicalBlogSlug } from '@/lib/blog-slug-translations';
 import { slugifyTaxonomy } from '@/lib/taxonomy';
+import { formatEditorialDate } from '@/lib/date';
 import GithubSlugger from 'github-slugger';
 
 export { slugifyTaxonomy } from '@/lib/taxonomy';
@@ -161,8 +161,18 @@ export function getAllPosts(locale?: string): BlogPostMeta[] {
   // Always get the list of slugs from the default (English) directory
   const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.mdx'));
 
-  const posts: BlogPostMeta[] = files.map((file) => {
+  const posts = files.map((file): BlogPostMeta | null => {
     const englishSlug = file.replace(/\.mdx$/, '');
+    const englishRaw = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf-8');
+    const { data: englishData } = matter(englishRaw);
+    const supportedLocales = (englishData.locales as string[] | undefined);
+
+    // Do not publish an English fallback under another locale URL when the
+    // post explicitly declares the languages in which it is available.
+    if (locale && supportedLocales && !supportedLocales.includes(locale)) {
+      return null;
+    }
+
     // Use translated slug for the URL, but load content from the right file
     const displaySlug = locale ? getLocalizedBlogSlug(locale, englishSlug) : englishSlug;
     const filePath = getPostFilePath(englishSlug, locale) || path.join(CONTENT_DIR, file);
@@ -178,13 +188,14 @@ export function getAllPosts(locale?: string): BlogPostMeta[] {
       author: (data.author as string) || AUTHOR.name,
       category: (data.category as string) || 'General',
       tags: (data.tags as string[]) || [],
+      locales: supportedLocales,
       coverImage: (data.coverImage as string) || undefined,
       excerpt: (data.excerpt as string) || undefined,
       featured: Boolean(data.featured) || false,
       readingTime: calculateReadingTime(content),
       keywords: (data.keywords as string[]) || undefined,
     };
-  });
+  }).filter((post): post is BlogPostMeta => post !== null);
 
   // Keep scheduled content out of listings, static routes, RSS, and sitemaps.
   return posts.filter((post) => isPublished(post.date)).sort(
@@ -201,6 +212,16 @@ export function getPostBySlug(slug: string, locale?: string): BlogPost | null {
   const filePath = getPostFilePath(slug, locale);
   if (!filePath) return null;
 
+  const canonicalSlug = locale ? getCanonicalBlogSlug(locale, slug) : slug;
+  const englishPath = path.join(CONTENT_DIR, `${canonicalSlug}.mdx`);
+  const englishData = fs.existsSync(englishPath)
+    ? matter(fs.readFileSync(englishPath, 'utf-8')).data
+    : {};
+  const supportedLocales = englishData.locales as string[] | undefined;
+  if (locale && supportedLocales && !supportedLocales.includes(locale)) {
+    return null;
+  }
+
   const raw = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(raw);
 
@@ -209,7 +230,6 @@ export function getPostBySlug(slug: string, locale?: string): BlogPost | null {
 
   // Determine the display slug (translated for non-English)
   // If the incoming slug is already translated, use it; otherwise translate it
-  const canonicalSlug = locale ? getCanonicalBlogSlug(locale, slug) : slug;
   const displaySlug = locale ? getLocalizedBlogSlug(locale, canonicalSlug) : slug;
 
   return {
@@ -221,6 +241,7 @@ export function getPostBySlug(slug: string, locale?: string): BlogPost | null {
     author: (data.author as string) || AUTHOR.name,
     category: (data.category as string) || 'General',
     tags: (data.tags as string[]) || [],
+    locales: supportedLocales,
     coverImage: (data.coverImage as string) || undefined,
     excerpt: (data.excerpt as string) || undefined,
     featured: Boolean(data.featured) || false,
@@ -427,5 +448,5 @@ export function searchPosts(
  * Format an ISO date string into a human-readable form, e.g. "July 2, 2026".
  */
 export function formatDate(dateString: string): string {
-  return format(new Date(dateString), 'MMMM d, yyyy');
+  return formatEditorialDate(dateString, 'en', 'long');
 }
