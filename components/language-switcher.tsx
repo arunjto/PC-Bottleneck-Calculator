@@ -5,6 +5,10 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { i18n, Locale } from '@/i18n-config';
 import { getCanonicalPath, getLocalizedPath } from '@/lib/path-translations';
+import {
+    blogSlugTranslations,
+    getCanonicalBlogSlug,
+} from '@/lib/blog-slug-translations';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
 
 const languageOptions: Record<Locale, { label: string; flag: string }> = {
@@ -67,6 +71,27 @@ export function LanguageSwitcher() {
 
         if (!pathAfterLocale) {
             return `/${newLocale}`;
+        }
+
+        // Blog articles are localized independently from normal app routes.
+        // If the current article has no real translation in the requested
+        // language, send the visitor to that language's blog index instead of
+        // an English fallback URL that would return 404.
+        const blogArticleMatch = pathAfterLocale.match(/^blog\/([^/]+)$/);
+        if (blogArticleMatch) {
+            if (newLocale === currentLocale) {
+                return pathname;
+            }
+
+            const canonicalSlug = getCanonicalBlogSlug(
+                currentLocale,
+                blogArticleMatch[1]
+            );
+            const localizedSlug = blogSlugTranslations[newLocale]?.[canonicalSlug];
+
+            return localizedSlug
+                ? `/${newLocale}/blog/${localizedSlug}`
+                : `/${newLocale}/blog`;
         }
 
         const canonicalPath = getCanonicalPath(currentLocale, pathAfterLocale);
