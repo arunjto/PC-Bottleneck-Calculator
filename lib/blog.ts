@@ -102,8 +102,21 @@ function getPostFilePath(slug: string, locale?: string): string | null {
  * Strips non-word characters (except spaces and hyphens), lowercases, and
  * replaces whitespace runs with a single hyphen.
  */
-/** Return true only when a post's publication date has arrived. */
+/** Return true only when a post's publication date has arrived in the site's timezone. */
 export function isPublished(date: string, now = new Date()): boolean {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    const currentDateParts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(now);
+    const part = (type: Intl.DateTimeFormatPartTypes) =>
+      currentDateParts.find((item) => item.type === type)?.value ?? '';
+    const currentSiteDate = `${part('year')}-${part('month')}-${part('day')}`;
+    return date <= currentSiteDate;
+  }
+
   const timestamp = Date.parse(date);
   return Number.isFinite(timestamp) && timestamp <= now.getTime();
 }
