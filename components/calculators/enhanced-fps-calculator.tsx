@@ -1539,7 +1539,7 @@ export function EnhancedFPSCalculator({
               className={`fps-collapsible-content ${expandedResultSections['upgrade-impact'] ? 'block' : 'hidden'}`}
             >
             <CardContent className="space-y-4">
-              <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 dark:border-violet-800 dark:bg-violet-950/35">
+              <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 dark:border-violet-700 dark:bg-violet-950/60">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <h3 className="font-semibold text-violet-950 dark:text-violet-100">
                     {upgradeSummaryCopy.current_signal}
