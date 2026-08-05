@@ -25,7 +25,7 @@ export default function BlogHeader({ title, description }: BlogHeaderProps) {
       {/* Gradient text heading */}
       <h1
         className="
-          text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl
+          pb-1 text-4xl font-extrabold leading-[1.15] tracking-tight sm:text-5xl lg:text-6xl
           bg-gradient-to-r from-primary via-accent to-primary
           bg-clip-text text-transparent
         "

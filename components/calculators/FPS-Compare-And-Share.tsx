@@ -149,7 +149,9 @@ export default function FPSCompareAndShare({
   };
 
   const share = (platform: string) => {
-    const shareUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang as Locale, 'fps-calculator')}`;
+    const shareUrl = typeof window === "undefined"
+      ? `https://www.pcbuildcheck.com${getLocalizedPath(lang as Locale, 'fps-calculator')}`
+      : window.location.href;
     const url = encodeURIComponent(shareUrl);
     const text = encodeURIComponent(t.share.text);
 
@@ -158,7 +160,7 @@ export default function FPSCompareAndShare({
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
         break;
       case "twitter":
-        window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+        window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, "_blank");
         break;
       case "instagram":
         toast.info(t.share.toast_insta);

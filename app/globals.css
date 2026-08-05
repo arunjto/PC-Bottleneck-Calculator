@@ -175,3 +175,48 @@ textarea,
     hsl(var(--accent)) 100%
   );
 }
+
+/* FPS result report: print only the calculated scenario, without site chrome. */
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .fps-print-report,
+  .fps-print-report * {
+    visibility: visible !important;
+  }
+
+  .fps-print-report {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    color: #0f172a !important;
+  }
+
+  .fps-print-report .fps-print-hide {
+    display: none !important;
+  }
+
+  .fps-print-report .fps-collapsible-content {
+    display: block !important;
+  }
+
+  .fps-print-report > * {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+
+  .fps-print-report [class*="dark:"] {
+    color: #0f172a !important;
+  }
+}

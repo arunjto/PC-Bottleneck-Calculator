@@ -1,8 +1,27 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { EnhancedFPSCalculator } from "@/components/calculators/enhanced-fps-calculator";
+import { FPSSavedHistory } from "@/components/calculators/fps-saved-history";
+import { getCPUById, getGameById, getGPUById } from "@/lib/hardware-database";
+import {
+  configFromFPSBuild,
+  FPS_HISTORY_STORAGE_KEY,
+  parseFPSHistory,
+  removeFPSHistoryEntry,
+  renameFPSHistoryEntry,
+  serializeFPSHistory,
+  upsertFPSHistory,
+  type FPSHistoryEntry,
+} from "@/lib/fps-history";
+import {
+  parseFPSShareParams,
+  removeFPSShareParams,
+  serializeFPSShareConfig,
+  type FPSCalculatorBuild,
+  type FPSCalculatorConfig,
+} from "@/lib/fps-share";
 
 const OtherGamesPerformance = dynamic(
   () =>
@@ -35,13 +54,154 @@ const FPSCompareAndShare = dynamic(
 
 export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: string }) {
   const calculatorRegionRef = useRef<HTMLDivElement>(null);
-  const [currentBuild, setCurrentBuild] = useState<{
-    cpu: string;
-    gpu: string;
-    game: string;
-    resolution: string;
-    fps: number;
-  } | null>(null);
+  const urlStateActiveRef = useRef(false);
+  const [currentBuild, setCurrentBuild] = useState<FPSCalculatorBuild | null>(null);
+  const [initialConfig, setInitialConfig] = useState<FPSCalculatorConfig | null | undefined>(undefined);
+  const [calculatorRevision, setCalculatorRevision] = useState(0);
+  const [savedHistory, setSavedHistory] = useState<FPSHistoryEntry[]>([]);
+  const [historyReady, setHistoryReady] = useState(false);
+  const [storageAvailable, setStorageAvailable] = useState(true);
+
+  const persistHistory = useCallback((entries: FPSHistoryEntry[]) => {
+    try {
+      window.localStorage.setItem(FPS_HISTORY_STORAGE_KEY, serializeFPSHistory(entries));
+      setStorageAvailable(true);
+    } catch {
+      setStorageAvailable(false);
+    }
+  }, []);
+
+  const updateHistory = useCallback(
+    (updater: (entries: FPSHistoryEntry[]) => FPSHistoryEntry[]) => {
+      setSavedHistory((entries) => {
+        const nextEntries = updater(entries);
+        persistHistory(nextEntries);
+        return nextEntries;
+      });
+    },
+    [persistHistory]
+  );
+
+  const readSharedConfig = useCallback(() => {
+    const parsedConfig = parseFPSShareParams(window.location.search);
+    const parsed = parsedConfig
+      && getCPUById(parsedConfig.cpu)
+      && getGPUById(parsedConfig.gpu)
+      && getGameById(parsedConfig.game)
+      ? parsedConfig
+      : null;
+    const currentParams = new URLSearchParams(window.location.search);
+    urlStateActiveRef.current = Boolean(parsed);
+
+    if (window.location.hash) {
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${window.location.search}`
+      );
+    }
+
+    if (!parsed && currentParams.has("fps")) {
+      const cleanParams = removeFPSShareParams(currentParams);
+      const cleanQuery = cleanParams.toString();
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ""}`
+      );
+    }
+
+    setInitialConfig(parsed);
+    setCurrentBuild(null);
+  }, []);
+
+  useEffect(() => {
+    readSharedConfig();
+
+    const handlePopState = () => {
+      readSharedConfig();
+      setCalculatorRevision((revision) => revision + 1);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [readSharedConfig]);
+
+  useEffect(() => {
+    try {
+      const parsedEntries = parseFPSHistory(
+        window.localStorage.getItem(FPS_HISTORY_STORAGE_KEY)
+      );
+      const validEntries = parsedEntries.filter(
+        (entry) => getCPUById(entry.config.cpu)
+          && getGPUById(entry.config.gpu)
+          && getGameById(entry.config.game)
+      );
+      setSavedHistory(validEntries);
+      persistHistory(validEntries);
+    } catch {
+      setStorageAvailable(false);
+    } finally {
+      setHistoryReady(true);
+    }
+  }, [persistHistory]);
+
+  const handleBuildChange = useCallback((build: FPSCalculatorBuild | null) => {
+    setCurrentBuild(build);
+
+    if (build) {
+      if (!urlStateActiveRef.current) return;
+      const params = serializeFPSShareConfig(build);
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}?${params.toString()}`
+      );
+      return;
+    }
+
+    urlStateActiveRef.current = false;
+    const cleanParams = removeFPSShareParams(window.location.search);
+    const cleanQuery = cleanParams.toString();
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ""}`
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!historyReady || !currentBuild || !storageAvailable) return;
+    const config = configFromFPSBuild(currentBuild);
+    updateHistory((entries) => upsertFPSHistory(entries, config));
+  }, [currentBuild, historyReady, storageAvailable, updateHistory]);
+
+  const openSavedConfig = useCallback((config: FPSCalculatorConfig) => {
+    if (!getCPUById(config.cpu) || !getGPUById(config.gpu) || !getGameById(config.game)) return;
+
+    urlStateActiveRef.current = true;
+    const params = serializeFPSShareConfig(config);
+    window.history.pushState(
+      null,
+      "",
+      `${window.location.pathname}?${params.toString()}`
+    );
+    setCurrentBuild(null);
+    setInitialConfig(config);
+    setCalculatorRevision((revision) => revision + 1);
+  }, []);
+
+  const renameSavedEntry = useCallback((id: string, name: string) => {
+    updateHistory((entries) => renameFPSHistoryEntry(entries, id, name));
+  }, [updateHistory]);
+
+  const deleteSavedEntry = useCallback((id: string) => {
+    updateHistory((entries) => removeFPSHistoryEntry(entries, id));
+  }, [updateHistory]);
+
+  const clearSavedHistory = useCallback(() => {
+    updateHistory(() => []);
+  }, [updateHistory]);
 
   useLayoutEffect(() => {
     if (!currentBuild) return;
@@ -75,10 +235,41 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
     <>
       {/* 🧮 Step 1: Main Calculator */}
       <div ref={calculatorRegionRef} className="scroll-mt-16 [overflow-anchor:none]">
-        <EnhancedFPSCalculator onBuildChange={setCurrentBuild} dict={dict} />
+        {initialConfig === undefined ? (
+          <div
+            aria-hidden="true"
+            className="mx-auto h-96 max-w-7xl animate-pulse rounded-xl border border-slate-200/70 bg-slate-100/60 dark:border-slate-800/60 dark:bg-slate-900/40"
+          />
+        ) : (
+          <EnhancedFPSCalculator
+            key={calculatorRevision}
+            initialConfig={initialConfig}
+            onBuildChange={handleBuildChange}
+            dict={dict}
+            lang={lang}
+          />
+        )}
       </div>
 
       {/* ⚖️ Step 2: Compare & Share (only appears after FPS is calculated) */}
+      {historyReady ? (
+        <FPSSavedHistory
+          entries={savedHistory}
+          storageAvailable={storageAvailable}
+          dict={dict}
+          lang={lang}
+          onOpen={openSavedConfig}
+          onRename={renameSavedEntry}
+          onDelete={deleteSavedEntry}
+          onClear={clearSavedHistory}
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          className="mx-auto mt-8 h-40 max-w-4xl animate-pulse rounded-xl border border-slate-200/70 bg-slate-100/60 dark:border-slate-800/60 dark:bg-slate-900/40"
+        />
+      )}
+
       {currentBuild && (
         <div
           className="space-y-6"

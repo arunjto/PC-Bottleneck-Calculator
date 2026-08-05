@@ -1,9 +1,12 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { BarChart3, Calculator, RotateCcw } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useMemo, useState } from 'react';
+import { AlertTriangle, BarChart3, Calculator, ExternalLink, RotateCcw, ShieldCheck } from 'lucide-react';
 import type { Locale } from '@/i18n-config';
 import type { ToolSlug } from '@/lib/pc-tools';
+import { getLocalizedPath } from '@/lib/path-translations';
+import { estimatePSUPlanningFromPower } from '@/lib/psu-model';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -16,6 +19,7 @@ export type ToolHardwareOption = {
   tdp: number;
   vram?: number;
   cores?: number;
+  socket?: string;
 };
 
 export type ToolGameOption = {
@@ -47,7 +51,8 @@ type ResultKey =
   | 'renderedResolution' | 'renderedPixels' | 'nativeWorkloadChange' | 'targetWorkloadChange'
   | 'suggestedPreset' | 'presetFps' | 'ultraFps' | 'limitingComponent' | 'ramStatus'
   | 'responsivenessGain' | 'freeCapacity' | 'additionalGames' | 'upgradeClass' | 'firstPriority'
-  | 'secondPriority' | 'thirdPriority' | 'fourthPriority';
+  | 'secondPriority' | 'thirdPriority' | 'fourthPriority' | 'currentPsu' | 'proposedPsu'
+  | 'socketChange' | 'platformCheck';
 
 type Option = { value: string; label: string };
 type Field = {
@@ -107,6 +112,8 @@ const EN_RESULTS: Record<ResultKey, string> = {
   limitingComponent: 'Likely slower component', ramStatus: 'Memory capacity check', responsivenessGain: 'Relative responsiveness-index gain',
   freeCapacity: 'Usable capacity after allowances', additionalGames: 'Approximate additional games', upgradeClass: 'Upgrade summary',
   firstPriority: '1st priority', secondPriority: '2nd priority', thirdPriority: '3rd priority', fourthPriority: '4th priority',
+  currentPsu: 'Current-build PSU planning value', proposedPsu: 'Proposed-build PSU planning value',
+  socketChange: 'Listed CPU socket', platformCheck: 'Platform check',
 };
 
 const EN_OPTIONS: Record<string, string> = {
@@ -146,6 +153,18 @@ const UI_COPY: Record<Locale, UiCopy> = {
     hddToSsd: 'Major responsiveness upgrade from HDD to solid-state storage', ssdStep: 'Faster storage tier; game-load gains vary',
     sameTier: 'Similar storage class; capacity may be the main benefit', noUrgent: 'No large modeled shortfall',
     componentCpu: 'CPU', componentGpu: 'GPU', componentRam: 'RAM', componentStorage: 'Storage',
+    unknown: 'Unknown', sameSocket: 'Same socket listed; verify the exact motherboard and BIOS support list',
+    platformChange: 'Different socket; motherboard or platform replacement is likely', verifyPlatform: 'Socket data incomplete; verify the platform manually',
+    checklistTitle: 'Compatibility checks before buying',
+    cpuSocketSame: 'Both CPUs list {socket}, but a matching socket does not guarantee chipset or BIOS support.',
+    cpuSocketChanged: 'The listed socket changes from {current} to {proposed}; a motherboard or platform change is likely.',
+    cpuSocketUnknown: 'Socket information is incomplete. Confirm both CPUs and the exact motherboard support list.',
+    cpuBios: 'Confirm motherboard model, chipset, BIOS version, RAM generation and CPU support list.',
+    cpuCooling: 'Check cooler mounting, thermal capacity, case clearance and power limits.',
+    gpuPower: 'Confirm PSU wattage and native connector guidance from the GPU manufacturer and board partner.',
+    gpuClearance: 'Check card length, thickness, slot clearance, support bracket and case airflow.',
+    gpuDrivers: 'Verify display outputs, driver support and any required adapter or native cable.',
+    openPsu: 'Open prefilled PSU Calculator',
   }),
   it: buildCopy('it', {
     calculator: 'Inserisci la configurazione', results: 'Risultato di pianificazione', calculate: 'Calcola', reset: 'Ripristina',
@@ -172,6 +191,8 @@ const UI_COPY: Record<Locale, UiCopy> = {
     presetFps: 'FPS stimati al preset', ultraFps: 'FPS stimati a ultra', limitingComponent: 'Componente probabilmente più lento',
     ramStatus: 'Controllo capacità memoria', freeCapacity: 'Capacità utilizzabile', additionalGames: 'Giochi aggiuntivi approssimativi',
     upgradeClass: 'Sintesi upgrade', firstPriority: '1ª priorità', secondPriority: '2ª priorità', thirdPriority: '3ª priorità', fourthPriority: '4ª priorità',
+    currentPsu: 'Valore PSU della configurazione attuale', proposedPsu: 'Valore PSU della configurazione proposta',
+    socketChange: 'Socket CPU indicato', platformCheck: 'Controllo piattaforma',
   }, {
     gaming: 'Gaming', productivity: 'Produttività / creazione', everyday: 'Uso quotidiano', esports: 'Esports',
     streamingCreator: 'Gaming + streaming', creator: 'Creazione contenuti', aaa: 'Giochi AAA moderni', mainstream: 'Giochi comuni',
@@ -187,6 +208,18 @@ const UI_COPY: Record<Locale, UiCopy> = {
     hddToSsd: 'Grande miglioramento passando da HDD a SSD', ssdStep: 'Storage più veloce; i caricamenti variano',
     sameTier: 'Classe simile; il vantaggio principale può essere la capacità', noUrgent: 'Nessuna carenza importante nel modello',
     componentCpu: 'CPU', componentGpu: 'GPU', componentRam: 'RAM', componentStorage: 'Storage',
+    unknown: 'Sconosciuto', sameSocket: 'Stesso socket indicato; verifica scheda madre e supporto BIOS',
+    platformChange: 'Socket diverso; probabile sostituzione della scheda madre o piattaforma', verifyPlatform: 'Dati socket incompleti; verifica manualmente la piattaforma',
+    checklistTitle: 'Controlli di compatibilità prima dell’acquisto',
+    cpuSocketSame: 'Entrambe le CPU indicano {socket}, ma lo stesso socket non garantisce chipset o BIOS compatibili.',
+    cpuSocketChanged: 'Il socket cambia da {current} a {proposed}; è probabile un cambio di scheda madre o piattaforma.',
+    cpuSocketUnknown: 'Informazioni socket incomplete. Verifica entrambe le CPU e la lista di supporto della scheda madre.',
+    cpuBios: 'Conferma modello, chipset, versione BIOS, generazione RAM e lista CPU supportate.',
+    cpuCooling: 'Controlla montaggio e capacità del dissipatore, spazio nel case e limiti di potenza.',
+    gpuPower: 'Conferma potenza PSU e connettori indicati dal produttore GPU e dal partner della scheda.',
+    gpuClearance: 'Controlla lunghezza, spessore, slot, staffa di supporto e flusso d’aria del case.',
+    gpuDrivers: 'Verifica uscite video, driver ed eventuali adattatori o cavi nativi necessari.',
+    openPsu: 'Apri il Calcolatore PSU precompilato',
   }),
   fr: buildCopy('fr', {
     calculator: 'Saisissez votre configuration', results: 'Résultat de planification', calculate: 'Calculer', reset: 'Réinitialiser',
@@ -213,6 +246,8 @@ const UI_COPY: Record<Locale, UiCopy> = {
     presetFps: 'FPS estimés au préréglage', ultraFps: 'FPS estimés en ultra', limitingComponent: 'Composant probablement le plus lent',
     ramStatus: 'Vérification de la mémoire', freeCapacity: 'Capacité utilisable', additionalGames: 'Jeux supplémentaires approximatifs',
     upgradeClass: 'Résumé de la mise à niveau', firstPriority: '1re priorité', secondPriority: '2e priorité', thirdPriority: '3e priorité', fourthPriority: '4e priorité',
+    currentPsu: 'Valeur d’alimentation actuelle', proposedPsu: 'Valeur d’alimentation proposée',
+    socketChange: 'Socket CPU indiqué', platformCheck: 'Vérification de plateforme',
   }, {
     gaming: 'Jeu', productivity: 'Productivité / création', everyday: 'Usage quotidien', esports: 'Esports',
     streamingCreator: 'Jeu + streaming', creator: 'Création de contenu', aaa: 'Jeux AAA modernes', mainstream: 'Jeux courants',
@@ -228,6 +263,18 @@ const UI_COPY: Record<Locale, UiCopy> = {
     hddToSsd: 'Gain majeur en passant du HDD au SSD', ssdStep: 'Stockage plus rapide; les chargements varient',
     sameTier: 'Classe similaire; la capacité peut être le principal gain', noUrgent: 'Aucun grand déficit modélisé',
     componentCpu: 'CPU', componentGpu: 'GPU', componentRam: 'RAM', componentStorage: 'Stockage',
+    unknown: 'Inconnu', sameSocket: 'Même socket indiqué ; vérifiez la carte mère et le BIOS',
+    platformChange: 'Socket différent ; remplacement de carte mère ou plateforme probable', verifyPlatform: 'Données de socket incomplètes ; vérifiez la plateforme',
+    checklistTitle: 'Compatibilité à vérifier avant achat',
+    cpuSocketSame: 'Les deux CPU indiquent {socket}, mais le même socket ne garantit pas le chipset ou le BIOS.',
+    cpuSocketChanged: 'Le socket passe de {current} à {proposed} ; un changement de carte mère ou plateforme est probable.',
+    cpuSocketUnknown: 'Informations de socket incomplètes. Vérifiez les CPU et la liste de support de la carte mère.',
+    cpuBios: 'Confirmez modèle, chipset, version du BIOS, génération de RAM et liste des CPU pris en charge.',
+    cpuCooling: 'Vérifiez montage et capacité du refroidisseur, espace du boîtier et limites de puissance.',
+    gpuPower: 'Confirmez puissance et connecteurs conseillés par les fabricants de l’alimentation et de la carte.',
+    gpuClearance: 'Vérifiez longueur, épaisseur, emplacements, support et circulation d’air du boîtier.',
+    gpuDrivers: 'Vérifiez sorties d’affichage, pilotes et adaptateurs ou câbles natifs nécessaires.',
+    openPsu: 'Ouvrir le calculateur d’alimentation prérempli',
   }),
   de: buildCopy('de', {
     calculator: 'Konfiguration eingeben', results: 'Berechnetes Planungsergebnis', calculate: 'Berechnen', reset: 'Zurücksetzen',
@@ -254,6 +301,8 @@ const UI_COPY: Record<Locale, UiCopy> = {
     presetFps: 'Geschätzte FPS beim Preset', ultraFps: 'Geschätzte FPS auf Ultra', limitingComponent: 'Wahrscheinlich langsamere Komponente',
     ramStatus: 'Speicherkapazitätsprüfung', freeCapacity: 'Nutzbare Kapazität', additionalGames: 'Ungefähre zusätzliche Spiele',
     upgradeClass: 'Upgrade-Zusammenfassung', firstPriority: '1. Priorität', secondPriority: '2. Priorität', thirdPriority: '3. Priorität', fourthPriority: '4. Priorität',
+    currentPsu: 'Netzteil-Planungswert des aktuellen PCs', proposedPsu: 'Netzteil-Planungswert des geplanten PCs',
+    socketChange: 'Gelisteter CPU-Sockel', platformCheck: 'Plattformprüfung',
   }, {
     gaming: 'Gaming', productivity: 'Produktivität / Kreativarbeit', everyday: 'Alltag', esports: 'Esports',
     streamingCreator: 'Gaming + Streaming', creator: 'Content-Erstellung', aaa: 'Moderne AAA-Spiele', mainstream: 'Normale Spiele',
@@ -269,6 +318,18 @@ const UI_COPY: Record<Locale, UiCopy> = {
     hddToSsd: 'Großer Reaktionssprung von HDD zu SSD', ssdStep: 'Schnellere Speicherstufe; Ladezeiten variieren',
     sameTier: 'Ähnliche Klasse; Kapazität kann der Hauptvorteil sein', noUrgent: 'Kein großer modellierter Rückstand',
     componentCpu: 'CPU', componentGpu: 'GPU', componentRam: 'RAM', componentStorage: 'Speicher',
+    unknown: 'Unbekannt', sameSocket: 'Gleicher Sockel gelistet; Mainboard- und BIOS-Support prüfen',
+    platformChange: 'Anderer Sockel; Mainboard- oder Plattformwechsel wahrscheinlich', verifyPlatform: 'Sockeldaten unvollständig; Plattform manuell prüfen',
+    checklistTitle: 'Kompatibilitätsprüfung vor dem Kauf',
+    cpuSocketSame: 'Beide CPUs listen {socket}, aber ein gleicher Sockel garantiert keinen Chipsatz- oder BIOS-Support.',
+    cpuSocketChanged: 'Der Sockel wechselt von {current} zu {proposed}; ein Mainboard- oder Plattformwechsel ist wahrscheinlich.',
+    cpuSocketUnknown: 'Sockelangaben sind unvollständig. Beide CPUs und die Mainboard-Supportliste prüfen.',
+    cpuBios: 'Mainboardmodell, Chipsatz, BIOS-Version, RAM-Generation und CPU-Supportliste bestätigen.',
+    cpuCooling: 'Kühlerbefestigung, thermische Kapazität, Gehäuseplatz und Power-Limits prüfen.',
+    gpuPower: 'Netzteil- und Anschlussvorgaben von GPU-Hersteller und Boardpartner bestätigen.',
+    gpuClearance: 'Kartenlänge, Dicke, Slot-Freiraum, Halterung und Gehäusebelüftung prüfen.',
+    gpuDrivers: 'Display-Ausgänge, Treiber und erforderliche Adapter oder native Kabel prüfen.',
+    openPsu: 'Vorausgefüllten Netzteil-Rechner öffnen',
   }),
   es: buildCopy('es', {
     calculator: 'Introduce tu configuración', results: 'Resultado de planificación', calculate: 'Calcular', reset: 'Restablecer',
@@ -295,6 +356,8 @@ const UI_COPY: Record<Locale, UiCopy> = {
     presetFps: 'FPS estimados con el ajuste', ultraFps: 'FPS estimados en ultra', limitingComponent: 'Componente probablemente más lento',
     ramStatus: 'Comprobación de memoria', freeCapacity: 'Capacidad utilizable', additionalGames: 'Juegos adicionales aproximados',
     upgradeClass: 'Resumen de la actualización', firstPriority: '1.ª prioridad', secondPriority: '2.ª prioridad', thirdPriority: '3.ª prioridad', fourthPriority: '4.ª prioridad',
+    currentPsu: 'Valor de PSU del equipo actual', proposedPsu: 'Valor de PSU del equipo propuesto',
+    socketChange: 'Socket de CPU indicado', platformCheck: 'Comprobación de plataforma',
   }, {
     gaming: 'Juegos', productivity: 'Productividad / creación', everyday: 'Uso diario', esports: 'Esports',
     streamingCreator: 'Juegos + streaming', creator: 'Creación de contenido', aaa: 'Juegos AAA modernos', mainstream: 'Juegos comunes',
@@ -310,6 +373,18 @@ const UI_COPY: Record<Locale, UiCopy> = {
     hddToSsd: 'Gran mejora al pasar de HDD a SSD', ssdStep: 'Nivel más rápido; las cargas varían',
     sameTier: 'Clase similar; la capacidad puede ser el beneficio principal', noUrgent: 'Sin gran carencia modelada',
     componentCpu: 'CPU', componentGpu: 'GPU', componentRam: 'RAM', componentStorage: 'Almacenamiento',
+    unknown: 'Desconocido', sameSocket: 'Mismo socket indicado; verifica placa y soporte de BIOS',
+    platformChange: 'Socket diferente; probable cambio de placa o plataforma', verifyPlatform: 'Datos de socket incompletos; verifica la plataforma',
+    checklistTitle: 'Compatibilidad que debes verificar antes de comprar',
+    cpuSocketSame: 'Ambas CPU indican {socket}, pero compartir socket no garantiza compatibilidad de chipset o BIOS.',
+    cpuSocketChanged: 'El socket cambia de {current} a {proposed}; probablemente necesitarás otra placa o plataforma.',
+    cpuSocketUnknown: 'La información de socket está incompleta. Verifica ambas CPU y la lista de soporte de la placa.',
+    cpuBios: 'Confirma modelo de placa, chipset, BIOS, generación de RAM y lista de CPU compatibles.',
+    cpuCooling: 'Comprueba montaje y capacidad del disipador, espacio de la caja y límites de potencia.',
+    gpuPower: 'Confirma potencia y conectores recomendados por el fabricante de la GPU y de la tarjeta.',
+    gpuClearance: 'Comprueba longitud, grosor, ranuras, soporte y ventilación de la caja.',
+    gpuDrivers: 'Verifica salidas de pantalla, controladores y adaptadores o cables nativos necesarios.',
+    openPsu: 'Abrir Calculadora de PSU preconfigurada',
   }),
 };
 
@@ -429,12 +504,16 @@ function calculate(slug: ToolSlug, values: Record<string, string>, data: ToolDat
       const usefulGain = (proposedEffective / Math.max(1, currentEffective) - 1) * 100;
       const theoretical = (proposed.score / Math.max(1, current.score) - 1) * 100;
       const fps = numeric(values, 'currentFps') * proposedEffective / Math.max(1, currentEffective);
+      const currentPsu = estimatePSUPlanningFromPower(cpu.tdp, current.tdp).planningWattage;
+      const proposedPsu = estimatePSUPlanningFromPower(cpu.tdp, proposed.tdp).planningWattage;
       return [
         { key: 'expectedFps', value: fps, unit: 'FPS', digits: 0, primary: true },
         { key: 'usefulGain', value: signed(usefulGain, 1), unit: '%'},
         { key: 'theoreticalGain', value: signed(theoretical, 1), unit: '%' },
         { key: 'vramChange', value: signed((proposed.vram ?? 0) - (current.vram ?? 0)), unit: 'GB' },
         { key: 'powerChange', value: signed(proposed.tdp - current.tdp), unit: 'W' },
+        { key: 'currentPsu', value: currentPsu, unit: 'W' },
+        { key: 'proposedPsu', value: proposedPsu, unit: 'W' },
         { key: 'cpuLimit', value: proposed.score > cpuCeiling ? copy.messages.likely : copy.messages.noLikely },
       ];
     }
@@ -448,12 +527,25 @@ function calculate(slug: ToolSlug, values: Record<string, string>, data: ToolDat
       const proposedEffective = gaming ? Math.min(proposed.score, cap) : proposed.score;
       const gain = (proposedEffective / Math.max(1, currentEffective) - 1) * 100;
       const theoretical = (proposed.score / Math.max(1, current.score) - 1) * 100;
+      const currentPsu = estimatePSUPlanningFromPower(current.tdp, gpu.tdp).planningWattage;
+      const proposedPsu = estimatePSUPlanningFromPower(proposed.tdp, gpu.tdp).planningWattage;
+      const currentSocket = current.socket || copy.messages.unknown;
+      const proposedSocket = proposed.socket || copy.messages.unknown;
+      const platformCheck = !current.socket || !proposed.socket
+        ? copy.messages.verifyPlatform
+        : current.socket.toLowerCase() === proposed.socket.toLowerCase()
+          ? copy.messages.sameSocket
+          : copy.messages.platformChange;
       return [
         { key: 'expectedOutcome', value: numeric(values, 'currentFps') * proposedEffective / Math.max(1, currentEffective), unit: gaming ? 'FPS' : 'index', digits: 0, primary: true },
         { key: 'usefulGain', value: signed(gain, 1), unit: '%' },
         { key: 'theoreticalGain', value: signed(theoretical, 1), unit: '%' },
         { key: 'coreChange', value: signed((proposed.cores ?? 0) - (current.cores ?? 0)), unit: 'cores' },
         { key: 'powerChange', value: signed(proposed.tdp - current.tdp), unit: 'W' },
+        { key: 'socketChange', value: `${currentSocket} → ${proposedSocket}` },
+        { key: 'platformCheck', value: platformCheck },
+        { key: 'currentPsu', value: currentPsu, unit: 'W' },
+        { key: 'proposedPsu', value: proposedPsu, unit: 'W' },
         { key: 'gpuLimit', value: gaming && proposed.score > cap ? copy.messages.likely : copy.messages.noLikely },
       ];
     }
@@ -596,20 +688,83 @@ function calculate(slug: ToolSlug, values: Record<string, string>, data: ToolDat
   }
 }
 
-function initialValues(fields: Field[]) {
+function buildInitialValues(fields: Field[], initial?: Record<string, string>) {
   return fields.reduce<Record<string, string>>((accumulator, field) => {
-    accumulator[field.key] = field.defaultValue;
+    const candidate = initial?.[field.key];
+    const validSelect = field.type === 'select'
+      && Boolean(field.options?.some((item) => item.value === candidate));
+    const numericCandidate = field.type === 'number' && candidate !== undefined
+      ? Number(candidate)
+      : Number.NaN;
+    const validNumber = field.type === 'number'
+      && Number.isFinite(numericCandidate)
+      && (field.min === undefined || numericCandidate >= field.min)
+      && (field.max === undefined || numericCandidate <= field.max);
+    accumulator[field.key] = validSelect || validNumber ? candidate! : field.defaultValue;
     return accumulator;
   }, {});
 }
 
-export function ToolCalculator({ slug, lang, data }: { slug: ToolSlug; lang: Locale; data: ToolDatasets }) {
+export function ToolCalculator({
+  slug,
+  lang,
+  data,
+  initialSelection,
+}: {
+  slug: ToolSlug;
+  lang: Locale;
+  data: ToolDatasets;
+  initialSelection?: Record<string, string>;
+}) {
   const copy = UI_COPY[lang] ?? UI_COPY.en;
   const fields = useMemo(() => getFields(slug, data, copy), [slug, data, copy]);
-  const defaults = useMemo(() => initialValues(fields), [fields]);
+  const defaults = useMemo(
+    () => buildInitialValues(fields, initialSelection),
+    [fields, initialSelection]
+  );
   const [values, setValues] = useState<Record<string, string>>(defaults);
   const [submitted, setSubmitted] = useState<Record<string, string>>(defaults);
   const results = useMemo(() => calculate(slug, submitted, data, copy), [slug, submitted, data, copy]);
+
+  useEffect(() => {
+    setValues(defaults);
+    setSubmitted(defaults);
+  }, [defaults]);
+  const readiness = useMemo(() => {
+    if (slug === 'cpu-upgrade-calculator') {
+      const current = byId(data.cpus, submitted.currentCpu);
+      const proposed = byId(data.cpus, submitted.newCpu);
+      const gpu = byId(data.gpus, submitted.gpu);
+      const socketMessage = !current.socket || !proposed.socket
+        ? copy.messages.cpuSocketUnknown
+        : current.socket.toLowerCase() === proposed.socket.toLowerCase()
+          ? copy.messages.cpuSocketSame.replace('{socket}', proposed.socket)
+          : copy.messages.cpuSocketChanged
+              .replace('{current}', current.socket)
+              .replace('{proposed}', proposed.socket);
+      return {
+        items: [socketMessage, copy.messages.cpuBios, copy.messages.cpuCooling],
+        psuHref: `${getLocalizedPath(lang, 'psu-calculator')}?${new URLSearchParams({
+          cpu: proposed.id,
+          gpu: gpu.id,
+        }).toString()}`,
+      };
+    }
+
+    if (slug === 'gpu-upgrade-calculator') {
+      const proposed = byId(data.gpus, submitted.newGpu);
+      const cpu = byId(data.cpus, submitted.cpu);
+      return {
+        items: [copy.messages.gpuPower, copy.messages.gpuClearance, copy.messages.gpuDrivers],
+        psuHref: `${getLocalizedPath(lang, 'psu-calculator')}?${new URLSearchParams({
+          cpu: cpu.id,
+          gpu: proposed.id,
+        }).toString()}`,
+      };
+    }
+
+    return null;
+  }, [copy.messages, data.cpus, data.gpus, lang, slug, submitted]);
 
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -705,6 +860,28 @@ export function ToolCalculator({ slug, lang, data }: { slug: ToolSlug; lang: Loc
               </div>
             );
           })}
+          {readiness && (
+            <div className="mt-4 rounded-xl border border-amber-300/70 bg-amber-50/70 p-4 dark:border-amber-800 dark:bg-amber-950/25">
+              <h3 className="flex items-center gap-2 font-semibold text-amber-950 dark:text-amber-100">
+                <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+                {copy.messages.checklistTitle}
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-amber-950/90 dark:text-amber-100/90">
+                {readiness.items.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <AlertTriangle className="mt-1 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild variant="outline" className="mt-4 w-full bg-background/80">
+                <Link href={readiness.psuHref}>
+                  {copy.messages.openPsu}
+                  <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
+                </Link>
+              </Button>
+            </div>
+          )}
           <p className="pt-2 text-xs leading-relaxed text-muted-foreground">{copy.estimateNotice}</p>
         </CardContent>
       </Card>
