@@ -12,6 +12,7 @@ import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebAp
 
 type Props = {
   params: Promise<{ lang: Locale }>;
+  searchParams: Promise<{ cpu?: string | string[]; gpu?: string | string[] }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -46,8 +47,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PsuCalculatorPage({ params }: Props) {
+export default async function PsuCalculatorPage({ params, searchParams }: Props) {
   const { lang } = await params;
+  const query = await searchParams;
   const dict = await getDictionary(lang);
   const t = dict.psu_page;
 
@@ -85,7 +87,13 @@ export default async function PsuCalculatorPage({ params }: Props) {
           </p>
         </div>
 
-        <EnhancedPSUCalculator dict={dict} />
+        <EnhancedPSUCalculator
+          dict={dict}
+          initialSelection={{
+            cpu: typeof query.cpu === 'string' ? query.cpu : undefined,
+            gpu: typeof query.gpu === 'string' ? query.gpu : undefined,
+          }}
+        />
         <CalculatorMethodology lang={lang} variant="psu" />
         <PsuContent dict={dict.psu_guide} />
 

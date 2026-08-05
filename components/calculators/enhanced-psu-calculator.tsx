@@ -8,12 +8,26 @@ import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-databas
 import { Zap, Battery, Shield, TrendingUp, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { estimatePSUPlanning } from '@/lib/psu-model';
 
-export function EnhancedPSUCalculator({ dict }: { dict: any }) {
-  const [selectedCPU, setSelectedCPU] = useState('');
-  const [selectedGPU, setSelectedGPU] = useState('');
-  const [selectedComponents, setSelectedComponents] = useState('');
-  const [selectedEfficiency, setSelectedEfficiency] = useState('');
+export function EnhancedPSUCalculator({
+  dict,
+  initialSelection,
+}: {
+  dict: any;
+  initialSelection?: { cpu?: string; gpu?: string };
+}) {
+  const initialCPU = initialSelection?.cpu && getCPUById(initialSelection.cpu)
+    ? initialSelection.cpu
+    : '';
+  const initialGPU = initialSelection?.gpu && getGPUById(initialSelection.gpu)
+    ? initialSelection.gpu
+    : '';
+  const hasPrefilledHardware = Boolean(initialCPU && initialGPU);
+  const [selectedCPU, setSelectedCPU] = useState(initialCPU);
+  const [selectedGPU, setSelectedGPU] = useState(initialGPU);
+  const [selectedComponents, setSelectedComponents] = useState(hasPrefilledHardware ? 'gaming' : '');
+  const [selectedEfficiency, setSelectedEfficiency] = useState(hasPrefilledHardware ? '80plus-gold' : '');
   const [showResults, setShowResults] = useState(false);
   const resultsRegionRef = useRef<HTMLDivElement>(null);
 
@@ -109,13 +123,12 @@ export function EnhancedPSUCalculator({ dict }: { dict: any }) {
     const efficiency = psuEfficiencyRatings.find(e => e.id === selectedEfficiency);
 
     if (cpu && gpu && components && efficiency) {
-      const estimatedLoad = cpu.tdp + gpu.tdp + components.power;
-      const lowerHeadroomEstimate = Math.round(estimatedLoad * 1.15);
-      const planningEstimate = Math.round(estimatedLoad * 1.3);
-      const upgradeHeadroomEstimate = Math.round(estimatedLoad * 1.5);
-
-      const commonPSUWattages = [450, 500, 550, 600, 650, 700, 750, 800, 850, 1000, 1200, 1500];
-      const planningWattage = commonPSUWattages.find(w => w >= planningEstimate) || planningEstimate;
+      const {
+        estimatedLoad,
+        lowerHeadroomEstimate,
+        planningWattage,
+        upgradeHeadroomEstimate,
+      } = estimatePSUPlanning(cpu, gpu, components.power);
 
       const getPSURecommendations = () => {
         return [

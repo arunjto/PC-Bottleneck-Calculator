@@ -23,9 +23,19 @@ export function generateStaticParams() {
   return i18n.locales.flatMap((lang) => TOOL_SLUGS.map((slug) => ({ lang, slug })));
 }
 
-export async function generateMetadata({ params }: { params: Promise<PageParams> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<PageParams>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const { lang, slug } = await params;
   if (!isToolSlug(slug)) return {};
+  const query = await searchParams;
+  const isPrefilledUrl = Object.values(query).some((value) =>
+    Array.isArray(value) ? value.length > 0 : typeof value === 'string'
+  );
   const content = getToolContent(slug, lang);
   const path = '/tools/' + slug;
   const alternates = constructMetadataAlternates(lang, path);
@@ -33,6 +43,16 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
     title: content.title,
     description: content.shortDescription,
     alternates,
+    ...(isPrefilledUrl && {
+      robots: {
+        index: false,
+        follow: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+    }),
     openGraph: {
       type: 'website',
       title: content.title,
@@ -48,8 +68,15 @@ function coreToolPath(lang: Locale, slug: CoreToolSlug) {
     : getLocalizedPath(lang, slug);
 }
 
-export default async function ToolPage({ params }: { params: Promise<PageParams> }) {
+export default async function ToolPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<PageParams>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const { lang, slug } = await params;
+  const query = await searchParams;
   const tool = getTool(slug);
   if (!tool) notFound();
 
@@ -59,7 +86,14 @@ export default async function ToolPage({ params }: { params: Promise<PageParams>
   const toolsPath = getLocalizedPath(lang, 'tools');
   const pageUrl = 'https://www.pcbuildcheck.com' + path;
   const data: ToolDatasets = {
-    cpus: allCPUs.map((cpu) => ({ id: cpu.id, name: cpu.name, score: cpu.benchmarkScore, tdp: cpu.tdp, cores: cpu.cores })),
+    cpus: allCPUs.map((cpu) => ({
+      id: cpu.id,
+      name: cpu.name,
+      score: cpu.benchmarkScore,
+      tdp: cpu.tdp,
+      cores: cpu.cores,
+      socket: cpu.socket,
+    })),
     gpus: allGPUs.map((gpu) => ({ id: gpu.id, name: gpu.name, score: gpu.benchmarkScore, tdp: gpu.tdp, vram: gpu.vram })),
     games: allGames.map((game) => ({
       id: game.id,
@@ -145,7 +179,14 @@ export default async function ToolPage({ params }: { params: Promise<PageParams>
         </header>
 
         <section aria-label={content.title}>
-          <ToolCalculator slug={tool.slug} lang={lang} data={data} />
+          <ToolCalculator
+            slug={tool.slug}
+            lang={lang}
+            data={data}
+            initialSelection={Object.fromEntries(
+              Object.entries(query).filter((entry): entry is [string, string] => typeof entry[1] === 'string')
+            )}
+          />
         </section>
 
         <section aria-labelledby="result-meaning" className="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 dark:border-blue-900 dark:bg-blue-950/20">

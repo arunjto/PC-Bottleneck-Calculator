@@ -28,6 +28,49 @@ export interface FPSEstimate {
   warnings: string[];
 }
 
+export type FPSBreakdownStageKey =
+  | 'reference'
+  | 'cpu'
+  | 'gpu'
+  | 'resolution'
+  | 'quality'
+  | 'upscaling'
+  | 'antiAliasing'
+  | 'vram'
+  | 'ram'
+  | 'memorySpeed'
+  | 'storage'
+  | 'fpsCap';
+
+export interface FPSBreakdownStage {
+  key: FPSBreakdownStageKey;
+  factor: number | null;
+  fpsAfter: number;
+}
+
+export interface FPSCalculationBreakdown {
+  profileSource: 'game-profile' | 'demand-fallback';
+  stages: FPSBreakdownStage[];
+  cpuScore: number;
+  gpuScore: number;
+  cpuScale: number;
+  gpuScale: number;
+  cpuWeight: number;
+  gpuWeight: number;
+  requiredVramGB: number;
+  availableVramGB: number;
+  requiredRamGB: number;
+  selectedRamGB: number;
+  upscalingSupported: boolean;
+  fpsCap: number | null;
+  uncappedAverage: number;
+}
+
+export interface FPSCalculationResult {
+  estimate: FPSEstimate;
+  breakdown: FPSCalculationBreakdown;
+}
+
 type GameProfile = {
   referenceFps: number;
   cpuWeight: number;
@@ -106,7 +149,7 @@ function supportsUpscaling(gpu: GPU, game: Game, upscaling: FPSUpscaling): boole
   return gpu.brand === 'Intel' || game.optimizations.some((item) => item.includes('XeSS'));
 }
 
-export function estimateFPSRange(cpu: CPU, gpu: GPU, game: Game, options: FPSModelOptions = {}): FPSEstimate {
+export function estimateFPSWithBreakdown(cpu: CPU, gpu: GPU, game: Game, options: FPSModelOptions = {}): FPSCalculationResult {
   const resolution = options.resolution ?? '1080p';
   const quality = options.quality ?? 'high';
   const upscaling = options.upscaling ?? 'off';
@@ -114,7 +157,8 @@ export function estimateFPSRange(cpu: CPU, gpu: GPU, game: Game, options: FPSMod
   const ramGB = options.ramGB ?? 16;
   const ramSpeedMT = options.ramSpeedMT ?? 3200;
   const storage = options.storage ?? 'nvme-ssd';
-  const profile = GAME_PROFILES[game.id] ?? defaultProfile(game);
+  const knownProfile = GAME_PROFILES[game.id];
+  const profile = knownProfile ?? defaultProfile(game);
   const warnings: string[] = [];
 
   const resolutionFactor = RESOLUTION_FACTORS[resolution] ?? 1;
@@ -123,7 +167,8 @@ export function estimateFPSRange(cpu: CPU, gpu: GPU, game: Game, options: FPSMod
   const gpuWeight = 1 - cpuWeight;
   const cpuScale = clamp(cpu.benchmarkScore / 90, 0.3, 1.15);
   const gpuScale = clamp(gpu.benchmarkScore / 90, 0.25, 1.12);
-  const hardwareScale = Math.pow(cpuScale, cpuWeight) * Math.pow(gpuScale, gpuWeight);
+  const cpuFactor = Math.pow(cpuScale, cpuWeight);
+  const gpuFactor = Math.pow(gpuScale, gpuWeight);
 
   const vramRequired = requiredVram(game, resolution, quality);
   const vramShortfall = Math.max(0, vramRequired - gpu.vram);
@@ -140,8 +185,36 @@ export function estimateFPSRange(cpu: CPU, gpu: GPU, game: Game, options: FPSMod
   const upscalingFactor = supportedUpscaling ? UPSCALING_FACTORS[upscaling] : 1;
   if (!supportedUpscaling) warnings.push('The selected upscaling option is not listed as supported for this GPU and game, so no uplift was applied.');
 
-  let average = profile.referenceFps * hardwareScale * resolutionFactor * QUALITY_FACTORS[quality] * upscalingFactor * AA_FACTORS[antiAliasing] * vramFactor * ramFactor * memorySpeedFactor * storageFactor;
-  if (profile.fpsCap) average = Math.min(average, profile.fpsCap);
+  const stages: FPSBreakdownStage[] = [
+    { key: 'reference', factor: null, fpsAfter: profile.referenceFps },
+  ];
+  let average = profile.referenceFps;
+  const applyFactor = (key: FPSBreakdownStageKey, factor: number) => {
+    average *= factor;
+    stages.push({ key, factor, fpsAfter: average });
+  };
+
+  applyFactor('cpu', cpuFactor);
+  applyFactor('gpu', gpuFactor);
+  applyFactor('resolution', resolutionFactor);
+  applyFactor('quality', QUALITY_FACTORS[quality]);
+  applyFactor('upscaling', upscalingFactor);
+  applyFactor('antiAliasing', AA_FACTORS[antiAliasing]);
+  applyFactor('vram', vramFactor);
+  applyFactor('ram', ramFactor);
+  applyFactor('memorySpeed', memorySpeedFactor);
+  applyFactor('storage', storageFactor);
+
+  const uncappedAverage = average;
+  if (profile.fpsCap) {
+    const cappedAverage = Math.min(average, profile.fpsCap);
+    stages.push({
+      key: 'fpsCap',
+      factor: average > 0 ? cappedAverage / average : 1,
+      fpsAfter: cappedAverage,
+    });
+    average = cappedAverage;
+  }
   average = Math.max(1, Math.round(average));
 
   const cpuCapacity = cpuScale / (profile.cpuWeight + 0.25);
@@ -157,7 +230,40 @@ export function estimateFPSRange(cpu: CPU, gpu: GPU, game: Game, options: FPSMod
 
   if (profile.speculative) warnings.push('This game profile is speculative because final PC performance data is not established.');
 
-  return { average, low, high, onePercentLow, limitingComponent, confidence: profile.speculative ? 'speculative' : 'planning', referenceFps: profile.referenceFps, requiredVramGB: vramRequired, warnings };
+  return {
+    estimate: {
+      average,
+      low,
+      high,
+      onePercentLow,
+      limitingComponent,
+      confidence: profile.speculative ? 'speculative' : 'planning',
+      referenceFps: profile.referenceFps,
+      requiredVramGB: vramRequired,
+      warnings,
+    },
+    breakdown: {
+      profileSource: knownProfile ? 'game-profile' : 'demand-fallback',
+      stages,
+      cpuScore: cpu.benchmarkScore,
+      gpuScore: gpu.benchmarkScore,
+      cpuScale,
+      gpuScale,
+      cpuWeight,
+      gpuWeight,
+      requiredVramGB: vramRequired,
+      availableVramGB: gpu.vram,
+      requiredRamGB: game.ramRequirement,
+      selectedRamGB: ramGB,
+      upscalingSupported: supportedUpscaling,
+      fpsCap: profile.fpsCap ?? null,
+      uncappedAverage,
+    },
+  };
+}
+
+export function estimateFPSRange(cpu: CPU, gpu: GPU, game: Game, options: FPSModelOptions = {}): FPSEstimate {
+  return estimateFPSWithBreakdown(cpu, gpu, game, options).estimate;
 }
 
 /** Backward-compatible midpoint used by comparison cards and secondary projections. */
