@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AlertTriangle, ArrowRight, BookOpenCheck, Calculator, CheckCircle2, SquareFunction } from 'lucide-react';
 import { i18n, type Locale } from '@/i18n-config';
-import { allCPUs, allGPUs, allGames } from '@/lib/hardware-database';
+import {
+  allCPUs,
+  allGPUs,
+  allGames,
+  HARDWARE_DATABASE_UPDATED,
+  HARDWARE_SCORE_METHODOLOGY_VERSION,
+} from '@/lib/hardware-database';
 import {
   TOOL_SLUGS,
   getTool,
@@ -16,6 +22,7 @@ import { getToolsPageCopy } from '@/lib/tools-page-i18n';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { ToolCalculator, type ToolDatasets } from '@/components/tools/tool-calculator';
+import { ComponentComparison } from '@/components/calculators/component-comparison';
 
 type PageParams = { lang: Locale; slug: string };
 
@@ -85,6 +92,10 @@ export default async function ToolPage({
   const path = getToolPath(lang, tool.slug);
   const toolsPath = getLocalizedPath(lang, 'tools');
   const pageUrl = 'https://www.pcbuildcheck.com' + path;
+  const includeComparisonDetails = tool.slug === 'component-comparison';
+  const initialSelection = Object.fromEntries(
+    Object.entries(query).filter((entry): entry is [string, string] => typeof entry[1] === 'string')
+  );
   const data: ToolDatasets = {
     cpus: allCPUs.map((cpu) => ({
       id: cpu.id,
@@ -93,8 +104,37 @@ export default async function ToolPage({
       tdp: cpu.tdp,
       cores: cpu.cores,
       socket: cpu.socket,
+      ...(includeComparisonDetails ? {
+        brand: cpu.brand,
+        series: cpu.series,
+        tier: cpu.tier,
+        category: cpu.category,
+        baseClock: cpu.baseClock,
+        boostClock: cpu.boostClock,
+        threads: cpu.threads,
+        architecture: cpu.architecture,
+        releaseYear: cpu.releaseYear,
+        officialUrl: cpu.officialUrl,
+      } : {}),
     })),
-    gpus: allGPUs.map((gpu) => ({ id: gpu.id, name: gpu.name, score: gpu.benchmarkScore, tdp: gpu.tdp, vram: gpu.vram })),
+    gpus: allGPUs.map((gpu) => ({
+      id: gpu.id,
+      name: gpu.name,
+      score: gpu.benchmarkScore,
+      tdp: gpu.tdp,
+      vram: gpu.vram,
+      ...(includeComparisonDetails ? {
+        brand: gpu.brand,
+        series: gpu.series,
+        tier: gpu.tier,
+        category: gpu.category,
+        baseClock: gpu.baseClock,
+        boostClock: gpu.boostClock,
+        architecture: gpu.architecture,
+        releaseYear: gpu.releaseYear,
+        officialUrl: gpu.officialUrl,
+      } : {}),
+    })),
     games: allGames.map((game) => ({
       id: game.id,
       name: game.name,
@@ -102,6 +142,8 @@ export default async function ToolPage({
       gpuDemand: game.gpuDemand,
       ramRequirement: game.ramRequirement,
     })),
+    databaseUpdated: HARDWARE_DATABASE_UPDATED,
+    scoreMethodologyVersion: HARDWARE_SCORE_METHODOLOGY_VERSION,
   };
 
   const schema = {
@@ -179,14 +221,23 @@ export default async function ToolPage({
         </header>
 
         <section aria-label={content.title}>
-          <ToolCalculator
-            slug={tool.slug}
-            lang={lang}
-            data={data}
-            initialSelection={Object.fromEntries(
-              Object.entries(query).filter((entry): entry is [string, string] => typeof entry[1] === 'string')
-            )}
-          />
+          {tool.slug === 'component-comparison' ? (
+            <ComponentComparison
+              lang={lang}
+              cpus={data.cpus}
+              gpus={data.gpus}
+              initialSelection={initialSelection}
+              databaseUpdated={data.databaseUpdated}
+              scoreMethodologyVersion={data.scoreMethodologyVersion}
+            />
+          ) : (
+            <ToolCalculator
+              slug={tool.slug}
+              lang={lang}
+              data={data}
+              initialSelection={initialSelection}
+            />
+          )}
         </section>
 
         <section aria-labelledby="result-meaning" className="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 dark:border-blue-900 dark:bg-blue-950/20">

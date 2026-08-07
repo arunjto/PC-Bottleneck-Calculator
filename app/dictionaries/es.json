@@ -828,6 +828,10 @@
             "upscaling_uncertain": "El modo de escalado seleccionado no está verificado para esta GPU y este juego; por eso no se aplica ninguna mejora en estas filas.",
             "model_note": "Estas filas son estimaciones de planificación, no benchmarks medidos. El ray tracing, los parches y los ajustes individuales pueden cambiar el rendimiento real."
         },
+        "organization": {
+            "more_analysis_title": "Más análisis de FPS",
+            "more_analysis_description": "Explora el rendimiento en otros juegos o compara este equipo con otra configuración."
+        },
         "results_navigation": {
             "aria_label": "Secciones del resultado de FPS",
             "new_badge": "Nuevo",

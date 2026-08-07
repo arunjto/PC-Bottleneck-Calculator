@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Check, Copy, History, Pencil, RotateCcw, ShieldCheck, Trash2, X } from 'lucide-react';
+import { Check, ChevronDown, Copy, History, Pencil, RotateCcw, ShieldCheck, Trash2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCPUById, getGameById, getGPUById } from '@/lib/hardware-database';
@@ -33,8 +33,11 @@ export function FPSSavedHistory({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draftName, setDraftName] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (!t) return null;
+
+  const resultNavigationCopy = dict?.fps_calculator?.results_navigation;
 
   const beginRename = (entry: FPSHistoryEntry) => {
     setEditingId(entry.id);
@@ -80,22 +83,45 @@ export function FPSSavedHistory({
             <CardTitle className="flex items-center gap-2">
               <History className="h-5 w-5 text-cyan-600" aria-hidden="true" />
               {t.title}
+              {entries.length > 0 && (
+                <span className="rounded-full bg-cyan-100 px-2 py-0.5 text-xs font-semibold text-cyan-900 dark:bg-cyan-950 dark:text-cyan-100">
+                  {entries.length}
+                </span>
+              )}
             </CardTitle>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">{t.description}</p>
           </div>
-          {entries.length > 0 && (
-            <Button type="button" variant="outline" size="sm" onClick={clearHistory}>
-              <Trash2 className="mr-2 h-4 w-4" aria-hidden="true" />
-              {t.clear_all}
-            </Button>
-          )}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="shrink-0"
+            aria-expanded={isExpanded}
+            aria-controls="fps-saved-history-content"
+            onClick={() => setIsExpanded((expanded) => !expanded)}
+          >
+            <ChevronDown
+              className={`mr-1.5 h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+              aria-hidden="true"
+            />
+            {isExpanded ? resultNavigationCopy?.collapse ?? 'Collapse' : resultNavigationCopy?.expand ?? 'Expand'}
+          </Button>
         </div>
+      </CardHeader>
+      <div id="fps-saved-history-content" className={isExpanded ? 'block' : 'hidden'}>
+      <CardContent className="space-y-4">
         <div className="flex items-start gap-2 rounded-lg border border-cyan-200 bg-cyan-50/70 p-3 text-xs leading-5 text-cyan-950 dark:border-cyan-900 dark:bg-cyan-950/20 dark:text-cyan-100">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
           <span>{t.privacy}</span>
         </div>
-      </CardHeader>
-      <CardContent>
+        {entries.length > 0 && (
+          <div className="flex justify-end">
+            <Button type="button" variant="outline" size="sm" onClick={clearHistory}>
+              <Trash2 className="mr-2 h-4 w-4" aria-hidden="true" />
+              {t.clear_all}
+            </Button>
+          </div>
+        )}
         {!storageAvailable ? (
           <p className="rounded-lg border border-amber-300/70 bg-amber-50 p-4 text-sm text-amber-950 dark:bg-amber-950/20 dark:text-amber-100">
             {t.unavailable}
@@ -220,6 +246,7 @@ export function FPSSavedHistory({
           </div>
         )}
       </CardContent>
+      </div>
     </Card>
   );
 }

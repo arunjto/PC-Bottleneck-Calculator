@@ -111,10 +111,10 @@ type FPSResultSectionId = (typeof FPS_RESULT_SECTION_IDS)[number];
 const defaultExpandedResultSections: Record<FPSResultSectionId, boolean> = {
   overview: true,
   smoothness: true,
-  optimizer: true,
-  'upgrade-impact': true,
+  optimizer: false,
+  'upgrade-impact': false,
   presets: false,
-  'calculation-breakdown': false,
+  'calculation-breakdown': true,
   system: false,
 };
 
@@ -268,6 +268,7 @@ export function EnhancedFPSCalculator({
   const [targetFps, setTargetFps] = useState<TargetFPS>(60);
   const [optimizationComparison, setOptimizationComparison] = useState<FPSOptimizationComparison | null>(null);
   const [comparisonCopied, setComparisonCopied] = useState<'original' | 'optimized' | null>(null);
+  const [shareToolsExpanded, setShareToolsExpanded] = useState(false);
   const [expandedResultSections, setExpandedResultSections] = useState(defaultExpandedResultSections);
   const [activeResultSection, setActiveResultSection] = useState<FPSResultSectionId>('overview');
   const resultsRegionRef = useRef<HTMLDivElement>(null);
@@ -1021,89 +1022,6 @@ export function EnhancedFPSCalculator({
           </nav>
 
           <section id="overview" className="scroll-mt-28 space-y-6" aria-label={resultNavigationCopy.sections.overview}>
-          <Card className="fps-print-hide border-blue-200 bg-blue-50/60 dark:border-blue-900 dark:bg-blue-950/20">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Link2 className="h-5 w-5 text-blue-600" aria-hidden="true" />
-                {t.share_result.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm leading-6 text-muted-foreground">{t.share_result.description}</p>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button type="button" onClick={copyResultLink} className="sm:min-w-52">
-                  {linkCopied ? (
-                    <Check className="mr-2 h-4 w-4" aria-hidden="true" />
-                  ) : (
-                    <Link2 className="mr-2 h-4 w-4" aria-hidden="true" />
-                  )}
-                  {linkCopied ? t.share_result.copied : t.share_result.copy}
-                </Button>
-                <Button type="button" variant="outline" onClick={() => window.print()} className="sm:min-w-44">
-                  <Printer className="mr-2 h-4 w-4" aria-hidden="true" />
-                  {t.share_result.print}
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground">{t.share_result.privacy}</p>
-
-              <div className="space-y-4 border-t border-blue-200 pt-4 dark:border-blue-900">
-                <div>
-                  <h3 className="flex items-center gap-2 font-semibold">
-                    <ImageDown className="h-5 w-5 text-cyan-600" aria-hidden="true" />
-                    {resultImageCopy.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-6 text-muted-foreground">{resultImageCopy.description}</p>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="space-y-1.5">
-                    <label htmlFor="result-image-theme" className="text-sm font-medium">
-                      {resultImageCopy.theme}
-                    </label>
-                    <select
-                      id="result-image-theme"
-                      value={imageTheme}
-                      onChange={(event) => setImageTheme(event.target.value as FPSResultImageTheme)}
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                    >
-                      <option value="dark">{resultImageCopy.theme_dark}</option>
-                      <option value="light">{resultImageCopy.theme_light}</option>
-                    </select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label htmlFor="result-image-layout" className="text-sm font-medium">
-                      {resultImageCopy.layout}
-                    </label>
-                    <select
-                      id="result-image-layout"
-                      value={imageLayout}
-                      onChange={(event) => setImageLayout(event.target.value as FPSResultImageLayout)}
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                    >
-                      <option value="square">{resultImageCopy.layout_square}</option>
-                      <option value="wide">{resultImageCopy.layout_wide}</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button type="button" onClick={downloadResultImage} disabled={imageBusy}>
-                    <ImageDown className="mr-2 h-4 w-4" aria-hidden="true" />
-                    {imageBusy ? resultImageCopy.generating : resultImageCopy.download_png}
-                  </Button>
-                  <Button type="button" variant="outline" onClick={copyResultImage} disabled={imageBusy}>
-                    <ClipboardCopy className="mr-2 h-4 w-4" aria-hidden="true" />
-                    {resultImageCopy.copy_image}
-                  </Button>
-                </div>
-                <p className="text-xs leading-5 text-muted-foreground">{resultImageCopy.privacy}</p>
-                <p aria-live="polite" className="min-h-5 text-sm font-medium text-cyan-800 dark:text-cyan-200">
-                  {imageFeedback}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
           {/* Main FPS Result */}
           <Card>
             <CardHeader>
@@ -1171,6 +1089,113 @@ export function EnhancedFPSCalculator({
                 ))}
               </div>
             </CardContent>
+          </Card>
+
+          <Card className="fps-print-hide border-blue-200 bg-blue-50/60 dark:border-blue-900 dark:bg-blue-950/20">
+            <CardHeader>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Link2 className="h-5 w-5 text-blue-600" aria-hidden="true" />
+                    {t.share_result.title}
+                  </CardTitle>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{t.share_result.description}</p>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="fps-collapse-toggle shrink-0"
+                  aria-expanded={shareToolsExpanded}
+                  aria-controls="fps-share-tools-content"
+                  onClick={() => setShareToolsExpanded((expanded) => !expanded)}
+                >
+                  <ChevronDown
+                    className={`mr-1.5 h-4 w-4 transition-transform ${shareToolsExpanded ? 'rotate-180' : ''}`}
+                    aria-hidden="true"
+                  />
+                  {shareToolsExpanded ? resultNavigationCopy.collapse : resultNavigationCopy.expand}
+                </Button>
+              </div>
+            </CardHeader>
+            <div
+              id="fps-share-tools-content"
+              className={`fps-collapsible-content ${shareToolsExpanded ? 'block' : 'hidden'}`}
+            >
+              <CardContent className="space-y-4">
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button type="button" onClick={copyResultLink} className="sm:min-w-52">
+                    {linkCopied ? (
+                      <Check className="mr-2 h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <Link2 className="mr-2 h-4 w-4" aria-hidden="true" />
+                    )}
+                    {linkCopied ? t.share_result.copied : t.share_result.copy}
+                  </Button>
+                  <Button type="button" variant="outline" onClick={() => window.print()} className="sm:min-w-44">
+                    <Printer className="mr-2 h-4 w-4" aria-hidden="true" />
+                    {t.share_result.print}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">{t.share_result.privacy}</p>
+
+                <div className="space-y-4 border-t border-blue-200 pt-4 dark:border-blue-900">
+                  <div>
+                    <h3 className="flex items-center gap-2 font-semibold">
+                      <ImageDown className="h-5 w-5 text-cyan-600" aria-hidden="true" />
+                      {resultImageCopy.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{resultImageCopy.description}</p>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label htmlFor="result-image-theme" className="text-sm font-medium">
+                        {resultImageCopy.theme}
+                      </label>
+                      <select
+                        id="result-image-theme"
+                        value={imageTheme}
+                        onChange={(event) => setImageTheme(event.target.value as FPSResultImageTheme)}
+                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      >
+                        <option value="dark">{resultImageCopy.theme_dark}</option>
+                        <option value="light">{resultImageCopy.theme_light}</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label htmlFor="result-image-layout" className="text-sm font-medium">
+                        {resultImageCopy.layout}
+                      </label>
+                      <select
+                        id="result-image-layout"
+                        value={imageLayout}
+                        onChange={(event) => setImageLayout(event.target.value as FPSResultImageLayout)}
+                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      >
+                        <option value="square">{resultImageCopy.layout_square}</option>
+                        <option value="wide">{resultImageCopy.layout_wide}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Button type="button" onClick={downloadResultImage} disabled={imageBusy}>
+                      <ImageDown className="mr-2 h-4 w-4" aria-hidden="true" />
+                      {imageBusy ? resultImageCopy.generating : resultImageCopy.download_png}
+                    </Button>
+                    <Button type="button" variant="outline" onClick={copyResultImage} disabled={imageBusy}>
+                      <ClipboardCopy className="mr-2 h-4 w-4" aria-hidden="true" />
+                      {resultImageCopy.copy_image}
+                    </Button>
+                  </div>
+                  <p className="text-xs leading-5 text-muted-foreground">{resultImageCopy.privacy}</p>
+                  <p aria-live="polite" className="min-h-5 text-sm font-medium text-cyan-800 dark:text-cyan-200">
+                    {imageFeedback}
+                  </p>
+                </div>
+              </CardContent>
+            </div>
           </Card>
 
           </section>
@@ -1261,12 +1286,35 @@ export function EnhancedFPSCalculator({
           <section id="optimizer" className="scroll-mt-28" aria-label={resultNavigationCopy.sections.optimizer}>
           <Card className="border-cyan-200 dark:border-cyan-900">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-cyan-600" aria-hidden="true" />
-                {targetCopy.title}
-              </CardTitle>
-              <p className="text-sm leading-6 text-muted-foreground">{targetCopy.description}</p>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Target className="h-5 w-5 text-cyan-600" aria-hidden="true" />
+                    {targetCopy.title}
+                  </CardTitle>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{targetCopy.description}</p>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="fps-collapse-toggle fps-print-hide shrink-0"
+                  aria-expanded={expandedResultSections.optimizer}
+                  aria-controls="optimizer-content"
+                  onClick={() => toggleResultSection('optimizer')}
+                >
+                  <ChevronDown
+                    className={`mr-1.5 h-4 w-4 transition-transform ${expandedResultSections.optimizer ? 'rotate-180' : ''}`}
+                    aria-hidden="true"
+                  />
+                  {expandedResultSections.optimizer ? resultNavigationCopy.collapse : resultNavigationCopy.expand}
+                </Button>
+              </div>
             </CardHeader>
+            <div
+              id="optimizer-content"
+              className={`fps-collapsible-content ${expandedResultSections.optimizer ? 'block' : 'hidden'}`}
+            >
             <CardContent className="space-y-5">
               <fieldset>
                 <legend className="mb-2 text-sm font-semibold">{targetCopy.select_target}</legend>
@@ -1503,6 +1551,7 @@ export function EnhancedFPSCalculator({
 
               <p className="text-xs leading-5 text-muted-foreground">{targetCopy.model_note}</p>
             </CardContent>
+            </div>
           </Card>
           </section>
 
