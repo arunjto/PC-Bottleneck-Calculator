@@ -780,6 +780,10 @@
             "upscaling_uncertain": "Der gewählte Upscaling-Modus ist für diese GPU und dieses Spiel nicht bestätigt; daher ist in diesen Zeilen kein Zuwachs enthalten.",
             "model_note": "Diese Zeilen sind Planungsschätzungen, keine gemessenen Benchmarks. Raytracing-Umsetzung, Spielupdates und einzelne Einstellungen können die reale Leistung verändern."
         },
+        "organization": {
+            "more_analysis_title": "Weitere FPS-Analysen",
+            "more_analysis_description": "Prüfen Sie die Leistung in anderen Spielen oder vergleichen Sie diesen PC mit einer anderen Konfiguration."
+        },
         "results_navigation": {
             "aria_label": "FPS-Ergebnisbereiche",
             "new_badge": "Neu",

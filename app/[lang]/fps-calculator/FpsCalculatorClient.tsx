@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { BarChart3, ChevronDown } from "lucide-react";
 import { EnhancedFPSCalculator } from "@/components/calculators/enhanced-fps-calculator";
 import { FPSSavedHistory } from "@/components/calculators/fps-saved-history";
 import { getCPUById, getGameById, getGPUById } from "@/lib/hardware-database";
@@ -61,6 +62,7 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
   const [savedHistory, setSavedHistory] = useState<FPSHistoryEntry[]>([]);
   const [historyReady, setHistoryReady] = useState(false);
   const [storageAvailable, setStorageAvailable] = useState(true);
+  const [extendedAnalysisExpanded, setExtendedAnalysisExpanded] = useState(false);
 
   const persistHistory = useCallback((entries: FPSHistoryEntry[]) => {
     try {
@@ -271,26 +273,59 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
       )}
 
       {currentBuild && (
-        <div
-          className="space-y-6"
-          style={{ contentVisibility: "auto", containIntrinsicSize: "0 900px" }}
-        >
-          <OtherGamesPerformance
-            cpuId={currentBuild.cpu}
-            gpuId={currentBuild.gpu}
-            resolution={currentBuild.resolution}
-            excludedGameId={currentBuild.game}
-            dict={dict}
-          />
-          <FPSCompareAndShare
-            currentCPU={currentBuild.cpu}
-            currentGPU={currentBuild.gpu}
-            currentGame={currentBuild.game}
-            currentResolution={currentBuild.resolution}
-            dict={dict}
-            lang={lang}
-          />
-        </div>
+        <section className="mx-auto mt-8 w-full max-w-4xl rounded-xl border border-slate-200 bg-card shadow-sm dark:border-slate-800">
+          <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-start sm:justify-between sm:p-6">
+            <div>
+              <h2 className="flex items-center gap-2 text-xl font-semibold">
+                <BarChart3 className="h-5 w-5 text-indigo-600" aria-hidden="true" />
+                {dict?.fps_calculator?.organization?.more_analysis_title ?? 'More FPS analysis'}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {dict?.fps_calculator?.organization?.more_analysis_description
+                  ?? 'Explore performance in other games or compare this build with another configuration.'}
+              </p>
+            </div>
+            <button
+              type="button"
+              className="inline-flex min-h-9 shrink-0 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-expanded={extendedAnalysisExpanded}
+              aria-controls="fps-extended-analysis-content"
+              onClick={() => setExtendedAnalysisExpanded((expanded) => !expanded)}
+            >
+              <ChevronDown
+                className={`mr-1.5 h-4 w-4 transition-transform ${extendedAnalysisExpanded ? 'rotate-180' : ''}`}
+                aria-hidden="true"
+              />
+              {extendedAnalysisExpanded
+                ? dict?.fps_calculator?.results_navigation?.collapse ?? 'Collapse'
+                : dict?.fps_calculator?.results_navigation?.expand ?? 'Expand'}
+            </button>
+          </div>
+
+          {extendedAnalysisExpanded && (
+            <div
+              id="fps-extended-analysis-content"
+              className="space-y-6 border-t border-slate-200 p-4 dark:border-slate-800 sm:p-6"
+              style={{ contentVisibility: "auto", containIntrinsicSize: "0 900px" }}
+            >
+              <OtherGamesPerformance
+                cpuId={currentBuild.cpu}
+                gpuId={currentBuild.gpu}
+                resolution={currentBuild.resolution}
+                excludedGameId={currentBuild.game}
+                dict={dict}
+              />
+              <FPSCompareAndShare
+                currentCPU={currentBuild.cpu}
+                currentGPU={currentBuild.gpu}
+                currentGame={currentBuild.game}
+                currentResolution={currentBuild.resolution}
+                dict={dict}
+                lang={lang}
+              />
+            </div>
+          )}
+        </section>
       )}
     </>
   );

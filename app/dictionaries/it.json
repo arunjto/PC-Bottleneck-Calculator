@@ -544,6 +544,10 @@
             "upscaling_uncertain": "La modalità di upscaling selezionata non è verificata per questa GPU e questo gioco; nelle righe non viene quindi applicato alcun aumento.",
             "model_note": "Queste righe sono stime di pianificazione, non benchmark misurati. Implementazione del ray tracing, patch e singole impostazioni possono modificare le prestazioni reali."
         },
+        "organization": {
+            "more_analysis_title": "Altre analisi FPS",
+            "more_analysis_description": "Esplora le prestazioni in altri giochi o confronta questa build con un'altra configurazione."
+        },
         "results_navigation": {
             "aria_label": "Sezioni del risultato FPS",
             "new_badge": "Nuovo",

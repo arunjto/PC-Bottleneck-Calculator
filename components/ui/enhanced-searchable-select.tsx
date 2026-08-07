@@ -23,6 +23,10 @@ interface EnhancedSearchableSelectProps {
   id: string;
   labelId?: string;
   descriptionId?: string;
+  searchPlaceholder?: string;
+  noResultsText?: string;
+  openInstructions?: string;
+  listLabel?: string;
 }
 
 const getTypeIcon = (type: string) => {
@@ -69,6 +73,10 @@ export function EnhancedSearchableSelect({
   id,
   labelId,
   descriptionId,
+  searchPlaceholder,
+  noResultsText,
+  openInstructions,
+  listLabel,
 }: EnhancedSearchableSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -178,7 +186,7 @@ export function EnhancedSearchableSelect({
             role="combobox"
             aria-expanded={isOpen}
             aria-haspopup="listbox"
-            aria-label={labelId ? undefined : `${placeholder}. Press Enter or Space to open dropdown. Use arrow keys to navigate.`}
+            aria-label={labelId ? undefined : (openInstructions ?? `${placeholder}. Press Enter or Space to open dropdown. Use arrow keys to navigate.`)}
             aria-labelledby={labelId}
             aria-describedby={descriptionId}
             aria-controls={isOpen ? listboxId : undefined}
@@ -222,7 +230,7 @@ export function EnhancedSearchableSelect({
             <input
                   ref={inputRef}
                   type="text"
-                  placeholder={`Search ${type.toUpperCase()}s...`}
+                  placeholder={searchPlaceholder ?? `Search ${type.toUpperCase()}s...`}
                   value={searchTerm}
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
@@ -230,18 +238,18 @@ export function EnhancedSearchableSelect({
                   }}
                   onKeyDown={handleKeyDown}
                   className="w-full pl-10 pr-4 py-2 text-sm bg-background border border-input rounded-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200"
-                  aria-label={`Search ${type}s. Type to filter, use arrow keys to navigate results.`}
+                  aria-label={searchPlaceholder ?? `Search ${type}s. Type to filter, use arrow keys to navigate results.`}
             />
           </div>
           <div
             className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent"
             role="listbox"
             id={listboxId}
-            aria-label={`List of available ${type}s`}
+            aria-label={listLabel ?? `List of available ${type}s`}
           >
             {filteredOptions.length === 0 ? (
               <div className="p-4 text-center text-muted-foreground text-sm">
-                No {type}s found matching &quot;{searchTerm}&quot;
+                {(noResultsText ?? `No ${type}s found matching {query}`).replace('{query}', `"${searchTerm}"`)}
               </div>
             ) : (
               <div className="p-1">

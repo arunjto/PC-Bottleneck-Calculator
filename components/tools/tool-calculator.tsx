@@ -17,9 +17,19 @@ export type ToolHardwareOption = {
   name: string;
   score: number;
   tdp: number;
+  brand?: string;
+  series?: string;
+  tier?: string;
+  category?: string;
+  baseClock?: number;
+  boostClock?: number;
   vram?: number;
   cores?: number;
+  threads?: number;
   socket?: string;
+  architecture?: string;
+  releaseYear?: number;
+  officialUrl?: string;
 };
 
 export type ToolGameOption = {
@@ -34,6 +44,8 @@ export type ToolDatasets = {
   cpus: ToolHardwareOption[];
   gpus: ToolHardwareOption[];
   games: ToolGameOption[];
+  databaseUpdated?: string;
+  scoreMethodologyVersion?: string;
 };
 
 type FieldKey =
@@ -409,6 +421,8 @@ function getFields(slug: ToolSlug, data: ToolDatasets, copy: UiCopy): Field[] {
   const proposedGpu = choose(data.gpus, 'rtx-5070', 4);
 
   switch (slug) {
+    case 'component-comparison':
+      return [];
     case 'gpu-upgrade-calculator':
       return [
         { key: 'currentGpu', type: 'select', defaultValue: currentGpu, options: gpuOptions },
@@ -494,6 +508,8 @@ const signed = (value: number, digits = 0) => (value > 0 ? '+' : '') + value.toF
 
 function calculate(slug: ToolSlug, values: Record<string, string>, data: ToolDatasets, copy: UiCopy): ResultItem[] {
   switch (slug) {
+    case 'component-comparison':
+      return [];
     case 'gpu-upgrade-calculator': {
       const current = byId(data.gpus, values.currentGpu);
       const proposed = byId(data.gpus, values.newGpu);

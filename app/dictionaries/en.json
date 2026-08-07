@@ -780,6 +780,10 @@
             "upscaling_uncertain": "The selected upscaling mode is not verified for this GPU and game, so no uplift is included in these rows.",
             "model_note": "These rows are planning estimates, not measured benchmarks. Ray-tracing implementation, game patches and individual settings can change real performance."
         },
+        "organization": {
+            "more_analysis_title": "More FPS analysis",
+            "more_analysis_description": "Explore performance in other games or compare this build with another configuration."
+        },
         "results_navigation": {
             "aria_label": "FPS result sections",
             "new_badge": "New",
