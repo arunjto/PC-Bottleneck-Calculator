@@ -1,15 +1,15 @@
 import { Metadata } from 'next';
 import EnhancedBottleneckCalculator from '@/components/calculators/enhanced-bottleneck-calculator';
 import { UpdateBanner } from '@/components/ui/update-banner';
-import { InterlinkBox } from '@/components/ui/interlink-box';
 import { ContentGuide } from '@/components/content/content-guide';
 import { CalculatorMethodology } from '@/components/content/calculator-methodology';
+import { BottleneckVerification } from '@/components/content/bottleneck-verification';
+import { FeaturedCalculators } from '@/components/content/featured-calculators';
 
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
-import { getToolsPageCopy } from '@/lib/tools-page-i18n';
 import { JsonLd } from '@/components/seo/json-ld';
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
 
@@ -47,7 +47,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
 export default async function HomePage({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
-  const toolsCopy = getToolsPageCopy(lang);
   const pageUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang, '')}`;
   const schemaData = createSchemaGraph([
     createWebPageSchema({
@@ -87,33 +86,21 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Loc
           </p>
         </div>
 
-        <UpdateBanner dict={dict.home.update_banner} />
+        <UpdateBanner
+          dict={dict.home.update_banner}
+          href={getLocalizedPath(lang, 'methodology')}
+        />
         <div className="[overflow-anchor:none]">
           <EnhancedBottleneckCalculator
             dict={{ calculator: dict.calculator, results: dict.results }}
           />
         </div>
         <CalculatorMethodology lang={lang} variant="bottleneck" />
+        <BottleneckVerification lang={lang} />
 
         {/* Below-the-fold: deferred rendering via content-visibility for mobile performance */}
         <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 1200px' }}>
-          <InterlinkBox
-            title={dict.home.fps_promo_title}
-            description={dict.home.fps_promo_desc}
-            href={getLocalizedPath(lang, 'fps-calculator')}
-            linkText={dict.home.fps_promo_link}
-            variant="primary"
-          />
-
-          <div className="mt-6">
-            <InterlinkBox
-              title={toolsCopy.hubTitle}
-              description={toolsCopy.hubDescription}
-              href={getLocalizedPath(lang, 'tools')}
-              linkText={toolsCopy.viewAllTools}
-              variant="accent"
-            />
-          </div>
+          <FeaturedCalculators lang={lang} />
 
           <ContentGuide dict={dict} />
 

@@ -29,7 +29,9 @@ module.exports = {
     const entries = [];
     for (const [locale, translations] of Object.entries(publicPaths)) {
       for (const canonicalPath of Object.keys(translations)) {
-        if (!canonicalPath.startsWith('tools/')) continue;
+        const shouldAddExplicitly =
+          canonicalPath === 'psu-calculator' || canonicalPath.startsWith('tools/');
+        if (!shouldAddExplicitly) continue;
         const entry = await config.transform(config, `/${locale}/${canonicalPath}`);
         if (entry) entries.push(entry);
       }

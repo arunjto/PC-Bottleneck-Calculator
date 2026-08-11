@@ -1,7 +1,7 @@
 {
     "common": {
         "title": "PC Bottleneck Calculator 2026 - Will My CPU Bottleneck My GPU? (Free Test)",
-        "description": "Calculate PC bottlenecks, estimate FPS, and determine PSU requirements",
+        "description": "Check whether your CPU or GPU is likely to limit gaming performance. Compare your parts with our free PC bottleneck calculator and review practical next steps.",
         "loading": "Loading...",
         "error": "An error occurred"
     },
@@ -17,7 +17,7 @@
     },
     "home": {
         "hero_title": "PC Bottleneck Calculator – Optimize Your PC Performance",
-        "hero_subtitle": "Instantly check your CPU and GPU balance with our advanced PC Bottleneck Calculator. Pinpoint performance bottlenecks, prevent slowdowns, and build a balanced gaming PC.",
+        "hero_subtitle": "Compare your CPU and GPU using normalized planning scores, see which component may become the constraint, and learn how to verify the result with game-specific benchmarks.",
         "cta_analyze": "Analyze My System",
         "select_components": "Select your components to analyze your PC's performance balance in seconds.",
         "fps_promo_title": "Curious about gaming performance?",
@@ -40,22 +40,31 @@
             },
             {
                 "q": "Do RAM or storage also cause bottlenecks?",
-                "a": "Yes. Insufficient or slow <strong>RAM</strong> can cause stutters in heavy workloads. Similarly, using an <strong>HDD</strong> instead of an SSD will lead to slower loading times."
+                "a": "Insufficient or poorly configured <strong>RAM</strong> can contribute to stutter in memory-heavy workloads. An <strong>HDD</strong> mainly affects loading and asset streaming; it does not automatically reduce average FPS in every game."
             },
             {
                 "q": "Should CPU and GPU both run at 100%?",
                 "a": "There is no universal ideal utilization. High GPU load can be normal in a demanding scene, while overall CPU load can hide one saturated core. Treat utilization as one clue and compare it with frame times, caps, temperatures, and repeated tests."
+            },
+            {
+                "q": "Does the bottleneck percentage equal lost FPS?",
+                "a": "No. The percentage is a relative planning signal from the calculator's normalized scores, not a measured FPS-loss figure. Actual performance depends on the game, scene, resolution, settings, drivers, cooling, memory, and background activity."
+            },
+            {
+                "q": "How can I verify the calculator result?",
+                "a": "Test a repeatable game scene, record FPS and frame times, check per-core CPU and GPU utilization, and then lower resolution or graphics settings. A large FPS increase after reducing GPU load suggests a graphics-side limit; little change can point toward the CPU, a frame cap, or another constraint."
             }
         ],
         "update_banner": {
-            "title": "Database Updated!",
-            "description": "Now featuring the latest 2026 CPU & GPU models with up-to-date performance data.",
-            "badge": "Latest"
+            "title": "Hardware data reviewed August 2026",
+            "description": "Supported CPU and GPU specifications and normalized comparison indices were reviewed for the current planning model.",
+            "badge": "Reviewed",
+            "link_text": "View methodology"
         }
     },
     "calculator": {
-        "title": "Advanced Bottleneck Calculator",
-        "subtitle": "Compare supported desktop hardware using published specifications and normalized scores",
+        "title": "Enter Your PC Components",
+        "subtitle": "Compare supported desktop CPUs and GPUs using published specifications and normalized planning scores",
         "labels": {
             "cpu": "Processor (CPU)",
             "gpu": "Graphics Card (GPU)",
@@ -338,13 +347,13 @@
         }
     },
     "guide": {
-        "title": "Understanding PC Bottlenecks: A Complete Guide to a Balanced System",
+        "title": "Understand and Verify PC Bottlenecks",
         "intro": "A <strong>bottleneck</strong> describes a workload in which one component reaches its limit before another. The limiting component can change with the game, resolution, settings, drivers, and background activity. Our <strong>PC Bottleneck Calculator</strong> compares internally normalized CPU and GPU scores to help you create a shortlist for further testing.",
         "intro_p2": "A score comparison can help you avoid obviously mismatched components, but it cannot predict every workload or guarantee a particular frame rate. Verify important purchase decisions with benchmarks for your games and settings.",
         "cpu_section": {
             "title": "What is a CPU Bottleneck?",
-            "subtitle": "(The \"Bad\" Bottleneck)",
-            "description": "A <strong>CPU bottleneck</strong> happens when your processor (CPU) cannot process data and instructions fast enough to keep your graphics card (GPU) fully occupied. This is the most common and problematic type of <strong>bottleneck</strong> for gamers, as it leads to inconsistent performance that can't be fixed by simply lowering graphics settings.",
+            "subtitle": "(A workload-specific CPU limit)",
+            "description": "A workload is <strong>CPU-limited</strong> when its processor-side work reaches a limit before the graphics workload does. Lowering resolution may then produce little improvement, but no single utilization number proves the diagnosis.",
             "symptoms_title": "Common Symptoms:",
             "symptoms_list": [
                 "<strong>Stuttering</strong> or choppy gameplay, especially during intense action.",
@@ -360,11 +369,11 @@
         },
         "action_plan": {
             "title": "How to Fix a Bottleneck: Your Action Plan",
-            "description": "Once our calculator identifies a <strong>bottleneck</strong>, here are the most effective steps to address it."
+            "description": "When the calculator suggests a possible constraint, run these low-risk checks before considering a hardware purchase."
         },
         "cpu_solutions": {
             "title": "Tackling a CPU Bottleneck",
-            "intro": "If your CPU is the weak link, reduce its workload or boost its performance.",
+            "intro": "If testing points to a CPU-side limit, first reduce processor-heavy work and rule out software, thermal, and frame-cap constraints.",
             "immediate_fixes_title": "Immediate Fixes:",
             "immediate_fixes_list": [
                 "<strong>Close Background Apps:</strong> Shut down browsers/streaming apps before gaming.",
@@ -383,11 +392,11 @@
         },
         "gpu_solutions": {
             "title": "Managing a GPU Bottleneck",
-            "intro": "This is often a <strong>good thing</strong>. The goal isn’t to remove it, but to tune for your FPS target.",
+            "intro": "A GPU-side limit is not automatically good or bad. The practical question is whether performance, frame pacing, image quality, and latency meet your target.",
             "levers_title": "Levers for More FPS:",
             "levers_list": [
                 "Lower GPU settings (textures, shadows, ray tracing).",
-                "Enable DLSS/FSR/XeSS for huge gains.",
+                "Compare supported DLSS/FSR/XeSS modes; performance, image quality, and latency vary by game.",
                 "Drop resolution (e.g., 4K → 1440p).",
                 "Upgrade GPU for higher headroom."
             ],
@@ -397,12 +406,12 @@
             "example_solution": "<strong>The Solution:</strong> Upgrade to a <strong>RTX 4060</strong> or <strong>RX 7700 XT</strong> for stable, high-quality 1440p gaming."
         },
         "final_section": {
-            "title": "How Our Calculator Leads to a Balanced PC",
-            "description": "Our tool analyzes component relationships so you don’t have to. By entering your parts, you get instant, data-driven analysis to:",
+            "title": "Use the Result as a Testing Shortlist",
+            "description": "The score comparison can flag a pairing worth investigating. Use it to prioritize tests and research—not as proof of measured FPS loss or a guaranteed upgrade outcome.",
             "benefits_list": [
-                "<strong>Build Smarter:</strong> Avoid pairing a high-end GPU with a weak CPU.",
-                "<strong>Upgrade with Confidence:</strong> Know which part gives biggest gains.",
-                "<strong>Save Money:</strong> Don’t overspend on bottlenecked components."
+                "<strong>Compare Pairings:</strong> Spot large relative score gaps before deeper research.",
+                "<strong>Test More Efficiently:</strong> Focus monitoring and setting changes on the likely constraint.",
+                "<strong>Buy More Carefully:</strong> Confirm important decisions with game-specific benchmarks and compatibility checks."
             ],
             "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Ready to compare your build?</strong> Use the calculator for a normalized score comparison, then verify the result with workload-specific benchmarks."
         }
@@ -1154,22 +1163,22 @@
         ]
     },
     "psu_calculator": {
-        "title": "Advanced PSU Calculator",
+        "title": "Enter Your PC Components",
         "subtitle": "Estimate system load and compare PSU headroom options",
         "labels": {
             "cpu": "Processor (CPU)",
             "gpu": "Graphics Card (GPU)",
             "components": "Additional Components",
-            "efficiency": "PSU Efficiency Rating"
+            "efficiency": "Efficiency Preference (optional)"
         },
         "placeholders": {
             "cpu": "Select your CPU...",
             "gpu": "Select your GPU...",
             "components": "Select component setup...",
-            "efficiency": "Select efficiency rating..."
+            "efficiency": "Select an optional efficiency tier..."
         },
         "button": "Calculate PSU Requirements",
-        "incomplete": "Please select all components",
+        "incomplete": "Select a CPU, GPU, and component setup",
         "back": "Back to Calculator",
         "results_title": "PSU Planning Estimate",
         "results_subtitle": "Published power figures plus configurable headroom",
@@ -1184,8 +1193,9 @@
             "min_desc": "Calculated load plus 15% headroom; not a purchase recommendation.",
             "rec": "Planning estimate",
             "rec_desc": "Calculated load plus 30% headroom, rounded to a common PSU size.",
-            "future": "Higher-headroom estimate",
-            "future_desc": "Calculated load plus 50% headroom for planning possible upgrades."
+            "future": "Upgrade-oriented common size",
+            "future_desc": "Next common PSU size above the calculated 50% headroom threshold.",
+            "calculated_threshold": "Calculated threshold"
         },
         "breakdown": {
             "title": "Power Consumption Breakdown",
@@ -1200,17 +1210,43 @@
             "power_eff": "Selected efficiency tier",
             "rating_label": "Approximate tier figure",
             "cost_title": "Important efficiency limitation",
-            "cost_desc": "The selected tier is a shopping preference, not certification of a specific PSU. Actual efficiency and electricity cost vary by model, load, mains voltage, usage time, and local energy price."
+            "cost_desc": "The selected 80 PLUS tier is only a shopping preference and does not change the wattage estimate. Certification indicates efficiency under defined test conditions; it does not certify overall PSU quality or compatibility. Actual efficiency varies by model, load and mains voltage.",
+            "not_selected": "No efficiency preference selected. This does not affect the wattage calculation."
         },
         "tips": {
-            "title": "PSU Selection Tips",
-            "brands_title": "Quality Brands",
-            "features_title": "Key Features",
+            "title": "PSU Selection Checklist",
+            "brands_title": "Model-level checks",
+            "features_title": "Checks before purchase",
+            "intro": "Compare the exact PSU model rather than relying on a brand name or efficiency badge alone.",
             "features_list": [
-                "Modular cables recommended",
-                "80 PLUS Gold or higher",
-                "5+ year warranty"
+                "Confirm the exact GPU vendor and board-partner wattage guidance",
+                "Verify native cable type, connector count, and cable-routing requirements",
+                "Check independent reviews for protections, voltage regulation, noise, and thermals",
+                "Confirm form factor, physical length, warranty, and regional support"
             ]
+        },
+        "readiness": {
+            "title": "PSU Readiness Summary",
+            "subtitle": "Capacity planning plus the checks that still require an exact PSU and graphics-card model.",
+            "capacity": "Recommended common capacity",
+            "load": "Estimated component load",
+            "headroom": "Capacity headroom",
+            "status_label": "Planning status",
+            "status": "Wattage planned—model and connector verification required",
+            "standard_title": "Power standard guidance",
+            "standard_desc": "For an applicable modern high-power GPU, compare an ATX 3.x PSU that explicitly supports the required power connector and power-excursion guidance.",
+            "standard_source": "Read Intel's ATX design guidance",
+            "connector_title": "GPU connector verification",
+            "connector_desc": "Connector requirements can differ by exact graphics-card and board-partner model. Prefer the PSU maker's native compatible cable and verify both manuals before purchase.",
+            "connector_source": "Read the PCI-SIG 12V-2x6 update"
+        },
+        "technical": {
+            "result_title": "Efficiency and selection details",
+            "result_subtitle": "Optional shopping preferences, limitations, and model-level checks.",
+            "methodology_title": "Technical details and methodology",
+            "methodology_subtitle": "Review the formula, assumptions, headroom model, and limitations.",
+            "guide_title": "PSU selection guide",
+            "guide_subtitle": "Read the longer explanation when you need additional buying context."
         },
         "component_options": {
             "basic": {

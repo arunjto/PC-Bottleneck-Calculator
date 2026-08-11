@@ -88,16 +88,6 @@ export function ContentGuide({ dict }: { dict: any }) {
               </div>
             </section>
 
-            {/* Real-World Example CPU */}
-            <aside role="note" aria-label="Real-world example: CPU bottleneck" className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded-2xl p-8 mb-8 shadow">
-              <h5 className="text-xl font-semibold text-blue-800 dark:text-blue-300 mb-4">
-                {dict.guide.cpu_solutions.example_title}
-              </h5>
-              <p dangerouslySetInnerHTML={{ __html: dict.guide.cpu_solutions.example_desc }} />
-              <p className="mt-3" dangerouslySetInnerHTML={{ __html: dict.guide.cpu_solutions.example_issue }} />
-              <p className="mt-3" dangerouslySetInnerHTML={{ __html: dict.guide.cpu_solutions.example_solution }} />
-            </aside>
-
             {/* GPU Bottleneck Solutions */}
             <section aria-labelledby="gpu-solutions" className="mb-8">
               <h3 id="gpu-solutions" className="text-2xl text-green-700 dark:text-green-400">{dict.guide.gpu_solutions.title}</h3>
@@ -113,16 +103,6 @@ export function ContentGuide({ dict }: { dict: any }) {
                 </ul>
               </div>
             </section>
-
-            {/* Real-World Example GPU */}
-            <aside role="note" aria-label="Real-world example: GPU bottleneck" className="bg-card border border-green-200/60 dark:border-green-800/60 rounded-2xl p-8 mb-8 shadow">
-              <h5 className="text-xl font-semibold text-green-800 dark:text-green-300 mb-4">
-                {dict.guide.gpu_solutions.example_title}
-              </h5>
-              <p dangerouslySetInnerHTML={{ __html: dict.guide.gpu_solutions.example_desc }} />
-              <p className="mt-3" dangerouslySetInnerHTML={{ __html: dict.guide.gpu_solutions.example_issue }} />
-              <p className="mt-3" dangerouslySetInnerHTML={{ __html: dict.guide.gpu_solutions.example_solution }} />
-            </aside>
 
             {/* Final Section */}
             <section aria-labelledby="final-section" className="mb-8 p-8 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl border border-purple-200/50 dark:border-purple-800/50 shadow">
