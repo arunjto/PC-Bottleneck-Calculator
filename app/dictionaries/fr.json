@@ -17,7 +17,7 @@
     },
     "home": {
         "hero_title": "Calculateur de Goulot d'Étranglement PC – Optimisez Votre Performance",
-        "hero_subtitle": "Vérifiez instantanément l'équilibre entre votre CPU et votre GPU avec notre calculateur avancé. Identifiez les goulots d'étranglement, évitez les ralentissements et construisez un PC équilibré.",
+        "hero_subtitle": "Comparez votre CPU et votre GPU à l’aide de scores de planification normalisés, identifiez le composant susceptible de devenir la contrainte et apprenez à vérifier le résultat avec des benchmarks adaptés.",
         "cta_analyze": "Analyser Mon Système",
         "select_components": "Sélectionnez vos composants pour analyser l'équilibre de votre PC en quelques secondes.",
         "fps_promo_title": "Curieux de vos performances en jeu ?",
@@ -40,22 +40,31 @@
             },
             {
                 "q": "La RAM ou le stockage causent-ils aussi des goulots d'étranglement ?",
-                "a": "Oui. Une <strong>RAM</strong> insuffisante ou lente peut causer des saccades dans les charges de travail lourdes. De même, utiliser un <strong>HDD</strong> au lieu d'un SSD entraînera des temps de chargement plus lents."
+                "a": "Une <strong>RAM</strong> insuffisante ou mal configurée peut contribuer aux saccades dans les charges gourmandes en mémoire. Un <strong>HDD</strong> affecte surtout les chargements et le streaming des ressources ; il ne réduit pas automatiquement les FPS moyens dans tous les jeux."
             },
             {
                 "q": "Le CPU et le GPU devraient-ils tourner à 100% ?",
                 "a": "Il n'existe pas d'utilisation idéale universelle. Une forte charge GPU peut être normale, tandis que l'utilisation CPU globale peut masquer un cœur saturé. Utilisez-la comme indice avec frame times, limites, températures et tests répétés."
+            },
+            {
+                "q": "Le pourcentage de goulot d’étranglement correspond-il aux FPS perdus ?",
+                "a": "Non. Il s’agit d’un signal de planification relatif issu de scores normalisés, pas d’une mesure des FPS perdus. Les performances réelles dépendent du jeu, de la scène, de la résolution, des réglages, des pilotes, du refroidissement, de la mémoire et des tâches en arrière-plan."
+            },
+            {
+                "q": "Comment vérifier le résultat du calculateur ?",
+                "a": "Testez une scène répétable, relevez les FPS et frame times, observez la charge par cœur et celle du GPU, puis réduisez la résolution ou les réglages graphiques. Une forte hausse des FPS suggère une limite graphique ; peu de changement peut indiquer le CPU, une limite d’images ou une autre contrainte."
             }
         ],
         "update_banner": {
-            "title": "Base de Données Mise à jour !",
-            "description": "Intégrant maintenant les derniers modèles CPU & GPU 2026 avec des données de performance à jour.",
-            "badge": "Nouveau"
+            "title": "Données matérielles révisées en août 2026",
+            "description": "Les caractéristiques des CPU et GPU pris en charge ainsi que les indices de comparaison normalisés ont été révisés pour le modèle de planification actuel.",
+            "badge": "Révisé",
+            "link_text": "Voir la méthodologie"
         }
     },
     "calculator": {
-        "title": "Calculateur de Goulot d'Étranglement Avancé",
-        "subtitle": "Analysez la performance de votre système avec une base de données matérielle complète (2017-2026)",
+        "title": "Saisissez les Composants de Votre PC",
+        "subtitle": "Comparez les CPU et GPU de bureau pris en charge à partir de caractéristiques publiées et de scores de planification normalisés",
         "labels": {
             "cpu": "Processeur (CPU)",
             "gpu": "Carte Graphique (GPU)",
@@ -338,13 +347,13 @@
         }
     },
     "guide": {
-        "title": "Comprendre les Goulots d'Étranglement PC : Un Guide Complet pour un Système Équilibré",
+        "title": "Comprendre et Vérifier les Goulots d’Étranglement PC",
         "intro": "Un <strong>goulot d'étranglement</strong> décrit une charge où un composant atteint sa limite avant un autre. Le composant limitant varie selon le jeu, la résolution, les réglages, les pilotes et les tâches en arrière-plan. Notre <strong>Calculateur de Goulot d'Étranglement PC</strong> compare des scores CPU et GPU normalisés en interne pour établir une présélection à vérifier.",
         "intro_p2": "La comparaison peut montrer des associations très déséquilibrées, mais elle ne prédit pas chaque charge et ne garantit pas les FPS. Vérifiez les achats importants avec des benchmarks adaptés à vos jeux et réglages.",
         "cpu_section": {
             "title": "Qu'est-ce qu'un Goulot d'Étranglement CPU ?",
-            "subtitle": "(Le \"Mauvais\" Goulot d'Étranglement)",
-            "description": "Un <strong>goulot d'étranglement CPU</strong> se produit lorsque votre processeur (CPU) ne peut pas traiter les données et les instructions assez vite pour occuper pleinement votre carte graphique (GPU). C'est le type de <strong>goulot d'étranglement</strong> le plus courant et le plus problématique pour les joueurs, car il entraîne des performances incohérentes qui ne peuvent pas être corrigées simplement en baissant les paramètres graphiques.",
+            "subtitle": "(Une limite CPU propre à la charge)",
+            "description": "Une charge est <strong>limitée par le CPU</strong> lorsque le travail côté processeur atteint sa limite avant le travail graphique. Réduire la résolution peut alors produire peu d’amélioration, mais aucun taux d’utilisation isolé ne suffit à confirmer le diagnostic.",
             "symptoms_title": "Symptômes Courants :",
             "symptoms_list": [
                 "<strong>Saccades</strong> ou gameplay haché, surtout pendant l'action intense.",
@@ -360,11 +369,11 @@
         },
         "action_plan": {
             "title": "Comment Réparer un Goulot d'Étranglement : Votre Plan d'Action",
-            "description": "Une fois que notre calculateur identifie un <strong>goulot d'étranglement</strong>, voici les étapes les plus efficaces pour y remédier."
+            "description": "Lorsque le calculateur suggère une contrainte possible, effectuez ces vérifications simples avant d’envisager un achat matériel."
         },
         "cpu_solutions": {
             "title": "S'attaquer à un Goulot d'Étranglement CPU",
-            "intro": "Si votre CPU est le maillon faible, réduisez sa charge de travail ou boostez ses performances.",
+            "intro": "Si les tests indiquent une limite côté CPU, réduisez d’abord le travail du processeur et écartez les contraintes logicielles, thermiques ou de limite d’images.",
             "immediate_fixes_title": "Corrections Immédiates :",
             "immediate_fixes_list": [
                 "<strong>Fermer les Applis en Arrière-plan :</strong> Fermez les navigateurs/applis de streaming avant de jouer.",
@@ -383,11 +392,11 @@
         },
         "gpu_solutions": {
             "title": "Gérer un Goulot d'Étranglement GPU",
-            "intro": "C'est souvent une <strong>bonne chose</strong>. Le but n'est pas de l'éliminer, mais de l'ajuster pour votre cible FPS.",
+            "intro": "Une limite côté GPU n’est pas automatiquement bonne ou mauvaise. L’important est de savoir si les performances, la régularité, la qualité d’image et la latence répondent à votre objectif.",
             "levers_title": "Leviers pour Plus de FPS :",
             "levers_list": [
                 "Baisser les paramètres GPU (textures, ombres, ray tracing).",
-                "Activer DLSS/FSR/XeSS pour des gains énormes.",
+                "Comparez les modes DLSS/FSR/XeSS pris en charge ; performances, qualité d’image et latence varient selon le jeu.",
                 "Baisser la résolution (ex., 4K → 1440p).",
                 "Mettre à niveau le GPU pour plus de marge."
             ],
@@ -397,12 +406,12 @@
             "example_solution": "<strong>La Solution :</strong> Passer à une <strong>RTX 4060</strong> ou <strong>RX 7700 XT</strong> pour un jeu 1440p stable et de haute qualité."
         },
         "final_section": {
-            "title": "Comment Notre Calculateur Mène à un PC Équilibré",
-            "description": "Notre outil analyse les relations entre composants pour que vous n'ayez pas à le faire. En entrant vos pièces, vous obtenez une analyse instantanée basée sur des données pour :",
+            "title": "Utilisez le Résultat comme Liste de Tests",
+            "description": "La comparaison des scores peut signaler une configuration à examiner. Utilisez-la pour prioriser vos tests et recherches, pas comme preuve de FPS perdus ni comme garantie de gain après achat.",
             "benefits_list": [
-                "<strong>Construire Plus Intelligemment :</strong> Évitez de coupler un GPU haut de gamme avec un CPU faible.",
-                "<strong>Mettre à Niveau avec Confiance :</strong> Sachez quelle pièce donne les plus gros gains.",
-                "<strong>Économiser de l'Argent :</strong> Ne dépensez pas trop sur des composants bridés."
+                "<strong>Comparez les configurations :</strong> Repérez les grands écarts relatifs avant une recherche approfondie.",
+                "<strong>Testez plus efficacement :</strong> Concentrez la surveillance et les réglages sur la contrainte probable.",
+                "<strong>Achetez avec prudence :</strong> Confirmez les décisions importantes avec des benchmarks adaptés et des contrôles de compatibilité."
             ],
             "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Prêt à comparer votre build ?</strong> Utilisez le calculateur pour comparer des scores normalisés, puis vérifiez avec des benchmarks adaptés."
         }
@@ -1163,22 +1172,22 @@
         ]
     },
     "psu_calculator": {
-        "title": "Calculateur PSU Avancé",
+        "title": "Saisissez les Composants du PC",
         "subtitle": "Estimez la charge du système et comparez plusieurs marges PSU",
         "labels": {
             "cpu": "Processeur (CPU)",
             "gpu": "Carte Graphique (GPU)",
             "components": "Composants Additionnels",
-            "efficiency": "Note d'Efficacité PSU"
+            "efficiency": "Préférence d'efficacité (facultatif)"
         },
         "placeholders": {
             "cpu": "Sélectionnez votre CPU...",
             "gpu": "Sélectionnez votre GPU...",
             "components": "Sélectionnez la config...",
-            "efficiency": "Sélectionnez l'efficacité..."
+            "efficiency": "Sélectionnez une classe facultative..."
         },
         "button": "Calculer les Besoins PSU",
-        "incomplete": "Veuillez sélectionner tous les composants",
+        "incomplete": "Sélectionnez le CPU, le GPU et la configuration",
         "back": "Retour au Calculateur",
         "results_title": "Estimation de Planification PSU",
         "results_subtitle": "Puissances publiées et marge configurable",
@@ -1193,8 +1202,9 @@
             "min_desc": "Charge calculée plus 15% de marge; ce n'est pas un conseil d'achat.",
             "rec": "Estimation de planification",
             "rec_desc": "Charge calculée plus 30% de marge, arrondie à une puissance PSU courante.",
-            "future": "Estimation à marge supérieure",
-            "future_desc": "Charge calculée plus 50% de marge pour planifier de possibles mises à niveau."
+            "future": "Puissance courante orientée évolution",
+            "future_desc": "Puissance PSU courante suivante au-dessus du seuil calculé avec 50% de marge.",
+            "calculated_threshold": "Seuil calculé"
         },
         "breakdown": {
             "title": "Répartition de la Consommation",
@@ -1209,17 +1219,43 @@
             "power_eff": "Classe d'efficacité sélectionnée",
             "rating_label": "Valeur indicative de la classe",
             "cost_title": "Limite importante sur l'efficacité",
-            "cost_desc": "La classe sélectionnée est une préférence d'achat, pas la certification d'une PSU précise. L'efficacité et le coût réels varient selon le modèle, la charge, la tension secteur, l'usage et le prix de l'énergie."
+            "cost_desc": "La classe 80 PLUS sélectionnée est seulement une préférence d'achat et ne modifie pas l'estimation de puissance. La certification indique l'efficacité dans des conditions d'essai définies; elle ne certifie ni la qualité globale ni la compatibilité. L'efficacité réelle varie selon le modèle, la charge et la tension secteur.",
+            "not_selected": "Aucune préférence d'efficacité sélectionnée. Cela ne modifie pas le calcul de puissance."
         },
         "tips": {
-            "title": "Conseils de Sélection PSU",
-            "brands_title": "Marques de Qualité",
-            "features_title": "Fonctionnalités Clés",
+            "title": "Checklist de Sélection du PSU",
+            "brands_title": "Contrôles du modèle",
+            "features_title": "Contrôles avant achat",
+            "intro": "Comparez le modèle exact du PSU plutôt que de vous fier uniquement à une marque ou à un badge d'efficacité.",
             "features_list": [
-                "Câbles modulaires recommandés",
-                "80 PLUS Gold ou supérieur",
-                "Garantie de 5+ ans"
+                "Confirmez les recommandations de puissance du fabricant GPU et du partenaire de la carte",
+                "Vérifiez le câble natif, le nombre de connecteurs et les contraintes de routage",
+                "Consultez des tests indépendants sur les protections, la régulation, le bruit et les températures",
+                "Confirmez le format, la longueur, la garantie et le support régional"
             ]
+        },
+        "readiness": {
+            "title": "Résumé de Préparation du PSU",
+            "subtitle": "Planification de capacité et contrôles nécessitant les modèles exacts du PSU et de la carte graphique.",
+            "capacity": "Capacité courante recommandée",
+            "load": "Charge estimée des composants",
+            "headroom": "Marge de capacité",
+            "status_label": "État de planification",
+            "status": "Puissance planifiée—vérification du modèle et des connecteurs requise",
+            "standard_title": "Conseils sur le standard d'alimentation",
+            "standard_desc": "Pour un GPU moderne à forte puissance concerné, comparez un PSU ATX 3.x prenant explicitement en charge le connecteur requis et les excursions de puissance.",
+            "standard_source": "Lire le guide de conception ATX d'Intel",
+            "connector_title": "Vérification du connecteur GPU",
+            "connector_desc": "Les exigences peuvent varier selon le modèle exact et le partenaire de la carte. Préférez le câble natif compatible du PSU et vérifiez les deux manuels.",
+            "connector_source": "Lire la mise à jour PCI-SIG 12V-2x6"
+        },
+        "technical": {
+            "result_title": "Détails d'efficacité et de sélection",
+            "result_subtitle": "Préférences facultatives, limites et contrôles au niveau du modèle.",
+            "methodology_title": "Détails techniques et méthodologie",
+            "methodology_subtitle": "Consultez la formule, les hypothèses, le modèle de marge et les limites.",
+            "guide_title": "Guide de sélection du PSU",
+            "guide_subtitle": "Lisez l'explication complète pour davantage de contexte d'achat."
         },
         "component_options": {
             "basic": {

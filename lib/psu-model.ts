@@ -8,7 +8,14 @@ export interface PSUPlanningEstimate {
   planningEstimate: number;
   planningWattage: number;
   upgradeHeadroomEstimate: number;
+  upgradePlanningWattage: number;
   systemOverhead: number;
+}
+
+export function roundUpToCommonPSUWattage(requiredWattage: number): number {
+  return COMMON_PSU_WATTAGES.find(
+    (wattage) => wattage >= requiredWattage
+  ) ?? Math.ceil(requiredWattage / 50) * 50;
 }
 
 export function estimatePSUPlanning(
@@ -28,9 +35,8 @@ export function estimatePSUPlanningFromPower(
   const lowerHeadroomEstimate = Math.round(estimatedLoad * 1.15);
   const planningEstimate = Math.round(estimatedLoad * 1.3);
   const upgradeHeadroomEstimate = Math.round(estimatedLoad * 1.5);
-  const planningWattage = COMMON_PSU_WATTAGES.find(
-    (wattage) => wattage >= planningEstimate
-  ) ?? planningEstimate;
+  const planningWattage = roundUpToCommonPSUWattage(planningEstimate);
+  const upgradePlanningWattage = roundUpToCommonPSUWattage(upgradeHeadroomEstimate);
 
   return {
     estimatedLoad,
@@ -38,6 +44,7 @@ export function estimatePSUPlanningFromPower(
     planningEstimate,
     planningWattage,
     upgradeHeadroomEstimate,
+    upgradePlanningWattage,
     systemOverhead,
   };
 }

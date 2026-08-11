@@ -9,6 +9,7 @@ import { constructMetadataAlternates } from '@/lib/seo';
 import { JsonLd } from '@/components/seo/json-ld';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
+import { BookOpen, ChevronDown, FlaskConical } from 'lucide-react';
 
 type Props = {
   params: Promise<{ lang: Locale }>;
@@ -52,6 +53,7 @@ export default async function PsuCalculatorPage({ params, searchParams }: Props)
   const query = await searchParams;
   const dict = await getDictionary(lang);
   const t = dict.psu_page;
+  const technical = dict.psu_calculator.technical;
 
   const pageUrl = `${SITE_URL}${getLocalizedPath(lang, '/psu-calculator')}`;
   const schemaData = createSchemaGraph([
@@ -94,8 +96,37 @@ export default async function PsuCalculatorPage({ params, searchParams }: Props)
             gpu: typeof query.gpu === 'string' ? query.gpu : undefined,
           }}
         />
-        <CalculatorMethodology lang={lang} variant="psu" />
-        <PsuContent dict={dict.psu_guide} />
+        <details className="group overflow-hidden rounded-xl border bg-card shadow-sm">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset">
+            <div className="flex items-start gap-3">
+              <FlaskConical className="mt-0.5 h-6 w-6 flex-none text-blue-600" />
+              <div>
+                <h2 className="text-xl font-semibold">{technical.methodology_title}</h2>
+                <p className="mt-1 text-sm font-normal text-muted-foreground">{technical.methodology_subtitle}</p>
+              </div>
+            </div>
+            <ChevronDown className="h-5 w-5 flex-none text-muted-foreground transition-transform group-open:rotate-180" />
+          </summary>
+          <div className="border-t p-4 md:p-6">
+            <CalculatorMethodology lang={lang} variant="psu" />
+          </div>
+        </details>
+
+        <details className="group overflow-hidden rounded-xl border bg-card shadow-sm">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset">
+            <div className="flex items-start gap-3">
+              <BookOpen className="mt-0.5 h-6 w-6 flex-none text-violet-600" />
+              <div>
+                <h2 className="text-xl font-semibold">{technical.guide_title}</h2>
+                <p className="mt-1 text-sm font-normal text-muted-foreground">{technical.guide_subtitle}</p>
+              </div>
+            </div>
+            <ChevronDown className="h-5 w-5 flex-none text-muted-foreground transition-transform group-open:rotate-180" />
+          </summary>
+          <div className="border-t p-4 md:p-6">
+            <PsuContent dict={dict.psu_guide} />
+          </div>
+        </details>
 
         <InterlinkBox
           title={t.interlink_title}

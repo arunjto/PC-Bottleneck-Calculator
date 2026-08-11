@@ -17,7 +17,7 @@
     },
     "home": {
         "hero_title": "Calculadora de Cuello de Botella de PC – Optimiza tu PC",
-        "hero_subtitle": "Comprueba instantáneamente el equilibrio de tu CPU y GPU con nuestra avanzada Calculadora de Cuello de Botella. Identifica cuellos de botella, evita ralentizaciones y construye un PC gaming equilibrado.",
+        "hero_subtitle": "Compara tu CPU y GPU mediante puntuaciones de planificación normalizadas, identifica qué componente podría convertirse en la limitación y aprende a verificar el resultado con benchmarks específicos.",
         "cta_analyze": "Analizar Mi Sistema",
         "select_components": "Selecciona tus componentes para analizar el equilibrio de rendimiento de tu PC en segundos.",
         "fps_promo_title": "¿Curioso sobre el rendimiento en juegos?",
@@ -40,22 +40,31 @@
             },
             {
                 "q": "¿La RAM o el almacenamiento también causan cuellos de botella?",
-                "a": "Sí. Una <strong>RAM</strong> insuficiente o lenta puede causar tartamudeos en cargas de trabajo pesadas. De manera similar, usar un <strong>HDD</strong> en lugar de un SSD conducirá a tiempos de carga más lentos."
+                "a": "Una <strong>RAM</strong> insuficiente o mal configurada puede contribuir a tirones en cargas que usan mucha memoria. Un <strong>HDD</strong> afecta principalmente a las cargas y al streaming de recursos; no reduce automáticamente los FPS medios en todos los juegos."
             },
             {
                 "q": "¿Deberían la CPU y la GPU funcionar al 100%?",
                 "a": "No existe un uso ideal universal. Una carga alta de GPU puede ser normal, mientras el uso total de CPU puede ocultar un núcleo saturado. Usa el uso como pista junto con frame times, límites, temperaturas y pruebas repetidas."
+            },
+            {
+                "q": "¿El porcentaje de cuello de botella equivale a FPS perdidos?",
+                "a": "No. Es una señal de planificación relativa obtenida de puntuaciones normalizadas, no una medición de FPS perdidos. El rendimiento real depende del juego, la escena, la resolución, los ajustes, los controladores, la refrigeración, la memoria y la actividad en segundo plano."
+            },
+            {
+                "q": "¿Cómo puedo verificar el resultado de la calculadora?",
+                "a": "Prueba una escena repetible, registra FPS y frame times, revisa el uso por núcleo y de la GPU y después reduce resolución o ajustes gráficos. Un gran aumento de FPS sugiere una limitación gráfica; pocos cambios pueden indicar CPU, un límite de FPS u otra restricción."
             }
         ],
         "update_banner": {
-            "title": "¡Base de datos actualizada!",
-            "description": "Ahora con los últimos modelos de CPU y GPU de 2026 con datos de rendimiento actualizados.",
-            "badge": "Último"
+            "title": "Datos de hardware revisados en agosto de 2026",
+            "description": "Las especificaciones de CPU y GPU compatibles y los índices de comparación normalizados se revisaron para el modelo de planificación actual.",
+            "badge": "Revisado",
+            "link_text": "Ver metodología"
         }
     },
     "calculator": {
-        "title": "Calculadora de Cuello de Botella Avanzada",
-        "subtitle": "Analiza el rendimiento de tu sistema con nuestra base de datos completa de hardware (2017-2026)",
+        "title": "Introduce los Componentes de tu PC",
+        "subtitle": "Compara CPU y GPU de escritorio compatibles mediante especificaciones publicadas y puntuaciones de planificación normalizadas",
         "labels": {
             "cpu": "Procesador (CPU)",
             "gpu": "Tarjeta Gráfica (GPU)",
@@ -265,22 +274,22 @@
         ]
     },
     "psu_calculator": {
-        "title": "Calculadora de Fuente de Alimentación",
+        "title": "Introduce los Componentes del PC",
         "subtitle": "Estima la carga del sistema y compara diferentes márgenes de PSU",
         "labels": {
             "cpu": "Procesador (CPU)",
             "gpu": "Tarjeta Gráfica (GPU)",
             "components": "Componentes Adicionales",
-            "efficiency": "Calificación de Eficiencia PSU"
+            "efficiency": "Preferencia de eficiencia (opcional)"
         },
         "placeholders": {
             "cpu": "Seleccionar CPU...",
             "gpu": "Seleccionar GPU...",
             "components": "Seleccionar configuración...",
-            "efficiency": "Seleccionar eficiencia..."
+            "efficiency": "Seleccionar una clase opcional..."
         },
         "button": "Calcular Requisitos de PSU",
-        "incomplete": "Por favor selecciona todos los componentes",
+        "incomplete": "Selecciona CPU, GPU y configuración de componentes",
         "back": "Volver a la Calculadora",
         "results_title": "Estimación de Planificación PSU",
         "results_subtitle": "Cifras publicadas y margen configurable",
@@ -295,8 +304,9 @@
             "min_desc": "Carga calculada más 15% de margen; no es una recomendación de compra.",
             "rec": "Estimación de planificación",
             "rec_desc": "Carga calculada más 30% de margen, redondeada a un tamaño común de PSU.",
-            "future": "Estimación con margen mayor",
-            "future_desc": "Carga calculada más 50% de margen para planificar posibles actualizaciones."
+            "future": "Tamaño común orientado a mejoras",
+            "future_desc": "Siguiente tamaño común de PSU por encima del umbral calculado con 50% de margen.",
+            "calculated_threshold": "Umbral calculado"
         },
         "breakdown": {
             "title": "Desglose de Consumo de Energía",
@@ -311,17 +321,43 @@
             "power_eff": "Clase de eficiencia seleccionada",
             "rating_label": "Valor aproximado de la clase",
             "cost_title": "Limitación importante de eficiencia",
-            "cost_desc": "La clase seleccionada es una preferencia de compra, no la certificación de una PSU concreta. La eficiencia y el costo reales varían según modelo, carga, voltaje de red, uso y tarifa eléctrica."
+            "cost_desc": "La clase 80 PLUS seleccionada es solo una preferencia de compra y no modifica la estimación de vataje. La certificación indica eficiencia en condiciones de prueba definidas; no certifica la calidad general ni la compatibilidad. La eficiencia real varía según modelo, carga y voltaje de red.",
+            "not_selected": "No se seleccionó una preferencia de eficiencia. Esto no afecta al cálculo de vataje."
         },
         "tips": {
-            "title": "Consejos de Selección de PSU",
-            "brands_title": "Marcas de Calidad",
-            "features_title": "Características Clave",
+            "title": "Lista de Comprobación del PSU",
+            "brands_title": "Comprobaciones del modelo",
+            "features_title": "Comprobaciones antes de comprar",
+            "intro": "Compara el modelo exacto del PSU en lugar de confiar solo en una marca o insignia de eficiencia.",
             "features_list": [
-                "Cables modulares recomendados",
-                "80 PLUS Gold o superior",
-                "Garantía de 5+ años"
+                "Confirma la guía de vataje del fabricante de la GPU y del socio de la tarjeta",
+                "Verifica el cable nativo, el número de conectores y los requisitos de enrutamiento",
+                "Consulta pruebas independientes sobre protecciones, regulación, ruido y temperaturas",
+                "Confirma formato, longitud física, garantía y soporte regional"
             ]
+        },
+        "readiness": {
+            "title": "Resumen de Preparación del PSU",
+            "subtitle": "Planificación de capacidad y comprobaciones que requieren los modelos exactos del PSU y la tarjeta gráfica.",
+            "capacity": "Capacidad común recomendada",
+            "load": "Carga estimada de componentes",
+            "headroom": "Margen de capacidad",
+            "status_label": "Estado de planificación",
+            "status": "Vataje planificado—se requiere verificar modelo y conectores",
+            "standard_title": "Guía del estándar de alimentación",
+            "standard_desc": "Para una GPU moderna de alta potencia aplicable, compara un PSU ATX 3.x que admita explícitamente el conector requerido y las excursiones de potencia.",
+            "standard_source": "Leer la guía de diseño ATX de Intel",
+            "connector_title": "Verificación del conector GPU",
+            "connector_desc": "Los requisitos pueden variar según el modelo exacto y el socio de la tarjeta. Prefiere el cable nativo compatible del PSU y verifica ambos manuales.",
+            "connector_source": "Leer la actualización PCI-SIG 12V-2x6"
+        },
+        "technical": {
+            "result_title": "Detalles de eficiencia y selección",
+            "result_subtitle": "Preferencias opcionales, limitaciones y comprobaciones del modelo.",
+            "methodology_title": "Detalles técnicos y metodología",
+            "methodology_subtitle": "Revisa la fórmula, los supuestos, el modelo de margen y las limitaciones.",
+            "guide_title": "Guía de selección del PSU",
+            "guide_subtitle": "Lee la explicación completa para obtener más contexto de compra."
         },
         "component_options": {
             "basic": {
@@ -386,13 +422,13 @@
         "button": "Ir a la Calculadora de Cuello de Botella"
     },
     "guide": {
-        "title": "Entendiendo los Cuellos de Botella de PC: Una Guía Completa",
+        "title": "Comprende y Verifica los Cuellos de Botella del PC",
         "intro": "Un <strong>cuello de botella</strong> describe una carga donde un componente alcanza su límite antes que otro. El componente limitante cambia según juego, resolución, ajustes, controladores y tareas en segundo plano. Nuestra <strong>Calculadora de Cuello de Botella de PC</strong> compara puntuaciones de CPU y GPU normalizadas internamente para crear una preselección que debe verificarse.",
         "intro_p2": "La comparación puede mostrar combinaciones muy desequilibradas, pero no predice cada carga ni garantiza FPS. Verifica las compras importantes con benchmarks de tus juegos y ajustes.",
         "cpu_section": {
             "title": "¿Qué es un Cuello de Botella de CPU?",
-            "subtitle": "(El Cuello de Botella \"Malo\")",
-            "description": "Un <strong>cuello de botella de CPU</strong> ocurre cuando tu procesador (CPU) no puede procesar datos e instrucciones lo suficientemente rápido para mantener tu tarjeta gráfica (GPU) completamente ocupada. Este es el tipo de <strong>cuello de botella</strong> más común y problemático para los gamers, ya que conduce a un rendimiento inconsistente que no se puede solucionar simplemente bajando la configuración gráfica.",
+            "subtitle": "(Un límite de CPU específico de la carga)",
+            "description": "Una carga está <strong>limitada por la CPU</strong> cuando el trabajo del procesador alcanza su límite antes que la carga gráfica. Bajar la resolución puede producir poca mejora, pero ningún dato aislado de uso demuestra el diagnóstico.",
             "symptoms_title": "Síntomas Comunes:",
             "symptoms_list": [
                 "<strong>Tartamudeo</strong> o juego entrecortado, especialmente durante acción intensa.",
@@ -408,11 +444,11 @@
         },
         "action_plan": {
             "title": "Cómo Solucionar un Cuello de Botella: Tu Plan de Acción",
-            "description": "Una vez que nuestra calculadora identifique un <strong>cuello de botella</strong>, aquí están los pasos más efectivos para abordarlo."
+            "description": "Cuando la calculadora sugiera una posible limitación, realiza estas comprobaciones de bajo riesgo antes de considerar una compra de hardware."
         },
         "cpu_solutions": {
             "title": "Abordando un Cuello de Botella de CPU",
-            "intro": "Si tu CPU es el eslabón débil, reduce su carga de trabajo o aumenta su rendimiento.",
+            "intro": "Si las pruebas apuntan a un límite de CPU, reduce primero el trabajo del procesador y descarta restricciones de software, temperatura o límite de fotogramas.",
             "immediate_fixes_title": "Soluciones Inmediatas:",
             "immediate_fixes_list": [
                 "<strong>Cierra Aplicaciones en Segundo Plano:</strong> Cierra navegadores/apps de streaming antes de jugar.",
@@ -431,11 +467,11 @@
         },
         "gpu_solutions": {
             "title": "Gestionando un Cuello de Botella de GPU",
-            "intro": "Esto a menudo es <strong>algo bueno</strong>. El objetivo no es eliminarlo, sino ajustar para tu objetivo de FPS.",
+            "intro": "Un límite de GPU no es automáticamente bueno o malo. Lo importante es si el rendimiento, la estabilidad de fotogramas, la calidad de imagen y la latencia cumplen tu objetivo.",
             "levers_title": "Palancas para Más FPS:",
             "levers_list": [
                 "Baja la configuración de GPU (texturas, sombras, trazado de rayos).",
-                "Habilita DLSS/FSR/XeSS para grandes ganancias.",
+                "Compara los modos DLSS/FSR/XeSS compatibles; el rendimiento, la calidad de imagen y la latencia varían según el juego.",
                 "Baja la resolución (p. ej., 4K → 1440p).",
                 "Actualiza la GPU para más margen."
             ],
@@ -445,12 +481,12 @@
             "example_solution": "<strong>La Solución:</strong> Actualizar a una <strong>RTX 4060</strong> o <strong>RX 7700 XT</strong> para juegos estables y de alta calidad a 1440p."
         },
         "final_section": {
-            "title": "Cómo Nuestra Calculadora LLeva a un PC Equilibrado",
-            "description": "Nuestra herramienta analiza las relaciones entre componentes para que tú no tengas que hacerlo. Al ingresar tus partes, obtienes un análisis instantáneo basado en datos para:",
+            "title": "Usa el Resultado como Lista de Pruebas",
+            "description": "La comparación de puntuaciones puede señalar una combinación que conviene investigar. Úsala para priorizar pruebas e investigación, no como prueba de FPS perdidos ni de una mejora garantizada.",
             "benefits_list": [
-                "<strong>Construir Más Inteligentemente:</strong> Evita emparejar una GPU de gama alta con una CPU débil.",
-                "<strong>Actualizar con Confianza:</strong> Sabe qué parte da las mayores ganancias.",
-                "<strong>Ahorrar Dinero:</strong> No gastes de más en componentes con cuello de botella."
+                "<strong>Compara combinaciones:</strong> Detecta grandes diferencias relativas antes de investigar a fondo.",
+                "<strong>Haz pruebas más eficientes:</strong> Centra la monitorización y los cambios de ajustes en la posible limitación.",
+                "<strong>Compra con cuidado:</strong> Confirma decisiones importantes con benchmarks específicos y comprobaciones de compatibilidad."
             ],
             "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">¿Listo para comparar tu equipo?</strong> Usa la calculadora para comparar puntuaciones normalizadas y verifica después con benchmarks adecuados."
         }

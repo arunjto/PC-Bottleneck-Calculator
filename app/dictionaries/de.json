@@ -17,7 +17,7 @@
     },
     "home": {
         "hero_title": "PC Flaschenhals Rechner – Optimieren Sie Ihre PC-Leistung",
-        "hero_subtitle": "Prüfen Sie sofort Ihre CPU- und GPU-Balance mit unserem fortschrittlichen PC Flaschenhals Rechner. Finden Sie Leistungsengpässe, verhindern Sie Verlangsamungen und bauen Sie einen ausgewogenen Gaming-PC.",
+        "hero_subtitle": "Vergleichen Sie CPU und GPU anhand normalisierter Planungswerte, erkennen Sie die möglicherweise begrenzende Komponente und erfahren Sie, wie Sie das Ergebnis mit passenden Benchmarks überprüfen.",
         "cta_analyze": "Mein System analysieren",
         "select_components": "Wählen Sie Ihre Komponenten, um die Leistungsbalance Ihres PCs in Sekunden zu analysieren.",
         "fps_promo_title": "Neugierig auf Gaming-Performance?",
@@ -40,22 +40,31 @@
             },
             {
                 "q": "Verursachen RAM oder Speicher auch Flaschenhälse?",
-                "a": "Ja. Unzureichender oder langsamer <strong>RAM</strong> kann bei hoher Auslastung Ruckler verursachen. Ebenso führt die Nutzung einer <strong>HDD</strong> anstelle einer SSD zu langsameren Ladezeiten."
+                "a": "Zu wenig oder ungünstig konfigurierter <strong>RAM</strong> kann bei speicherintensiven Aufgaben zu Rucklern beitragen. Eine <strong>HDD</strong> beeinflusst vor allem Ladezeiten und Asset-Streaming; sie senkt nicht in jedem Spiel automatisch die durchschnittlichen FPS."
             },
             {
                 "q": "Sollten CPU und GPU beide bei 100% laufen?",
                 "a": "Es gibt keine universell ideale Auslastung. Hohe GPU-Last kann normal sein, während die CPU-Gesamtauslastung einen gesättigten Kern verbirgt. Nutzen Sie Auslastung nur als Hinweis neben Frame Times, Limits, Temperaturen und Wiederholungstests."
+            },
+            {
+                "q": "Entspricht der Flaschenhals-Prozentwert verlorenen FPS?",
+                "a": "Nein. Er ist ein relatives Planungssignal aus normalisierten Werten und keine Messung verlorener FPS. Die reale Leistung hängt von Spiel, Szene, Auflösung, Einstellungen, Treibern, Kühlung, Speicher und Hintergrundaktivität ab."
+            },
+            {
+                "q": "Wie kann ich das Rechnerergebnis überprüfen?",
+                "a": "Testen Sie eine wiederholbare Spielszene, erfassen Sie FPS und Frame Times, prüfen Sie die Auslastung einzelner CPU-Kerne und der GPU und senken Sie danach Auflösung oder Grafikdetails. Ein starker FPS-Anstieg deutet auf ein Grafiklimit hin; wenig Veränderung kann CPU, FPS-Limit oder eine andere Ursache bedeuten."
             }
         ],
         "update_banner": {
-            "title": "Datenbank aktualisiert!",
-            "description": "Jetzt mit den neuesten 2026 CPU- & GPU-Modellen und aktuellen Leistungsdaten.",
-            "badge": "Neu"
+            "title": "Hardwaredaten im August 2026 geprüft",
+            "description": "Die Spezifikationen unterstützter CPUs und GPUs sowie die normalisierten Vergleichsindizes wurden für das aktuelle Planungsmodell geprüft.",
+            "badge": "Geprüft",
+            "link_text": "Methodik ansehen"
         }
     },
     "calculator": {
-        "title": "Fortschrittlicher Flaschenhals Rechner",
-        "subtitle": "Analysieren Sie Ihre Systemleistung mit umfassender Hardware-Datenbank (2017-2026)",
+        "title": "PC-Komponenten Eingeben",
+        "subtitle": "Vergleichen Sie unterstützte Desktop-CPUs und -GPUs anhand veröffentlichter Spezifikationen und normalisierter Planungswerte",
         "labels": {
             "cpu": "Prozessor (CPU)",
             "gpu": "Grafikkarte (GPU)",
@@ -338,13 +347,13 @@
         }
     },
     "guide": {
-        "title": "PC-Flaschenhälse verstehen: Ein kompletter Guide für ein ausgewogenes System",
+        "title": "PC-Flaschenhälse Verstehen und Überprüfen",
         "intro": "Ein <strong>Flaschenhals</strong> beschreibt einen Workload, bei dem eine Komponente vor einer anderen ihr Limit erreicht. Welche Komponente limitiert, hängt von Spiel, Auflösung, Einstellungen, Treibern und Hintergrundaktivität ab. Unser <strong>PC-Flaschenhals-Rechner</strong> vergleicht intern normalisierte CPU- und GPU-Werte für eine Vorauswahl, die weiter geprüft werden muss.",
         "intro_p2": "Der Wertevergleich kann deutlich unausgewogene Kombinationen aufzeigen, sagt aber nicht jeden Workload voraus und garantiert keine Bildrate. Prüfen Sie wichtige Käufe mit Benchmarks für Ihre Spiele und Einstellungen.",
         "cpu_section": {
             "title": "Was ist ein CPU-Flaschenhals?",
-            "subtitle": "(Der \"schlechte\" Flaschenhals)",
-            "description": "Ein <strong>CPU-Flaschenhals</strong> entsteht, wenn Ihr Prozessor (CPU) Daten und Anweisungen nicht schnell genug verarbeiten kann, um Ihre Grafikkarte (GPU) voll auszulasten. Dies ist die häufigste und problematischste Art von <strong>Flaschenhals</strong> für Gamer, da sie zu inkonsistenter Leistung führt, die nicht einfach durch Senken der Grafikeinstellungen behoben werden kann.",
+            "subtitle": "(Ein workload-spezifisches CPU-Limit)",
+            "description": "Eine Arbeitslast ist <strong>CPU-limitiert</strong>, wenn die Prozessorarbeit ihre Grenze vor der Grafiklast erreicht. Eine niedrigere Auflösung bringt dann möglicherweise wenig Verbesserung, doch kein einzelner Auslastungswert beweist die Diagnose.",
             "symptoms_title": "Häufige Symptome:",
             "symptoms_list": [
                 "<strong>Stottern</strong> oder abgehacktes Gameplay, besonders bei intensiver Action.",
@@ -360,11 +369,11 @@
         },
         "action_plan": {
             "title": "Wie man einen Flaschenhals behebt: Ihr Aktionsplan",
-            "description": "Sobald unser Rechner einen <strong>Flaschenhals</strong> identifiziert, sind hier die effektivsten Schritte, um ihn zu beheben."
+            "description": "Wenn der Rechner auf eine mögliche Begrenzung hinweist, führen Sie diese risikoarmen Prüfungen durch, bevor Sie neue Hardware in Betracht ziehen."
         },
         "cpu_solutions": {
             "title": "Einen CPU-Flaschenhals angehen",
-            "intro": "Wenn Ihre CPU das schwache Glied ist, reduzieren Sie ihre Arbeitslast oder steigern Sie ihre Leistung.",
+            "intro": "Wenn Tests auf ein CPU-seitiges Limit hindeuten, reduzieren Sie zunächst Prozessorlast und schließen Sie Software-, Temperatur- und FPS-Limits aus.",
             "immediate_fixes_title": "Sofortige Lösungen:",
             "immediate_fixes_list": [
                 "<strong>Hintergrund-Apps schließen:</strong> Beenden Sie Browser/Streaming-Apps vor dem Spielen.",
@@ -383,11 +392,11 @@
         },
         "gpu_solutions": {
             "title": "Einen GPU-Flaschenhals verwalten",
-            "intro": "Das ist oft eine <strong>gute Sache</strong>. Das Ziel ist nicht, ihn zu entfernen, sondern ihn für Ihr FPS-Ziel anzupassen.",
+            "intro": "Ein GPU-seitiges Limit ist nicht automatisch gut oder schlecht. Entscheidend ist, ob Leistung, Frame Pacing, Bildqualität und Latenz Ihr Ziel erfüllen.",
             "levers_title": "Hebel für mehr FPS:",
             "levers_list": [
                 "GPU-Einstellungen senken (Texturen, Schatten, Raytracing).",
-                "DLSS/FSR/XeSS aktivieren für enorme Gewinne.",
+                "Unterstützte DLSS/FSR/XeSS-Modi vergleichen; Leistung, Bildqualität und Latenz unterscheiden sich je nach Spiel.",
                 "Auflösung senken (z. B. 4K → 1440p).",
                 "GPU aufrüsten für mehr Spielraum."
             ],
@@ -397,12 +406,12 @@
             "example_solution": "<strong>Die Lösung:</strong> Upgrade auf eine <strong>RTX 4060</strong> oder <strong>RX 7700 XT</strong> für stabiles, hochwertiges 1440p-Gaming."
         },
         "final_section": {
-            "title": "Wie unser Rechner zu einem ausgewogenen PC führt",
-            "description": "Unser Tool analysiert Komponentenbeziehungen, damit Sie es nicht müssen. Durch Eingabe Ihrer Teile erhalten Sie eine sofortige, datengestützte Analyse, um:",
+            "title": "Das Ergebnis als Testliste Nutzen",
+            "description": "Der Wertevergleich kann auf eine prüfenswerte Kombination hinweisen. Nutzen Sie ihn zur Priorisierung von Tests und Recherche, nicht als Beweis für verlorene FPS oder garantierte Upgrade-Gewinne.",
             "benefits_list": [
-                "<strong>Klug zu bauen:</strong> Vermeiden Sie die Paarung einer High-End-GPU mit einer schwachen CPU.",
-                "<strong>Mit Vertrauen aufzurüsten:</strong> Wissen Sie, welches Teil den größten Gewinn bringt.",
-                "<strong>Geld zu sparen:</strong> Geben Sie nicht zu viel für ausgebremste Komponenten aus."
+                "<strong>Kombinationen vergleichen:</strong> Große relative Wertunterschiede vor tieferer Recherche erkennen.",
+                "<strong>Gezielter testen:</strong> Überwachung und Einstellungsänderungen auf die wahrscheinliche Begrenzung konzentrieren.",
+                "<strong>Sorgfältiger kaufen:</strong> Wichtige Entscheidungen mit passenden Benchmarks und Kompatibilitätsprüfungen bestätigen."
             ],
             "cta": "<strong class=\"text-purple-800 dark:text-purple-400\">Bereit für den Build-Vergleich?</strong> Vergleichen Sie normalisierte Werte und prüfen Sie das Ergebnis danach mit passenden Benchmarks."
         }
@@ -1154,22 +1163,22 @@
         ]
     },
     "psu_calculator": {
-        "title": "Fortschrittlicher Netzteil Rechner",
+        "title": "PC-Komponenten Eingeben",
         "subtitle": "Schätzen Sie die Systemlast und vergleichen Sie verschiedene Netzteil-Spielräume",
         "labels": {
             "cpu": "Prozessor (CPU)",
             "gpu": "Grafikkarte (GPU)",
             "components": "Zusätzliche Komponenten",
-            "efficiency": "Netzteil Effizienz-Rating"
+            "efficiency": "Effizienzpräferenz (optional)"
         },
         "placeholders": {
             "cpu": "Wählen Sie Ihre CPU...",
             "gpu": "Wählen Sie Ihre GPU...",
             "components": "Wählen Sie Komponenten-Setup...",
-            "efficiency": "Wählen Sie Effizienz-Rating..."
+            "efficiency": "Optionale Effizienzklasse wählen..."
         },
         "button": "Netzteil-Bedarf berechnen",
-        "incomplete": "Bitte wählen Sie alle Komponenten",
+        "incomplete": "CPU, GPU und Komponenten-Setup wählen",
         "back": "Zurück zum Rechner",
         "results_title": "Netzteil-Planungsschätzung",
         "results_subtitle": "Veröffentlichte Leistungswerte plus konfigurierbarer Spielraum",
@@ -1184,8 +1193,9 @@
             "min_desc": "Berechnete Last plus 15% Spielraum; keine Kaufempfehlung.",
             "rec": "Planungsschätzung",
             "rec_desc": "Berechnete Last plus 30% Spielraum, auf eine übliche Netzteilgröße gerundet.",
-            "future": "Schätzung mit größerem Spielraum",
-            "future_desc": "Berechnete Last plus 50% Spielraum zur Planung möglicher Upgrades."
+            "future": "Übliche Größe für Upgrades",
+            "future_desc": "Nächste übliche Netzteilgröße oberhalb der berechneten Schwelle mit 50% Spielraum.",
+            "calculated_threshold": "Berechnete Schwelle"
         },
         "breakdown": {
             "title": "Stromverbrauchs-Aufschlüsselung",
@@ -1200,17 +1210,43 @@
             "power_eff": "Gewählte Effizienzklasse",
             "rating_label": "Ungefährer Klassenwert",
             "cost_title": "Wichtige Effizienzgrenze",
-            "cost_desc": "Die gewählte Klasse ist eine Kaufpräferenz, keine Zertifizierung eines bestimmten Netzteils. Tatsächliche Effizienz und Stromkosten hängen von Modell, Last, Netzspannung, Nutzung und Strompreis ab."
+            "cost_desc": "Die gewählte 80-PLUS-Klasse ist nur eine Kaufpräferenz und ändert die Wattzahl-Schätzung nicht. Die Zertifizierung beschreibt Effizienz unter definierten Testbedingungen; sie zertifiziert weder Gesamtqualität noch Kompatibilität. Die tatsächliche Effizienz hängt von Modell, Last und Netzspannung ab.",
+            "not_selected": "Keine Effizienzpräferenz gewählt. Dies ändert die Wattzahl-Berechnung nicht."
         },
         "tips": {
-            "title": "Netzteil Auswahl-Tipps",
-            "brands_title": "Qualitätsmarken",
-            "features_title": "Hauptmerkmale",
+            "title": "Checkliste zur Netzteil-Auswahl",
+            "brands_title": "Prüfungen auf Modellebene",
+            "features_title": "Prüfungen vor dem Kauf",
+            "intro": "Vergleichen Sie das genaue Netzteilmodell, statt sich allein auf Markenname oder Effizienzabzeichen zu verlassen.",
             "features_list": [
-                "Modulare Kabel empfohlen",
-                "80 PLUS Gold oder höher",
-                "5+ Jahre Garantie"
+                "Wattzahl-Vorgaben von GPU-Hersteller und Board-Partner bestätigen",
+                "Nativen Kabeltyp, Anschlussanzahl und Kabelführung prüfen",
+                "Unabhängige Tests zu Schutzschaltungen, Regelung, Lautstärke und Temperaturen prüfen",
+                "Formfaktor, Länge, Garantie und regionalen Support bestätigen"
             ]
+        },
+        "readiness": {
+            "title": "Netzteil-Bereitschaft Zusammenfassung",
+            "subtitle": "Kapazitätsplanung plus Prüfungen, die genaue Netzteil- und Grafikkartenmodelle erfordern.",
+            "capacity": "Empfohlene übliche Kapazität",
+            "load": "Geschätzte Komponentenlast",
+            "headroom": "Kapazitätsspielraum",
+            "status_label": "Planungsstatus",
+            "status": "Wattzahl geplant—Modell- und Anschlussprüfung erforderlich",
+            "standard_title": "Hinweise zum Netzteilstandard",
+            "standard_desc": "Vergleichen Sie für eine relevante moderne Hochleistungs-GPU ein ATX-3.x-Netzteil, das den erforderlichen Anschluss und Leistungsspitzen ausdrücklich unterstützt.",
+            "standard_source": "Intels ATX-Designleitfaden lesen",
+            "connector_title": "GPU-Anschluss prüfen",
+            "connector_desc": "Anforderungen können je nach genauem Grafikkarten- und Board-Partner-Modell variieren. Bevorzugen Sie das native kompatible PSU-Kabel und prüfen Sie beide Handbücher.",
+            "connector_source": "PCI-SIG-Update zu 12V-2x6 lesen"
+        },
+        "technical": {
+            "result_title": "Effizienz- und Auswahldetails",
+            "result_subtitle": "Optionale Kaufpräferenzen, Grenzen und Prüfungen auf Modellebene.",
+            "methodology_title": "Technische Details und Methodik",
+            "methodology_subtitle": "Formel, Annahmen, Spielraummodell und Grenzen prüfen.",
+            "guide_title": "Leitfaden zur Netzteil-Auswahl",
+            "guide_subtitle": "Lesen Sie die ausführliche Erklärung für zusätzlichen Kaufkontext."
         },
         "component_options": {
             "basic": {

@@ -1,7 +1,19 @@
 'use client';
 
 import React, { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
-import { Check, ChevronDown, Search } from 'lucide-react';
+import {
+  BadgeCheck,
+  Check,
+  ChevronDown,
+  Cpu,
+  Gamepad2,
+  ImageIcon,
+  Layers3,
+  MemoryStick,
+  Monitor,
+  Search,
+  Star,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface Option {
@@ -18,7 +30,7 @@ interface EnhancedSearchableSelectProps {
   value: string;
   onValueChange: (value: string) => void;
   placeholder: string;
-  type: 'cpu' | 'gpu' | 'ram' | 'resolution' | 'game';
+  type: 'cpu' | 'gpu' | 'ram' | 'resolution' | 'game' | 'components' | 'efficiency';
   /** DOM id forwarded to the trigger element — links <label htmlFor> to this combobox */
   id: string;
   labelId?: string;
@@ -27,22 +39,27 @@ interface EnhancedSearchableSelectProps {
   noResultsText?: string;
   openInstructions?: string;
   listLabel?: string;
+  showTier?: boolean;
 }
 
-const getTypeIcon = (type: string) => {
+const getTypeIcon = (type: EnhancedSearchableSelectProps['type']) => {
   switch (type) {
     case 'cpu':
-      return '🔧';
+      return <Cpu className="h-5 w-5" />;
     case 'gpu':
-      return '🖥️';
+      return <Monitor className="h-5 w-5" />;
     case 'ram':
-      return '💾';
+      return <MemoryStick className="h-5 w-5" />;
     case 'resolution':
-      return '🖼️';
+      return <ImageIcon className="h-5 w-5" />;
     case 'game':
-      return '🎮';
+      return <Gamepad2 className="h-5 w-5" />;
+    case 'components':
+      return <Layers3 className="h-5 w-5" />;
+    case 'efficiency':
+      return <BadgeCheck className="h-5 w-5" />;
     default:
-      return '⭐';
+      return <Star className="h-5 w-5" />;
   }
 };
 
@@ -77,6 +94,7 @@ export function EnhancedSearchableSelect({
   noResultsText,
   openInstructions,
   listLabel,
+  showTier = true,
 }: EnhancedSearchableSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -200,14 +218,16 @@ export function EnhancedSearchableSelect({
                     <span className="font-medium text-foreground truncate">
                       {selectedOption.name}
                     </span>
-                    <span
-                      className={cn(
-                        'px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0',
-                        getTierColor(selectedOption.tier)
-                      )}
-                    >
-                      {selectedOption.tier}
-                    </span>
+                    {showTier && selectedOption.tier && (
+                      <span
+                        className={cn(
+                          'px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0',
+                          getTierColor(selectedOption.tier)
+                        )}
+                      >
+                        {selectedOption.tier}
+                      </span>
+                    )}
                   </div>
                   <div className="text-xs text-muted-foreground truncate mt-0.5">
                     {selectedOption.specs}
@@ -266,16 +286,18 @@ export function EnhancedSearchableSelect({
                     onClick={() => handleOptionClick(option.id)}
                     role="option"
                     aria-selected={value === option.id}
-                    aria-label={`${option.name}, ${option.tier} tier, ${option.specs}`}
+                    aria-label={`${option.name}${showTier && option.tier ? `, ${option.tier} tier` : ''}, ${option.specs}`}
                   >
                     <div className="flex items-center space-x-3 flex-1 min-w-0">
                       <span className="text-base flex-shrink-0" aria-hidden="true">{getTypeIcon(type)}</span>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
                           <span className="font-medium text-sm truncate">{option.name}</span>
-                          <span className={cn('px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0', getTierColor(option.tier))}>
-                            {option.tier}
-                          </span>
+                          {showTier && option.tier && (
+                            <span className={cn('px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0', getTierColor(option.tier))}>
+                              {option.tier}
+                            </span>
+                          )}
                         </div>
                         <div className="text-xs text-muted-foreground truncate">{option.specs}</div>
                         {option.benchmarkScore && <div className="text-xs text-primary font-medium mt-0.5">Score: {option.benchmarkScore}/100</div>}
