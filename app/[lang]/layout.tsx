@@ -2,6 +2,7 @@
 import '@/app/globals.css';
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
@@ -114,6 +115,7 @@ export default async function RootLayout({
             crossOrigin="anonymous"
           />
         )}
+        <Analytics />
       </body>
     </html>
   );
