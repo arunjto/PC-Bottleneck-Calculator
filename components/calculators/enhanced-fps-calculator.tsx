@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
 import { allCPUs, allGPUs, allGames, getCPUById, getGPUById, getGameById } from '@/lib/hardware-database';
-import { estimateFPSRange, estimateFPSWithBreakdown, FPS_MODEL_VERSION } from '@/lib/fps-model';
+import { estimateFPSRange, estimateFPSWithBreakdown, FPS_MODEL_VERSION, getFPSGameProfileMetadata } from '@/lib/fps-model';
 import type { FPSEstimate, FPSModelOptions } from '@/lib/fps-model';
 import { serializeFPSShareConfig } from '@/lib/fps-share';
 import type { FPSCalculatorBuild, FPSCalculatorConfig } from '@/lib/fps-share';
@@ -25,8 +25,96 @@ import {
 import { analyzeFPSSmoothness } from '@/lib/fps-smoothness';
 import { getLocalizedPath } from '@/lib/path-translations';
 import type { Locale } from '@/i18n-config';
-import { Gamepad2, Monitor, BarChart3, TrendingUp, Cpu, Zap, HardDrive, Sparkles, Gauge, AlertTriangle, Check, Link2, Printer, Calculator, ImageDown, ClipboardCopy, Target, Activity, ChevronDown, ArrowUpRight } from 'lucide-react';
+import { Gamepad2, Monitor, BarChart3, TrendingUp, Cpu, Zap, HardDrive, Sparkles, Gauge, AlertTriangle, Check, Link2, Printer, Calculator, ImageDown, ClipboardCopy, Target, Activity, ChevronDown, ArrowUpRight, Info } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+
+const VRAM_TOOL_LINK_COPY: Record<Locale, string> = {
+  en: 'Plan VRAM capacity for this game and settings',
+  it: 'Pianifica la capacità VRAM per questo gioco e queste impostazioni',
+  fr: 'Planifier la capacité VRAM pour ce jeu et ces réglages',
+  de: 'VRAM-Kapazität für dieses Spiel und diese Einstellungen planen',
+  es: 'Planificar la capacidad de VRAM para este juego y estos ajustes',
+};
+
+type GameInsightCopy = {
+  title: string;
+  profile: string;
+  detailedProfile: string;
+  fallbackProfile: string;
+  workload: string;
+  cpuHeavy: string;
+  gpuHeavy: string;
+  balanced: string;
+  ram: string;
+  technologies: string;
+  noTechnologies: string;
+  why: string;
+  detailedNote: string;
+  fallbackNote: string;
+  speculativeWarning: string;
+  cpuAdvice: string;
+  gpuAdvice: string;
+  balancedAdvice: string;
+};
+
+const GAME_INSIGHT_COPY: Record<Locale, GameInsightCopy> = {
+  en: {
+    title: 'How this game is modeled', profile: 'Profile', detailedProfile: 'Detailed editorial profile', fallbackProfile: 'General demand-based estimate',
+    workload: 'Workload tendency', cpuHeavy: 'CPU-heavy', gpuHeavy: 'GPU-heavy', balanced: 'Balanced', ram: 'RAM baseline',
+    technologies: 'Listed technologies', noTechnologies: 'None listed', why: 'Why this matters',
+    detailedNote: 'Uses a game-specific calibration anchor, then adjusts for your hardware and settings. It is still a planning estimate, not a measured benchmark of your PC.',
+    fallbackNote: 'Uses the game’s CPU and GPU demand classes because no game-specific calibration anchor is available.',
+    speculativeWarning: 'Pre-release planning profile—verified PC benchmark data is not available. Treat the result as speculative.',
+    cpuAdvice: 'CPU choice and CPU-heavy settings such as simulation, crowds or view distance may have greater influence, especially at high FPS targets.',
+    gpuAdvice: 'GPU performance, resolution, ray tracing and graphics quality are likely to have greater influence. Upscaling can help when the game and GPU support it.',
+    balancedAdvice: 'Both CPU and GPU can materially influence the result, so compare the limiting-component and frame-time sections after calculating.',
+  },
+  it: {
+    title: 'Come viene modellato questo gioco', profile: 'Profilo', detailedProfile: 'Profilo editoriale dettagliato', fallbackProfile: 'Stima generale basata sulla domanda',
+    workload: 'Tendenza del carico', cpuHeavy: 'Prevalenza CPU', gpuHeavy: 'Prevalenza GPU', balanced: 'Bilanciato', ram: 'RAM di base',
+    technologies: 'Tecnologie indicate', noTechnologies: 'Nessuna indicata', why: 'Perché è importante',
+    detailedNote: 'Usa un riferimento calibrato per il gioco e lo adatta a hardware e impostazioni. Resta una stima, non un benchmark misurato sul tuo PC.',
+    fallbackNote: 'Usa le classi di domanda CPU e GPU perché non è disponibile un riferimento calibrato specifico.',
+    speculativeWarning: 'Profilo pre-release: non sono disponibili benchmark PC verificati. Considera il risultato speculativo.',
+    cpuAdvice: 'CPU e impostazioni come simulazione, folla o distanza visiva possono incidere di più, soprattutto con obiettivi FPS elevati.',
+    gpuAdvice: 'GPU, risoluzione, ray tracing e qualità grafica incidono probabilmente di più. L’upscaling può aiutare se supportato.',
+    balancedAdvice: 'CPU e GPU possono influire entrambe: dopo il calcolo confronta componente limitante e frame time.',
+  },
+  fr: {
+    title: 'Comment ce jeu est modélisé', profile: 'Profil', detailedProfile: 'Profil éditorial détaillé', fallbackProfile: 'Estimation générale par demande',
+    workload: 'Tendance de charge', cpuHeavy: 'Plutôt CPU', gpuHeavy: 'Plutôt GPU', balanced: 'Équilibrée', ram: 'RAM de base',
+    technologies: 'Technologies indiquées', noTechnologies: 'Aucune indiquée', why: 'Pourquoi c’est utile',
+    detailedNote: 'Utilise un point de calibration propre au jeu, puis l’adapte au matériel et aux réglages. Cela reste une estimation, pas un benchmark mesuré de votre PC.',
+    fallbackNote: 'Utilise les classes de demande CPU et GPU faute de point de calibration propre au jeu.',
+    speculativeWarning: 'Profil avant sortie : aucun benchmark PC vérifié n’est disponible. Le résultat reste spéculatif.',
+    cpuAdvice: 'Le CPU et les réglages de simulation, foule ou distance de vue peuvent compter davantage, surtout à haut objectif FPS.',
+    gpuAdvice: 'GPU, résolution, ray tracing et qualité graphique devraient compter davantage. La mise à l’échelle peut aider si elle est prise en charge.',
+    balancedAdvice: 'CPU et GPU peuvent tous deux compter : consultez le composant limitant et les frame times après calcul.',
+  },
+  de: {
+    title: 'So wird dieses Spiel modelliert', profile: 'Profil', detailedProfile: 'Detailliertes redaktionelles Profil', fallbackProfile: 'Allgemeine bedarfsbasierte Schätzung',
+    workload: 'Lasttendenz', cpuHeavy: 'CPU-lastig', gpuHeavy: 'GPU-lastig', balanced: 'Ausgewogen', ram: 'RAM-Basis',
+    technologies: 'Gelistete Technologien', noTechnologies: 'Keine gelistet', why: 'Warum das wichtig ist',
+    detailedNote: 'Nutzt einen spielspezifischen Kalibrierungswert und passt ihn an Hardware und Einstellungen an. Es bleibt eine Planungsschätzung, kein gemessener Benchmark deines PCs.',
+    fallbackNote: 'Nutzt CPU- und GPU-Bedarfsklassen, weil kein spielspezifischer Kalibrierungswert verfügbar ist.',
+    speculativeWarning: 'Pre-Release-Profil: Verifizierte PC-Benchmarks sind nicht verfügbar. Das Ergebnis ist spekulativ.',
+    cpuAdvice: 'CPU und Einstellungen wie Simulation, Menschenmengen oder Sichtweite können stärker wirken, besonders bei hohen FPS-Zielen.',
+    gpuAdvice: 'GPU, Auflösung, Raytracing und Grafikqualität wirken wahrscheinlich stärker. Upscaling kann bei Unterstützung helfen.',
+    balancedAdvice: 'CPU und GPU können beide relevant sein. Prüfe nach der Berechnung limitierende Komponente und Frame Times.',
+  },
+  es: {
+    title: 'Cómo se modela este juego', profile: 'Perfil', detailedProfile: 'Perfil editorial detallado', fallbackProfile: 'Estimación general por demanda',
+    workload: 'Tendencia de carga', cpuHeavy: 'Depende más de CPU', gpuHeavy: 'Depende más de GPU', balanced: 'Equilibrada', ram: 'RAM base',
+    technologies: 'Tecnologías indicadas', noTechnologies: 'Ninguna indicada', why: 'Por qué importa',
+    detailedNote: 'Usa una referencia calibrada para el juego y la ajusta al hardware y configuración. Sigue siendo una estimación, no un benchmark medido de tu PC.',
+    fallbackNote: 'Usa las clases de demanda de CPU y GPU porque no hay una referencia calibrada específica.',
+    speculativeWarning: 'Perfil previo al lanzamiento: no hay benchmarks de PC verificados. Trata el resultado como especulativo.',
+    cpuAdvice: 'La CPU y ajustes como simulación, multitudes o distancia de visión pueden influir más, especialmente con objetivos FPS altos.',
+    gpuAdvice: 'GPU, resolución, ray tracing y calidad gráfica probablemente influyan más. El reescalado puede ayudar si es compatible.',
+    balancedAdvice: 'CPU y GPU pueden influir: después de calcular revisa el componente limitante y los frame times.',
+  },
+};
 
 type HardwareBrandLogoProps = {
   brand: 'Intel' | 'AMD' | 'NVIDIA';
@@ -291,6 +379,8 @@ export function EnhancedFPSCalculator({
     }),
     [t]
   );
+  const locale = (lang in GAME_INSIGHT_COPY ? lang : 'en') as Locale;
+  const gameInsightCopy = GAME_INSIGHT_COPY[locale];
 
   useEffect(() => {
     if (!initialConfig || restoredConfigNotified.current) return;
@@ -665,6 +755,35 @@ export function EnhancedFPSCalculator({
         { label: t.display.aa_label, value: aaOption.label, helper: aaOption.description },
         { label: t.display.refresh_label, value: refreshRateOption.label, helper: refreshRateOption.description },
       ];
+      const vramResolution = ({
+        '1080p': '1920x1080',
+        '1440p': '2560x1440',
+        '4K': '3840x2160',
+      } as Record<string, string>)[selectedResolution] ?? '2560x1440';
+      const vramTextureQuality = selectedGraphicsQuality === 'ultra' || selectedGraphicsQuality.startsWith('rt-')
+        ? 'ultra'
+        : selectedGraphicsQuality === 'high' || selectedGraphicsQuality === 'ray-tracing'
+          ? 'high'
+          : 'medium';
+      const vramRayTracing = selectedGraphicsQuality === 'rt-ultra' || selectedGraphicsQuality === 'rt-extreme'
+        ? 'heavy'
+        : selectedGraphicsQuality === 'ray-tracing'
+          ? 'light'
+          : 'none';
+      const vramUpscaling = selectedUpscaling === 'off'
+        ? 'native'
+        : selectedUpscaling.includes('performance')
+          ? 'performance'
+          : selectedUpscaling.includes('balanced') || selectedUpscaling === 'xe-ss'
+            ? 'balanced'
+            : 'quality';
+      const vramToolHref = `${getLocalizedPath(lang as Locale, 'tools/vram-calculator')}?${new URLSearchParams({
+        game: game.id,
+        resolution: vramResolution,
+        textureQuality: vramTextureQuality,
+        rayTracing: vramRayTracing,
+        upscaling: vramUpscaling,
+      }).toString()}`;
 
       const fpsDelta = adjustedFps - baselineFps;
       const fpsDeltaRounded = Math.round(fpsDelta);
@@ -1845,6 +1964,13 @@ export function EnhancedFPSCalculator({
               <p className="rounded-lg border border-dashed border-indigo-300 bg-indigo-50/60 p-4 text-sm leading-6 text-indigo-950 dark:border-indigo-900 dark:bg-indigo-950/20 dark:text-indigo-100">
                 {breakdownCopy.final_note.replace('{fps}', String(fpsEstimate.average))}
               </p>
+              <Link
+                href={vramToolHref}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+              >
+                {VRAM_TOOL_LINK_COPY[lang as Locale] ?? VRAM_TOOL_LINK_COPY.en}
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
             </CardContent>
             </div>
           </Card>
@@ -2045,7 +2171,19 @@ export function EnhancedFPSCalculator({
 
   const cpuName = selectedCPU ? getCPUById(selectedCPU)?.name ?? '' : '';
   const gpuName = selectedGPU ? getGPUById(selectedGPU)?.name ?? '' : '';
-  const gameName = selectedGame ? getGameById(selectedGame)?.name ?? '' : '';
+  const selectedGameData = selectedGame ? getGameById(selectedGame) : undefined;
+  const gameName = selectedGameData?.name ?? '';
+  const gameProfileMetadata = selectedGameData ? getFPSGameProfileMetadata(selectedGameData) : undefined;
+  const workloadLabel = gameProfileMetadata?.tendency === 'cpu-heavy'
+    ? gameInsightCopy.cpuHeavy
+    : gameProfileMetadata?.tendency === 'gpu-heavy'
+      ? gameInsightCopy.gpuHeavy
+      : gameInsightCopy.balanced;
+  const workloadAdvice = gameProfileMetadata?.tendency === 'cpu-heavy'
+    ? gameInsightCopy.cpuAdvice
+    : gameProfileMetadata?.tendency === 'gpu-heavy'
+      ? gameInsightCopy.gpuAdvice
+      : gameInsightCopy.balancedAdvice;
   const resolutionOption = locResolutionOptions.find((option) => option.id === selectedResolution);
   const ramSizeOptionForm = getModifierOption(locRamSizeOptions, selectedRamSize);
   const ramSpeedOptionForm = getModifierOption(locRamSpeedOptions, selectedRamSpeed);
@@ -2290,20 +2428,61 @@ export function EnhancedFPSCalculator({
               </p>
             </div>
             <div className="min-h-[44px]">
-              {selectedGame && (
-                <div className="flex items-center justify-between text-xs text-muted-foreground bg-slate-100/80 dark:bg-slate-800/60 px-3 py-2 rounded-md">
-                  <span className="truncate">
-                    {t.game.selected}{' '}
-                    <span className="font-medium text-foreground">{gameName}</span>
-                  </span>
-                  <button
-                    type="button"
-                    className="text-primary font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 rounded"
-                    onClick={() => handleClearSelection('game')}
-                  >
-                    {t.game.clear}
-                  </button>
-                </div>
+              {selectedGameData && gameProfileMetadata && (
+                <section
+                  aria-labelledby="selected-game-model-title"
+                  className={`rounded-lg border p-3 text-xs ${gameProfileMetadata.speculative
+                    ? 'border-amber-300 bg-amber-50/80 dark:border-amber-800 dark:bg-amber-950/30'
+                    : 'border-slate-200 bg-slate-50/80 dark:border-slate-700 dark:bg-slate-800/60'}`}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 id="selected-game-model-title" className="flex items-center gap-1.5 font-semibold text-foreground">
+                      <Info className="h-4 w-4 text-blue-600" aria-hidden="true" />
+                      {gameInsightCopy.title}
+                    </h4>
+                    <button
+                      type="button"
+                      className="rounded font-semibold text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                      onClick={() => handleClearSelection('game')}
+                    >
+                      {t.game.clear}
+                    </button>
+                  </div>
+
+                  {gameProfileMetadata.speculative && (
+                    <p className="mt-2 flex items-start gap-1.5 rounded-md border border-amber-300 bg-amber-100/80 px-2.5 py-2 font-medium leading-5 text-amber-950 dark:border-amber-800 dark:bg-amber-950/60 dark:text-amber-100">
+                      <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      <span>{gameInsightCopy.speculativeWarning}</span>
+                    </p>
+                  )}
+
+                  <dl className="mt-3 grid gap-x-4 gap-y-2 text-muted-foreground sm:grid-cols-2">
+                    <div>
+                      <dt className="inline font-medium text-foreground">{gameInsightCopy.profile}: </dt>
+                      <dd className="inline">{gameProfileMetadata.source === 'game-profile' ? gameInsightCopy.detailedProfile : gameInsightCopy.fallbackProfile}</dd>
+                    </div>
+                    <div>
+                      <dt className="inline font-medium text-foreground">{gameInsightCopy.workload}: </dt>
+                      <dd className="inline"><Badge variant="outline" className="ml-1 align-middle">{workloadLabel}</Badge></dd>
+                    </div>
+                    <div>
+                      <dt className="inline font-medium text-foreground">{gameInsightCopy.ram}: </dt>
+                      <dd className="inline">{selectedGameData.ramRequirement} GB</dd>
+                    </div>
+                    <div>
+                      <dt className="inline font-medium text-foreground">{gameInsightCopy.technologies}: </dt>
+                      <dd className="inline">{selectedGameData.optimizations.length ? selectedGameData.optimizations.join(', ') : gameInsightCopy.noTechnologies}</dd>
+                    </div>
+                  </dl>
+
+                  <details className="mt-3 rounded-md border border-dashed border-slate-300 bg-background/70 px-3 py-2 dark:border-slate-700">
+                    <summary className="cursor-pointer font-semibold text-primary">{gameInsightCopy.why}</summary>
+                    <div className="mt-2 space-y-2 leading-5 text-muted-foreground">
+                      <p>{gameProfileMetadata.source === 'game-profile' ? gameInsightCopy.detailedNote : gameInsightCopy.fallbackNote}</p>
+                      <p className="font-medium text-foreground">{workloadAdvice}</p>
+                    </div>
+                  </details>
+                </section>
               )}
             </div>
             <div className="space-y-1 mt-auto">

@@ -1,8 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { BarChart3, ChevronDown } from "lucide-react";
+import { BarChart3, ChevronDown, Gamepad2 } from "lucide-react";
+import type { Locale } from "@/i18n-config";
 import { EnhancedFPSCalculator } from "@/components/calculators/enhanced-fps-calculator";
 import { FPSSavedHistory } from "@/components/calculators/fps-saved-history";
 import { getCPUById, getGameById, getGPUById } from "@/lib/hardware-database";
@@ -23,6 +25,15 @@ import {
   type FPSCalculatorBuild,
   type FPSCalculatorConfig,
 } from "@/lib/fps-share";
+import { getLocalizedPath } from "@/lib/path-translations";
+
+const GAME_FINDER_CTA: Record<Locale, string> = {
+  en: 'See what other games this PC can run',
+  it: 'Scopri quali altri giochi può eseguire questo PC',
+  fr: 'Voir quels autres jeux ce PC peut faire tourner',
+  de: 'Prüfen, welche weiteren Spiele dieser PC schafft',
+  es: 'Ver qué otros juegos puede ejecutar este PC',
+};
 
 const OtherGamesPerformance = dynamic(
   () =>
@@ -53,7 +64,7 @@ const FPSCompareAndShare = dynamic(
   }
 );
 
-export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: string }) {
+export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: Locale }) {
   const calculatorRegionRef = useRef<HTMLDivElement>(null);
   const urlStateActiveRef = useRef(false);
   const [currentBuild, setCurrentBuild] = useState<FPSCalculatorBuild | null>(null);
@@ -233,6 +244,20 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
     };
   }, [currentBuild]);
 
+  const gameFinderQuality = currentBuild && ['low', 'medium', 'high', 'ultra'].includes(currentBuild.quality)
+    ? currentBuild.quality
+    : 'high';
+  const gameFinderHref = currentBuild
+    ? `${getLocalizedPath(lang, 'tools/what-games-can-my-pc-run')}?${new URLSearchParams({
+        cpu: currentBuild.cpu,
+        gpu: currentBuild.gpu,
+        ramCapacity: currentBuild.ramSize.replace('gb', ''),
+        resolution: currentBuild.resolution,
+        quality: gameFinderQuality,
+        targetFps: currentBuild.refreshRate.replace('hz', ''),
+      }).toString()}`
+    : getLocalizedPath(lang, 'tools/what-games-can-my-pc-run');
+
   return (
     <>
       {/* 🧮 Step 1: Main Calculator */}
@@ -285,21 +310,27 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: s
                   ?? 'Explore performance in other games or compare this build with another configuration.'}
               </p>
             </div>
-            <button
-              type="button"
-              className="inline-flex min-h-9 shrink-0 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              aria-expanded={extendedAnalysisExpanded}
-              aria-controls="fps-extended-analysis-content"
-              onClick={() => setExtendedAnalysisExpanded((expanded) => !expanded)}
-            >
-              <ChevronDown
-                className={`mr-1.5 h-4 w-4 transition-transform ${extendedAnalysisExpanded ? 'rotate-180' : ''}`}
-                aria-hidden="true"
-              />
-              {extendedAnalysisExpanded
-                ? dict?.fps_calculator?.results_navigation?.collapse ?? 'Collapse'
-                : dict?.fps_calculator?.results_navigation?.expand ?? 'Expand'}
-            </button>
+            <div className="flex flex-col gap-2 sm:items-end">
+              <Link href={gameFinderHref} className="inline-flex min-h-9 items-center justify-center gap-2 rounded-md border border-indigo-300 bg-indigo-50 px-3 text-sm font-semibold text-indigo-800 transition-colors hover:bg-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-200 dark:hover:bg-indigo-950/70">
+                <Gamepad2 className="h-4 w-4" aria-hidden="true" />
+                {GAME_FINDER_CTA[lang]}
+              </Link>
+              <button
+                type="button"
+                className="inline-flex min-h-9 shrink-0 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-expanded={extendedAnalysisExpanded}
+                aria-controls="fps-extended-analysis-content"
+                onClick={() => setExtendedAnalysisExpanded((expanded) => !expanded)}
+              >
+                <ChevronDown
+                  className={`mr-1.5 h-4 w-4 transition-transform ${extendedAnalysisExpanded ? 'rotate-180' : ''}`}
+                  aria-hidden="true"
+                />
+                {extendedAnalysisExpanded
+                  ? dict?.fps_calculator?.results_navigation?.collapse ?? 'Collapse'
+                  : dict?.fps_calculator?.results_navigation?.expand ?? 'Expand'}
+              </button>
+            </div>
           </div>
 
           {extendedAnalysisExpanded && (

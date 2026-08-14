@@ -11,8 +11,18 @@ import { getLocalizedPath } from "@/lib/path-translations";
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from "@/lib/structured-data";
 import { BookOpen, Calculator, ChevronDown, CircleHelp } from "lucide-react";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ lang: Locale }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const { lang } = await params;
+  const query = await searchParams;
+  const isPrefilledResult = Array.isArray(query.fps)
+    ? query.fps.includes('1')
+    : query.fps === '1';
   const dict = await getDictionary(lang);
   const title = dict.fps.title;
   const pageUrl = constructMetadataAlternates(lang, '/fps-calculator').canonical;
@@ -28,6 +38,16 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
       "PC FPS benchmark"
     ],
     alternates: constructMetadataAlternates(lang, '/fps-calculator'),
+    ...(isPrefilledResult && {
+      robots: {
+        index: false,
+        follow: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+    }),
     openGraph: {
       title,
       description: dict.fps.subtitle,
