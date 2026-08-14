@@ -35,9 +35,13 @@ export type ToolHardwareOption = {
 export type ToolGameOption = {
   id: string;
   name: string;
+  category?: 'AAA' | 'Esports' | 'Indie' | 'Simulation' | 'Sandbox' | 'Survival';
   cpuDemand: 'Low' | 'Medium' | 'High' | 'Extreme';
   gpuDemand: 'Low' | 'Medium' | 'High' | 'Extreme';
   ramRequirement: number;
+  storageRequirement?: number;
+  releaseYear?: number;
+  optimizations?: string[];
 };
 
 export type ToolDatasets = {
@@ -50,14 +54,15 @@ export type ToolDatasets = {
 
 type FieldKey =
   | 'currentGpu' | 'newGpu' | 'cpu' | 'currentFps' | 'currentCpu' | 'newCpu' | 'gpu'
-  | 'useCase' | 'gameType' | 'resolution' | 'textureQuality' | 'rayTracing' | 'monitorCount'
+  | 'useCase' | 'gameType' | 'resolution' | 'textureQuality' | 'rayTracing' | 'monitorCount' | 'upscaling'
   | 'multitasking' | 'streaming' | 'modding' | 'targetFps' | 'refreshRate' | 'baseResolution'
   | 'targetResolution' | 'scalePercent' | 'ramCapacity' | 'game' | 'currentStorage' | 'newStorage'
   | 'driveCapacity' | 'systemSpace' | 'librarySize' | 'averageGameSize' | 'storageType';
 
 type ResultKey =
   | 'expectedFps' | 'usefulGain' | 'theoreticalGain' | 'vramChange' | 'powerChange' | 'cpuLimit'
-  | 'expectedOutcome' | 'coreChange' | 'gpuLimit' | 'recommendedVram' | 'workingVram' | 'headroom'
+  | 'expectedOutcome' | 'coreChange' | 'gpuLimit' | 'recommendedVram' | 'planningRange' | 'workingVram' | 'headroom'
+  | 'gameProfileBase' | 'resolutionAllowance' | 'textureAllowance' | 'rayTracingAllowance' | 'upscalingAdjustment'
   | 'recommendedRam' | 'workingRam' | 'currentFrameTime' | 'targetFrameTime' | 'frameTimeDifference'
   | 'displayUtilization' | 'fpsSurplus' | 'refreshHeadroom' | 'renderInterval' | 'refreshInterval'
   | 'renderedResolution' | 'renderedPixels' | 'nativeWorkloadChange' | 'targetWorkloadChange'
@@ -102,7 +107,7 @@ const EN_FIELDS: Record<FieldKey, string> = {
   currentGpu: 'Current GPU', newGpu: 'Proposed GPU', cpu: 'Current CPU', currentFps: 'Current FPS or performance baseline',
   currentCpu: 'Current CPU', newCpu: 'Proposed CPU', gpu: 'Current GPU', useCase: 'Primary use case',
   gameType: 'Game workload', resolution: 'Resolution', textureQuality: 'Texture quality', rayTracing: 'Ray tracing',
-  monitorCount: 'Active monitors', multitasking: 'Concurrent multitasking', streaming: 'Stream while gaming',
+  monitorCount: 'Active monitors', upscaling: 'Upscaling mode', multitasking: 'Concurrent multitasking', streaming: 'Stream while gaming',
   modding: 'Modding level', targetFps: 'Target FPS', refreshRate: 'Monitor refresh rate',
   baseResolution: 'Base display resolution', targetResolution: 'Comparison resolution', scalePercent: 'Render scale',
   ramCapacity: 'Installed RAM', game: 'Game', currentStorage: 'Current storage', newStorage: 'Proposed storage',
@@ -114,7 +119,9 @@ const EN_RESULTS: Record<ResultKey, string> = {
   expectedFps: 'Estimated effective FPS', usefulGain: 'Estimated useful gain', theoreticalGain: 'Raw score difference',
   vramChange: 'VRAM change', powerChange: 'Board-power change', cpuLimit: 'CPU headroom check',
   expectedOutcome: 'Estimated performance value', coreChange: 'Core-count change', gpuLimit: 'GPU headroom check',
-  recommendedVram: 'Suggested VRAM tier', workingVram: 'Planning requirement', headroom: 'Capacity headroom',
+  recommendedVram: 'Suggested common VRAM tier', planningRange: 'Estimated working range', workingVram: 'Planning midpoint', headroom: 'Headroom at suggested tier',
+  gameProfileBase: 'Game-profile base', resolutionAllowance: 'Resolution allowance', textureAllowance: 'Texture allowance',
+  rayTracingAllowance: 'Ray-tracing allowance', upscalingAdjustment: 'Upscaling adjustment',
   recommendedRam: 'Suggested RAM tier', workingRam: 'Estimated working RAM', currentFrameTime: 'Current frame time',
   targetFrameTime: 'Target frame time', frameTimeDifference: 'Difference from target',
   displayUtilization: 'Refresh-rate utilization', fpsSurplus: 'FPS above refresh rate', refreshHeadroom: 'Unused refresh headroom',
@@ -133,6 +140,7 @@ const EN_OPTIONS: Record<string, string> = {
   streamingCreator: 'Gaming + streaming', creator: 'Content creation', aaa: 'Modern AAA games', mainstream: 'Mainstream games',
   modded: 'Heavily modded / simulation', medium: 'Medium', high: 'High', ultra: 'Ultra', none: 'Off / none',
   light: 'Light', heavy: 'Heavy', one: '1 monitor', two: '2 monitors', three: '3 monitors',
+  native: 'Native resolution / off', quality: 'Quality mode', balancedMode: 'Balanced mode', performance: 'Performance mode',
   multitaskLight: 'Light: voice chat and a few tabs', multitaskMedium: 'Moderate: many tabs and background apps',
   multitaskHeavy: 'Heavy: multiple active applications', yes: 'Yes', no: 'No',
   modLight: 'A few lightweight mods', modHeavy: 'Large mod pack / high-resolution assets',
@@ -400,6 +408,77 @@ const UI_COPY: Record<Locale, UiCopy> = {
   }),
 };
 
+type VramUiOverrides = {
+  upscaling: string;
+  results: Partial<Record<ResultKey, string>>;
+  options: Record<string, string>;
+};
+
+const VRAM_UI_OVERRIDES: Record<Locale, VramUiOverrides> = {
+  en: {
+    upscaling: 'Upscaling mode',
+    results: {
+      recommendedVram: 'Suggested common VRAM tier', planningRange: 'Estimated working range',
+      workingVram: 'Planning midpoint', headroom: 'Headroom at suggested tier', gameProfileBase: 'Game-profile base',
+      resolutionAllowance: 'Resolution allowance', textureAllowance: 'Texture allowance',
+      rayTracingAllowance: 'Ray-tracing allowance', upscalingAdjustment: 'Upscaling adjustment',
+    },
+    options: { native: 'Native resolution / off', quality: 'Quality mode', balancedMode: 'Balanced mode', performance: 'Performance mode' },
+  },
+  it: {
+    upscaling: 'Modalità di upscaling',
+    results: {
+      recommendedVram: 'Taglio VRAM comune suggerito', planningRange: 'Intervallo di utilizzo stimato',
+      workingVram: 'Valore centrale stimato', headroom: 'Margine del taglio suggerito', gameProfileBase: 'Base del profilo di gioco',
+      resolutionAllowance: 'Margine risoluzione', textureAllowance: 'Margine texture',
+      rayTracingAllowance: 'Margine ray tracing', upscalingAdjustment: 'Correzione upscaling',
+    },
+    options: { native: 'Risoluzione nativa / disattivato', quality: 'Modalità Qualità', balancedMode: 'Modalità Bilanciata', performance: 'Modalità Prestazioni' },
+  },
+  fr: {
+    upscaling: 'Mode de mise à l\'échelle',
+    results: {
+      recommendedVram: 'Palier VRAM courant conseillé', planningRange: 'Plage d\'utilisation estimée',
+      workingVram: 'Point central estimé', headroom: 'Marge du palier conseillé', gameProfileBase: 'Base du profil de jeu',
+      resolutionAllowance: 'Marge de résolution', textureAllowance: 'Marge des textures',
+      rayTracingAllowance: 'Marge du ray tracing', upscalingAdjustment: 'Ajustement de mise à l\'échelle',
+    },
+    options: { native: 'Résolution native / désactivé', quality: 'Mode Qualité', balancedMode: 'Mode Équilibré', performance: 'Mode Performance' },
+  },
+  de: {
+    upscaling: 'Upscaling-Modus',
+    results: {
+      recommendedVram: 'Empfohlene gängige VRAM-Stufe', planningRange: 'Geschätzter Arbeitsbereich',
+      workingVram: 'Geschätzter Mittelwert', headroom: 'Reserve der empfohlenen Stufe', gameProfileBase: 'Basis des Spielprofils',
+      resolutionAllowance: 'Auflösungsaufschlag', textureAllowance: 'Texturaufschlag',
+      rayTracingAllowance: 'Raytracing-Aufschlag', upscalingAdjustment: 'Upscaling-Anpassung',
+    },
+    options: { native: 'Native Auflösung / aus', quality: 'Qualitätsmodus', balancedMode: 'Ausgewogener Modus', performance: 'Leistungsmodus' },
+  },
+  es: {
+    upscaling: 'Modo de reescalado',
+    results: {
+      recommendedVram: 'Nivel de VRAM común sugerido', planningRange: 'Rango de uso estimado',
+      workingVram: 'Punto medio estimado', headroom: 'Margen del nivel sugerido', gameProfileBase: 'Base del perfil del juego',
+      resolutionAllowance: 'Margen de resolución', textureAllowance: 'Margen de texturas',
+      rayTracingAllowance: 'Margen de ray tracing', upscalingAdjustment: 'Ajuste de reescalado',
+    },
+    options: { native: 'Resolución nativa / desactivado', quality: 'Modo Calidad', balancedMode: 'Modo Equilibrado', performance: 'Modo Rendimiento' },
+  },
+};
+
+const getToolCopy = (lang: Locale, slug: ToolSlug): UiCopy => {
+  const base = UI_COPY[lang] ?? UI_COPY.en;
+  if (slug !== 'vram-calculator') return base;
+  const overrides = VRAM_UI_OVERRIDES[lang] ?? VRAM_UI_OVERRIDES.en;
+  return {
+    ...base,
+    fields: { ...base.fields, upscaling: overrides.upscaling },
+    resultLabels: { ...base.resultLabels, ...overrides.results },
+    options: { ...base.options, ...overrides.options },
+  };
+};
+
 const RESOLUTIONS: Option[] = [
   { value: '1920x1080', label: '1920 × 1080 (1080p)' },
   { value: '2560x1440', label: '2560 × 1440 (1440p)' },
@@ -422,6 +501,7 @@ function getFields(slug: ToolSlug, data: ToolDatasets, copy: UiCopy): Field[] {
 
   switch (slug) {
     case 'component-comparison':
+    case 'what-games-can-my-pc-run':
       return [];
     case 'gpu-upgrade-calculator':
       return [
@@ -440,11 +520,11 @@ function getFields(slug: ToolSlug, data: ToolDatasets, copy: UiCopy): Field[] {
       ];
     case 'vram-calculator':
       return [
-        { key: 'gameType', type: 'select', defaultValue: 'aaa', options: [option(copy, 'esports', 'esports'), option(copy, 'mainstream', 'mainstream'), option(copy, 'aaa', 'aaa'), option(copy, 'modded', 'modded')] },
+        { key: 'game', type: 'select', defaultValue: gameOptions.find((item) => item.value === 'black-myth-wukong')?.value ?? gameOptions[0]?.value ?? '', options: gameOptions },
         { key: 'resolution', type: 'select', defaultValue: '2560x1440', options: RESOLUTIONS },
         { key: 'textureQuality', type: 'select', defaultValue: 'high', options: [option(copy, 'medium', 'medium'), option(copy, 'high', 'high'), option(copy, 'ultra', 'ultra')] },
         { key: 'rayTracing', type: 'select', defaultValue: 'light', options: [option(copy, 'none', 'none'), option(copy, 'light', 'light'), option(copy, 'heavy', 'heavy')] },
-        { key: 'monitorCount', type: 'select', defaultValue: '1', options: [option(copy, '1', 'one'), option(copy, '2', 'two'), option(copy, '3', 'three')] },
+        { key: 'upscaling', type: 'select', defaultValue: 'quality', options: [option(copy, 'native', 'native'), option(copy, 'quality', 'quality'), option(copy, 'balanced', 'balancedMode'), option(copy, 'performance', 'performance')] },
       ];
     case 'gaming-ram-calculator':
       return [
@@ -506,9 +586,10 @@ const tier = (value: number, tiers: number[]) => tiers.find((item) => item >= va
 const parseResolution = (value: string) => value.split('x').map(Number) as [number, number];
 const signed = (value: number, digits = 0) => (value > 0 ? '+' : '') + value.toFixed(digits);
 
-function calculate(slug: ToolSlug, values: Record<string, string>, data: ToolDatasets, copy: UiCopy): ResultItem[] {
+function calculate(slug: ToolSlug, values: Record<string, string>, data: ToolDatasets, copy: UiCopy, lang: Locale): ResultItem[] {
   switch (slug) {
     case 'component-comparison':
+    case 'what-games-can-my-pc-run':
       return [];
     case 'gpu-upgrade-calculator': {
       const current = byId(data.gpus, values.currentGpu);
@@ -566,17 +647,32 @@ function calculate(slug: ToolSlug, values: Record<string, string>, data: ToolDat
       ];
     }
     case 'vram-calculator': {
-      const bases: Record<string, number> = { esports: 3, mainstream: 4, aaa: 6, modded: 8 };
-      const resolution: Record<string, number> = { '1920x1080': 0, '2560x1440': 1.5, '3440x1440': 2.5, '3840x2160': 4 };
-      const textures: Record<string, number> = { medium: 0, high: 1.5, ultra: 3 };
-      const rt: Record<string, number> = { none: 0, light: 1.5, heavy: 3 };
-      const working = (bases[values.gameType] ?? 4) + (resolution[values.resolution] ?? 0) +
-        (textures[values.textureQuality] ?? 0) + (rt[values.rayTracing] ?? 0) + Math.max(0, numeric(values, 'monitorCount') - 1) * 0.4;
-      const recommendation = tier(working * 1.1, [4, 6, 8, 10, 12, 16, 20, 24, 32]);
+      const game = gameById(data.games, values.game);
+      const gameBases: Record<ToolGameOption['gpuDemand'], number> = { Low: 3.5, Medium: 4.5, High: 6, Extreme: 7.5 };
+      const resolutionAllowances: Record<string, number> = { '1920x1080': 0, '2560x1440': 1, '3440x1440': 2, '3840x2160': 3.5 };
+      const textureAllowances: Record<string, number> = { medium: 0, high: 1.25, ultra: 2.5 };
+      const rayTracingAllowances: Record<string, number> = { none: 0, light: 1, heavy: 2.25 };
+      const upscalingAdjustments: Record<string, number> = { native: 0, quality: -0.25, balanced: -0.5, performance: -0.75 };
+      const gameBase = gameBases[game?.gpuDemand ?? 'Medium'];
+      const resolutionAllowance = resolutionAllowances[values.resolution] ?? 0;
+      const textureAllowance = textureAllowances[values.textureQuality] ?? 0;
+      const rayTracingAllowance = rayTracingAllowances[values.rayTracing] ?? 0;
+      const upscalingAdjustment = upscalingAdjustments[values.upscaling] ?? 0;
+      const working = Math.max(3, gameBase + resolutionAllowance + textureAllowance + rayTracingAllowance + upscalingAdjustment);
+      const rangeLow = Math.max(3, working * 0.9);
+      const rangeHigh = working * 1.1;
+      const recommendation = tier(rangeHigh, [4, 6, 8, 10, 12, 16, 20, 24, 32]);
+      const rangeFormatter = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
       return [
         { key: 'recommendedVram', value: recommendation, unit: 'GB', digits: 0, primary: true },
+        { key: 'planningRange', value: `${rangeFormatter.format(rangeLow)}–${rangeFormatter.format(rangeHigh)}`, unit: 'GB' },
         { key: 'workingVram', value: working, unit: 'GB', digits: 1 },
         { key: 'headroom', value: recommendation - working, unit: 'GB', digits: 1 },
+        { key: 'gameProfileBase', value: gameBase, unit: 'GB', digits: 1 },
+        { key: 'resolutionAllowance', value: signed(resolutionAllowance, 1), unit: 'GB' },
+        { key: 'textureAllowance', value: signed(textureAllowance, 1), unit: 'GB' },
+        { key: 'rayTracingAllowance', value: signed(rayTracingAllowance, 1), unit: 'GB' },
+        { key: 'upscalingAdjustment', value: signed(upscalingAdjustment, 2), unit: 'GB' },
       ];
     }
     case 'gaming-ram-calculator': {
@@ -732,7 +828,7 @@ export function ToolCalculator({
   data: ToolDatasets;
   initialSelection?: Record<string, string>;
 }) {
-  const copy = UI_COPY[lang] ?? UI_COPY.en;
+  const copy = useMemo(() => getToolCopy(lang, slug), [lang, slug]);
   const fields = useMemo(() => getFields(slug, data, copy), [slug, data, copy]);
   const defaults = useMemo(
     () => buildInitialValues(fields, initialSelection),
@@ -740,7 +836,7 @@ export function ToolCalculator({
   );
   const [values, setValues] = useState<Record<string, string>>(defaults);
   const [submitted, setSubmitted] = useState<Record<string, string>>(defaults);
-  const results = useMemo(() => calculate(slug, submitted, data, copy), [slug, submitted, data, copy]);
+  const results = useMemo(() => calculate(slug, submitted, data, copy, lang), [slug, submitted, data, copy, lang]);
 
   useEffect(() => {
     setValues(defaults);
@@ -858,24 +954,29 @@ export function ToolCalculator({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {results.map((result) => {
-            const rendered = typeof result.value === 'number'
-              ? new Intl.NumberFormat(lang, {
-                minimumFractionDigits: result.digits ?? 0,
-                maximumFractionDigits: result.digits ?? 0,
-              }).format(result.value)
-              : result.value;
-            return (
-              <div key={result.key} className={result.primary ? 'rounded-xl bg-blue-600 p-4 text-white' : 'rounded-lg border bg-background/85 p-3'}>
-                <div className={result.primary ? 'text-sm text-blue-100' : 'text-sm text-muted-foreground'}>
-                  {copy.resultLabels[result.key]}
+          <div className={slug === 'vram-calculator' ? 'grid gap-3 sm:grid-cols-2' : 'space-y-3'}>
+            {results.map((result) => {
+              const rendered = typeof result.value === 'number'
+                ? new Intl.NumberFormat(lang, {
+                  minimumFractionDigits: result.digits ?? 0,
+                  maximumFractionDigits: result.digits ?? 0,
+                }).format(result.value)
+                : result.value;
+              return (
+                <div
+                  key={result.key}
+                  className={`${result.primary ? 'rounded-xl bg-blue-600 p-4 text-white' : 'rounded-lg border bg-background/85 p-3'} ${result.primary && slug === 'vram-calculator' ? 'sm:col-span-2' : ''}`}
+                >
+                  <div className={result.primary ? 'text-sm text-blue-100' : 'text-sm text-muted-foreground'}>
+                    {copy.resultLabels[result.key]}
+                  </div>
+                  <div className={result.primary ? 'mt-1 break-words text-2xl font-bold' : 'mt-1 break-words text-lg font-semibold'}>
+                    {rendered}{result.unit ? ' ' + result.unit : ''}
+                  </div>
                 </div>
-                <div className={result.primary ? 'mt-1 break-words text-2xl font-bold' : 'mt-1 break-words text-lg font-semibold'}>
-                  {rendered}{result.unit ? ' ' + result.unit : ''}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
           {readiness && (
             <div className="mt-4 rounded-xl border border-amber-300/70 bg-amber-50/70 p-4 dark:border-amber-800 dark:bg-amber-950/25">
               <h3 className="flex items-center gap-2 font-semibold text-amber-950 dark:text-amber-100">

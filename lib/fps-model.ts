@@ -79,6 +79,16 @@ type GameProfile = {
   speculative?: boolean;
 };
 
+export type FPSGameProfileMetadata = {
+  source: 'game-profile' | 'demand-fallback';
+  speculative: boolean;
+  tendency: 'cpu-heavy' | 'gpu-heavy' | 'balanced';
+};
+
+export type FPSModelCPU = Pick<CPU, 'benchmarkScore'>;
+export type FPSModelGPU = Pick<GPU, 'benchmarkScore' | 'vram' | 'brand'>;
+export type FPSModelGame = Pick<Game, 'id' | 'category' | 'cpuDemand' | 'gpuDemand' | 'ramRequirement' | 'optimizations'>;
+
 // Reference FPS represents a 90-score CPU + 90-score GPU at 1080p High, native rendering.
 // Values are editorial calibration anchors, not measurements for a particular retail system.
 const GAME_PROFILES: Record<string, GameProfile> = {
@@ -122,6 +132,22 @@ export function hasFPSGameProfile(gameId: string): boolean {
   return Object.prototype.hasOwnProperty.call(GAME_PROFILES, gameId);
 }
 
+export function getFPSGameProfileMetadata(game: FPSModelGame): FPSGameProfileMetadata {
+  const storedProfile = GAME_PROFILES[game.id];
+  const profile = storedProfile ?? defaultProfile(game);
+  const tendency = profile.cpuWeight >= 0.6
+    ? 'cpu-heavy'
+    : profile.gpuWeight >= 0.6
+      ? 'gpu-heavy'
+      : 'balanced';
+
+  return {
+    source: storedProfile ? 'game-profile' : 'demand-fallback',
+    speculative: Boolean(profile.speculative),
+    tendency,
+  };
+}
+
 const RESOLUTION_FACTORS: Record<string, number> = { '1080p': 1, '1440p': 0.76, '4K': 0.44 };
 const QUALITY_FACTORS: Record<FPSQuality, number> = { low: 1.34, medium: 1.16, high: 1, ultra: 0.88, 'ray-tracing': 0.68, 'rt-ultra': 0.56, 'rt-extreme': 0.46 };
 const UPSCALING_FACTORS: Record<FPSUpscaling, number> = { off: 1, 'nvidia-dlss': 1.22, 'amd-fsr': 1.16, 'intel-xess': 1.14, 'dlss-quality': 1.18, 'dlss-balanced': 1.28, 'dlss-performance': 1.42, fsr2: 1.18, 'fsr-quality': 1.15, 'xe-ss': 1.16, 'xess-quality': 1.13 };
@@ -129,27 +155,27 @@ const AA_FACTORS: Record<FPSAntiAliasing, number> = { off: 1.03, fxaa: 1, smaa: 
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-function defaultProfile(game: Game): GameProfile {
+function defaultProfile(game: FPSModelGame): GameProfile {
   const demandBase = { Low: 220, Medium: 150, High: 105, Extreme: 75 }[game.gpuDemand];
   const cpuWeight = game.category === 'Esports' ? 0.65 : game.cpuDemand === 'Extreme' ? 0.62 : game.cpuDemand === 'High' ? 0.52 : 0.42;
   return { referenceFps: demandBase, cpuWeight, gpuWeight: 1 - cpuWeight };
 }
 
-function requiredVram(game: Game, resolution: string, quality: FPSQuality): number {
+function requiredVram(game: FPSModelGame, resolution: string, quality: FPSQuality): number {
   const base = { Low: 4, Medium: 6, High: 8, Extreme: 10 }[game.gpuDemand];
   const resolutionExtra = resolution === '4K' ? 4 : resolution === '1440p' ? 2 : 0;
   const qualityExtra = quality === 'ultra' ? 2 : quality.startsWith('rt-') || quality === 'ray-tracing' ? 3 : quality === 'low' ? -2 : 0;
   return clamp(base + resolutionExtra + qualityExtra, 4, 16);
 }
 
-function supportsUpscaling(gpu: GPU, game: Game, upscaling: FPSUpscaling): boolean {
+function supportsUpscaling(gpu: FPSModelGPU, game: FPSModelGame, upscaling: FPSUpscaling): boolean {
   if (upscaling === 'off') return true;
   if (upscaling.startsWith('dlss') || upscaling === 'nvidia-dlss') return gpu.brand === 'NVIDIA' && game.optimizations.some((item) => item.includes('DLSS'));
   if (upscaling.includes('fsr') || upscaling === 'amd-fsr') return game.optimizations.some((item) => item.includes('FSR'));
   return gpu.brand === 'Intel' || game.optimizations.some((item) => item.includes('XeSS'));
 }
 
-export function estimateFPSWithBreakdown(cpu: CPU, gpu: GPU, game: Game, options: FPSModelOptions = {}): FPSCalculationResult {
+export function estimateFPSWithBreakdown(cpu: FPSModelCPU, gpu: FPSModelGPU, game: FPSModelGame, options: FPSModelOptions = {}): FPSCalculationResult {
   const resolution = options.resolution ?? '1080p';
   const quality = options.quality ?? 'high';
   const upscaling = options.upscaling ?? 'off';
@@ -262,11 +288,11 @@ export function estimateFPSWithBreakdown(cpu: CPU, gpu: GPU, game: Game, options
   };
 }
 
-export function estimateFPSRange(cpu: CPU, gpu: GPU, game: Game, options: FPSModelOptions = {}): FPSEstimate {
+export function estimateFPSRange(cpu: FPSModelCPU, gpu: FPSModelGPU, game: FPSModelGame, options: FPSModelOptions = {}): FPSEstimate {
   return estimateFPSWithBreakdown(cpu, gpu, game, options).estimate;
 }
 
 /** Backward-compatible midpoint used by comparison cards and secondary projections. */
-export function estimateFPS(cpu: CPU, gpu: GPU, game: Game, resolution: string): number {
+export function estimateFPS(cpu: FPSModelCPU, gpu: FPSModelGPU, game: FPSModelGame, resolution: string): number {
   return estimateFPSRange(cpu, gpu, game, { resolution }).average;
 }
