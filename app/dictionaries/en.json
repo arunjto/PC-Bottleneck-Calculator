@@ -191,7 +191,7 @@
         "faqs": [
             {
                 "q": "How does the FPS calculator work?",
-                "a": "The FPS calculator uses a database of component benchmarks and game optimization data to estimate average frames per second you can expect with your selected CPU and GPU combination."
+                "a": "The calculator combines normalized CPU and GPU performance indexes with a game reference profile, then adjusts the result for resolution, quality, upscaling and selected memory options. It produces a planning range, midpoint and estimated 1% low—not a measured benchmark of your PC."
             },
             {
                 "q": "Why is my actual FPS different from the calculator’s estimate?",
@@ -199,11 +199,23 @@
             },
             {
                 "q": "Can I use the FPS calculator for future games?",
-                "a": "While the calculator is based on current benchmark data, it can give a rough idea for upcoming titles. However, new game engines and updates may cause performance to differ."
+                "a": "Yes, but unreleased games use a speculative planning profile with wider uncertainty until reliable PC performance evidence is available. Treat that result as an early estimate, not proof of launch-day performance or a purchase guarantee."
             },
             {
-                "q": "Does resolution and graphics settings affect FPS results?",
+                "q": "Do resolution and graphics settings affect FPS results?",
                 "a": "Yes. Running games at higher resolutions (1440p, 4K) or ultra settings requires more GPU power, which lowers FPS compared to playing at 1080p or medium settings."
+            },
+            {
+                "q": "What do average FPS and 1% low FPS mean?",
+                "a": "Average FPS summarizes overall frame output during a test. The 1% low describes performance during the slower portion of the run and helps indicate smoothness or stutter. On this calculator, both are planning estimates rather than values captured from your PC."
+            },
+            {
+                "q": "Does monitor refresh rate limit FPS?",
+                "a": "A PC can render more FPS than the monitor's refresh rate, but the display cannot show more complete refreshes per second than its rated Hz. Frame caps, V-Sync and variable refresh rate can change pacing, tearing and the FPS you observe."
+            },
+            {
+                "q": "How do DLSS, FSR, XeSS and frame generation affect FPS?",
+                "a": "Upscaling can improve GPU-limited performance by rendering at a lower internal resolution and reconstructing the output, but gains vary by game and mode. Frame generation inserts additional displayed frames, so generated or displayed FPS should not be treated as identical to the underlying rendered FPS or input response."
             }
         ]
     },

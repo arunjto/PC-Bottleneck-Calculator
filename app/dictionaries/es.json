@@ -191,7 +191,7 @@
         "faqs": [
             {
                 "q": "¿Cómo funciona la calculadora de FPS?",
-                "a": "La calculadora de FPS utiliza una base de datos de benchmarks de componentes y datos de optimización de juegos para estimar los cuadros por segundo promedio que puedes esperar con tu combinación seleccionada de CPU y GPU."
+                "a": "La calculadora combina índices normalizados de rendimiento de CPU y GPU con un perfil de referencia del juego y ajusta el resultado según la resolución, la calidad, el reescalado y las opciones de memoria seleccionadas. Produce un intervalo orientativo, un punto medio y un 1% low estimado; no es un benchmark medido en tu PC."
             },
             {
                 "q": "¿Por qué mis FPS reales son diferentes de la estimación de la calculadora?",
@@ -199,11 +199,23 @@
             },
             {
                 "q": "¿Puedo usar la calculadora de FPS para juegos futuros?",
-                "a": "Aunque la calculadora se basa en datos de benchmarks actuales, puede dar una idea aproximada para próximos títulos. Sin embargo, los nuevos motores de juego y actualizaciones pueden causar diferencias en el rendimiento."
+                "a": "Sí, pero los juegos aún no publicados utilizan un perfil de planificación especulativo con mayor incertidumbre hasta que existan datos fiables de rendimiento en PC. Considera el resultado una estimación inicial, no una prueba del rendimiento de lanzamiento ni una garantía de compra."
             },
             {
                 "q": "¿La resolución y la configuración gráfica afectan los resultados de FPS?",
                 "a": "Sí. Ejecutar juegos a resoluciones más altas (1440p, 4K) o configuraciones ultra requiere más potencia de GPU, lo que reduce los FPS en comparación con jugar a 1080p o configuraciones medias."
+            },
+            {
+                "q": "¿Qué significan los FPS promedio y el 1% low?",
+                "a": "Los FPS promedio resumen la producción total de fotogramas durante una prueba. El 1% low describe el rendimiento en la parte más lenta del recorrido y ayuda a valorar la fluidez o los tirones. En esta calculadora, ambos son estimaciones orientativas y no mediciones capturadas en tu PC."
+            },
+            {
+                "q": "¿La frecuencia de actualización del monitor limita los FPS?",
+                "a": "Un PC puede renderizar más FPS que los hercios del monitor, pero la pantalla no puede mostrar más actualizaciones completas por segundo que su frecuencia nominal. Los límites de FPS, V-Sync y la frecuencia de actualización variable pueden cambiar la cadencia, el tearing y los FPS observados."
+            },
+            {
+                "q": "¿Cómo afectan DLSS, FSR, XeSS y la generación de fotogramas a los FPS?",
+                "a": "El reescalado puede mejorar el rendimiento limitado por la GPU al renderizar a una resolución interna inferior y reconstruir la salida, pero la mejora depende del juego y del modo. La generación de fotogramas inserta imágenes adicionales, por lo que los FPS mostrados no equivalen a los FPS renderizados subyacentes ni a la respuesta de entrada."
             }
         ]
     },

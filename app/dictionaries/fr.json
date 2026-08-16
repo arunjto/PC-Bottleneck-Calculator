@@ -191,7 +191,7 @@
         "faqs": [
             {
                 "q": "Comment fonctionne le calculateur FPS ?",
-                "a": "Le calculateur FPS utilise une base de données de benchmarks de composants et de données d'optimisation de jeux pour estimer les images par seconde moyennes que vous pouvez attendre avec votre combinaison CPU et GPU sélectionnée."
+                "a": "Le calculateur combine des indices de performance CPU et GPU normalisés avec un profil de référence du jeu, puis ajuste le résultat selon la résolution, la qualité, l'upscaling et les options de mémoire sélectionnées. Il produit une plage indicative, un point médian et un 1% low estimé, pas un benchmark mesuré sur votre PC."
             },
             {
                 "q": "Pourquoi mes FPS réels sont-ils différents de l'estimation ?",
@@ -199,11 +199,23 @@
             },
             {
                 "q": "Puis-je utiliser le calculateur FPS pour les futurs jeux ?",
-                "a": "Bien que le calculateur soit basé sur des données de benchmark actuelles, il peut donner une idée approximative pour les titres à venir. Cependant, les nouveaux moteurs de jeux et les mises à jour peuvent faire différer les performances."
+                "a": "Oui, mais les jeux non encore sortis utilisent un profil de planification spéculatif avec une incertitude plus large jusqu'à la disponibilité de données PC fiables. Considérez le résultat comme une première estimation, et non comme une preuve des performances au lancement ou une garantie d'achat."
             },
             {
                 "q": "La résolution et les paramètres graphiques affectent-ils les résultats FPS ?",
                 "a": "Oui. Exécuter des jeux à des résolutions plus élevées (1440p, 4K) ou des paramètres ultra nécessite plus de puissance GPU, ce qui réduit les FPS par rapport au jeu en 1080p ou avec des paramètres moyens."
+            },
+            {
+                "q": "Que signifient les FPS moyens et le 1% low ?",
+                "a": "Les FPS moyens résument le débit global d'images pendant un test. Le 1% low décrit les performances dans la partie la plus lente du parcours et aide à évaluer la fluidité ou les saccades. Dans ce calculateur, ces deux valeurs sont des estimations indicatives et non des mesures capturées sur votre PC."
+            },
+            {
+                "q": "La fréquence de rafraîchissement du moniteur limite-t-elle les FPS ?",
+                "a": "Un PC peut calculer plus de FPS que la fréquence du moniteur, mais l'écran ne peut pas afficher plus de rafraîchissements complets par seconde que sa valeur nominale en Hz. Les limites de FPS, la V-Sync et le rafraîchissement variable influencent la cadence, le tearing et les FPS observés."
+            },
+            {
+                "q": "Comment DLSS, FSR, XeSS et la génération d'images affectent-ils les FPS ?",
+                "a": "L'upscaling peut améliorer les performances limitées par le GPU en effectuant le rendu à une résolution interne inférieure puis en reconstruisant l'image, mais le gain dépend du jeu et du mode. La génération d'images ajoute des images affichées ; les FPS affichés ne sont donc pas identiques aux FPS réellement rendus ni à la réactivité des commandes."
             }
         ]
     },

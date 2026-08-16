@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import FpsCalculatorClient from "./FpsCalculatorClient";
 import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
@@ -107,6 +108,17 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
             </summary>
             <div className="border-t border-slate-200/80 p-4 dark:border-slate-800 sm:p-6">
               <CalculatorMethodology lang={lang} variant="fps" />
+              {lang === 'en' && (
+                <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                  Want to validate the estimate on your own PC?{' '}
+                  <Link
+                    href="/en/blog/how-to-check-fps-on-pc"
+                    className="font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                  >
+                    Follow the step-by-step guide to checking FPS in Windows games.
+                  </Link>
+                </p>
+              )}
             </div>
           </details>
         </div>
