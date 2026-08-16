@@ -191,7 +191,7 @@
         "faqs": [
             {
                 "q": "Wie funktioniert der FPS-Rechner?",
-                "a": "Der FPS-Rechner verwendet eine Datenbank mit Komponenten-Benchmarks und Spieloptimierungsdaten, um die durchschnittlichen Bilder pro Sekunde zu schätzen, die Sie mit Ihrer gewählten CPU- und GPU-Kombination erwarten können."
+                "a": "Der Rechner kombiniert normalisierte CPU- und GPU-Leistungsindizes mit einem Referenzprofil des Spiels und passt das Ergebnis an Auflösung, Qualitätsstufe, Upscaling und ausgewählte Speicheroptionen an. Er liefert einen Planungsbereich, einen Mittelwert und geschätzte 1%-Low-FPS – keinen gemessenen Benchmark Ihres PCs."
             },
             {
                 "q": "Warum unterscheidet sich meine tatsächliche FPS von der Schätzung des Rechners?",
@@ -199,11 +199,23 @@
             },
             {
                 "q": "Kann ich den FPS-Rechner für zukünftige Spiele nutzen?",
-                "a": "Während der Rechner auf aktuellen Benchmark-Daten basiert, kann er eine grobe Vorstellung für kommende Titel geben. Neue Spiel-Engines und Updates können jedoch dazu führen, dass die Leistung abweicht."
+                "a": "Ja, aber unveröffentlichte Spiele verwenden ein spekulatives Planungsprofil mit größerer Unsicherheit, bis verlässliche PC-Leistungsdaten verfügbar sind. Behandeln Sie das Ergebnis als frühe Schätzung, nicht als Nachweis der Leistung zum Veröffentlichungszeitpunkt oder als Kaufgarantie."
             },
             {
                 "q": "Beeinflussen Auflösung und Grafikeinstellungen die FPS-Ergebnisse?",
                 "a": "Ja. Das Spielen in höheren Auflösungen (1440p, 4K) oder Ultra-Einstellungen erfordert mehr GPU-Leistung, was die FPS im Vergleich zum Spielen in 1080p oder mittleren Einstellungen senkt."
+            },
+            {
+                "q": "Was bedeuten durchschnittliche FPS und 1%-Low-FPS?",
+                "a": "Die durchschnittlichen FPS fassen die gesamte Bildausgabe während eines Tests zusammen. Die 1%-Low-FPS beschreiben die Leistung im langsameren Teil des Durchlaufs und helfen, Gleichmäßigkeit oder Ruckler einzuschätzen. Im Rechner sind beide Werte Planungsschätzungen und keine Messwerte Ihres PCs."
+            },
+            {
+                "q": "Begrenzt die Bildwiederholrate des Monitors die FPS?",
+                "a": "Ein PC kann mehr FPS berechnen als die Bildwiederholrate des Monitors, der Bildschirm kann jedoch nicht mehr vollständige Aktualisierungen pro Sekunde als seine Nennfrequenz in Hz anzeigen. FPS-Limits, V-Sync und variable Bildwiederholrate beeinflussen Frame Pacing, Tearing und die beobachteten FPS."
+            },
+            {
+                "q": "Wie beeinflussen DLSS, FSR, XeSS und Frame Generation die FPS?",
+                "a": "Upscaling kann GPU-limitierte Leistung verbessern, indem intern mit geringerer Auflösung gerendert und das Bild rekonstruiert wird; der Gewinn hängt von Spiel und Modus ab. Frame Generation fügt zusätzliche angezeigte Frames ein, daher sind angezeigte FPS nicht mit den zugrunde liegenden gerenderten FPS oder der Eingabereaktion gleichzusetzen."
             }
         ]
     },
