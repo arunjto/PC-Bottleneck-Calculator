@@ -1,10 +1,12 @@
 // app/layout.tsx
 import '@/app/globals.css';
 import type { Metadata, Viewport } from 'next';
+import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
+import { i18n, isSupportedLocale } from '@/i18n-config';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -68,9 +70,6 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-// app/[lang]/layout.tsx
-import { i18n } from '@/i18n-config';
-
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
@@ -83,6 +82,11 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+
+  if (!isSupportedLocale(lang)) {
+    notFound();
+  }
+
   const adsConfigured =
     process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true' &&
     process.env.NEXT_PUBLIC_GOOGLE_CERTIFIED_CMP_CONFIGURED === 'true';

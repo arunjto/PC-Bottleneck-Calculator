@@ -133,8 +133,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    // Strictly exclude static files and Next.js internals to prevent CSS 404s
+    // Exclude Next.js internals and every file-like request from middleware.
+    // Missing assets should resolve as assets/404s, never as locale routes.
     matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico).*)',
+        '/((?!api|_next/static|_next/image|.*\\..*).*)',
     ],
 };

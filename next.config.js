@@ -17,6 +17,15 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  async redirects() {
+    return [
+      {
+        source: '/apple-touch-icon-precomposed.png',
+        destination: '/apple-touch-icon.png',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
