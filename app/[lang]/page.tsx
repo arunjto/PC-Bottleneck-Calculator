@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import EnhancedBottleneckCalculator from '@/components/calculators/enhanced-bottleneck-calculator';
 import { UpdateBanner } from '@/components/ui/update-banner';
 import { ContentGuide } from '@/components/content/content-guide';
@@ -7,7 +8,7 @@ import { BottleneckVerification } from '@/components/content/bottleneck-verifica
 import { FeaturedCalculators } from '@/components/content/featured-calculators';
 
 import { getDictionary } from '@/get-dictionary';
-import { Locale } from '@/i18n-config';
+import { isSupportedLocale, Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { JsonLd } from '@/components/seo/json-ld';
@@ -44,8 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
   };
 }
 
-export default async function HomePage({ params }: { params: Promise<{ lang: Locale }> }) {
+export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+
+  if (!isSupportedLocale(lang)) {
+    notFound();
+  }
+
   const dict = await getDictionary(lang);
   const pageUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang, '')}`;
   const schemaData = createSchemaGraph([
