@@ -42,6 +42,23 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       description:
         'Free tools to analyze CPU/GPU bottlenecks, estimate gaming FPS, and calculate PSU requirements.'
     },
+    icons: {
+      icon: [
+        {
+          url: '/favicon-96x96.png',
+          type: 'image/png',
+          sizes: '96x96',
+        },
+      ],
+      shortcut: '/favicon.ico',
+      apple: [
+        {
+          url: '/apple-touch-icon.png',
+          type: 'image/png',
+          sizes: '180x180',
+        },
+      ],
+    },
     manifest: '/manifest.json',
   };
 }
