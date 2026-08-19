@@ -53,14 +53,27 @@ export async function generateMetadata({
       title,
       description: dict.fps.subtitle,
       url: pageUrl,
-      images: ['https://www.pcbuildcheck.com/og-image-fps.png'],
+      images: [
+        {
+          url: 'https://www.pcbuildcheck.com/og-image-fps.png',
+          width: 1200,
+          height: 630,
+          type: 'image/png',
+          alt: 'Gaming monitor showing an illustrative 240 FPS and frame-time analysis',
+        },
+      ],
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: dict.fps.subtitle,
-      images: ['https://www.pcbuildcheck.com/og-image-fps.png'],
+      images: [
+        {
+          url: 'https://www.pcbuildcheck.com/og-image-fps.png',
+          alt: 'Gaming monitor showing an illustrative 240 FPS and frame-time analysis',
+        },
+      ],
     },
   };
 }
