@@ -79,10 +79,18 @@
         },
         "buttons": {
             "analyze": "Analyser Mon Système",
-            "incomplete": "Veuillez sélectionner tous les composants"
+            "incomplete": "Veuillez sélectionner tous les composants",
+            "preparing": "Préparation des résultats…"
         },
         "status": {
             "ready": "Prêt pour l'Analyse"
+        },
+        "coverage": {
+            "cpus": "{count} processeurs pris en charge",
+            "gpus": "{count} cartes graphiques prises en charge",
+            "pairings": "{count} associations CPU–GPU",
+            "no_signup": "Aucune inscription requise",
+            "note": "Estimations de planification basées sur des scores normalisés, et non sur des benchmarks mesurés."
         }
     },
     "about": {
@@ -222,6 +230,24 @@
     "results": {
         "title": "Résultats d'Analyse Système",
         "subtitle": "Répartition complète des performances",
+        "summary": {
+            "eyebrow": "Résumé du résultat",
+            "balanced_title": "Association CPU–GPU équilibrée",
+            "cpu_title": "Le processeur est probablement la contrainte de planification",
+            "gpu_title": "La carte graphique est probablement la contrainte de planification",
+            "gap": "Écart des scores de planification",
+            "resolution": "Résolution sélectionnée",
+            "resolution_adjusted": "Indices de planification ajustés à la résolution",
+            "resolution_applied": "La résolution sélectionnée applique un ajustement modéré de la charge gaming aux deux scores normalisés. L’indice le plus faible indique le côté à vérifier en premier.",
+            "next_step": "Prochaine étape recommandée",
+            "balanced_meaning": "Les scores normalisés de planification du processeur et de la carte graphique sont proches.",
+            "cpu_meaning": "À la résolution sélectionnée, le processeur a l’indice de planification ajusté le plus faible et peut atteindre sa limite en premier dans les jeux dépendants du CPU.",
+            "gpu_meaning": "À la résolution sélectionnée, la carte graphique a l’indice de planification ajusté le plus faible et peut atteindre sa limite en premier dans les jeux très graphiques.",
+            "balanced_action": "Vérifiez cette association dans vos jeux et réglages réels avant de changer de matériel.",
+            "cpu_action": "Vérifiez la charge par cœur, les limites d'images, les températures et les 1% low dans une scène répétable.",
+            "gpu_action": "Vérifiez l'utilisation du GPU, la VRAM, les températures et les réglages graphiques dans une scène répétable.",
+            "disclaimer": "Le pourcentage représente l'écart entre les scores, pas une perte de FPS mesurée."
+        },
         "back_button": "Retour au Calculateur",
         "sections": {
             "resolution_impact": "Impact de la Résolution & Benchmarks",
@@ -257,7 +283,16 @@
             "power_reqs": "Estimation de Planification PSU",
             "rec_psu": "Puissance de planification",
             "psu_estimate_note": "Estimation de planification avec 20% de marge. Avant l'achat, vérifiez les exigences de puissance et de connecteurs du fabricant du GPU et du partenaire de la carte.",
-            "final_rec": "Résumé de Recommandation"
+            "final_rec": "Résumé de Recommandation",
+            "likely_constraint": "contrainte probable",
+            "system_verdict": "Verdict du système",
+            "similar_indexes": "Indices de planification proches",
+            "review_benchmarks": "Vérifier les benchmarks de charge",
+            "final_balanced_desc": "Les indices de planification CPU et GPU sont proches. Les résultats réels varient selon le jeu, les réglages, les pilotes, le refroidissement et le reste du système.",
+            "final_constraint_desc": "En {resolution}, le composant {type} a l’indice de planification ajusté le plus faible. Cela ne mesure pas une perte de FPS et ne prouve pas qu’une mise à niveau est nécessaire ; vérifiez les benchmarks de vos jeux et réglages.",
+            "gaming": "Jeu",
+            "resolution_label": "Résolution",
+            "value": "Valeur"
         },
         "ratings": {
             "excellent": "Excellent",
@@ -266,7 +301,7 @@
             "fair": "Moyen",
             "poor": "Mauvais",
             "well_balanced": "Système Bien Équilibré",
-            "bottleneck_warning": "écart relatif des scores",
+            "bottleneck_warning": "écart de planification ajusté à la résolution",
             "maxed_out": "Au Max",
             "optimal": "Optimal"
         },
@@ -330,9 +365,9 @@
             },
             "upgrade_priority": {
                 "cpu_title": "Examiner les charges limitées par le CPU",
-                "cpu_desc": "Le score normalisé du CPU est inférieur de {val}% au score du composant le plus élevé. Vérifiez des benchmarks propres à vos jeux avant toute mise à niveau.",
+                "cpu_desc": "L’indice CPU ajusté à la résolution est inférieur de {val}% à l’indice le plus élevé. Vérifiez des benchmarks propres à vos jeux avant toute mise à niveau.",
                 "gpu_title": "Examiner les charges limitées par le GPU",
-                "gpu_desc": "Le score normalisé du GPU est inférieur de {val}% au score du composant le plus élevé. Vérifiez des benchmarks propres à vos jeux avant toute mise à niveau.",
+                "gpu_desc": "L’indice GPU ajusté à la résolution est inférieur de {val}% à l’indice le plus élevé. Vérifiez des benchmarks propres à vos jeux avant toute mise à niveau.",
                 "balanced_title": "Bien Équilibré",
                 "balanced_desc": "Les scores normalisés sont proches; vérifiez vos jeux avant de changer de matériel",
                 "ram_title": "Considérez : Plus de RAM",
@@ -341,9 +376,9 @@
         },
         "bottleneck_analysis": {
             "balanced_title": "Vos composants système sont bien assortis",
-            "bottleneck_title": "Le composant {type} a le score normalisé le plus faible",
+            "bottleneck_title": "Le composant {type} a l’indice de planification ajusté à la résolution le plus faible",
             "balanced_desc": "Les scores normalisés sont proches. Cela ne garantit pas des performances égales dans chaque jeu ou charge.",
-            "bottleneck_desc": "Le chiffre de {val}% est l'écart relatif entre des scores CPU et GPU normalisés en interne, pas une perte de FPS mesurée. Le composant {type} au score inférieur peut limiter certaines charges {scenario}.",
+            "bottleneck_desc": "Le chiffre de {val}% est l’écart relatif entre les indices CPU et GPU ajustés à la résolution, pas une perte de FPS mesurée. Le composant {type} à l’indice inférieur peut limiter certaines charges {scenario}.",
             "cpu_scenario": "intensifs en CPU",
             "gpu_scenario": "intensifs en graphismes"
         },

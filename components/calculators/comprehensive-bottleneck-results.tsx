@@ -22,12 +22,11 @@ import {
   HardDrive,
   Cpu,
   BarChart3,
-  Settings,
   Star,
   TrendingUp
 } from 'lucide-react';
-import { CPU, GPU, calculateRelativeScoreGap, getBottleneckType, calculatePSURequirement, allGames } from '@/lib/hardware-database';
-import { estimateFPS } from '@/lib/fps-model';
+import { CPU, GPU, calculatePSURequirement } from '@/lib/hardware-database';
+import { calculateResolutionAdjustedBalance, type GamingResolution } from '@/lib/bottleneck-model';
 
 interface ComprehensiveBottleneckResultsProps {
   cpu: CPU & { officialUrl?: string };
@@ -90,26 +89,24 @@ export function ComprehensiveBottleneckResults({
     cpu_price: '', gpu_price: '', combined: '', view_specs_fallback: 'View Specs',
     price_disclaimer: 'Prices are approximate USD reference values and may vary by retailer, region, condition, and availability.'
   };
+  const summary = results.summary || {};
 
 
-  const relativeScoreGap = calculateRelativeScoreGap(cpu, gpu);
-  const bottleneckType = getBottleneckType(cpu, gpu);
+  const selectedBalance = calculateResolutionAdjustedBalance(cpu, gpu, resolution);
+  const relativeScoreGap = selectedBalance.gapPercentage;
+  const bottleneckType = selectedBalance.constraint;
   const psuRequirement = calculatePSURequirement(cpu, gpu);
 
   // Resolution impact calculations
-  const resolutions = ['1080p', '1440p', '4K'];
+  const resolutions: GamingResolution[] = ['1080p', '1440p', '4K'];
   const resolutionImpact = resolutions.map(res => {
-    const multiplier = { '1080p': 1.0, '1440p': 0.7, '4K': 0.4 }[res] || 1.0;
-    const cpuScore = cpu.benchmarkScore * (res === '1080p' ? 0.9 : 1.0); // CPU matters less at higher res
-    const gpuScore = gpu.benchmarkScore * multiplier;
-    const limitingFactor = cpuScore < gpuScore ? 'CPU' : 'GPU';
+    const balance = calculateResolutionAdjustedBalance(cpu, gpu, res);
 
     return {
       resolution: res,
-      cpuScore: Math.round(cpuScore),
-      gpuScore: Math.round(gpuScore),
-      limitingFactor,
-      estimatedFPS: Math.round(Math.min(cpuScore, gpuScore) * 1.2)
+      cpuScore: balance.cpuIndex,
+      gpuScore: balance.gpuIndex,
+      limitingFactor: balance.constraint,
     };
   });
 
@@ -190,18 +187,6 @@ export function ComprehensiveBottleneckResults({
 
   const gameRecommendations = getGameTypeRecommendations();
 
-  // Expected gaming experience
-  const esportsGames = allGames.filter(game => game.category === 'Esports').slice(0, 4);
-  const aaaGames = allGames.filter(game => game.category === 'AAA').slice(0, 4);
-
-  const getSettingsRecommendation = (fps: number) => {
-    if (fps >= 120) return { settings: 'Ultra', color: 'text-green-600' };
-    if (fps >= 90) return { settings: 'High', color: 'text-blue-600' };
-    if (fps >= 60) return { settings: 'Medium', color: 'text-yellow-600' };
-    if (fps >= 30) return { settings: 'Low', color: 'text-orange-600' };
-    return { settings: 'Very Low', color: 'text-red-600' };
-  };
-
   // Calculate total system price
   const totalSystemPrice = cpu.currentPrice + gpu.currentPrice + ram.price;
 
@@ -228,6 +213,90 @@ export function ComprehensiveBottleneckResults({
         </CardHeader>
       </Card>
 
+      <Card className="border-2 border-blue-200 dark:border-blue-900">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {bottleneckType === 'Balanced' ? (
+              <CheckCircle className="h-6 w-6 text-emerald-600" />
+            ) : (
+              <AlertTriangle className="h-6 w-6 text-amber-600" />
+            )}
+            <span>{summary.eyebrow || 'Result summary'}</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xl font-bold text-gray-950 dark:text-white">
+                {bottleneckType === 'Balanced'
+                  ? (summary.balanced_title || 'Close CPU–GPU match')
+                  : bottleneckType === 'CPU'
+                    ? (summary.cpu_title || 'CPU is the likely planning constraint')
+                    : (summary.gpu_title || 'GPU is the likely planning constraint')}
+              </p>
+              <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                {bottleneckType === 'Balanced'
+                  ? (summary.balanced_meaning || 'The normalized CPU and GPU planning scores are close for this comparison.')
+                  : bottleneckType === 'CPU'
+                    ? (summary.cpu_meaning || 'The CPU has the lower normalized planning score and may reach its limit first in CPU-heavy workloads.')
+                    : (summary.gpu_meaning || 'The GPU has the lower normalized planning score and may reach its limit first in graphics-heavy workloads.')}
+              </p>
+            </div>
+            <Badge className="w-fit px-4 py-2 text-sm" variant={bottleneckType === 'Balanced' ? 'secondary' : 'outline'}>
+              {summary.gap || 'Planning score gap'}: {relativeScoreGap}%
+            </Badge>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-900">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                {summary.resolution || 'Selected resolution'}
+              </p>
+              <p className="mt-1 font-semibold">{resolution}</p>
+            </div>
+            <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-900">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                {summary.next_step || 'Recommended next step'}
+              </p>
+              <p className="mt-1 text-sm text-gray-700 dark:text-gray-200">
+                {bottleneckType === 'Balanced'
+                  ? (summary.balanced_action || 'Verify the pairing in the games and settings you actually use before changing hardware.')
+                  : bottleneckType === 'CPU'
+                    ? (summary.cpu_action || 'Check per-core CPU load, frame caps, temperatures and 1% lows in a repeatable game scene.')
+                    : (summary.gpu_action || 'Check GPU utilization, VRAM, temperatures and graphics settings in a repeatable game scene.')}
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-700 dark:bg-slate-900/70">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                {summary.resolution_adjusted || 'Resolution-adjusted planning indexes'}
+              </p>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                {resolution}
+              </span>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-[42px_1fr_34px] items-center gap-2 text-xs">
+                <span className="font-semibold text-blue-700 dark:text-blue-300">CPU</span>
+                <Progress value={selectedBalance.cpuIndex} className="h-2.5" />
+                <span className="text-right font-bold tabular-nums">{selectedBalance.cpuIndex}</span>
+              </div>
+              <div className="grid grid-cols-[42px_1fr_34px] items-center gap-2 text-xs">
+                <span className="font-semibold text-violet-700 dark:text-violet-300">GPU</span>
+                <Progress value={selectedBalance.gpuIndex} className="h-2.5" />
+                <span className="text-right font-bold tabular-nums">{selectedBalance.gpuIndex}</span>
+              </div>
+            </div>
+            <p className="mt-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
+              {summary.resolution_applied || 'The selected resolution applies a moderate gaming-workload adjustment to both normalized component scores. Lower index means the side to verify first.'}
+            </p>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {summary.disclaimer || 'The percentage is score separation, not measured lost FPS.'}
+          </p>
+        </CardContent>
+      </Card>
+
       {/* 🔹 1. Resolution Impact & Benchmarks */}
       <Card>
         <CardHeader>
@@ -248,9 +317,6 @@ export function ComprehensiveBottleneckResults({
               >
                 <div className="text-center mb-3">
                   <h3 className="font-semibold text-lg">{impact.resolution}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {labels.estimated_total}: {impact.estimatedFPS} FPS
-                  </p>
                 </div>
 
                 <div className="space-y-3">
@@ -268,7 +334,9 @@ export function ComprehensiveBottleneckResults({
 
                   <div className="flex items-center justify-center mt-3">
                     <Badge variant={impact.limitingFactor === 'CPU' ? 'destructive' : 'secondary'}>
-                      {impact.limitingFactor} Limited
+                      {impact.limitingFactor === 'Balanced'
+                        ? (ratings.well_balanced || 'Close match')
+                        : `${impact.limitingFactor} ${labels.likely_constraint || 'likely constraint'}`}
                     </Badge>
                   </div>
                 </div>
@@ -506,7 +574,7 @@ export function ComprehensiveBottleneckResults({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium">CPU Utilization</span>
+                  <span className="font-medium">{labels.cpu_util || 'CPU Utilization'}</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">
                     {bottleneckType === 'CPU' ? ratings.maxed_out : ratings.optimal}
                   </span>
@@ -519,7 +587,7 @@ export function ComprehensiveBottleneckResults({
 
               <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium">GPU Utilization</span>
+                  <span className="font-medium">{labels.gpu_util || 'GPU Utilization'}</span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">
                     {bottleneckType === 'GPU' ? ratings.maxed_out : ratings.optimal}
                   </span>
@@ -542,94 +610,6 @@ export function ComprehensiveBottleneckResults({
                     .replace('{scenario}', bottleneckType === 'CPU' ? bot.cpu_scenario : bot.gpu_scenario)
                 }
               </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* 🔹 6. Expected Gaming Experience */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Gamepad2 className="w-6 h-6 text-indigo-600" />
-            <span>🔹 {sections.expected_experience} ({resolution})</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            <div>
-              <h3 className="font-semibold mb-4 flex items-center space-x-2">
-                <Target className="w-5 h-5 text-blue-600" />
-                <span>{labels.esports}</span>
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {esportsGames.map((game) => {
-                  const fps = estimateFPS(cpu, gpu, game, resolution);
-                  const settings = getSettingsRecommendation(fps);
-                  return (
-                    <div key={game.id} className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="font-medium">{game.name}</span>
-                        <span className="font-bold text-blue-600">{fps} FPS</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Recommended</span>
-                        <span className={`font-medium ${settings.color}`}>{settings.settings}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-4 flex items-center space-x-2">
-                <Star className="w-5 h-5 text-purple-600" />
-                <span>{labels.aaa}</span>
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {aaaGames.map((game) => {
-                  const fps = estimateFPS(cpu, gpu, game, resolution);
-                  const settings = getSettingsRecommendation(fps);
-                  return (
-                    <div key={game.id} className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="font-medium">{game.name}</span>
-                        <span className="font-bold text-purple-600">{fps} FPS</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Recommended</span>
-                        <span className={`font-medium ${settings.color}`}>{settings.settings}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
-              <h4 className="font-semibold mb-3 flex items-center space-x-2">
-                <Settings className="w-5 h-5 text-indigo-600" />
-                <span>{labels.optimization_tips}</span>
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h5 className="font-medium mb-2">{labels.graphics_settings}</h5>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-400">
-                    <li>• Enable DLSS/FSR for better performance</li>
-                    <li>• Reduce shadow quality for FPS boost</li>
-                    <li>• Use medium textures if VRAM limited</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-medium mb-2">{labels.system_opt}</h5>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-400">
-                    <li>• Close background applications</li>
-                    <li>• Enable Game Mode in Windows</li>
-                    <li>• Review CPU-heavy settings and background tasks</li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
         </CardContent>
@@ -839,25 +819,29 @@ export function ComprehensiveBottleneckResults({
         <CardContent>
           <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
             <h3 className="font-bold text-lg mb-2 text-green-900 dark:text-green-100">
-              System Verdict: {bottleneckType === 'Balanced' ? 'Similar normalized scores' : 'Review workload benchmarks'}
+              {labels.system_verdict || 'System verdict'}: {bottleneckType === 'Balanced'
+                ? (labels.similar_indexes || 'Similar planning indexes')
+                : (labels.review_benchmarks || 'Review workload benchmarks')}
             </h3>
             <p className="text-green-800 dark:text-green-200 mb-4">
               {bottleneckType === 'Balanced'
-                ? 'The CPU and GPU normalized comparison scores are close. Real results still vary by game, settings, drivers, cooling, and the rest of the system.'
-                : `The ${bottleneckType} has the lower normalized comparison score. This does not measure lost FPS or prove that an upgrade is needed; verify with benchmarks for your games and settings.`
+                ? (labels.final_balanced_desc || 'The CPU and GPU planning indexes are close. Real results still vary by game, settings, drivers, cooling and the rest of the system.')
+                : (labels.final_constraint_desc || 'At {resolution}, the {type} has the lower resolution-adjusted planning index. This does not measure lost FPS or prove that an upgrade is needed; verify with benchmarks for your games and settings.')
+                    .replace('{resolution}', resolution)
+                    .replace('{type}', bottleneckType)
               }
             </p>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div className="p-2 bg-white dark:bg-green-900/40 rounded shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">Gaming</div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">{labels.gaming || 'Gaming'}</div>
                 <div className="font-bold text-green-900 dark:text-green-100">{gameRecommendations.primary}</div>
               </div>
               <div className="p-2 bg-white dark:bg-green-900/40 rounded shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">Resolution</div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">{labels.resolution_label || 'Resolution'}</div>
                 <div className="font-bold text-green-900 dark:text-green-100">{resolution} Ready</div>
               </div>
               <div className="p-2 bg-white dark:bg-green-900/40 rounded shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">Value</div>
+                <div className="text-xs font-semibold uppercase tracking-wider text-green-700 dark:text-green-300">{labels.value || 'Value'}</div>
                 <div className="font-bold text-green-900 dark:text-green-100">${totalSystemPrice} Total</div>
               </div>
             </div>

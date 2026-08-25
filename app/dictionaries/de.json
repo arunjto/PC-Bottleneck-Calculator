@@ -79,10 +79,18 @@
         },
         "buttons": {
             "analyze": "Mein System analysieren",
-            "incomplete": "Bitte alle Komponenten auswählen"
+            "incomplete": "Bitte alle Komponenten auswählen",
+            "preparing": "Ergebnisse werden vorbereitet…"
         },
         "status": {
             "ready": "Bereit zur Analyse"
+        },
+        "coverage": {
+            "cpus": "{count} unterstützte CPUs",
+            "gpus": "{count} unterstützte GPUs",
+            "pairings": "{count} CPU-GPU-Kombinationen",
+            "no_signup": "Keine Anmeldung erforderlich",
+            "note": "Planungsschätzungen auf Basis normalisierter Werte, keine gemessenen Benchmarks."
         }
     },
     "about": {
@@ -222,6 +230,24 @@
     "results": {
         "title": "Systemanalyse Ergebnisse",
         "subtitle": "Umfassende Leistungsaufschlüsselung",
+        "summary": {
+            "eyebrow": "Ergebnisübersicht",
+            "balanced_title": "Ausgewogene CPU-GPU-Kombination",
+            "cpu_title": "Die CPU ist der wahrscheinliche Planungsengpass",
+            "gpu_title": "Die GPU ist der wahrscheinliche Planungsengpass",
+            "gap": "Abstand der Planungswerte",
+            "resolution": "Gewählte Auflösung",
+            "resolution_adjusted": "Auflösungsangepasste Planungsindizes",
+            "resolution_applied": "Die gewählte Auflösung wendet eine moderate Anpassung für die Gaming-Last auf beide normalisierten Komponentenwerte an. Der niedrigere Index zeigt, welche Seite zuerst geprüft werden sollte.",
+            "next_step": "Empfohlener nächster Schritt",
+            "balanced_meaning": "Die normalisierten Planungswerte von CPU und GPU liegen in diesem Vergleich nah beieinander.",
+            "cpu_meaning": "Bei der gewählten Auflösung hat die CPU den niedrigeren angepassten Planungsindex und kann in CPU-lastigen Spielszenarien zuerst an ihre Grenze kommen.",
+            "gpu_meaning": "Bei der gewählten Auflösung hat die GPU den niedrigeren angepassten Planungsindex und kann in grafiklastigen Spielszenarien zuerst an ihre Grenze kommen.",
+            "balanced_action": "Prüfe die Kombination in deinen tatsächlichen Spielen und Einstellungen, bevor du Hardware wechselst.",
+            "cpu_action": "Prüfe Last pro Kern, FPS-Limits, Temperaturen und 1%-Lows in einer wiederholbaren Spielszene.",
+            "gpu_action": "Prüfe GPU-Auslastung, VRAM, Temperaturen und Grafikeinstellungen in einer wiederholbaren Spielszene.",
+            "disclaimer": "Der Prozentwert zeigt den Abstand der Werte, nicht einen gemessenen FPS-Verlust."
+        },
         "back_button": "Zurück zum Rechner",
         "sections": {
             "resolution_impact": "Auflösungseinfluss & Benchmarks",
@@ -257,7 +283,16 @@
             "power_reqs": "Netzteil-Planungsschätzung",
             "rec_psu": "Planungs-Wattzahl",
             "psu_estimate_note": "Planungsschätzung mit 20% Spielraum. Prüfen Sie vor dem Kauf die Watt- und Anschlussanforderungen des GPU-Herstellers und Board-Partners.",
-            "final_rec": "Zusammenfassung der Empfehlung"
+            "final_rec": "Zusammenfassung der Empfehlung",
+            "likely_constraint": "wahrscheinlicher Engpass",
+            "system_verdict": "Systemeinschätzung",
+            "similar_indexes": "Ähnliche Planungsindizes",
+            "review_benchmarks": "Workload-Benchmarks prüfen",
+            "final_balanced_desc": "Die CPU- und GPU-Planungsindizes liegen nahe beieinander. Reale Ergebnisse variieren weiterhin je nach Spiel, Einstellungen, Treibern, Kühlung und restlichem System.",
+            "final_constraint_desc": "Bei {resolution} hat die Komponente {type} den niedrigeren auflösungsangepassten Planungsindex. Dies misst keinen FPS-Verlust und beweist keinen Upgrade-Bedarf; prüfen Sie Benchmarks für Ihre Spiele und Einstellungen.",
+            "gaming": "Gaming",
+            "resolution_label": "Auflösung",
+            "value": "Wert"
         },
         "ratings": {
             "excellent": "Exzellent",
@@ -266,7 +301,7 @@
             "fair": "Fair",
             "poor": "Schlecht",
             "well_balanced": "Gut abgestimmtes System",
-            "bottleneck_warning": "relative Punktedifferenz",
+            "bottleneck_warning": "auflösungsangepasste Planungsdifferenz",
             "maxed_out": "Ausgereizt",
             "optimal": "Optimal"
         },
@@ -330,9 +365,9 @@
             },
             "upgrade_priority": {
                 "cpu_title": "CPU-limitierte Workloads prüfen",
-                "cpu_desc": "Der normalisierte CPU-Wert liegt {val}% unter dem höheren Komponentenwert. Prüfen Sie spielspezifische Benchmarks, bevor Sie ein Upgrade erwägen.",
+                "cpu_desc": "Der auflösungsangepasste CPU-Planungsindex liegt {val}% unter dem höheren Komponentenindex. Prüfen Sie spielspezifische Benchmarks, bevor Sie ein Upgrade erwägen.",
                 "gpu_title": "GPU-limitierte Workloads prüfen",
-                "gpu_desc": "Der normalisierte GPU-Wert liegt {val}% unter dem höheren Komponentenwert. Prüfen Sie spielspezifische Benchmarks, bevor Sie ein Upgrade erwägen.",
+                "gpu_desc": "Der auflösungsangepasste GPU-Planungsindex liegt {val}% unter dem höheren Komponentenindex. Prüfen Sie spielspezifische Benchmarks, bevor Sie ein Upgrade erwägen.",
                 "balanced_title": "Gut abgestimmt",
                 "balanced_desc": "Die normalisierten Werte liegen nahe beieinander; prüfen Sie Ihre Spiele vor einem Hardwarewechsel",
                 "ram_title": "Erwägen Sie: Mehr RAM",
@@ -341,9 +376,9 @@
         },
         "bottleneck_analysis": {
             "balanced_title": "Ihre Systemkomponenten sind gut abgestimmt",
-            "bottleneck_title": "Die Komponente {type} hat den niedrigeren normalisierten Vergleichswert",
+            "bottleneck_title": "Die Komponente {type} hat den niedrigeren auflösungsangepassten Planungsindex",
             "balanced_desc": "Die normalisierten Werte liegen nahe beieinander. Das garantiert nicht in jedem Spiel oder Workload gleiche Leistung.",
-            "bottleneck_desc": "Die {val}% sind die relative Differenz zwischen intern normalisierten CPU- und GPU-Werten, kein gemessener FPS-Verlust. Die niedriger bewertete Komponente {type} kann manche {scenario} Workloads begrenzen.",
+            "bottleneck_desc": "Die {val}% sind die relative Differenz zwischen den auflösungsangepassten CPU- und GPU-Planungsindizes, kein gemessener FPS-Verlust. Die Komponente {type} mit dem niedrigeren Index kann manche {scenario} Workloads begrenzen.",
             "cpu_scenario": "CPU-intensiven",
             "gpu_scenario": "Grafik-intensiven"
         },

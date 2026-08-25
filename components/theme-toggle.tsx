@@ -2,12 +2,16 @@
 
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
 
 export function ThemeToggle({ lang = 'en' }: { lang?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const copy = getSiteChromeCopy(lang);
-  const isDark = resolvedTheme === 'dark';
+  const isDark = mounted && resolvedTheme === 'dark';
+
+  useEffect(() => setMounted(true), []);
 
   return (
     <button

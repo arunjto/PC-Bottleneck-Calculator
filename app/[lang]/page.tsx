@@ -2,17 +2,20 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import EnhancedBottleneckCalculator from '@/components/calculators/enhanced-bottleneck-calculator';
 import { UpdateBanner } from '@/components/ui/update-banner';
-import { ContentGuide } from '@/components/content/content-guide';
 import { CalculatorMethodology } from '@/components/content/calculator-methodology';
-import { BottleneckVerification } from '@/components/content/bottleneck-verification';
 import { FeaturedCalculators } from '@/components/content/featured-calculators';
+import { PopularBuilds } from '@/components/content/popular-builds';
+import { BottleneckFieldGuide } from '@/components/content/bottleneck-field-guide';
+import { CalculatorMaintainer } from '@/components/content/calculator-maintainer';
 
 import { getDictionary } from '@/get-dictionary';
 import { isSupportedLocale, Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { JsonLd } from '@/components/seo/json-ld';
-import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
+import { createBreadcrumbSchema, createFaqSchema, createItemListSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
+import { POPULAR_BUILDS, getPopularBuildAnalysis } from '@/lib/popular-builds';
+import { getPopularBuildCopy } from '@/lib/popular-builds-i18n';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params;
@@ -54,7 +57,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   const dict = await getDictionary(lang);
   const pageUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang, '')}`;
-  const schemaData = createSchemaGraph([
+  const schemaNodes: object[] = [
     createWebPageSchema({
       pageUrl,
       name: dict.common.title,
@@ -72,7 +75,21 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
     }),
     createBreadcrumbSchema(pageUrl, [{ name: 'Home', url: pageUrl }]),
     createFaqSchema(pageUrl, dict.home.faqs),
-  ]);
+  ];
+
+  schemaNodes.push(createItemListSchema(
+      pageUrl,
+      getPopularBuildCopy(lang).sectionTitle,
+      POPULAR_BUILDS.map((build) => {
+        const { cpu, gpu } = getPopularBuildAnalysis(build);
+        return {
+          name: `${cpu.name} + ${gpu.name}`,
+          url: `${SITE_URL}/${lang}/builds/${build.slug}`,
+        };
+      }),
+    ));
+
+  const schemaData = createSchemaGraph(schemaNodes);
 
   return (
     <div className="py-8 px-4">
@@ -96,19 +113,21 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           dict={dict.home.update_banner}
           href={getLocalizedPath(lang, 'methodology')}
         />
-        <div className="[overflow-anchor:none]">
+        <div id="calculator" className="scroll-mt-20 [overflow-anchor:none]">
           <EnhancedBottleneckCalculator
             dict={{ calculator: dict.calculator, results: dict.results }}
           />
         </div>
+        <PopularBuilds lang={lang} />
         <CalculatorMethodology lang={lang} variant="bottleneck" />
-        <BottleneckVerification lang={lang} />
 
         {/* Below-the-fold: deferred rendering via content-visibility for mobile performance */}
         <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 1200px' }}>
           <FeaturedCalculators lang={lang} />
 
-          <ContentGuide dict={dict} />
+          <BottleneckFieldGuide lang={lang} />
+
+          <CalculatorMaintainer lang={lang} />
 
           {/* FAQ Section */}
           <section className="prose prose-slate dark:prose-invert max-w-none relative prose-headings:font-semibold prose-strong:text-blue-600 dark:prose-strong:text-blue-400">
