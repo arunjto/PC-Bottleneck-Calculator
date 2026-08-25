@@ -20,6 +20,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/index',
+        destination: '/en',
+        permanent: true,
+      },
+      {
+        source: '/index.html',
+        destination: '/en',
+        permanent: true,
+      },
+      {
         source: '/apple-touch-icon-precomposed.png',
         destination: '/apple-touch-icon.png',
         permanent: true,

@@ -54,6 +54,24 @@ export function createFaqSchema(pageUrl: string, faqs: FaqItem[]) {
   };
 }
 
+export function createItemListSchema(
+  pageUrl: string,
+  name: string,
+  items: Array<{ name: string; url: string }>,
+) {
+  return {
+    '@type': 'ItemList',
+    '@id': `${pageUrl}#popular-builds`,
+    name,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  };
+}
+
 export function createWebPageSchema({
   pageUrl,
   name,

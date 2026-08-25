@@ -37,13 +37,13 @@ export function Footer({ lang }: { dict?: unknown; lang: string }) {
 
   const socialLinks = [
     {
-      href: 'https://www.facebook.com/people/PC-Build-Check/61576275498498/',
+      href: 'https://www.facebook.com/share/1QQYM74k3H/',
       label: 'Facebook',
       ariaLabel: t.followFacebook,
       icon: Facebook,
     },
     {
-      href: 'https://www.instagram.com/pcbuildcheck/',
+      href: 'https://www.instagram.com/pcbuildcheck?igsi=ZWF2cTVlaTl3Zmpz',
       label: 'Instagram',
       ariaLabel: t.followInstagram,
       icon: Instagram,

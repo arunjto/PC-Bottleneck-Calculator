@@ -79,10 +79,18 @@
         },
         "buttons": {
             "analyze": "Analyze My System",
-            "incomplete": "Please select all components"
+            "incomplete": "Please select all components",
+            "preparing": "Preparing results…"
         },
         "status": {
             "ready": "Ready for Analysis"
+        },
+        "coverage": {
+            "cpus": "{count} supported CPUs",
+            "gpus": "{count} supported GPUs",
+            "pairings": "{count} CPU–GPU pairings",
+            "no_signup": "No signup required",
+            "note": "Planning estimates based on normalized scores—not measured benchmarks."
         }
     },
     "about": {
@@ -222,6 +230,24 @@
     "results": {
         "title": "System Analysis Results",
         "subtitle": "Comprehensive performance breakdown",
+        "summary": {
+            "eyebrow": "Result summary",
+            "balanced_title": "Close CPU–GPU match",
+            "cpu_title": "CPU is the likely planning constraint",
+            "gpu_title": "GPU is the likely planning constraint",
+            "gap": "Planning score gap",
+            "resolution": "Selected resolution",
+            "resolution_adjusted": "Resolution-adjusted planning indexes",
+            "resolution_applied": "The selected resolution applies a moderate gaming-workload adjustment to both normalized component scores. The lower index is the side to verify first.",
+            "next_step": "Recommended next step",
+            "balanced_meaning": "The normalized CPU and GPU planning scores are close for this comparison.",
+            "cpu_meaning": "At the selected resolution, the CPU has the lower adjusted planning index and may reach its limit first in CPU-heavy game workloads.",
+            "gpu_meaning": "At the selected resolution, the GPU has the lower adjusted planning index and may reach its limit first in graphics-heavy game workloads.",
+            "balanced_action": "Verify the pairing in the games and settings you actually use before changing hardware.",
+            "cpu_action": "Check per-core CPU load, frame caps, temperatures and 1% lows in a repeatable game scene.",
+            "gpu_action": "Check GPU utilization, VRAM, temperatures and graphics settings in a repeatable game scene.",
+            "disclaimer": "The percentage is score separation, not measured lost FPS."
+        },
         "back_button": "Back to Calculator",
         "sections": {
             "resolution_impact": "Resolution Impact & Benchmarks",
@@ -257,7 +283,16 @@
             "power_reqs": "PSU Planning Estimate",
             "rec_psu": "Planning wattage",
             "psu_estimate_note": "Planning estimate with 20% headroom. Verify the GPU maker and board partner's PSU and connector requirements before purchasing.",
-            "final_rec": "Final Recommendation Summary"
+            "final_rec": "Final Recommendation Summary",
+            "likely_constraint": "likely constraint",
+            "system_verdict": "System verdict",
+            "similar_indexes": "Similar planning indexes",
+            "review_benchmarks": "Review workload benchmarks",
+            "final_balanced_desc": "The CPU and GPU planning indexes are close. Real results still vary by game, settings, drivers, cooling and the rest of the system.",
+            "final_constraint_desc": "At {resolution}, the {type} has the lower resolution-adjusted planning index. This does not measure lost FPS or prove that an upgrade is needed; verify with benchmarks for your games and settings.",
+            "gaming": "Gaming",
+            "resolution_label": "Resolution",
+            "value": "Value"
         },
         "ratings": {
             "excellent": "Excellent",
@@ -266,7 +301,7 @@
             "fair": "Fair",
             "poor": "Poor",
             "well_balanced": "Well Balanced System",
-            "bottleneck_warning": "relative score gap",
+            "bottleneck_warning": "resolution-adjusted planning gap",
             "maxed_out": "Maxed Out",
             "optimal": "Optimal"
         },
@@ -330,9 +365,9 @@
             },
             "upgrade_priority": {
                 "cpu_title": "Review CPU-limited workloads",
-                "cpu_desc": "The CPU's normalized score is {val}% below the higher component score. Verify with game-specific benchmarks before considering an upgrade.",
+                "cpu_desc": "The CPU's resolution-adjusted planning index is {val}% below the higher component index. Verify with game-specific benchmarks before considering an upgrade.",
                 "gpu_title": "Review GPU-limited workloads",
-                "gpu_desc": "The GPU's normalized score is {val}% below the higher component score. Verify with game-specific benchmarks before considering an upgrade.",
+                "gpu_desc": "The GPU's resolution-adjusted planning index is {val}% below the higher component index. Verify with game-specific benchmarks before considering an upgrade.",
                 "balanced_title": "Well Balanced",
                 "balanced_desc": "Normalized scores are close; verify performance in your own games before changing hardware",
                 "ram_title": "Consider: More RAM",
@@ -341,9 +376,9 @@
         },
         "bottleneck_analysis": {
             "balanced_title": "Your system components are well matched",
-            "bottleneck_title": "Your {type} has the lower normalized comparison score",
+            "bottleneck_title": "Your {type} has the lower resolution-adjusted planning index",
             "balanced_desc": "The normalized scores are close. This does not guarantee equal performance in every game or workload.",
-            "bottleneck_desc": "The {val}% figure is the relative gap between internally normalized CPU and GPU scores, not measured FPS loss. The lower-scoring {type} may limit some {scenario} workloads.",
+            "bottleneck_desc": "The {val}% figure is the relative gap between the resolution-adjusted CPU and GPU planning indexes, not measured FPS loss. The lower-index {type} may limit some {scenario} workloads.",
             "cpu_scenario": "CPU-intensive",
             "gpu_scenario": "graphics-intensive"
         },

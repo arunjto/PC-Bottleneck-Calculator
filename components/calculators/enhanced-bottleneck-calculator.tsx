@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
 import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-database';
-import { Cpu, Zap, HardDrive, Monitor, Calculator } from 'lucide-react';
+import { Cpu, Zap, HardDrive, Monitor, Calculator, ShieldCheck } from 'lucide-react';
 
 // Dynamically load the heavy results component
 const ComprehensiveBottleneckResults = dynamic(
@@ -66,12 +66,40 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
   const [showResults, setShowResults] = useState(false);
   const [isPending, startTransition] = useTransition();
   const resultsRef = useRef<HTMLDivElement>(null);
+  const coverage = dict.calculator.coverage || {};
+  const pairingCount = allCPUs.length * allGPUs.length;
+  const withCount = (value: string | undefined, count: number, fallback: string) =>
+    (value || fallback).replace('{count}', count.toLocaleString());
 
   // Stable IDs for label/input association
   const cpuId = 'calc-cpu-select';
   const gpuId = 'calc-gpu-select';
   const ramId = 'calc-ram-select';
   const resolutionId = 'calc-resolution-select';
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cpu = params.get('cpu');
+    const gpu = params.get('gpu');
+    const ram = params.get('ram');
+    const resolution = params.get('resolution');
+    const hasValidBuild =
+      cpuOptions.some((option) => option.id === cpu) &&
+      gpuOptions.some((option) => option.id === gpu) &&
+      ramOptions.some((option) => option.id === ram) &&
+      resolutionOptions.some((option) => option.id === resolution);
+
+    if (!hasValidBuild || !cpu || !gpu || !ram || !resolution) return;
+
+    setSelectedCPU(cpu);
+    setSelectedGPU(gpu);
+    setSelectedRAM(ram);
+    setSelectedResolution(resolution);
+
+    // The preset has been consumed. Keep the clean canonical homepage URL in
+    // the address bar so temporary calculator state is not shared or crawled.
+    window.history.replaceState(null, '', `${window.location.pathname}#calculator`);
+  }, []);
 
   const handleAnalyze = () => {
     if (selectedCPU && selectedGPU && selectedRAM && selectedResolution) {
@@ -160,6 +188,30 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
+        <div className="rounded-xl border border-blue-200 bg-blue-50/70 p-4 dark:border-blue-900 dark:bg-blue-950/30">
+          <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+            <div className="flex items-center gap-2 font-medium text-blue-950 dark:text-blue-100">
+              <Cpu className="h-4 w-4 text-blue-600" aria-hidden="true" />
+              <span>{withCount(coverage.cpus, allCPUs.length, '{count} supported CPUs')}</span>
+            </div>
+            <div className="flex items-center gap-2 font-medium text-blue-950 dark:text-blue-100">
+              <Zap className="h-4 w-4 text-purple-600" aria-hidden="true" />
+              <span>{withCount(coverage.gpus, allGPUs.length, '{count} supported GPUs')}</span>
+            </div>
+            <div className="flex items-center gap-2 font-medium text-blue-950 dark:text-blue-100">
+              <Calculator className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+              <span>{withCount(coverage.pairings, pairingCount, '{count} CPU–GPU pairings')}</span>
+            </div>
+            <div className="flex items-center gap-2 font-medium text-blue-950 dark:text-blue-100">
+              <ShieldCheck className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+              <span>{coverage.no_signup || 'No signup required'}</span>
+            </div>
+          </div>
+          <p className="mt-3 text-xs text-blue-800 dark:text-blue-300">
+            {coverage.note || 'Planning estimates based on normalized scores—not measured benchmarks.'}
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label htmlFor={cpuId} className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -231,7 +283,7 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
             {isFormComplete ? (
               <>
                 <Calculator className="w-5 h-5 mr-2" />
-                {isPending ? 'Preparing results…' : dict.calculator.buttons.analyze}
+                {isPending ? (dict.calculator.buttons.preparing || 'Preparing results…') : dict.calculator.buttons.analyze}
               </>
             ) : (
               dict.calculator.buttons.incomplete
@@ -246,7 +298,7 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
               <p>✓ CPU: {selectedSummary.cpu}</p>
               <p>✓ GPU: {selectedSummary.gpu}</p>
               <p>✓ RAM: {selectedSummary.ram}</p>
-              <p>✓ Resolution: {selectedSummary.resolution}</p>
+              <p>✓ {dict.calculator.labels.resolution}: {selectedSummary.resolution}</p>
             </div>
           </div>
         )}
