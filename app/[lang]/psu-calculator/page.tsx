@@ -16,8 +16,12 @@ type Props = {
   searchParams: Promise<{ cpu?: string | string[]; gpu?: string | string[] }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { lang } = await params;
+  const query = await searchParams;
+  const isPrefilledUrl = Object.values(query).some((value) =>
+    Array.isArray(value) ? value.length > 0 : typeof value === 'string'
+  );
   const dict = await getDictionary(lang);
   const pageUrl = constructMetadataAlternates(lang, '/psu-calculator').canonical;
   const socialImage = `${SITE_URL}/og-image.png`;
@@ -32,6 +36,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'system power requirements'
     ],
     alternates: constructMetadataAlternates(lang, '/psu-calculator'),
+    ...(isPrefilledUrl && {
+      robots: {
+        index: false,
+        follow: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+    }),
     openGraph: {
       title: dict.psu_page.title,
       description: dict.psu_page.description,
