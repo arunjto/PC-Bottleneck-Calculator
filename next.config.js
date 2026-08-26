@@ -2,6 +2,8 @@
 const nextConfig = {
   // Keep production tracing inside this app when a parent folder also has a lockfile.
   outputFileTracingRoot: __dirname,
+  // Keep SEO metadata in the document head for raw-HTML crawlers and audit tools.
+  htmlLimitedBots: /.*/,
   images: {
     formats: ['image/avif', 'image/webp'], // Serve modern image formats on mobile
     remotePatterns: [
@@ -19,6 +21,11 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: '/fps-calculator',
+        destination: '/en/fps-calculator',
+        permanent: true,
+      },
       {
         source: '/index',
         destination: '/en',
