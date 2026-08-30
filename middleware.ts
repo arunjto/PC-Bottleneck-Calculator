@@ -6,6 +6,48 @@ import { i18n } from './i18n-config';
 import { getCanonicalPath, getLocalizedPath } from '@/lib/path-translations';
 import { Locale } from '@/i18n-config';
 
+function getPermanentRedirectTarget(pathname: string): string | null {
+    const normalizedPathname = pathname.length > 1
+        ? pathname.replace(/\/+$/, '')
+        : pathname;
+    const removedTrailingSlash = normalizedPathname !== pathname;
+
+    const pathnameIsMissingLocale = i18n.locales.every(
+        (locale) => !normalizedPathname.startsWith(`/${locale}/`) && normalizedPathname !== `/${locale}`
+    );
+
+    if (pathnameIsMissingLocale) {
+        return normalizedPathname === '/'
+            ? `/${i18n.defaultLocale}`
+            : `/${i18n.defaultLocale}${normalizedPathname}`;
+    }
+
+    const match = normalizedPathname.match(/^\/([a-z]{2})(?:\/(.*))?$/);
+    if (!match) {
+        return removedTrailingSlash ? normalizedPathname : null;
+    }
+
+    const locale = match[1] as Locale;
+    const pathSegment = match[2] || '';
+
+    // Blog slugs are already public paths and only need slash normalization.
+    if (pathSegment.startsWith('blog')) {
+        return removedTrailingSlash ? normalizedPathname : null;
+    }
+
+    // A matching reverse lookup means this is already the localized public URL.
+    if (getCanonicalPath(locale, pathSegment)) {
+        return removedTrailingSlash ? normalizedPathname : null;
+    }
+
+    const localizedPath = getLocalizedPath(locale, pathSegment);
+    if (localizedPath !== normalizedPathname) {
+        return localizedPath;
+    }
+
+    return removedTrailingSlash ? normalizedPathname : null;
+}
+
 export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
 
@@ -26,23 +68,16 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // 1. Check if there is any supported locale in the pathname
-    const pathnameIsMissingLocale = i18n.locales.every(
-        (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-    );
-
-    // Permanently consolidate every unlocalized URL into the default locale.
-    // Keep the root free of a trailing slash so it does not create a second hop.
-    if (pathnameIsMissingLocale) {
-        const localizedPath = pathname === '/'
-            ? `/${i18n.defaultLocale}`
-            : `/${i18n.defaultLocale}${pathname}`;
-        const localizedUrl = request.nextUrl.clone();
-        localizedUrl.pathname = localizedPath;
-        return NextResponse.redirect(localizedUrl, 308);
+    // Consolidate locale, translated-path and trailing-slash normalization into
+    // one permanent hop while preserving the original query string.
+    const redirectTarget = getPermanentRedirectTarget(pathname);
+    if (redirectTarget) {
+        const redirectUrl = new URL(request.url);
+        redirectUrl.pathname = redirectTarget;
+        return NextResponse.redirect(redirectUrl, 301);
     }
 
-    // 2. Handle Localized Paths
+    // Handle localized public paths.
     // Extract locale and path segments
     // e.g. /it/chi-siamo -> locale='it', pathSegment='chi-siamo'
     const match = pathname.match(/^\/([a-z]{2})(?:\/(.*))?$/);
@@ -69,44 +104,6 @@ export function middleware(request: NextRequest) {
             });
         }
 
-        // Case B: User visits an internal path directly (e.g., /it/about)
-        // We SHOULD redirect them to the localized path (e.g., /it/chi-siamo) to avoid duplicate content
-        // BUT we must verify this isn't a rewrite loop.
-        // The check `canonicalPath` above handles the incoming requests that ARE localized.
-        // Now we check if the current pathSegment IS actually a canonical path key that HAS a different localized value.
-
-        // This logic requires a reverse lookup helper or access to the config.
-        // Ideally: if pathSegment is 'about' and locale is 'it', we see that 'about' -> 'chi-siamo'.
-        // So we redirect to /it/chi-siamo.
-
-        // Let's implement this check safely.
-        // We import the direct translations object or use a helper that checks if "input path" is a canonical key.
-        // Actually, getLocalizedPath does simpler logic: it assumes input is canonical.
-
-        const potentiallyLocalized = getLocalizedPath(locale, pathSegment);
-
-        // If getLocalizedPath returns a different path than what we are on, it means we are on the canonical path
-        // but should be on the localized one.
-        // e.g. pathSegment = 'about' -> returns '/it/chi-siamo'
-        // current url = '/it/about'
-        // mismatch -> redirect.
-
-        // One catch: getLocalizedPath('/it/chi-siamo') would likely return '/it/chi-siamo' if 'chi-siamo' isn't a key.
-        // So we need to be careful not to redirect valid localized paths if they happen to match a key (unlikely here but good practice).
-
-        // Simpler check:
-        // iterate keys of translations[locale]
-        // if pathSegment === key, and value !== key -> Redirect to value.
-
-        // We can use a simplified check using the helper:
-        const targetPath = getLocalizedPath(locale, pathSegment);
-        // targetPath comes back as full string e.g. /it/chi-siamo
-
-        if (targetPath !== pathname && targetPath !== `/${locale}/${pathSegment}`) {
-            // If function returned a mapped path that is different from current,
-            // it implies current pathSegment IS a canonical key that should be translated.
-            return NextResponse.redirect(new URL(targetPath, request.url), 308);
-        }
     }
 
     return NextResponse.next();

@@ -23,6 +23,11 @@
       "statusCode": 301
     },
     {
+      "source": "/index.html",
+      "destination": "/en",
+      "statusCode": 301
+    },
+    {
       "source": "/:slug.html",
       "destination": "/:slug",
       "statusCode": 301
