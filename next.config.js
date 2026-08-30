@@ -19,27 +19,30 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  // Disable Next.js' built-in 308 trailing-slash normalization so every
+  // public URL variant can be consolidated with an explicit 301 in middleware.
+  skipTrailingSlashRedirect: true,
   async redirects() {
     return [
       {
         source: '/fps-calculator',
         destination: '/en/fps-calculator',
-        permanent: true,
+        statusCode: 301,
       },
       {
         source: '/index',
         destination: '/en',
-        permanent: true,
+        statusCode: 301,
       },
       {
         source: '/index.html',
         destination: '/en',
-        permanent: true,
+        statusCode: 301,
       },
       {
         source: '/apple-touch-icon-precomposed.png',
         destination: '/apple-touch-icon.png',
-        permanent: true,
+        statusCode: 301,
       },
     ];
   },
