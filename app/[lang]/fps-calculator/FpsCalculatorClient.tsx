@@ -33,6 +33,8 @@ const GAME_FINDER_CTA: Record<Locale, string> = {
   fr: 'Voir quels autres jeux ce PC peut faire tourner',
   de: 'Prüfen, welche weiteren Spiele dieser PC schafft',
   es: 'Ver qué otros juegos puede ejecutar este PC',
+
+  ru: "Посмотрите, какие еще игры может запускать этот компьютер",
 };
 
 const OtherGamesPerformance = dynamic(

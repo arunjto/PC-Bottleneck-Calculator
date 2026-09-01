@@ -25,6 +25,11 @@ const SECTION_COPY: Record<Locale, { title: string; description: string }> = {
     title: 'Continúa Comprobando tu Configuración',
     description: 'Usa el resultado como contexto y responde a la siguiente pregunta práctica con una calculadora específica.',
   },
+
+  ru: {
+    title: "Продолжите проверку сборки",
+    description: "Используйте результат как контекст, а затем ответьте на следующий практический вопрос с помощью специального калькулятора.",
+  },
 };
 
 export function FeaturedCalculators({ lang }: { lang: Locale }) {

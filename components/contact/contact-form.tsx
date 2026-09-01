@@ -30,6 +30,8 @@ const SYSTEM_COPY: Record<Locale, { missingTitle: string; missingDescription: st
   fr: { missingTitle: 'Configuration du formulaire manquante', missingDescription: 'Configurez le formulaire de contact avant l’envoi.', company: 'Entreprise', general: 'Demande générale' },
   de: { missingTitle: 'Formularkonfiguration fehlt', missingDescription: 'Konfigurieren Sie das Kontaktformular vor dem Absenden.', company: 'Unternehmen', general: 'Allgemeine Anfrage' },
   es: { missingTitle: 'Falta la configuración del formulario', missingDescription: 'Configura el formulario de contacto antes de enviarlo.', company: 'Empresa', general: 'Consulta general' },
+
+  ru: { missingTitle: "Отсутствует конфигурация формы", missingDescription: "Пожалуйста, настройте контактную форму перед отправкой.", company: 'Компания', general: "Общий запрос" },
 };
 
 export function ContactForm({ dict, lang }: { dict: any; lang: Locale }) {

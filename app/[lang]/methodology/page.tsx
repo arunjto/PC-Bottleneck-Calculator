@@ -59,6 +59,16 @@ const copy: Record<Locale, {
     limits: 'Limitaciones importantes', limitItems: ['Parches, controladores, BIOS, temperaturas, RAM, tareas en segundo plano, límites de potencia y variación del silicio afectan al rendimiento.', 'Componentes portátiles y tarjetas con overclock pueden tener límites de potencia muy distintos.', 'Las cifras FPS son salidas del modelo, no mediciones realizadas con el hardware elegido.', 'Los precios son referencias de lanzamiento o capturas editoriales, no ofertas en vivo.', 'Antes de comprar, revisa compatibilidad y benchmarks independientes de tu juego y ajustes concretos.'],
     sources: 'Fuentes primarias de especificaciones', back: 'Volver a la calculadora de cuello de botella',
   },
+
+  ru: {
+    title: "Методика калькулятора", description: "Как PCBuildCheck получает спецификации оборудования и создает узкие места, оценки FPS и PSU.", updated: `Database updated: ${HARDWARE_DATABASE_UPDATED} · Score methodology: ${HARDWARE_SCORE_METHODOLOGY_VERSION}`,
+    data: "Данные оборудования", dataBody: "Имена CPU и GPU, тактовые частоты, количество ядер, память и показатели мощности проверяются на страницах продуктов производителя, если таковые имеются. PCBuildCheck поддерживает документированный индекс планирования 0–100 в каждом классе компонентов; эти нормализованные оценки представляют собой редакционные материалы, а не официальные рейтинги производителей или необработанные результаты лабораторных исследований.",
+    calculations: "Как рассчитываются оценки", bottleneck: "Узкое место: инструмент сравнивает нормализованные показатели CPU и GPU. Отображаемый процент — это их относительный разрыв в баллах, а не измеренный процент потерянной производительности.",
+    fps: `FPS model ${FPS_MODEL_VERSION}: each game has a 1080p High reference profile. CPU and GPU scores scale separately, with resolution-sensitive weighting plus quality, supported upscaling, anti-aliasing, RAM and VRAM pressure. Results are shown as an uncertainty range with a planning midpoint and estimated 1% low; they are not measured benchmarks.`,
+    psu: "PSU: опубликованные значения мощности CPU и GPU объединяются с широким допуском для выбранных компонентов, затем применяется запас в 15–50 %, и результат планирования может быть округлен до обычного размера PSU. Всегда проверяйте рекомендации GPU-поставщика, партнера по плате и PSU-модели.",
+    limits: "Важные ограничения", limitItems: ["Игровые патчи, драйверы, настройки BIOS, температурные режимы, RAM, фоновые задачи, ограничения мощности и вариации микросхем влияют на производительность.", "Детали ноутбуков и карты с заводским разгоном могут иметь совершенно разные ограничения мощности, несмотря на схожие названия.", "Цифры FPS являются выходными данными модели, а не измерениями, полученными с выбранного оборудования.", "Цены представляют собой ссылки на запуск или редакционные снимки, а не действующие предложения.", "Используйте результаты в качестве подсказки и проверяйте совместимость, а также независимые тесты, соответствующие именно вашей игре и настройкам, перед покупкой."],
+    sources: "Источники первичных спецификаций", back: "Вернуться к калькулятору узких мест",
+  },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {

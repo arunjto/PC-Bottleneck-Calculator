@@ -35,6 +35,8 @@ const VRAM_TOOL_LINK_COPY: Record<Locale, string> = {
   fr: 'Planifier la capacité VRAM pour ce jeu et ces réglages',
   de: 'VRAM-Kapazität für dieses Spiel und diese Einstellungen planen',
   es: 'Planificar la capacidad de VRAM para este juego y estos ajustes',
+
+  ru: "Запланируйте емкость VRAM для этой игры и настроек",
 };
 
 type GameInsightCopy = {
@@ -113,6 +115,18 @@ const GAME_INSIGHT_COPY: Record<Locale, GameInsightCopy> = {
     cpuAdvice: 'La CPU y ajustes como simulación, multitudes o distancia de visión pueden influir más, especialmente con objetivos FPS altos.',
     gpuAdvice: 'GPU, resolución, ray tracing y calidad gráfica probablemente influyan más. El reescalado puede ayudar si es compatible.',
     balancedAdvice: 'CPU y GPU pueden influir: después de calcular revisa el componente limitante y los frame times.',
+  },
+
+  ru: {
+    title: "Как моделируется эта игра", profile: 'Профиль', detailedProfile: "Подробный редакционный профиль", fallbackProfile: "Общая оценка по уровню требований",
+    workload: "Характер нагрузки", cpuHeavy: 'Высокая нагрузка на CPU', gpuHeavy: 'Высокая нагрузка на GPU', balanced: 'Сбалансированная', ram: "Базовый объём RAM",
+    technologies: "Перечисленные технологии", noTechnologies: "Нет в списке", why: "Почему это важно",
+    detailedNote: "Использует привязку калибровки для конкретной игры, а затем адаптируется к вашему оборудованию и настройкам. Это по-прежнему плановая оценка, а не измеренный тест вашего ПК.",
+    fallbackNote: "Использует игровые классы требований CPU и GPU, поскольку привязка калибровки для конкретной игры недоступна.",
+    speculativeWarning: "Профиль планирования предварительной версии — проверенные данные тестирования ПК недоступны. Считайте результат умозрительным.",
+    cpuAdvice: "Выбор CPU и тяжелые настройки CPU, такие как симуляция, скопление людей или расстояние просмотра, могут иметь большее влияние, особенно при высоких целях FPS.",
+    gpuAdvice: "GPU производительность, разрешение, трассировка лучей и качество графики, вероятно, будут иметь большее влияние. Масштабирование может помочь, если игра и GPU поддерживают его.",
+    balancedAdvice: "И CPU, и GPU могут существенно повлиять на результат, поэтому после расчета сравните разделы ограничивающего компонента и времени кадра.",
   },
 };
 

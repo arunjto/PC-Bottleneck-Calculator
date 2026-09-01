@@ -17,6 +17,7 @@ const languageOptions: Record<Locale, { label: string; flag: string }> = {
     fr: { label: 'Français', flag: '/flags/fr.svg' },
     de: { label: 'Deutsch', flag: '/flags/de.svg' },
     es: { label: 'Español', flag: '/flags/es.svg' },
+    ru: { label: 'Русский', flag: '/flags/ru.svg' },
 };
 
 export function LanguageSwitcher() {

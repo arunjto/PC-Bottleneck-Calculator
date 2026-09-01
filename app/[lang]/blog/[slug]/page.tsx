@@ -95,7 +95,9 @@ export async function generateMetadata({
         ? [{ url: `${SITE_URL}${post.coverImage}`, width: 1200, height: 630 }]
         : undefined,
       locale:
-        lang === 'it'
+        lang === 'ru'
+          ? 'ru_RU'
+          : lang === 'it'
           ? 'it_IT'
           : lang === 'fr'
           ? 'fr_FR'
