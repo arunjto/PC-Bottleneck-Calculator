@@ -64,7 +64,7 @@ export async function generateMetadata({
       url: `${SITE_URL}/${lang}/blog`,
       siteName: 'PC Build Check',
       type: 'website',
-      locale: lang === 'it' ? 'it_IT' : lang === 'fr' ? 'fr_FR' : lang === 'de' ? 'de_DE' : lang === 'es' ? 'es_ES' : 'en_US',
+      locale: lang === 'it' ? 'it_IT' : lang === 'fr' ? 'fr_FR' : lang === 'de' ? 'de_DE' : lang === 'es' ? 'es_ES' : lang === 'ru' ? 'ru_RU' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',

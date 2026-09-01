@@ -65,6 +65,17 @@ const COPY: Record<Locale, MaintainerCopy> = {
     reviewed: 'Última revisión: agosto de 2026',
     imageAlt: 'Arun Kumar Yadav, fundador y editor de PCBuildCheck',
   },
+
+  ru: {
+    eyebrow: "Редакционная ответственность",
+    title: "Кто обслуживает этот калькулятор?",
+    description:
+      "Просматривается и поддерживается Аруном Кумаром Ядавом, основателем и редактором PCBuildCheck. Арун поддерживает базу данных оборудования, методологию расчетов и практические руководства по сборке ПК. Результаты калькулятора представляют собой оценки планирования, основанные на поддерживаемых характеристиках оборудования, а не на лабораторных измерениях.",
+    aboutAuthor: "Об авторе",
+    methodology: "Читать методологию",
+    reviewed: "Последний отзыв: август 2026 г.",
+    imageAlt: "Арун Кумар Ядав, основатель и редактор PCBuildCheck",
+  },
 };
 
 export function CalculatorMaintainer({ lang }: { lang: Locale }) {

@@ -26,7 +26,7 @@ const AUTHOR_COPY: Record<Locale, AuthorCopy> = {
     role: 'Founder, Editor, Technical Writer & Tool Creator',
     location: 'Lucknow, India',
     experience: '10 years of experience',
-    about: 'About',
+    about: 'Об авторе',
     bio: [
       'Arun Kumar Yadav is a web developer, blogger, and the founder of PCBuildCheck, a website created to explain PC performance, gaming FPS, bottlenecks, and power-supply needs in a simple and practical way.',
       'With 10 years of experience in web development and blogging, Arun creates tools that are fast, easy to use, and useful in real decisions. His work makes technical PC topics easier for beginners, gamers, students, and PC builders.',
@@ -122,6 +122,28 @@ const AUTHOR_COPY: Record<Locale, AuthorCopy> = {
     recentArticles: 'Artículos recientes de Arun',
     connect: 'Conecta',
     contact: 'Contacto',
+  },
+
+  ru: {
+    metaTitle: "Арун Кумар Ядав — основатель и редактор",
+    metaDescription: "Арун Кумар Ядав — основатель и редактор PCBuildCheck, веб-разработчик и технический писатель, создающий практические инструменты и руководства для планирования ПК.",
+    profileDescription: "Основатель, редактор, технический писатель и создатель инструментов PCBuildCheck. Выпускник BTech и веб-разработчик из Лакнау с 10-летним опытом.",
+    imageAlt: "Арун Кумар Ядав, основатель PCBuildCheck",
+    role: "Основатель, редактор, технический писатель и создатель инструментов",
+    location: "Лакнау, Индия",
+    experience: "10 лет опыта",
+    about: 'About',
+    bio: [
+      "Арун Кумар Ядав — веб-разработчик, блоггер и основатель PCBuildCheck, веб-сайта, созданного для простого и практичного объяснения производительности ПК, игр FPS, узких мест и потребностей в источниках питания.",
+      "Имея 10-летний опыт веб-разработки и ведения блогов, Арун создает быстрые, простые в использовании и полезные для принятия реальных решений инструменты. Его работа облегчает изучение технических вопросов ПК для новичков, геймеров, студентов и сборщиков ПК.",
+      "В PCBuildCheck Арун создает и редактирует контент, посвященный анализу узких мест ПК, оценке FPS, требованиям PSU и совместимости оборудования. Каждый инструмент и статья созданы для того, чтобы дать четкие ответы без ненужной сложности.",
+      "Арун живет в Лакхнау и имеет степень бакалавра технических наук. Его опыт в области технологий и веб-разработки помогает ему создавать практические инструменты для людей, планирующих собирать, обновлять или оценивать ПК.",
+    ],
+    expertise: 'Специализация',
+    expertiseItems: ["Калькуляторы узких мест ПК", "Калькуляторы FPS", "Калькуляторы блока питания", "Веб-разработка", "Технические статьи", "Инструменты, ориентированные на пользователя", "Руководства по производительности и совместимости ПК", "Технические объяснения для начинающих"],
+    recentArticles: "Последние статьи Аруна",
+    connect: 'Связаться',
+    contact: 'Контакты',
   },
 };
 

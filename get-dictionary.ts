@@ -9,6 +9,7 @@ const dictionaries = {
     fr: () => import('./app/dictionaries/fr.json').then((module) => module.default),
     de: () => import('./app/dictionaries/de.json').then((module) => module.default),
     es: () => import('./app/dictionaries/es.json').then((module) => module.default),
+    ru: () => import('./app/dictionaries/ru.json').then((module) => module.default),
 };
 
 export const getDictionary = async (locale: Locale) => dictionaries[locale]?.() ?? dictionaries.en();

@@ -26,9 +26,9 @@ type MethodologyCopy = {
 
 const COPY: Record<Locale, MethodologyCopy> = {
   en: {
-    eyebrow: 'Methodology',
+    eyebrow: 'Методология',
     title: 'How this calculator works',
-    inputsLabel: 'Inputs',
+    inputsLabel: 'Исходные данные',
     calculationLabel: 'Calculation model',
     interpretationLabel: 'How to read the result',
     limitationsLabel: 'Important limitations',
@@ -43,7 +43,7 @@ const COPY: Record<Locale, MethodologyCopy> = {
         limitations: 'Games, workloads, cooling, drivers, BIOS, power limits and resolution can change the real bottleneck. Verify with benchmarks matching your exact workload.',
       },
       fps: {
-        summary: `FPS model ${FPS_MODEL_VERSION} produces a planning range from a game reference profile and the selected hardware and graphics settings. It is not a measured benchmark.`,
+        summary: `Модель FPS ${FPS_MODEL_VERSION} рассчитывает ориентировочный диапазон по игровому профилю, выбранному оборудованию и графическим настройкам. Это не результат измеренного теста.`,
         inputs: 'CPU and GPU indices, game profile, resolution, quality preset, upscaling, anti-aliasing, RAM capacity and speed, VRAM pressure and storage type.',
         calculation: 'A per-game 1080p High reference is scaled by weighted CPU/GPU capacity, resolution and quality factors, supported upscaling, memory pressure and smaller system modifiers.',
         formula: 'Estimated FPS = game reference × hardware scale × resolution × quality × supported modifiers',
@@ -197,6 +197,42 @@ const COPY: Record<Locale, MethodologyCopy> = {
         formula: 'Potencia planificada = tamaño PSU habitual ≥ (CPU + GPU + asignación) × 1,30',
         interpretation: 'La recomendación es un objetivo de capacidad. La certificación de eficiencia no reduce la potencia de salida necesaria.',
         limitations: 'Picos transitorios, conectores, overclocking, calidad de la PSU y recomendaciones del fabricante siguen siendo esenciales. Verifica los modelos exactos.',
+      },
+    },
+  },
+
+  ru: {
+    eyebrow: 'Methodology',
+    title: "Как работает этот калькулятор",
+    inputsLabel: 'Inputs',
+    calculationLabel: "Модель расчета",
+    interpretationLabel: "Как прочитать результат",
+    limitationsLabel: "Важные ограничения",
+    fullMethodology: "Прочитать полную методологию",
+    variants: {
+      bottleneck: {
+        summary: "Этот калькулятор сравнивает внутренне нормализованную оценку планирования CPU с нормализованной оценкой планирования GPU. Он не измеряет потерю производительности.",
+        inputs: "Выбран профиль CPU, GPU, RAM и целевое разрешение, используя поддерживаемые на сайте характеристики оборудования и индексы сравнения 0–100.",
+        calculation: "Индексы планирования CPU и GPU корректируются для выбранного разрешения, а затем сравниваются с использованием относительного разрыва. Скорректированный разрыв в 8% или менее классифицируется как близкое совпадение.",
+        formula: "Скорректированный разрыв = | скорректированный индекс CPU − скорректированный индекс GPU | ÷ более высокий скорректированный индекс × 100",
+        interpretation: "Более низкий нормализованный балл указывает на вероятное ограничение планирования. Процент описывает разделение оценок — не гарантируется потеря, использование или несовместимость FPS.",
+        limitations: "Игры, рабочие нагрузки, охлаждение, драйверы, BIOS, ограничения мощности и разрешение могут изменить реальное узкое место. Проверьте с помощью тестов, соответствующих вашей конкретной рабочей нагрузке.",
+      },
+      fps: {
+        summary: `FPS model ${FPS_MODEL_VERSION} produces a planning range from a game reference profile and the selected hardware and graphics settings. It is not a measured benchmark.`,
+        inputs: "Индексы CPU и GPU, профиль игры, разрешение, предустановка качества, масштабирование, сглаживание, емкость и скорость RAM, давление VRAM и тип хранилища.",
+        calculation: "Эталонное разрешение 1080p High для каждой игры масштабируется с учетом взвешенной CPU/GPU емкости, разрешения и коэффициентов качества, поддерживаемого масштабирования, нехватки памяти и меньших системных модификаторов.",
+        formula: "Примерное значение FPS = ссылка на игру × аппаратный масштаб × разрешение × качество × поддерживаемые модификаторы.",
+        interpretation: "Результаты включают вероятный диапазон, среднюю точку планирования, расчетный минимум 1% и вероятный ограничивающий компонент. Более широкая неопределенность используется для спекулятивных игровых профилей.",
+        limitations: "Патчи, драйверы, сложность карты или сцены, фоновые задачи, термические параметры и настройки, специфичные для игры, могут существенно изменить FPS. Сравните с независимыми тестами.",
+      },
+      psu: {
+        summary: "Калькулятор PSU оценивает общую нагрузку системы на основе опубликованных значений мощности компонентов, добавляет допуск на компоненты и применяет запас планирования.",
+        inputs: "Опубликованные показатели мощности CPU и GPU, выбранный профиль дополнительных компонентов и выбранный уровень эффективности.",
+        calculation: "Мощность CPU и GPU добавляется к выбранному допуску компонента. Инструмент отображает сценарии с запасом мощности 15 %, 30 % и 50 % и округляет результат планирования до общей мощности PSU, где это возможно.",
+        formula: "Планируемая мощность = следующий общий размер PSU ≥ (CPU + GPU + допуск на компонент) × 1,30",
+        interpretation: "Рекомендуемая мощность является целью планирования мощности. Сертификация эффективности описывает эффективность преобразования; это не снижает требуемую выходную мощность.",
+        limitations: "Переходные всплески, требования к разъемам, разгон, качество PSU и рекомендации производителя по-прежнему имеют значение. Подтвердите точную документацию модели GPU и PSU.",
       },
     },
   },

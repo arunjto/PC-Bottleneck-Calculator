@@ -95,7 +95,42 @@ const COPY: Record<Locale, BuildLocaleCopy> = {
   es: {
     curated: 'Ejemplos seleccionados', sectionTitle: 'Configuraciones de PC populares', sectionDescription: 'Seis combinaciones CPU-GPU compatibles para escenarios habituales en 1080p, 1440p y 4K.', closeMatch: 'Índices similares', constraint: side => `Límite de planificación del lado ${side}`, gap: 'diferencia de planificación', viewAnalysis: 'Ver análisis completo', selectionNote: 'Selección para distintos presupuestos, plataformas y resoluciones; no es una clasificación de popularidad en directo.', reviewed: 'Revisado', back: 'Calculadora de cuello de botella', analysis: 'Análisis del cuello de botella', metaDescription: (cpu, gpu, res) => `Analiza la combinación de ${cpu} y ${gpu} a ${res}, con índices ajustados a la resolución, RAM, fuente y compatibilidad.`, reviewedLabel: 'Revisado', planningNotice: 'Análisis de planificación, no un benchmark de juego medido', resultSummary: 'Resumen del resultado', balancedTitle: 'Índices ajustados a la resolución similares', balancedBody: 'Los índices de planificación de CPU y GPU están próximos con la resolución seleccionada. El límite real puede cambiar según el juego, la escena, los ajustes y el objetivo de FPS.', constraintTitle: side => `Límite de planificación del lado ${side}`, constraintBody: side => `Con la resolución seleccionada, el componente ${side} tiene el índice ajustado más bajo y conviene comprobarlo primero en juegos relevantes.`, planningGap: 'diferencia de planificación', scoreDisclaimer: 'El porcentaje es la separación entre índices ajustados a la resolución. No es una pérdida de FPS medida ni una garantía del comportamiento real.', loadBuild: 'Cargar esta configuración en la calculadora', dashboard: 'Panel de planificación', normalizedBalance: 'Equilibrio normalizado de componentes', rawScoreNote: 'Estas son puntuaciones de planificación de PCBuildCheck antes del ajuste moderado de resolución; no son puntuaciones PassMark, FPS medidos ni resultados de laboratorio.', quickPlan: 'Plan de la configuración', targetResolution: 'Resolución objetivo', memoryPlan: 'Memoria prevista', cpuPlatform: 'Plataforma CPU', graphicsMemory: 'Memoria gráfica', publishedPower: 'Potencia publicada de CPU + GPU', psuPlan: 'Tamaño habitual de fuente', likelyConstraint: 'Límite probable', componentOverview: 'Resumen de componentes', processor: 'Procesador', graphicsCard: 'Tarjeta gráfica', normalizedScore: 'Puntuación de planificación normalizada', coresThreads: 'Núcleos / hilos', boostClock: 'Frecuencia boost', publishedTdp: 'TDP publicado', socket: 'Socket', architecture: 'Arquitectura', boardPower: 'Potencia de placa publicada', officialDetails: 'Detalles oficiales', verifyModel: 'Verificar modelo', resolutionHeading: 'Cómo cambia la resolución el posible límite', resolutionIntro: 'Las resoluciones más altas suelen trasladar más trabajo a la GPU. Son índices de planificación, no utilización medida.', pressureGraph: 'Gráfico de presión por resolución', selected: 'Seleccionada', graphNote: 'El gráfico aplica un ajuste moderado de resolución a las puntuaciones normalizadas. La barra más baja indica qué lado verificar primero; no predice los FPS.', resolutionTableHeaders: ['Resolución', 'Índice CPU', 'Índice GPU', 'Presión de CPU', 'Presión de GPU', 'Límite probable'], readiness: { title: 'Comprobaciones antes del montaje', memoryTitle: 'Plan de memoria', memoryBody: ram => `${ram}. Confirma que la placa elegida admite la generación y velocidad de memoria.`, psuTitle: 'Capacidad de la fuente', psuBody: (calculated, common) => `La capacidad calculada es de unos ${calculated} W; ${common} W es el siguiente tamaño habitual. Comprueba el mínimo del fabricante de la GPU.`, platformTitle: 'Plataforma', platformBody: socket => `Usa una placa base ${socket} y verifica BIOS, memoria y espacio de expansión disponible.`, coolingTitle: 'Refrigeración y espacio', coolingBody: 'Comprueba capacidad del disipador, longitud y grosor de la GPU, flujo de aire y espacio para el cable de alimentación.' }, bestFor: 'Útil para', verifyBeforeBuying: 'Comprobar antes de comprar', compatibilityHeading: 'Lista de compatibilidad', compatibilityItems: ['Confirma socket, chipset y compatibilidad de BIOS de la placa base.', 'Verifica refrigeración, espacio de la caja y memoria.', 'Comprueba capacidad de la fuente y conectores exactos de la GPU.'], interpretation: { title: 'Cómo interpretar este análisis', paragraphs: ['PCBuildCheck compara puntuaciones internas normalizadas de CPU y GPU derivadas de especificaciones publicadas. El modelo ayuda a identificar qué lado requiere más pruebas; no reproduce un benchmark de laboratorio.', 'El rendimiento real cambia con versión del juego, escena, ajustes, límite FPS, refrigeración, memoria, controladores y aplicaciones en segundo plano. Antes de mejorar, verifica el límite sospechado con mediciones repetibles de frame times y utilización.'], methodologyLink: 'Leer la metodología', fpsLink: 'Abrir la calculadora FPS dedicada' }, relatedBuilds: 'Configuraciones relacionadas', openAnalysis: 'Abrir análisis',
   },
+
+  ru: {
+    curated: "Кураторские примеры", sectionTitle: "Популярные проверки сборки ПК", sectionDescription: "Ознакомьтесь с шестью поддерживаемыми комбинациями CPU и GPU, охватывающими распространенные сценарии сборки 1080p, 1440p и 4K.", closeMatch: "Закрыть совпадение индекса", constraint: side => `${side}-side planning constraint`, gap: "разрыв в планировании", viewAnalysis: "Посмотреть полный анализ сборки", selectionNote: "Выбрано для покрытия различных бюджетов, платформ и разрешений, а не для живого рейтинга популярности.", reviewed: 'Reviewed', back: "Калькулятор узких мест ПК", analysis: "Анализ узких мест", metaDescription: (cpu, gpu, res) => `Review the ${cpu} and ${gpu} pairing at ${res}, including resolution-adjusted planning indexes, RAM, PSU and compatibility checks.`, reviewedLabel: 'Reviewed', planningNotice: "Анализ планирования, а не измеренный игровой тест", resultSummary: "Сводка результатов", balancedTitle: "Точное совпадение индекса с поправкой на разрешение", balancedBody: "Индексы планирования CPU и GPU близки при выбранном целевом разрешении. Реальные ограничения по-прежнему могут меняться в зависимости от игрового движка, сцены, настроек и целевой частоты кадров.", constraintTitle: side => `${side}-side planning constraint`, constraintBody: side => `At the selected target resolution, the ${side} has the lower adjusted planning index and deserves closer testing in relevant games.`, planningGap: "разрыв в планировании", scoreDisclaimer: "Этот процент представляет собой разделение между индексами планирования, скорректированными с учетом резолюции. Он не измеряется потерянным FPS, потерянной производительностью или гарантией поведения в реальной игре.", loadBuild: "Загрузите эту сборку в калькулятор", dashboard: "Панель планирования сборки", normalizedBalance: "Нормализованный баланс компонентов", rawScoreNote: "Это PCBuildCheck оценки планирования до умеренной корректировки разрешения. Это не результаты PassMark, измеренные FPS или результаты лабораторных исследований.", quickPlan: "Краткий план сборки", targetResolution: "Целевое разрешение", memoryPlan: "План памяти", cpuPlatform: "Платформа CPU", graphicsMemory: "Графическая память", publishedPower: "Опубликовано CPU + GPU мощность", psuPlan: "Общий плановый размер PSU", likelyConstraint: "Вероятное ограничение", componentOverview: "Обзор компонентов", processor: 'Processor', graphicsCard: "Видеокарта", normalizedScore: "Нормализованный показатель планирования", coresThreads: "Ядра/потоки", boostClock: "Увеличение частоты", publishedTdp: "Опубликовано TDP", socket: 'Socket', architecture: 'Architecture', boardPower: "Опубликованная мощность платы", officialDetails: "Официальные подробности", verifyModel: "Проверить модель", resolutionHeading: "Как разрешение меняет вероятное ограничение", resolutionIntro: "Более высокие выходные разрешения обычно требуют больше работы с GPU. Это индексы планирования, а не измеренное использование.", pressureGraph: "График давления разрешения", selected: 'Selected', graphNote: "На графике применяется корректировка рабочей нагрузки умеренного разрешения к нормализованным оценкам компонентов. Нижняя полоса указывает сторону, которую необходимо проверить в первую очередь; он не прогнозирует FPS.", resolutionTableHeaders: ['Resolution', "CPU индекс", "GPU индекс", "CPU — боковое давление", "GPU — боковое давление", "Вероятное ограничение"], readiness: { title: "Проверка готовности сборки", memoryTitle: "План памяти", memoryBody: ram => `${ram}. Confirm that the selected motherboard supports the memory generation and speed.`, psuTitle: "PSU емкость", psuBody: (calculated, common) => `Calculated capacity is about ${calculated}W; ${common}W is the next common planning size. Verify the GPU maker’s minimum.`, platformTitle: 'Platform', platformBody: socket => `Use a ${socket} motherboard and verify BIOS support, memory compatibility and available expansion space.`, coolingTitle: "Охлаждение и посадка", coolingBody: "Проверьте мощность охладителя CPU, длину и толщину GPU, воздушный поток корпуса и родной зазор для кабеля питания." }, bestFor: "Полезно для", verifyBeforeBuying: "Проверьте перед покупкой", compatibilityHeading: "Контрольный список совместимости", compatibilityItems: ["Подтвердите разъем материнской платы, набор микросхем и поддержку BIOS.", "Проверьте кулер, зазор в корпусе и совместимость памяти.", "Проверьте емкость PSU и точные разъемы питания GPU."], interpretation: { title: "Как интерпретировать этот анализ", paragraphs: ["PCBuildCheck сравнивает внутренне нормализованные показатели планирования CPU и GPU, полученные на основе опубликованных спецификаций. Модель помогает определить, какая сторона заслуживает более тщательного тестирования; он не воспроизводит лабораторный тест.", "Реальная производительность зависит от версии игры, сцены, настроек графики, ограничения кадров, охлаждения, конфигурации памяти, драйверов и фоновых приложений. Перед обновлением проверьте предполагаемый предел с помощью повторяемых измерений времени кадра и использования."], methodologyLink: "Читать методологию", fpsLink: "Откройте специальный калькулятор FPS." }, relatedBuilds: "Связанные проверки сборки", openAnalysis: "Открытый анализ",
+  },
 };
+
+Object.assign(COPY.ru, {
+  curated: 'Подобранные примеры',
+  closeMatch: 'Близкие индексы',
+  constraint: (side: string) => `Вероятное ограничение со стороны ${side}`,
+  reviewed: 'Проверено',
+  reviewedLabel: 'Проверено',
+  metaDescription: (cpu: string, gpu: string, resolution: string) =>
+    `Анализ сочетания ${cpu} и ${gpu} в ${resolution}: индексы с поправкой на разрешение, RAM, блок питания и совместимость.`,
+  constraintTitle: (side: string) => `Вероятное ограничение со стороны ${side}`,
+  constraintBody: (side: string) =>
+    `При выбранном разрешении у ${side} ниже скорректированный индекс. Сначала проверьте этот компонент в нужных играх.`,
+  processor: 'Процессор',
+  socket: 'Сокет',
+  architecture: 'Архитектура',
+  selected: 'Выбрано',
+  resolutionTableHeaders: ['Разрешение', 'Индекс CPU', 'Индекс GPU', 'Нагрузка на CPU', 'Нагрузка на GPU', 'Вероятное ограничение'],
+  readiness: {
+    title: 'Проверка готовности сборки',
+    memoryTitle: 'Память',
+    memoryBody: (ram: string) => `${ram}. Убедитесь, что материнская плата поддерживает выбранное поколение и скорость памяти.`,
+    psuTitle: 'Мощность блока питания',
+    psuBody: (calculated: number, common: number) =>
+      `Расчётная мощность — около ${calculated} Вт; ${common} Вт — следующий распространённый номинал. Проверьте минимум, указанный производителем видеокарты.`,
+    platformTitle: 'Платформа',
+    platformBody: (socket: string) =>
+      `Используйте материнскую плату с сокетом ${socket}; проверьте поддержку BIOS, совместимость памяти и доступное пространство.`,
+    coolingTitle: 'Охлаждение и габариты',
+    coolingBody: 'Проверьте мощность кулера CPU, длину и толщину видеокарты, вентиляцию корпуса и пространство для кабелей питания.',
+  },
+} satisfies Partial<BuildLocaleCopy>);
 
 export function getPopularBuildCopy(locale: Locale) {
   return COPY[locale];
@@ -107,6 +142,8 @@ const PRESSURE_LABELS: Record<Locale, Record<string, string>> = {
   fr: { High: 'Élevée', Moderate: 'Modérée', Lower: 'Plus faible', 'Very high': 'Très élevée' },
   it: { High: 'Alta', Moderate: 'Moderata', Lower: 'Più bassa', 'Very high': 'Molto alta' },
   es: { High: 'Alta', Moderate: 'Moderada', Lower: 'Más baja', 'Very high': 'Muy alta' },
+
+  ru: { High: 'Высокая', Moderate: 'Умеренная', Lower: 'Ниже', 'Very high': 'Очень высокая' },
 };
 
 export function localizePressureLabel(locale: Locale, label: string) {
@@ -119,6 +156,8 @@ const REVIEWED_DATES: Record<Locale, string> = {
   fr: '22 août 2026',
   it: '22 agosto 2026',
   es: '22 de agosto de 2026',
+
+  ru: "22 августа 2026 г.",
 };
 
 export function getPopularBuildReviewedDate(locale: Locale) {
@@ -132,24 +171,28 @@ export function getLocalizedBuildDetails(build: PopularBuild, locale: Locale) {
     fr: `Configuration gaming ${build.resolution}`,
     it: `Build gaming ${build.resolution}`,
     es: `Configuración gaming ${build.resolution}`,
+    ru: `Игровая сборка для ${build.resolution}`,
   };
   const overviewByLocale: Record<Exclude<Locale, 'en'>, string> = {
     de: `Eine praktische Kombination aus ${build.resolution}-Ziel, ${build.ramLabel} und den gewählten CPU-/GPU-Klassen. Prüfe Spiele-Benchmarks, Plattformkosten, Kühlung und Stromversorgung vor dem Kauf.`,
     fr: `Une association pratique visant le ${build.resolution} avec ${build.ramLabel}. Vérifiez les benchmarks de vos jeux, le coût de la plateforme, le refroidissement et l’alimentation avant achat.`,
     it: `Un abbinamento pratico per il ${build.resolution} con ${build.ramLabel}. Prima dell’acquisto verifica benchmark dei giochi, costo della piattaforma, raffreddamento e alimentazione.`,
     es: `Una combinación práctica para ${build.resolution} con ${build.ramLabel}. Antes de comprar, comprueba benchmarks de tus juegos, coste de plataforma, refrigeración y alimentación.`,
+    ru: `Практичная комбинация для ${build.resolution} с ${build.ramLabel}. Перед покупкой проверьте тесты нужных игр, совместимость платформы, охлаждение и питание.`,
   };
   const bestFor: Record<Exclude<Locale, 'en'>, string[]> = {
     de: [`Gaming bei ${build.resolution}`, 'Vergleich einer vollständigen Teileliste', 'Planung von Plattform und Netzteil'],
     fr: [`Jeu en ${build.resolution}`, 'Comparaison d’une configuration complète', 'Planification de la plateforme et de l’alimentation'],
     it: [`Gaming a ${build.resolution}`, 'Confronto di una configurazione completa', 'Pianificazione di piattaforma e alimentatore'],
     es: [`Gaming a ${build.resolution}`, 'Comparación de una configuración completa', 'Planificación de plataforma y fuente'],
+    ru: [`Игры в ${build.resolution}`, 'Сравнение полной конфигурации', 'Планирование платформы и блока питания'],
   };
   const watchFor: Record<Exclude<Locale, 'en'>, string[]> = {
     de: ['Mainboard- und BIOS-Kompatibilität prüfen', 'Gehäuse, Kühlung und Stromanschlüsse prüfen', 'Ergebnis mit Benchmarks der eigenen Spiele bestätigen'],
     fr: ['Vérifier la carte mère et le BIOS', 'Vérifier le boîtier, le refroidissement et les connecteurs', 'Confirmer avec les benchmarks de vos jeux'],
     it: ['Verificare scheda madre e BIOS', 'Controllare case, raffreddamento e connettori', 'Confermare con benchmark dei propri giochi'],
     es: ['Verificar placa base y BIOS', 'Comprobar caja, refrigeración y conectores', 'Confirmar con benchmarks de tus juegos'],
+    ru: ['Проверить совместимость материнской платы и BIOS', 'Проверить корпус, охлаждение и разъёмы питания', 'Сверить результат с тестами нужных игр'],
   };
   const local = locale as Exclude<Locale, 'en'>;
   return { ...build, category: categoryByLocale[local], overview: overviewByLocale[local], bestFor: bestFor[local], watchFor: watchFor[local] };

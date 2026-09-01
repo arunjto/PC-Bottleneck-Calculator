@@ -128,5 +128,31 @@
     "tools/game-settings-optimizer": "herramientas/optimizador-ajustes-juego",
     "tools/ssd-upgrade-calculator": "herramientas/calculadora-actualizacion-ssd",
     "tools/pc-upgrade-priority-calculator": "herramientas/calculadora-prioridad-actualizacion-pc"
+  },
+  "ru": {
+    "about": "o-nas",
+    "fps-calculator": "kalkulyator-fps",
+    "psu-calculator": "kalkulyator-bloka-pitaniya",
+    "contact": "kontakty",
+    "privacy": "konfidencialnost",
+    "thank-you": "spasibo",
+    "terms": "usloviya",
+    "disclaimer": "otkaz-ot-otvetstvennosti",
+    "cookie-policy": "politika-cookie",
+    "author": "avtor",
+    "methodology": "metodologiya",
+    "tools": "instrumenty",
+    "tools/gpu-upgrade-calculator": "instrumenty/kalkulyator-apgreida-gpu",
+    "tools/cpu-upgrade-calculator": "instrumenty/kalkulyator-apgreida-cpu",
+    "tools/component-comparison": "instrumenty/sravnenie-komponentov",
+    "tools/what-games-can-my-pc-run": "instrumenty/kakie-igry-potyanet-moy-pc",
+    "tools/vram-calculator": "instrumenty/kalkulyator-vram",
+    "tools/gaming-ram-calculator": "instrumenty/kalkulyator-igrovoi-ram",
+    "tools/frame-time-calculator": "instrumenty/kalkulyator-vremeni-kadra",
+    "tools/fps-refresh-rate-calculator": "instrumenty/kalkulyator-fps-i-chastoty-obnovleniya",
+    "tools/resolution-scaling-calculator": "instrumenty/kalkulyator-masshtabirovaniya-razresheniya",
+    "tools/game-settings-optimizer": "instrumenty/optimizator-nastroek-igr",
+    "tools/ssd-upgrade-calculator": "instrumenty/kalkulyator-apgreida-ssd",
+    "tools/pc-upgrade-priority-calculator": "instrumenty/kalkulyator-prioriteta-apgreida-pc"
   }
 }

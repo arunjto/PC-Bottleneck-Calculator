@@ -137,6 +137,24 @@ const COPY: Record<Locale, Copy> = {
     tendencies: { 'cpu-heavy': 'Depende de la CPU', 'gpu-heavy': 'Depende de la GPU', balanced: 'Equilibrado' },
     qualityLabels: { low: 'Bajo', medium: 'Medio', high: 'Alto', ultra: 'Ultra' },
   },
+
+  ru: {
+    cpu: "Процессор (CPU)", gpu: "Видеокарта (GPU)", ram: "Установленная RAM", resolution: 'Разрешение', quality: "Качество графики", target: "Целевая частота кадров",
+    chooseCpu: "Выберите процессор", chooseGpu: "Выберите видеокарту", searchCpu: "Поиск процессоров", searchGpu: "Поиск видеокарт", calculate: "Проверить игры для этого ПК",
+    assumptions: "Предположения при планировании: встроенный рендеринг, FXAA, память 3200 МТ/с и NVMe SSD. Откройте игру в подробном калькуляторе, чтобы изменить эти входные данные.",
+    resultsTitle: "Игры, которые может запускать этот компьютер", resultsIntro: "Это смоделированные диапазоны планирования, а не измеренные ориентиры. Используйте группы, чтобы составить список игр и настроек, которые стоит протестировать.",
+    searchGames: "Поиск результатов по названию игры", allGames: "Все игры", noMatches: "Ни одна игра не соответствует этому фильтру.", fpsRange: "Предполагаемый диапазон", onePercentLow: "Предполагаемый минимум на 1%", likelyLimit: "Вероятный предел",
+    suggestedPreset: "Предлагаемая предустановка", currentPresetWorks: "Выбранный пресет", detailedEstimate: "Открыть подробную смету FPS", ramWarning: "RAM под профилем игры", vramWarning: "Расчетное давление VRAM",
+    speculative: "Предварительный релиз/спекулятивный профиль", nativeNote: "Оценка собственного разрешения",
+    statuses: {
+      strong: { label: "Сильная посадка", description: "Нижний предел диапазона планирования соответствует вашей цели." },
+      target: { label: "Достигает цели", description: "Средняя точка соответствует вашей цели, но более тяжелые сцены могут оказаться ниже нее." },
+      tune: { label: "Настройка настроек", description: "Для достижения цели может потребоваться более низкая предустановка." },
+      below: { label: "Ниже цели", description: "Даже верхняя оценка ниже выбранной вами цели." },
+    },
+    tendencies: { 'cpu-heavy': 'Зависит от CPU', 'gpu-heavy': 'Зависит от GPU', balanced: 'Сбалансированная' },
+    qualityLabels: { low: 'Низкое', medium: 'Среднее', high: 'Высокое', ultra: 'Ультра' },
+  },
 };
 
 const QUALITY_ORDER: Array<'ultra' | 'high' | 'medium' | 'low'> = ['ultra', 'high', 'medium', 'low'];

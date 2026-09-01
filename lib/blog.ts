@@ -180,6 +180,13 @@ export function getAllPosts(locale?: string): BlogPostMeta[] {
     const { data: englishData } = matter(englishRaw);
     const supportedLocales = (englishData.locales as string[] | undefined);
 
+    // Do not publish English fallback articles under Russian URLs. Russian
+    // posts become available only after their frontmatter explicitly includes
+    // `ru` and a real localized MDX file is added.
+    if (locale === 'ru' && !supportedLocales?.includes('ru')) {
+      return null;
+    }
+
     // Do not publish an English fallback under another locale URL when the
     // post explicitly declares the languages in which it is available.
     if (locale && supportedLocales && !supportedLocales.includes(locale)) {
@@ -231,6 +238,9 @@ export function getPostBySlug(slug: string, locale?: string): BlogPost | null {
     ? matter(fs.readFileSync(englishPath, 'utf-8')).data
     : {};
   const supportedLocales = englishData.locales as string[] | undefined;
+  if (locale === 'ru' && !supportedLocales?.includes('ru')) {
+    return null;
+  }
   if (locale && supportedLocales && !supportedLocales.includes(locale)) {
     return null;
   }

@@ -10,7 +10,7 @@ import { i18n, isSupportedLocale } from '@/i18n-config';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  const locale = lang === 'it' ? 'it_IT' : lang === 'fr' ? 'fr_FR' : lang === 'de' ? 'de_DE' : lang === 'es' ? 'es_ES' : 'en_US';
+  const locale = lang === 'it' ? 'it_IT' : lang === 'fr' ? 'fr_FR' : lang === 'de' ? 'de_DE' : lang === 'es' ? 'es_ES' : lang === 'ru' ? 'ru_RU' : 'en_US';
 
   return {
     metadataBase: new URL('https://www.pcbuildcheck.com'),
