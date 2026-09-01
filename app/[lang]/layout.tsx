@@ -6,6 +6,7 @@ import Script from 'next/script';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
+import { ConsentController } from '@/components/privacy/consent-controller';
 import { i18n, isSupportedLocale } from '@/i18n-config';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -90,10 +91,28 @@ export default async function RootLayout({
   const adsConfigured =
     process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true' &&
     process.env.NEXT_PUBLIC_GOOGLE_CERTIFIED_CMP_CONFIGURED === 'true';
+  const gaEnabled = process.env.NEXT_PUBLIC_GA_ENABLED !== 'false';
+  const gaMeasurementId =
+    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-7W6RG58JC7';
 
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        {gaEnabled && (
+          <Script id="google-consent-default" strategy="beforeInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              window.gtag = window.gtag || gtag;
+              gtag('consent', 'default', {
+                analytics_storage: 'denied',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied'
+              });
+            `}
+          </Script>
+        )}
         <meta
           name="google-adsense-account"
           content="ca-pub-9111916848868133"
@@ -135,6 +154,10 @@ export default async function RootLayout({
             crossOrigin="anonymous"
           />
         )}
+        <ConsentController
+          lang={lang}
+          measurementId={gaEnabled ? gaMeasurementId : undefined}
+        />
       </body>
     </html>
   );

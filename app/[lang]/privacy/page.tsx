@@ -6,6 +6,7 @@ import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
+import { getConsentCopy } from '@/lib/consent-i18n';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -30,6 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
 export default async function PrivacyPage({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const consentCopy = getConsentCopy(lang);
   const privacyUrl = `https://www.pcbuildcheck.com${getLocalizedPath(lang, 'privacy')}`;
   const updatedDate = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date('2026-07-14T00:00:00Z'));
 
@@ -102,11 +104,13 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
 
                 {/* Specific Consent Manager Button Section (Keeping explicit as it wraps a component) */}
                 <h2 id="preferences" className="text-2xl font-bold text-primary border-b-2 border-border pb-3 mt-10 mb-6">
-                  {lang === 'it' ? '6. Preferenze Cookie / Consenso' : '6. Cookie / Consent Preferences'}
+                  {consentCopy.preferencesSectionTitle}
                 </h2>
                 <p className="leading-7">
-                  {lang === 'it' ? 'Puoi aprire il gestore del consenso qui: ' : 'You can open the consent manager here: '}
-                  <ConsentManagerButton className="underline text-primary" />
+                  {consentCopy.openManagerIntro}{' '}
+                  <ConsentManagerButton className="underline text-primary">
+                    {consentCopy.managePreferences}
+                  </ConsentManagerButton>
                   .
                 </p>
 
