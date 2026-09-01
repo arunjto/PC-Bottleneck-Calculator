@@ -31,6 +31,9 @@ export const blogSlugTranslations: Record<string, Record<string, string>> = {
     'cpu-vs-gpu-bottleneck-explained': 'bottleneck-cpu-vs-gpu-explicado',
     'how-to-check-pc-bottleneck': 'como-verificar-bottleneck-pc',
   },
+  ru: {
+    'how-to-check-pc-bottleneck': 'kak-proverit-uzkoe-mesto-pk',
+  },
 };
 
 /**
