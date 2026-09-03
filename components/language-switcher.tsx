@@ -10,6 +10,11 @@ import {
     getCanonicalBlogSlug,
 } from '@/lib/blog-slug-translations';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
+import { getAvailableLocalizedTaxonomySlug } from '@/lib/taxonomy-translations';
+import type {
+    TaxonomyAvailability,
+    TaxonomyKind,
+} from '@/lib/taxonomy-translations';
 
 const languageOptions: Record<Locale, { label: string; flag: string }> = {
     en: { label: 'English', flag: '/flags/en.svg' },
@@ -20,7 +25,11 @@ const languageOptions: Record<Locale, { label: string; flag: string }> = {
     ru: { label: 'Русский', flag: '/flags/ru.svg' },
 };
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({
+    taxonomyAvailability,
+}: {
+    taxonomyAvailability: TaxonomyAvailability;
+}) {
     const pathname = usePathname();
     const detailsRef = useRef<HTMLDetailsElement>(null);
     const summaryRef = useRef<HTMLElement>(null);
@@ -72,6 +81,31 @@ export function LanguageSwitcher() {
 
         if (!pathAfterLocale) {
             return `/${newLocale}`;
+        }
+
+        // Tag and category slugs are localized independently. Link to the
+        // translated archive only when it exists in the target locale;
+        // otherwise fall back to that locale's blog index instead of a 404.
+        const blogTaxonomyMatch = pathAfterLocale.match(
+            /^blog\/(tag|category)\/([^/]+)$/
+        );
+        if (blogTaxonomyMatch) {
+            if (newLocale === currentLocale) {
+                return pathname;
+            }
+
+            const kind = blogTaxonomyMatch[1] as TaxonomyKind;
+            const localizedSlug = getAvailableLocalizedTaxonomySlug(
+                kind,
+                currentLocale,
+                blogTaxonomyMatch[2],
+                newLocale,
+                taxonomyAvailability
+            );
+
+            return localizedSlug
+                ? `/${newLocale}/blog/${kind}/${localizedSlug}`
+                : `/${newLocale}/blog`;
         }
 
         // Blog articles are localized independently from normal app routes.
