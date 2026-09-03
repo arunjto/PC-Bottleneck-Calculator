@@ -4,8 +4,20 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { Menu, X } from 'lucide-react';
 import { getLocalizedPath } from '@/lib/path-translations';
-import { Locale } from '@/i18n-config';
+import { i18n, Locale } from '@/i18n-config';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
+import { getAllCategorySlugs, getAllTagSlugs } from '@/lib/blog';
+import type { TaxonomyAvailability } from '@/lib/taxonomy-translations';
+
+const taxonomyAvailability = Object.fromEntries(
+  i18n.locales.map((locale) => [
+    locale,
+    {
+      tag: getAllTagSlugs(locale),
+      category: getAllCategorySlugs(locale),
+    },
+  ])
+) as TaxonomyAvailability;
 
 export function Navbar({ lang }: { lang: string; dict?: unknown }) {
   const t = getSiteChromeCopy(lang);
@@ -56,7 +68,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
 
           {/* Right controls */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            <LanguageSwitcher />
+            <LanguageSwitcher taxonomyAvailability={taxonomyAvailability} />
             <ThemeToggle lang={lang} />
             <details className="group xl:hidden">
               <summary
