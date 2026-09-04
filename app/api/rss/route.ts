@@ -6,6 +6,10 @@
 
 import { generateRSSFeed } from '@/lib/rss';
 
+// Blog content changes only when a new deployment is created, so generate the
+// feed once at build time instead of invoking Fluid Compute for RSS requests.
+export const dynamic = 'force-static';
+
 /**
  * GET handler for the RSS feed.
  * Returns XML with appropriate content type headers.
