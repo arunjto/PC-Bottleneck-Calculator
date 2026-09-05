@@ -194,12 +194,19 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
               )}
               {lang === 'ru' && (
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                  Хотите проверить расчёт на своём компьютере?{' '}
+                  Хотите понять расчёт и проверить его на своём компьютере?{' '}
+                  <Link
+                    href="/ru/blog/kak-uznat-skolko-fps-budet-v-igre"
+                    className="font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                  >
+                    Узнайте, как оценивать FPS и читать диапазон результата,
+                  </Link>{' '}
+                  а затем{' '}
                   <Link
                     href="/ru/blog/kak-proverit-uzkoe-mesto-pk"
                     className="font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                   >
-                    Следуйте пошаговому руководству по измерению FPS и поиску ограничений системы.
+                    выполните повторяемую проверку производительности.
                   </Link>
                 </p>
               )}
