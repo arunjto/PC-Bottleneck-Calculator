@@ -202,9 +202,9 @@ const COPY: Record<Locale, MethodologyCopy> = {
   },
 
   ru: {
-    eyebrow: 'Methodology',
+    eyebrow: 'Методика',
     title: "Как работает этот калькулятор",
-    inputsLabel: 'Inputs',
+    inputsLabel: 'Исходные данные',
     calculationLabel: "Модель расчета",
     interpretationLabel: "Как прочитать результат",
     limitationsLabel: "Важные ограничения",
@@ -219,7 +219,7 @@ const COPY: Record<Locale, MethodologyCopy> = {
         limitations: "Игры, рабочие нагрузки, охлаждение, драйверы, BIOS, ограничения мощности и разрешение могут изменить реальное узкое место. Проверьте с помощью тестов, соответствующих вашей конкретной рабочей нагрузке.",
       },
       fps: {
-        summary: `FPS model ${FPS_MODEL_VERSION} produces a planning range from a game reference profile and the selected hardware and graphics settings. It is not a measured benchmark.`,
+        summary: `Модель FPS ${FPS_MODEL_VERSION} рассчитывает ориентировочный диапазон по эталонному профилю игры, выбранному оборудованию и настройкам графики. Это не результат измеренного теста.`,
         inputs: "Индексы CPU и GPU, профиль игры, разрешение, предустановка качества, масштабирование, сглаживание, емкость и скорость RAM, давление VRAM и тип хранилища.",
         calculation: "Эталонное разрешение 1080p High для каждой игры масштабируется с учетом взвешенной CPU/GPU емкости, разрешения и коэффициентов качества, поддерживаемого масштабирования, нехватки памяти и меньших системных модификаторов.",
         formula: "Примерное значение FPS = ссылка на игру × аппаратный масштаб × разрешение × качество × поддерживаемые модификаторы.",
