@@ -74,6 +74,18 @@ const taxonomySlugTranslations: Record<
       ru: 'proizvoditelnost-pk',
     },
     {
+      en: 'gaming-fps',
+      ru: 'igrovoy-fps',
+    },
+    {
+      en: 'fps-calculator',
+      ru: 'kalkulyator-fps',
+    },
+    {
+      en: 'frame-time',
+      ru: 'vremya-kadra',
+    },
+    {
       en: 'optimization',
       it: 'ottimizzazione',
       fr: 'optimisation',
