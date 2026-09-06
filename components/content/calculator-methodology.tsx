@@ -26,9 +26,9 @@ type MethodologyCopy = {
 
 const COPY: Record<Locale, MethodologyCopy> = {
   en: {
-    eyebrow: 'Методология',
+    eyebrow: 'Methodology',
     title: 'How this calculator works',
-    inputsLabel: 'Исходные данные',
+    inputsLabel: 'Inputs',
     calculationLabel: 'Calculation model',
     interpretationLabel: 'How to read the result',
     limitationsLabel: 'Important limitations',
@@ -43,7 +43,7 @@ const COPY: Record<Locale, MethodologyCopy> = {
         limitations: 'Games, workloads, cooling, drivers, BIOS, power limits and resolution can change the real bottleneck. Verify with benchmarks matching your exact workload.',
       },
       fps: {
-        summary: `Модель FPS ${FPS_MODEL_VERSION} рассчитывает ориентировочный диапазон по игровому профилю, выбранному оборудованию и графическим настройкам. Это не результат измеренного теста.`,
+        summary: `The FPS model ${FPS_MODEL_VERSION} estimates a planning range from the selected game profile, hardware and graphics settings. It is not a measured benchmark.`,
         inputs: 'CPU and GPU indices, game profile, resolution, quality preset, upscaling, anti-aliasing, RAM capacity and speed, VRAM pressure and storage type.',
         calculation: 'A per-game 1080p High reference is scaled by weighted CPU/GPU capacity, resolution and quality factors, supported upscaling, memory pressure and smaller system modifiers.',
         formula: 'Estimated FPS = game reference × hardware scale × resolution × quality × supported modifiers',
