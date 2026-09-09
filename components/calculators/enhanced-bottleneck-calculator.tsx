@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
 import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-database';
 import { Cpu, Zap, HardDrive, Monitor, Calculator, ShieldCheck } from 'lucide-react';
+import type { Locale } from '@/i18n-config';
 
 // Dynamically load the heavy results component
 const ComprehensiveBottleneckResults = dynamic(
@@ -58,7 +59,7 @@ const gpuOptions = allGPUs.map(gpu => ({
   price: gpu.currentPrice
 }));
 
-export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
+export function EnhancedBottleneckCalculator({ dict, lang }: { dict: any; lang: Locale }) {
   const [selectedCPU, setSelectedCPU] = useState('');
   const [selectedGPU, setSelectedGPU] = useState('');
   const [selectedRAM, setSelectedRAM] = useState('');
@@ -95,6 +96,7 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
     setSelectedGPU(gpu);
     setSelectedRAM(ram);
     setSelectedResolution(resolution);
+    setShowResults(true);
 
     // The preset has been consumed. Keep the clean canonical homepage URL in
     // the address bar so temporary calculator state is not shared or crawled.
@@ -168,6 +170,7 @@ export function EnhancedBottleneckCalculator({ dict }: { dict: any }) {
             gpu={gpu}
             ram={ram}
             resolution={selectedResolution}
+            lang={lang}
             onBack={() => setShowResults(false)}
             dict={dict}
           />

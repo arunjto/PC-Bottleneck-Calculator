@@ -115,6 +115,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         />
         <div id="calculator" className="scroll-mt-20 [overflow-anchor:none]">
           <EnhancedBottleneckCalculator
+            lang={lang}
             dict={{ calculator: dict.calculator, results: dict.results }}
           />
         </div>

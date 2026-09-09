@@ -27,12 +27,15 @@ import {
 } from 'lucide-react';
 import { CPU, GPU, calculatePSURequirement } from '@/lib/hardware-database';
 import { calculateResolutionAdjustedBalance, type GamingResolution } from '@/lib/bottleneck-model';
+import type { Locale } from '@/i18n-config';
+import { BottleneckEnhancements } from '@/components/calculators/bottleneck-enhancements';
 
 interface ComprehensiveBottleneckResultsProps {
   cpu: CPU & { officialUrl?: string };
   gpu: GPU & { officialUrl?: string };
   ram: { id: string; name: string; tier: string; specs: string; price: number };
   resolution: string;
+  lang: Locale;
   onBack: () => void;
   dict: any;
 }
@@ -65,6 +68,7 @@ export function ComprehensiveBottleneckResults({
   gpu,
   ram,
   resolution,
+  lang,
   onBack,
   dict
 }: ComprehensiveBottleneckResultsProps) {
@@ -296,6 +300,14 @@ export function ComprehensiveBottleneckResults({
           </p>
         </CardContent>
       </Card>
+
+      <BottleneckEnhancements
+        cpu={cpu}
+        gpu={gpu}
+        ram={ram}
+        resolution={resolution}
+        lang={lang}
+      />
 
       {/* 🔹 1. Resolution Impact & Benchmarks */}
       <Card>
