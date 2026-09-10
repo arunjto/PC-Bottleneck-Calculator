@@ -3,6 +3,7 @@ import { Locale } from '@/i18n-config';
 export type SiteChromeCopy = {
   home: string;
   tools: string;
+  canIRun: string;
   fpsCalculator: string;
   psuCalculator: string;
   blog: string;
@@ -33,6 +34,7 @@ const SITE_CHROME_COPY: Record<Locale, SiteChromeCopy> = {
   en: {
     home: 'Home',
     tools: 'Tools',
+    canIRun: 'Can I Run It?',
     fpsCalculator: 'FPS Calculator',
     psuCalculator: 'PSU Calculator',
     blog: 'Blog',
@@ -61,6 +63,7 @@ const SITE_CHROME_COPY: Record<Locale, SiteChromeCopy> = {
   it: {
     home: 'Home',
     tools: 'Strumenti',
+    canIRun: 'Posso eseguirlo?',
     fpsCalculator: 'Calcolatore FPS',
     psuCalculator: 'Calcolatore PSU',
     blog: 'Blog',
@@ -89,6 +92,7 @@ const SITE_CHROME_COPY: Record<Locale, SiteChromeCopy> = {
   fr: {
     home: 'Accueil',
     tools: 'Outils',
+    canIRun: 'Puis-je le lancer ?',
     fpsCalculator: 'Calculateur FPS',
     psuCalculator: "Calculateur d’alimentation",
     blog: 'Blog',
@@ -117,6 +121,7 @@ const SITE_CHROME_COPY: Record<Locale, SiteChromeCopy> = {
   de: {
     home: 'Startseite',
     tools: 'Werkzeuge',
+    canIRun: 'Kann ich es spielen?',
     fpsCalculator: 'FPS-Rechner',
     psuCalculator: 'Netzteil-Rechner',
     blog: 'Blog',
@@ -145,6 +150,7 @@ const SITE_CHROME_COPY: Record<Locale, SiteChromeCopy> = {
   es: {
     home: 'Inicio',
     tools: 'Herramientas',
+    canIRun: '¿Puedo ejecutarlo?',
     fpsCalculator: 'Calculadora FPS',
     psuCalculator: 'Calculadora de PSU',
     blog: 'Blog',
@@ -173,6 +179,7 @@ const SITE_CHROME_COPY: Record<Locale, SiteChromeCopy> = {
   ru: {
     home: 'Главная',
     tools: 'Инструменты',
+    canIRun: 'Потянет ли мой ПК?',
     fpsCalculator: 'Калькулятор FPS',
     psuCalculator: 'Калькулятор блока питания',
     blog: 'Блог',

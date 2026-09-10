@@ -13,6 +13,7 @@ import {
   Facebook,
   Instagram,
   Wrench,
+  Gamepad2,
 } from 'lucide-react';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { Locale } from '@/i18n-config';
@@ -25,6 +26,7 @@ export function Footer({ lang }: { dict?: unknown; lang: string }) {
   const footerLinks = [
     { href: `/${lang}`, label: t.home, icon: Home },
     { href: getLocalizedPath(locale, 'tools'), label: t.tools, icon: Wrench },
+    { href: getLocalizedPath(locale, 'can-i-run'), label: t.canIRun, icon: Gamepad2 },
     { href: `/${lang}/blog`, label: t.blog, icon: BookOpen },
     { href: getLocalizedPath(locale, 'about'), label: t.about, icon: Info },
     { href: getLocalizedPath(locale, 'methodology'), label: t.methodology, icon: FlaskConical },
