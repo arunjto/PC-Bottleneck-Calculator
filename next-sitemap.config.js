@@ -41,6 +41,8 @@ module.exports = {
         const shouldAddExplicitly =
           canonicalPath === 'fps-calculator' ||
           canonicalPath === 'psu-calculator' ||
+          canonicalPath === 'can-i-run' ||
+          canonicalPath.startsWith('can-i-run/') ||
           canonicalPath.startsWith('tools/');
         if (!shouldAddExplicitly) continue;
         const entry = await config.transform(config, `/${locale}/${canonicalPath}`);
