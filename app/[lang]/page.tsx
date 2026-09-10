@@ -7,6 +7,7 @@ import { FeaturedCalculators } from '@/components/content/featured-calculators';
 import { PopularBuilds } from '@/components/content/popular-builds';
 import { BottleneckFieldGuide } from '@/components/content/bottleneck-field-guide';
 import { CalculatorMaintainer } from '@/components/content/calculator-maintainer';
+import { BottleneckVerification } from '@/components/content/bottleneck-verification';
 
 import { getDictionary } from '@/get-dictionary';
 import { isSupportedLocale, Locale } from '@/i18n-config';
@@ -119,6 +120,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             dict={{ calculator: dict.calculator, results: dict.results }}
           />
         </div>
+        <BottleneckVerification lang={lang} />
         <PopularBuilds lang={lang} />
         <CalculatorMethodology lang={lang} variant="bottleneck" />
 
