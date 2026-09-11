@@ -5,6 +5,7 @@ import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { constructMetadataAlternates } from "@/lib/seo";
 import { FpsGuideContent } from "@/components/content/fps-guide-content";
+import { FpsRangeGuide } from "@/components/content/fps-range-guide";
 import { CalculatorMethodology } from "@/components/content/calculator-methodology";
 import { FAQSection } from "@/components/faq/faq-section";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -44,7 +45,8 @@ export async function generateMetadata({
     keywords: [
       "FPS calculator",
       "FPS estimator",
-      "PC Builds fps calculator",
+      "how many FPS will I get",
+      "FPS calculator for laptop",
       "gaming performance predictor",
       "frame rate calculator",
       "PC FPS benchmark"
@@ -125,6 +127,9 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
         </header>
         <div id="fps-calculator" className="scroll-mt-20">
           <FpsCalculatorClient dict={dict} lang={lang} />
+        </div>
+        <div className="mx-auto mt-8 max-w-4xl">
+          <FpsRangeGuide lang={lang} />
         </div>
         {cs2Spotlight && (
           <section

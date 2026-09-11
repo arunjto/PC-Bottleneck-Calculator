@@ -15,8 +15,8 @@ type VerificationCopy = {
 
 const COPY: Record<Locale, VerificationCopy> = {
   en: {
-    eyebrow: 'Verify the estimate',
-    title: 'How to check whether your PC is actually bottlenecked',
+    eyebrow: 'PC bottleneck test',
+    title: 'PC Bottleneck Test: How to Check Whether Your CPU or GPU Is Limiting Performance',
     description: 'Use the calculator as a planning signal, then confirm the likely constraint in a repeatable game or workload.',
     steps: [
       'Test the same scene or benchmark route and record average FPS and frame times.',
@@ -75,8 +75,8 @@ const COPY: Record<Locale, VerificationCopy> = {
     note: 'Kein einzelner Auslastungswert oder Rechnerwert beweist einen Flaschenhals in jeder Arbeitslast.',
   },
   es: {
-    eyebrow: 'Verifica la estimación',
-    title: 'Cómo comprobar si tu PC tiene realmente un cuello de botella',
+    eyebrow: 'Prueba la combinación',
+    title: 'Test de cuello de botella para PC: cómo comprobar CPU y GPU',
     description: 'Usa la calculadora como señal de planificación y confirma después el posible límite en una prueba de juego repetible.',
     steps: [
       'Prueba la misma escena o recorrido y registra los FPS medios y los tiempos de fotograma.',
