@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "dev:webpack": "next dev",
+    "check:internal-links": "node scripts/check-internal-links.mjs",
+    "prebuild": "npm run check:internal-links",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
