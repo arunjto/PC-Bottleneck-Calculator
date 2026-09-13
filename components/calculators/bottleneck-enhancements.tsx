@@ -87,6 +87,30 @@ function getRank(score: number, scores: number[]) {
   return 1 + scores.filter((candidate) => candidate > score).length;
 }
 
+async function copyText(value: string) {
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch {
+    const textArea = document.createElement('textarea');
+    textArea.value = value;
+    textArea.setAttribute('readonly', '');
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      return document.execCommand('copy');
+    } catch {
+      return false;
+    } finally {
+      document.body.removeChild(textArea);
+    }
+  }
+}
+
 function Status({ ready, readyLabel, reviewLabel }: { ready: boolean; readyLabel: string; reviewLabel: string }) {
   return ready ? (
     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
@@ -164,27 +188,41 @@ export function BottleneckEnhancements({ cpu, gpu, ram, resolution, lang }: Prop
     resolution,
   });
 
-  const getShareUrl = () => `${window.location.origin}${getLocalizedPath(lang, '')}?${resultQuery.toString()}`;
+  const getShareUrl = () => {
+    const url = new URL(getLocalizedPath(lang, ''), window.location.origin);
+    url.search = resultQuery.toString();
+    url.hash = 'calculator';
+    return url.toString();
+  };
 
   const copyResultLink = async () => {
-    try {
-      await navigator.clipboard.writeText(getShareUrl());
-      setCopyState('copied');
-    } catch {
-      setCopyState('error');
+    const copied = await copyText(getShareUrl());
+    setCopyState(copied ? 'copied' : 'error');
+
+    if (copied) {
+      window.setTimeout(() => setCopyState('idle'), 2500);
     }
   };
 
   const shareResult = async () => {
     const url = getShareUrl();
-    if (navigator.share) {
+    const shareData = {
+      title: `${cpu.name} + ${gpu.name}`,
+      text: `${relativeLabel()}: ${selectedBalance.gapPercentage}%`,
+      url,
+    };
+    const canUseNativeShare = typeof navigator.share === 'function'
+      && (typeof navigator.canShare !== 'function' || navigator.canShare(shareData));
+
+    if (canUseNativeShare) {
       try {
-        await navigator.share({ title: `${cpu.name} + ${gpu.name}`, text: `${relativeLabel()}: ${selectedBalance.gapPercentage}%`, url });
+        await navigator.share(shareData);
         return;
-      } catch {
-        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
       }
     }
+
     await copyResultLink();
   };
 
@@ -302,7 +340,9 @@ export function BottleneckEnhancements({ cpu, gpu, ram, resolution, lang }: Prop
           <Button type="button" onClick={copyResultLink} variant="outline"><Copy className="mr-2 h-4 w-4" />{copyState === 'copied' ? copy.copied : copy.copyLink}</Button>
           <Button type="button" onClick={shareResult} variant="outline"><Share2 className="mr-2 h-4 w-4" />{copy.share}</Button>
           <Button type="button" onClick={downloadResultCard}><Download className="mr-2 h-4 w-4" />{copy.download}</Button>
-          {copyState === 'error' && <p className="w-full text-xs text-red-600">{terms.copyFailed}</p>}
+          <p className={`w-full text-xs ${copyState === 'error' ? 'text-red-600' : 'text-emerald-700 dark:text-emerald-400'}`} aria-live="polite">
+            {copyState === 'error' ? terms.copyFailed : copyState === 'copied' ? copy.copied : ''}
+          </p>
         </CardContent>
       </Card>
 
