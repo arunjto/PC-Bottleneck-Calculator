@@ -1,34 +1,41 @@
 import Link from 'next/link';
-import { ArrowRight, Gamepad2, Wrench, Zap } from 'lucide-react';
+import { ArrowRight, Gamepad2, GitCompareArrows, ListChecks, Wrench, Zap } from 'lucide-react';
 import type { Locale } from '@/i18n-config';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { getToolsPageCopy } from '@/lib/tools-page-i18n';
+import { getToolContent, getToolPath, type ToolSlug } from '@/lib/pc-tools';
 
-const SECTION_COPY: Record<Locale, { title: string; description: string }> = {
+const SECTION_COPY: Record<Locale, { title: string; description: string; nextTitle: string }> = {
   en: {
     title: 'Continue Your Build Check',
     description: 'Use the result as context, then answer the next practical question with a focused calculator.',
+    nextTitle: 'Choose the next check',
   },
   it: {
     title: 'Continua la Verifica della Build',
     description: 'Usa il risultato come contesto, poi rispondi alla domanda pratica successiva con un calcolatore specifico.',
+    nextTitle: 'Scegli la verifica successiva',
   },
   fr: {
     title: 'Poursuivez la Vérification de Votre Configuration',
     description: 'Utilisez le résultat comme contexte, puis répondez à la prochaine question pratique avec un calculateur ciblé.',
+    nextTitle: 'Choisissez la prochaine vérification',
   },
   de: {
     title: 'Build-Prüfung Fortsetzen',
     description: 'Nutzen Sie das Ergebnis als Kontext und beantworten Sie die nächste praktische Frage mit einem passenden Rechner.',
+    nextTitle: 'Nächsten Check auswählen',
   },
   es: {
     title: 'Continúa Comprobando tu Configuración',
     description: 'Usa el resultado como contexto y responde a la siguiente pregunta práctica con una calculadora específica.',
+    nextTitle: 'Elige la siguiente comprobación',
   },
 
   ru: {
     title: "Продолжите проверку сборки",
     description: "Используйте результат как контекст, а затем ответьте на следующий практический вопрос с помощью специального калькулятора.",
+    nextTitle: 'Выберите следующую проверку',
   },
 };
 
@@ -56,6 +63,11 @@ export function FeaturedCalculators({ lang }: { lang: Locale }) {
       iconClass: 'bg-amber-100 text-amber-700 dark:bg-amber-900/70 dark:text-amber-200',
       linkClass: 'text-amber-700 dark:text-amber-300',
     },
+  ];
+  const nextTools: Array<{ slug: ToolSlug; icon: typeof GitCompareArrows }> = [
+    { slug: 'component-comparison', icon: GitCompareArrows },
+    { slug: 'pc-upgrade-priority-calculator', icon: ListChecks },
+    { slug: 'what-games-can-my-pc-run', icon: Gamepad2 },
   ];
 
   return (
@@ -85,6 +97,28 @@ export function FeaturedCalculators({ lang }: { lang: Locale }) {
             </span>
           </Link>
         ))}
+      </div>
+
+      <div className="mt-6 border-t pt-5">
+        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">{section.nextTitle}</h3>
+        <div className="mt-3 grid gap-3 md:grid-cols-3">
+          {nextTools.map(({ slug, icon: Icon }) => {
+            const tool = getToolContent(slug, lang);
+            return (
+              <Link
+                key={slug}
+                href={getToolPath(lang, slug)}
+                className="group flex items-start gap-3 rounded-xl border bg-background p-4 transition hover:border-primary/50 hover:shadow-sm"
+              >
+                <span className="mt-0.5 rounded-lg bg-muted p-2 text-primary"><Icon className="h-4 w-4" aria-hidden="true" /></span>
+                <span>
+                  <span className="block font-semibold group-hover:text-primary">{tool.title}</span>
+                  <span className="mt-1 block text-sm leading-5 text-muted-foreground">{tool.shortDescription}</span>
+                </span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       <div className="mt-5 text-center">

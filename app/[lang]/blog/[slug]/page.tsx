@@ -29,6 +29,7 @@ import { AdSlotTop, AdSlotMiddle, AdSlotBottom } from '@/components/blog/ad-slot
 import { getCanonicalBlogSlug, getLocalizedBlogSlug } from '@/lib/blog-slug-translations';
 import { getBlogCopy } from '@/lib/blog-i18n';
 import { getLocalizedPath } from '@/lib/path-translations';
+import { PlanningResources } from '@/components/blog/planning-resources';
 
 // ---------------------------------------------------------------------------
 // Static params — generate for every slug × locale combination
@@ -138,6 +139,7 @@ export default async function BlogArticlePage({
   const copy = getBlogCopy(lang);
   const articleUrl = `${SITE_URL}/${lang}/blog/${post.slug}`;
   const authorUrl = `${SITE_URL}${getLocalizedPath(lang as Locale, 'author')}`;
+  const canonicalSlug = getCanonicalBlogSlug(lang, post.slug);
 
   // Compile MDX content
   const { content: mdxContent } = await compileMDXContent(post.content);
@@ -247,6 +249,8 @@ export default async function BlogArticlePage({
               <div className="blog-prose">
                 {mdxContent}
               </div>
+
+              <PlanningResources lang={lang as Locale} canonicalSlug={canonicalSlug} />
 
               {/* AdSense Middle */}
               <div className="my-8">
