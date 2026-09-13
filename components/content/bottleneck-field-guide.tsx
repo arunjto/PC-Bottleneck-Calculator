@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedBlogSlug } from '@/lib/blog-slug-translations';
 import { getBottleneckFieldGuideCopy } from '@/lib/bottleneck-field-guide-i18n';
 import { getLocalizedPath } from '@/lib/path-translations';
+import { getToolContent, getToolPath } from '@/lib/pc-tools';
 
 const exampleAccents = [
   'border-blue-300 bg-blue-50/60 dark:border-blue-900 dark:bg-blue-950/20',
@@ -28,6 +29,13 @@ const exampleAccents = [
 export function BottleneckFieldGuide({ lang }: { lang: Locale }) {
   const copy = getBottleneckFieldGuideCopy(lang);
   const testingGuide = `/${lang}/blog/${getLocalizedBlogSlug(lang, 'how-to-check-pc-bottleneck')}`;
+  const comparisonTool = getToolContent('component-comparison', lang);
+  const upgradePriorityTool = getToolContent('pc-upgrade-priority-calculator', lang);
+  const exampleResources = [
+    { href: `/${lang}/builds/core-i5-12600k-rtx-4060`, label: 'Intel Core i5-12600K + NVIDIA GeForce RTX 4060' },
+    { href: `/${lang}/builds/ryzen-7-9800x3d-rtx-5080`, label: 'AMD Ryzen 7 9800X3D + NVIDIA GeForce RTX 5080' },
+    { href: getToolPath(lang, 'frame-time-calculator'), label: getToolContent('frame-time-calculator', lang).title },
+  ];
 
   return (
     <article aria-labelledby="bottleneck-field-guide-title" className="space-y-8">
@@ -90,6 +98,9 @@ export function BottleneckFieldGuide({ lang }: { lang: Locale }) {
         <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-100">
           <strong>{copy.important}</strong> {copy.thresholdNotice}
         </p>
+        <Link href={getToolPath(lang, 'component-comparison')} className="inline-flex items-center gap-1.5 font-semibold text-violet-700 hover:underline dark:text-violet-300">
+          {comparisonTool.title}<ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </section>
 
       <section aria-labelledby="workload-title" className="space-y-5">
@@ -164,6 +175,9 @@ export function BottleneckFieldGuide({ lang }: { lang: Locale }) {
               <CardContent className="space-y-3 text-sm leading-6">
                 <p><strong>{copy.situation}</strong> {example.setup}</p>
                 <p className="text-muted-foreground"><strong className="text-foreground">{copy.whatMatters}</strong> {example.lesson}</p>
+                <Link href={exampleResources[index].href} className="inline-flex items-center gap-1.5 font-semibold text-emerald-800 hover:underline dark:text-emerald-300">
+                  {exampleResources[index].label}<ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
               </CardContent>
             </Card>
           ))}
@@ -186,6 +200,9 @@ export function BottleneckFieldGuide({ lang }: { lang: Locale }) {
             </li>
           ))}
         </ol>
+        <Link href={getToolPath(lang, 'pc-upgrade-priority-calculator')} className="inline-flex items-center gap-1.5 font-semibold text-orange-700 hover:underline dark:text-orange-300">
+          {upgradePriorityTool.title}<ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </section>
 
       <section aria-labelledby="limits-title" className="rounded-2xl border border-slate-300 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-950/50 md:p-8">
