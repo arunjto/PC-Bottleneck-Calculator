@@ -24,6 +24,8 @@ import { getLocalizedPath } from '@/lib/path-translations';
 import { ToolCalculator, type ToolDatasets } from '@/components/tools/tool-calculator';
 import { ComponentComparison } from '@/components/calculators/component-comparison';
 import { WhatGamesCanMyPCRun } from '@/components/tools/what-games-can-my-pc-run';
+import { ToolWorkedExample } from '@/components/tools/tool-worked-example';
+import { PriorityToolResources } from '@/components/tools/priority-tool-resources';
 
 type PageParams = { lang: Locale; slug: string };
 
@@ -413,6 +415,8 @@ export default async function ToolPage({
           )}
         </section>
 
+        <ToolWorkedExample slug={tool.slug} lang={lang} content={content} />
+
         <section aria-labelledby="result-meaning" className="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 dark:border-blue-900 dark:bg-blue-950/20">
           <h2 id="result-meaning" className="flex items-center gap-2 text-2xl font-semibold">
             <BookOpenCheck className="h-6 w-6 text-blue-600" aria-hidden="true" />
@@ -464,6 +468,8 @@ export default async function ToolPage({
             </Link>
           </div>
         </section>
+
+        <PriorityToolResources slug={tool.slug} lang={lang} content={content} pageUrl={pageUrl} />
 
         <section aria-labelledby="related-tools-title" className="border-t pt-10">
           <div className="flex flex-wrap items-end justify-between gap-3">

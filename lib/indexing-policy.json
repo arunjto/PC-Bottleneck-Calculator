@@ -1,0 +1,24 @@
+{
+  "priorityToolsUpdated": "2026-09-16",
+  "popularBuildsUpdated": "2026-09-15",
+  "requiredIndexablePaths": [
+    "contact",
+    "privacy",
+    "cookie-policy",
+    "disclaimer"
+  ],
+  "priorityToolSlugs": [
+    "component-comparison",
+    "pc-upgrade-priority-calculator",
+    "resolution-scaling-calculator",
+    "ssd-upgrade-calculator"
+  ],
+  "popularBuildSlugs": [
+    "core-i5-12600k-rtx-4060",
+    "core-i5-14600k-rtx-4070-super",
+    "ryzen-5-5600x-rtx-4060",
+    "ryzen-5-7600x-rx-7800-xt",
+    "ryzen-7-7800x3d-rtx-5070",
+    "ryzen-7-9800x3d-rtx-5080"
+  ]
+}

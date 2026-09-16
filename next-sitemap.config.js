@@ -1,13 +1,7 @@
 const publicPaths = require('./lib/path-translations.json');
+const indexingPolicy = require('./lib/indexing-policy.json');
 
-const popularBuildSlugs = [
-  'core-i5-12600k-rtx-4060',
-  'core-i5-14600k-rtx-4070-super',
-  'ryzen-5-5600x-rtx-4060',
-  'ryzen-5-7600x-rx-7800-xt',
-  'ryzen-7-7800x3d-rtx-5070',
-  'ryzen-7-9800x3d-rtx-5080',
-];
+const priorityToolSlugs = new Set(indexingPolicy.priorityToolSlugs);
 
 function toPublicPath(route) {
   const match = route.match(/^\/([a-z]{2})(?:\/(.+))?$/);
@@ -16,6 +10,20 @@ function toPublicPath(route) {
   if (!canonicalPath) return route;
   const localized = publicPaths[locale]?.[canonicalPath];
   return localized ? `/${locale}/${localized}` : route;
+}
+
+function getSignificantLastmod(route) {
+  const match = route.match(/^\/[a-z]{2}\/(.+)$/);
+  const canonicalPath = match?.[1];
+  if (!canonicalPath) return undefined;
+
+  if (canonicalPath.startsWith('builds/')) return indexingPolicy.popularBuildsUpdated;
+  if (canonicalPath.startsWith('tools/')) {
+    const slug = canonicalPath.slice('tools/'.length);
+    if (priorityToolSlugs.has(slug)) return indexingPolicy.priorityToolsUpdated;
+  }
+
+  return undefined;
 }
 
 /** @type {import('next-sitemap').IConfig} */
@@ -29,11 +37,13 @@ module.exports = {
     '*/blog/category/*',
     '*/blog/tag/*',
   ],
-  transform: async (config, route) => ({
-    loc: toPublicPath(route),
-    changefreq: config.changefreq,
-    priority: config.priority,
-  }),
+  transform: async (_config, route) => {
+    const lastmod = getSignificantLastmod(route);
+    return {
+      loc: toPublicPath(route),
+      ...(lastmod ? { lastmod } : {}),
+    };
+  },
   additionalPaths: async (config) => {
     const entries = [];
     for (const [locale, translations] of Object.entries(publicPaths)) {
@@ -49,7 +59,7 @@ module.exports = {
         if (entry) entries.push(entry);
       }
 
-      for (const slug of popularBuildSlugs) {
+      for (const slug of indexingPolicy.popularBuildSlugs) {
         const entry = await config.transform(config, `/${locale}/builds/${slug}`);
         if (entry) entries.push(entry);
       }

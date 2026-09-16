@@ -22,6 +22,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { JsonLd } from '@/components/seo/json-ld';
 import { LoadBuildButton } from '@/components/builds/load-build-button';
 import { LocalizedBuildAnalysis } from '@/components/builds/localized-build-analysis';
+import { BuildAlternativeComparison } from '@/components/builds/build-alternative-comparison';
 import { i18n, isSupportedLocale, type Locale } from '@/i18n-config';
 import { getPopularBuildCopy } from '@/lib/popular-builds-i18n';
 import {
@@ -56,7 +57,10 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
   const pageUrl = `${SITE_URL}/${lang}/builds/${build.slug}`;
   const title = `${cpu.name} + ${gpu.name} ${copy.analysis} (${build.resolution})`;
   const description = copy.metaDescription(cpu.name, gpu.name, build.resolution);
-  const languages = Object.fromEntries(i18n.locales.map(locale => [locale, `${SITE_URL}/${locale}/builds/${build.slug}`]));
+  const languages = Object.fromEntries([
+    ...i18n.locales.map(locale => [locale, `${SITE_URL}/${locale}/builds/${build.slug}`]),
+    ['x-default', `${SITE_URL}/en/builds/${build.slug}`],
+  ]);
 
   return {
     title,
@@ -396,6 +400,8 @@ export default async function PopularBuildPage({ params }: { params: Promise<Pag
           </div>
         </CardContent>
       </Card>
+
+      <BuildAlternativeComparison lang="en" build={build} />
 
       <section aria-labelledby="related-builds" className="space-y-4">
         <h2 id="related-builds" className="text-2xl font-bold">Compare other popular build checks</h2>
