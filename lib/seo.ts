@@ -28,6 +28,11 @@ export function constructMetadataAlternates(locale: string, path: string = '') {
         languages[l] = `${baseUrl}${localPath}`;
     });
 
+    // Send users whose language is not explicitly supported to English.
+    // Keeping the fallback inside the same hreflang cluster also makes the
+    // relationship between localized variants explicit to search engines.
+    languages['x-default'] = `${baseUrl}${getLocalizedPath('en', path)}`;
+
     const currentLocalPath = getLocalizedPath(locale as any, path);
 
     return {

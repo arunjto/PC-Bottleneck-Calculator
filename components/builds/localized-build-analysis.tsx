@@ -7,6 +7,7 @@ import { LoadBuildButton } from '@/components/builds/load-build-button';
 import { POPULAR_BUILDS, getPopularBuildAnalysis, getResolutionPlanningRows, type PopularBuild } from '@/lib/popular-builds';
 import { getLocalizedBuildDetails, getPopularBuildCopy, getPopularBuildReviewedDate, localizedConstraintLabel, localizePressureLabel } from '@/lib/popular-builds-i18n';
 import { getLocalizedPath } from '@/lib/path-translations';
+import { BuildAlternativeComparison } from '@/components/builds/build-alternative-comparison';
 
 function ScoreBar({ label, value, color }: { label: string; value: number; color: string }) {
   return (
@@ -123,6 +124,8 @@ export function LocalizedBuildAnalysis({ lang, build }: { lang: Locale; build: P
           </div>
         </CardContent>
       </Card>
+
+      <BuildAlternativeComparison lang={lang} build={build} />
 
       <section aria-labelledby="localized-related" className="space-y-4"><h2 id="localized-related" className="text-2xl font-bold">{copy.relatedBuilds}</h2><div className="grid gap-3 md:grid-cols-3">{related.map(candidate => { const analysis = getPopularBuildAnalysis(candidate); return <Link key={candidate.slug} href={`/${lang}/builds/${candidate.slug}`} className="rounded-xl border p-4 transition hover:border-violet-400 hover:shadow-sm"><p className="font-semibold">{analysis.cpu.name} + {analysis.gpu.name}</p><p className="mt-2 inline-flex items-center text-sm text-violet-700 dark:text-violet-300">{copy.openAnalysis}<ArrowRight className="ml-1 h-4 w-4" /></p></Link>; })}</div></section>
     </main>

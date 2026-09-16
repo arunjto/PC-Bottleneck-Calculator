@@ -6,11 +6,12 @@
     "dev": "next dev --turbopack",
     "dev:webpack": "next dev",
     "check:internal-links": "node scripts/check-internal-links.mjs",
+    "check:sitemap": "node scripts/check-sitemap.mjs",
     "prebuild": "npm run check:internal-links",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap && npm run check:sitemap"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.7.4",
