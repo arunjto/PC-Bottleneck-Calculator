@@ -7,6 +7,7 @@ import { constructMetadataAlternates } from "@/lib/seo";
 import { FpsGuideContent } from "@/components/content/fps-guide-content";
 import { FpsRangeGuide } from "@/components/content/fps-range-guide";
 import { CalculatorMethodology } from "@/components/content/calculator-methodology";
+import { CalculatorMaintainer } from "@/components/content/calculator-maintainer";
 import { FAQSection } from "@/components/faq/faq-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getLocalizedPath } from "@/lib/path-translations";
@@ -217,6 +218,9 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
               )}
             </div>
           </details>
+        </div>
+        <div className="mx-auto max-w-4xl">
+          <CalculatorMaintainer lang={lang} />
         </div>
       </div>
       {/* Below-the-fold content: deferred rendering on mobile */}

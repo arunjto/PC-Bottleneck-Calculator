@@ -930,7 +930,7 @@
         "faqs": [
             {
                 "q": "Come determina il calcolatore il wattaggio richiesto?",
-                "a": "Il calcolatore combina i dati di potenza pubblicati di CPU e GPU con una quota generale per gli altri componenti e applica un margine del 15–50%. È una stima di pianificazione, non una misurazione o certificazione elettrica."
+                "a": "Il calcolatore combina la potenza pubblicata di CPU e GPU con quote visibili per scheda madre, memoria, unità, raffreddamento, ventole e carichi opzionali selezionati, poi applica un margine del 15–50%. È una stima di pianificazione, non una misurazione o certificazione elettrica."
             },
             {
                 "q": "È dannoso usare un PSU con wattaggio molto superiore?",
@@ -970,7 +970,7 @@
         "rec_wattage_label": "Wattaggio di Pianificazione",
         "selected_efficiency": "Preferenza di efficienza selezionata",
         "estimate_notice_title": "Stima di pianificazione, non certificazione di sicurezza",
-        "estimate_notice": "La stima usa i dati pubblicati di CPU e GPU più una quota generale per gli altri componenti. Non modella completamente picchi transitori, limiti di fabbrica, età o qualità del PSU, linee di alimentazione e connettori.",
+        "estimate_notice": "La stima usa i dati pubblicati di CPU e GPU più le quote dei componenti mostrate nel dettaglio. Non modella completamente picchi transitori, limiti di fabbrica, età o qualità del PSU, linee di alimentazione e connettori.",
         "vendor_check": "Prima dell'acquisto verifica wattaggio minimo e connettori richiesti dal produttore della GPU e dal partner della scheda.",
         "categories": {
             "min": "Stima con margine ridotto",
@@ -987,7 +987,7 @@
             "gpu": "Potenza GPU",
             "other": "Altri Componenti",
             "total": "Carico stimato dei componenti",
-            "total_desc": "Somma dei dati CPU/GPU pubblicati e della quota selezionata; non è una misura alla presa"
+            "total_desc": "Somma dei dati CPU/GPU pubblicati e delle quote selezionate; non è una misura alla presa"
         },
         "efficiency": {
             "title": "Preferenza di Efficienza",
@@ -1073,21 +1073,23 @@
     },
     "psu_guide": {
         "header_title": "Calcolatore Wattaggio PSU – Trova l'Alimentatore Giusto per il Tuo PC Gaming",
-        "intro": "Scegliere un <strong>Alimentatore (PSU)</strong> adatto richiede più della semplice somma dei watt. Un'unità inadeguata o di scarsa qualità può contribuire a spegnimenti o instabilità. Il nostro <strong>Calcolatore PSU</strong> fornisce una stima di pianificazione e non sostituisce le indicazioni del produttore.",
-        "why_title": "Perché usare un Calcolatore di Wattaggio?",
-        "why_desc": "Oltre al wattaggio contano connettori, qualità, formato, efficienza, risposta ai picchi e garanzia. Un <strong>calcolatore</strong> restringe l'intervallo da valutare, ma non certifica compatibilità o sicurezza.",
-        "how_title": "Come Funziona?",
-        "how_desc_1": "Lo strumento somma i dati di potenza pubblicati di CPU e GPU a una quota generale per gli altri componenti, poi mostra stime con margini del 15%, 30% e 50%. Non modella completamente picchi transitori, connettori, età o qualità del PSU.",
-        "how_desc_2": "Usa il risultato per creare una lista preliminare, poi verifica i requisiti del produttore della GPU e del partner della scheda. Il <strong>Calcolatore di Bottleneck PC</strong> confronta punteggi relativi e non valida la compatibilità elettrica.",
-        "benefits_title": "Vantaggi del Nostro Calcolatore",
+        "intro": "Scegliere il giusto <strong>alimentatore (PSU)</strong> è una decisione di capacità e compatibilità, non solo una somma tra CPU e GPU. Il calcolatore del wattaggio PSU stima la capacità di uscita CC da pianificare per la configurazione selezionata, include quote visibili per il resto del sistema e mostra diversi livelli di margine. Usalo per restringere la scelta, poi verifica la documentazione esatta della scheda grafica e del PSU prima dell'acquisto.",
+        "why_title": "Cosa dovrebbe dirti il risultato del wattaggio PSU?",
+        "why_desc": "Un buon <strong>calcolatore PSU</strong> rende visibili le proprie ipotesi. Questa pagina considera base della scheda madre, RAM, archiviazione, ventole, raffreddamento e carichi opzionali invece di nascondere un unico sovraccarico non spiegato. Separa inoltre una stima più stretta da un obiettivo normale e da uno scenario orientato all'upgrade, così puoi verificare e adattare il risultato per una seconda GPU, una scheda di acquisizione, un loop personalizzato, limiti di potenza aumentati o dispositivi USB insoliti.",
+        "how_title": "Come stima la configurazione il calcolatore PSU?",
+        "how_desc_1": "Seleziona prima il modello esatto di CPU e GPU, poi aggiungi solo i componenti e i carichi opzionali che userai davvero. Il calcolatore combina i valori di potenza pubblicati di CPU e GPU con le quote dei componenti selezionati e mostra tre scenari: margine del 15% per una configurazione stock nota, 30% per la pianificazione generale e 50% quando upgrade futuri o incertezza giustificano più capacità. La formula di pianificazione è <strong>(CPU + GPU + quote selezionate) × 1,30</strong>, arrotondata a un taglio PSU comune quando possibile.",
+        "how_desc_2": "Esempio: una CPU da 120W, una GPU da 250W e una quota piattaforma da 100W producono una stima base di 470W; 470W × 1,30 = 611W, quindi 650W è il taglio pratico successivo. Se il produttore della GPU esatta indica un minimo di 750W o un connettore diverso, vale il requisito più alto. Leggi la <a href=\"/it/metodologia\" class=\"text-primary hover:underline\">metodologia completa del calcolo PSU</a> per le ipotesi di ogni quota. È una pianificazione della capacità, non una misura alla presa, una certificazione di laboratorio o una garanzia sul comportamento di ogni modello PSU durante i picchi transitori.",
+        "benefits_title": "Cosa verificare dopo aver calcolato il wattaggio PSU",
         "benefits_list": [
-            "<strong>Parti da un intervallo:</strong> Confronta più tagli PSU senza considerare un singolo numero come esatto.",
-            "<strong>Confronta il margine:</strong> Valuta come diverse riserve cambiano la stima.",
-            "<strong>Pianifica gli aggiornamenti:</strong> Considera se componenti futuri aumenteranno il carico.",
-            "<strong>Verifica prima dell'acquisto:</strong> Controlla wattaggio, connettori, formato e qualità del modello con documentazione e test indipendenti."
+            "<strong>Scegli lo scenario corretto:</strong> Considera il risultato al 30% come punto di partenza normale per la configurazione attuale. Il 15% è un confronto più stretto, mentre il 50% ha senso per un upgrade definito o un carico insolito.",
+            "<strong>Applica il requisito della GPU esatta:</strong> Confronta il risultato con la potenza di sistema raccomandata dal produttore della scheda. Se la documentazione richiede di più, quel requisito prevale sull'aritmetica generica.",
+            "<strong>Controlla connettori e cavi:</strong> Verifica PCIe 8-pin oppure 12VHPWR/12V-2x6 nativo, il numero di cavi e la capacità 12V del PSU. Non riutilizzare cavi modulari di un altro modello solo perché la spina entra.",
+            "<strong>Separa efficienza e qualità:</strong> 80 PLUS descrive l'efficienza in punti di test definiti; non dimostra protezioni, risposta ai transitori, rumore, temperature o affidabilità. Cerca test indipendenti del modello e della revisione esatti.",
+            "<strong>Pianifica gli upgrade:</strong> Un PSU più grande è utile se corrisponde a una GPU o espansione futura definita. Il wattaggio massimo senza un piano può costare di più e lasciare comunque il connettore o il formato sbagliati.",
+            "<strong>Interpreta correttamente i sintomi:</strong> Un PSU insufficiente o guasto può causare spegnimenti, schermate nere e riavvii sotto carico. Normalmente non crea un bottleneck FPS come CPU o GPU: analizza separatamente prestazioni e alimentazione."
         ],
-        "conclusion_title": "Costruisci Meglio con il PSU Giusto",
-        "conclusion_desc": "L'alimentatore è importante per un PC affidabile. Usa il calcolatore per una stima preliminare, poi verifica scheda grafica, modello PSU, connettori e requisiti dei produttori prima dell'acquisto."
+        "conclusion_title": "Dalla stima del wattaggio all'acquisto del PSU",
+        "conclusion_desc": "Prima di ordinare, verifica i valori esatti di CPU e GPU, il requisito minimo del PSU indicato dalla GPU, connettori e cavi, dimensioni del modello, uscita 12V, protezioni, test indipendenti, garanzia e tensione d'ingresso della tua regione. Se stai facendo un upgrade, usa il <a href=\"/it/strumenti/calcolatore-priorita-upgrade-pc\" class=\"text-primary hover:underline\">Calcolatore priorità upgrade PC</a> per capire se intervenire prima su PSU, GPU, CPU, RAM o archiviazione."
     },
     "bottleneck_promo": {
         "title": "I tuoi FPS sono più bassi del previsto?",

@@ -1,6 +1,9 @@
 {
   "priorityToolsUpdated": "2026-09-16",
   "popularBuildsUpdated": "2026-09-15",
+  "corePageUpdates": {
+    "psu-calculator": "2026-09-17"
+  },
   "requiredIndexablePaths": [
     "contact",
     "privacy",

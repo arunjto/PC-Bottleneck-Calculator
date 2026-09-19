@@ -29,6 +29,9 @@ for (const [locale, localePaths] of Object.entries(translations)) {
   for (const canonicalPath of policy.requiredIndexablePaths) {
     requiredIndexableUrls.push(`${siteUrl}/${locale}/${localePaths[canonicalPath]}`);
   }
+  for (const [canonicalPath, updateDate] of Object.entries(policy.corePageUpdates)) {
+    expectedDatedUrls.set(`${siteUrl}/${locale}/${localePaths[canonicalPath]}`, updateDate);
+  }
   for (const slug of policy.priorityToolSlugs) {
     expectedDatedUrls.set(
       `${siteUrl}/${locale}/${localePaths[`tools/${slug}`]}`,
