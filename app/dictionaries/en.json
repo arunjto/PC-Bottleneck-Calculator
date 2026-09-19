@@ -1193,7 +1193,7 @@
         "faqs": [
             {
                 "q": "How does the PSU calculator determine the required wattage?",
-                "a": "The calculator combines published CPU and GPU power figures with a broad allowance for other components, then applies 15–50% headroom. It is a planning estimate, not an electrical measurement or certification."
+                "a": "The calculator combines published CPU and GPU power figures with visible allowances for the motherboard, memory, storage, cooling, fans, and any optional loads you select, then applies 15–50% headroom. It is a planning estimate, not an electrical measurement or certification."
             },
             {
                 "q": "Is it bad to use a PSU with much higher wattage than needed?",
@@ -1233,7 +1233,7 @@
         "rec_wattage_label": "Planning Wattage",
         "selected_efficiency": "Selected efficiency preference",
         "estimate_notice_title": "Planning estimate—not a safety certification",
-        "estimate_notice": "This estimate uses published CPU and GPU power figures plus a broad allowance for other components. It does not fully model transient spikes, factory power limits, PSU age or quality, power rails, or connector availability.",
+        "estimate_notice": "This estimate uses published CPU and GPU power figures plus the component allowances shown in the detailed breakdown. It does not fully model transient spikes, factory power limits, PSU age or quality, power rails, or connector availability.",
         "vendor_check": "Before purchasing, verify the GPU vendor and board partner's minimum PSU wattage and connector requirements.",
         "categories": {
             "min": "Lower-headroom estimate",
@@ -1250,7 +1250,7 @@
             "gpu": "GPU Power",
             "other": "Other Components",
             "total": "Estimated component load",
-            "total_desc": "Sum of published CPU/GPU figures and the selected broad allowance; not a wall-power measurement"
+            "total_desc": "Sum of published CPU/GPU figures and the selected component allowances; not a wall-power measurement"
         },
         "efficiency": {
             "title": "Efficiency Preference",
@@ -1336,21 +1336,23 @@
     },
     "psu_guide": {
         "header_title": "PSU Wattage Calculator – Find the Right Power Supply for Your Gaming PC",
-        "intro": "Choosing a suitable <strong>Power Supply Unit (PSU)</strong> requires more than adding component wattages. An inadequate or poor-quality unit can contribute to shutdowns or instability. Our <strong>PSU Calculator</strong> provides a planning estimate from published component figures and configurable headroom; it does not replace manufacturer guidance.",
-        "why_title": "Why Use a PSU Wattage Calculator?",
-        "why_desc": "Picking a PSU is not just about wattage. Connector support, build quality, form factor, efficiency, transient response, warranty, and the graphics-card maker's guidance also matter. A <strong>PSU wattage calculator</strong> can narrow the range to research, but it cannot certify compatibility or safety.",
-        "how_title": "How Does the PSU Calculator Work?",
-        "how_desc_1": "The tool adds published CPU and GPU power figures to a broad allowance for other selected components. It then displays estimates with 15%, 30%, and 50% headroom. These figures do not fully model transient spikes, factory-overclocked cards, power connectors, PSU age, or model quality.",
-        "how_desc_2": "Use the result as a shortlist aid, then check the GPU manufacturer and board partner's minimum PSU wattage and connector requirements. The <strong>PC Bottleneck Calculator</strong> is a separate relative-score comparison and does not determine electrical compatibility.",
-        "benefits_title": "Benefits of Using Our PSU Calculator",
+        "intro": "Choosing the right <strong>Power Supply Unit (PSU)</strong> is a capacity and compatibility decision, not just a CPU-plus-GPU addition. The PSU wattage calculator estimates the DC output capacity your selected build should plan for, includes visible allowances for the rest of the system, and shows different headroom levels. Use it to narrow the shortlist, then verify the exact graphics-card and PSU documentation before buying.",
+        "why_title": "What Should a PSU Wattage Result Tell You?",
+        "why_desc": "A useful <strong>PSU calculator</strong> should make its assumptions visible. This page accounts for the motherboard platform, RAM, storage, fans, cooling, and optional loads instead of hiding one unexplained overhead number. It also separates a tighter estimate from a normal planning target and an upgrade-oriented scenario. That makes the result easier to audit and adjust when your build includes a second GPU, capture card, custom loop, raised power limits, or unusual USB loads.",
+        "how_title": "How Does the PSU Calculator Estimate Your Build?",
+        "how_desc_1": "Select the exact CPU and GPU first, then add only the components and optional loads that you will actually run. The calculator combines the published CPU and GPU power figures with the selected component allowances and shows three scenarios: 15% headroom for a known stock configuration, 30% for general build planning, and 50% when future upgrades or uncertainty justify more capacity. The planning formula is <strong>(CPU + GPU + selected allowances) × 1.30</strong>, rounded up to a common PSU size where possible.",
+        "how_desc_2": "For example, a 120W CPU, 250W GPU, and 100W platform allowance produce a 470W base estimate; 470W × 1.30 = 611W, so 650W is the next practical planning size. If the exact GPU manufacturer specifies a 750W minimum or a different connector, use the higher valid requirement. Read the <a href=\"/en/methodology\" class=\"text-primary hover:underline\">full PSU calculation methodology</a> for the assumptions behind each allowance. This is capacity planning—not a wall-power measurement, laboratory certification, or guarantee that a particular PSU model will handle every transient event.",
+        "benefits_title": "What to Check After Calculating PSU Wattage",
         "benefits_list": [
-            "<strong>Start with a planning range:</strong> Compare several common PSU sizes instead of treating one number as exact.",
-            "<strong>Compare headroom:</strong> See how different allowances change the estimate.",
-            "<strong>Plan possible upgrades:</strong> Consider whether later components may increase the load.",
-            "<strong>Verify before buying:</strong> Confirm wattage, connectors, form factor, and model quality with manufacturer documentation and independent PSU testing."
+            "<strong>Choose the right tier:</strong> Treat the 30% result as the normal starting point for the current build. Use the 15% figure for comparison, not as an automatic buying recommendation, and use the 50% figure when a defined upgrade or unusual load justifies it.",
+            "<strong>Apply the exact GPU requirement:</strong> Compare the result with the graphics-card manufacturer's recommended system PSU. When the documented requirement is higher, it takes priority over generic arithmetic.",
+            "<strong>Check connectors and cables:</strong> Confirm the required PCIe 8-pin or native 12VHPWR/12V-2x6 connection, the number of cable runs, and the PSU's 12V capability. Never reuse modular cables from another PSU just because the plug fits.",
+            "<strong>Separate efficiency from quality:</strong> 80 PLUS describes conversion efficiency at defined test points; it does not prove protections, transient behaviour, noise, temperature performance, or long-term reliability. Check independent testing of the exact model and revision.",
+            "<strong>Plan upgrades deliberately:</strong> A larger PSU is useful when it matches a defined future GPU or expansion plan. Buying maximum wattage for an undefined upgrade can waste money and still leave you with the wrong connector or case fit.",
+            "<strong>Diagnose symptoms correctly:</strong> An undersized or failing PSU can cause shutdowns, black screens, and reboots under load. It does not normally create a CPU/GPU-style FPS bottleneck, so investigate performance and power faults separately."
         ],
-        "conclusion_title": "Build Smarter with the Right PSU",
-        "conclusion_desc": "The PSU is an important part of a reliable PC. Use our <strong>PSU Wattage Calculator</strong> to create a preliminary planning range, then verify the exact graphics card, PSU model, connectors, and manufacturer requirements before purchasing. The <strong>FPS Calculator</strong> provides separate performance estimates and does not validate power-supply compatibility."
+        "conclusion_title": "From a Wattage Estimate to a PSU Purchase",
+        "conclusion_desc": "Before ordering, verify the exact CPU and GPU power figures, the GPU's minimum system-PSU requirement, connector and cable guidance, PSU dimensions, 12V output, protections, independent test results, warranty, and regional input voltage. For a deeper worksheet covering efficiency, connectors, unusual loads, and replacement decisions, continue to the <a href=\"/en/blog/how-much-psu-wattage-do-i-need\" class=\"text-primary hover:underline\">complete PSU wattage guide</a>. If this is an upgrade, use the <a href=\"/en/tools/pc-upgrade-priority-calculator\" class=\"text-primary hover:underline\">PC Upgrade Priority Calculator</a> to decide whether the PSU, GPU, CPU, RAM, or storage deserves attention first."
     },
     "bottleneck_promo": {
         "title": "Is your FPS lower than expected?",

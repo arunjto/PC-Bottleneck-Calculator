@@ -1193,7 +1193,7 @@
         "faqs": [
             {
                 "q": "Wie bestimmt der Netzteil-Rechner die erforderliche Wattzahl?",
-                "a": "Der Rechner kombiniert veröffentlichte CPU- und GPU-Leistungswerte mit einer allgemeinen Pauschale für weitere Komponenten und wendet 15–50% Spielraum an. Das ist eine Planungsschätzung, keine elektrische Messung oder Zertifizierung."
+                "a": "Der Rechner kombiniert CPU- und GPU-Leistungswerte mit sichtbaren Pauschalen für Mainboard, Speicher, Laufwerke, Kühlung, Lüfter und gewählte optionale Lasten und wendet 15–50% Spielraum an. Das ist eine Planungsschätzung, keine elektrische Messung oder Zertifizierung."
             },
             {
                 "q": "Ist es schlecht, ein Netzteil mit viel höherer Wattzahl als nötig zu nutzen?",
@@ -1233,7 +1233,7 @@
         "rec_wattage_label": "Planungs-Wattzahl",
         "selected_efficiency": "Gewählte Effizienzpräferenz",
         "estimate_notice_title": "Planungsschätzung, keine Sicherheitszertifizierung",
-        "estimate_notice": "Die Schätzung nutzt veröffentlichte CPU- und GPU-Werte plus eine allgemeine Pauschale. Lastspitzen, Werkslimits, Alter oder Qualität des Netzteils, Stromschienen und Anschlüsse werden nicht vollständig abgebildet.",
+        "estimate_notice": "Die Schätzung nutzt veröffentlichte CPU- und GPU-Werte plus die in der Aufschlüsselung gezeigten Komponentenpauschalen. Lastspitzen, Werkslimits, Alter oder Qualität des Netzteils, Stromschienen und Anschlüsse werden nicht vollständig abgebildet.",
         "vendor_check": "Prüfen Sie vor dem Kauf die Mindestleistung und Anschlussanforderungen des GPU-Herstellers und Board-Partners.",
         "categories": {
             "min": "Schätzung mit kleinem Spielraum",
@@ -1250,7 +1250,7 @@
             "gpu": "GPU Strom",
             "other": "Andere Komponenten",
             "total": "Geschätzte Komponentenlast",
-            "total_desc": "Summe veröffentlichter CPU/GPU-Werte und der gewählten Pauschale; keine Messung an der Steckdose"
+            "total_desc": "Summe veröffentlichter CPU/GPU-Werte und der gewählten Komponentenpauschalen; keine Messung an der Steckdose"
         },
         "efficiency": {
             "title": "Effizienzpräferenz",
@@ -1336,21 +1336,23 @@
     },
     "psu_guide": {
         "header_title": "Netzteil Watt Rechner – Finden Sie das richtige Netzteil für Ihren Gaming-PC",
-        "intro": "Die Wahl eines geeigneten <strong>Netzteils (PSU)</strong> erfordert mehr als das Addieren von Wattzahlen. Ein ungeeignetes oder minderwertiges Gerät kann zu Abschaltungen oder Instabilität beitragen. Unser <strong>Netzteil-Rechner</strong> liefert eine Planungsschätzung und ersetzt keine Herstellerangaben.",
-        "why_title": "Warum einen Netzteil Watt Rechner nutzen?",
-        "why_desc": "Neben der Wattzahl zählen Anschlüsse, Qualität, Formfaktor, Effizienz, Reaktion auf Lastspitzen und Garantie. Ein <strong>Netzteil Watt Rechner</strong> grenzt den zu prüfenden Bereich ein, zertifiziert aber weder Kompatibilität noch Sicherheit.",
-        "how_title": "Wie funktioniert der Netzteil-Rechner?",
-        "how_desc_1": "Das Tool addiert veröffentlichte CPU- und GPU-Leistungswerte zu einer allgemeinen Pauschale für weitere Komponenten und zeigt Schätzungen mit 15%, 30% und 50% Spielraum. Lastspitzen, Anschlüsse, Alter und Qualität des Netzteils werden nicht vollständig modelliert.",
-        "how_desc_2": "Nutzen Sie das Ergebnis für eine Vorauswahl und prüfen Sie danach die Anforderungen des GPU-Herstellers und Board-Partners. Der <strong>PC Flaschenhals Rechner</strong> vergleicht relative Werte und bestätigt keine elektrische Kompatibilität.",
-        "benefits_title": "Vorteile unseres Netzteil-Rechners",
+        "intro": "Die Wahl des richtigen <strong>Netzteils (PSU)</strong> ist eine Entscheidung über Kapazität und Kompatibilität, nicht nur über die Summe von CPU und GPU. Der Netzteil-Watt-Rechner schätzt die einzuplanende DC-Ausgangskapazität, macht Reserven für das restliche System sichtbar und zeigt mehrere Spielraumstufen. Nutzen Sie ihn zur Vorauswahl und prüfen Sie danach die genaue Dokumentation von Grafikkarte und Netzteil.",
+        "why_title": "Was sollte ein Netzteil-Ergebnis aussagen?",
+        "why_desc": "Ein guter <strong>Netzteil-Rechner</strong> macht seine Annahmen sichtbar. Diese Seite berücksichtigt Mainboardbasis, RAM, Speicher, Lüfter, Kühlung und optionale Lasten, statt eine unerklärte Pauschale zu verstecken. Sie trennt außerdem eine knappe Schätzung, ein normales Planungsziel und ein Upgrade-Szenario. So lässt sich das Ergebnis für eine zweite GPU, Capture-Karte, Custom-Loop, erhöhte Power-Limits oder ungewöhnliche USB-Lasten anpassen.",
+        "how_title": "Wie schätzt der Netzteil-Rechner Ihren Build?",
+        "how_desc_1": "Wählen Sie zuerst die exakten CPU- und GPU-Modelle und fügen Sie danach nur Komponenten und optionale Lasten hinzu, die tatsächlich genutzt werden. Der Rechner kombiniert veröffentlichte CPU- und GPU-Leistungswerte mit den gewählten Komponentenpauschalen und zeigt drei Szenarien: 15% für eine bekannte Stock-Konfiguration, 30% für die allgemeine Build-Planung und 50% bei einem geplanten Upgrade oder größerer Unsicherheit. Die Planungsformel lautet <strong>(CPU + GPU + gewählte Pauschalen) × 1,30</strong>; anschließend wird auf eine übliche Netzteilgröße aufgerundet.",
+        "how_desc_2": "Beispiel: 120W CPU, 250W GPU und 100W Plattformpauschale ergeben 470W Basislast; 470W × 1,30 = 611W, also ist 650W die nächste praktische Größe. Verlangt der Hersteller der exakten GPU mindestens 750W oder einen anderen Anschluss, gilt die höhere gültige Anforderung. Lesen Sie die <a href=\"/de/methodik\" class=\"text-primary hover:underline\">vollständige Netzteil-Berechnungsmethodik</a> für die Annahmen hinter den Pauschalen. Das ist Kapazitätsplanung, keine Steckdosenmessung, Laborklassifizierung oder Garantie für jedes Transientenereignis.",
+        "benefits_title": "Was ist nach der Wattberechnung zu prüfen?",
         "benefits_list": [
-            "<strong>Mit einem Bereich beginnen:</strong> Vergleichen Sie mehrere Netzteilgrößen, statt eine Zahl als exakt zu behandeln.",
-            "<strong>Spielraum vergleichen:</strong> Sehen Sie, wie verschiedene Reserven die Schätzung verändern.",
-            "<strong>Upgrades planen:</strong> Prüfen Sie, ob spätere Komponenten die Last erhöhen.",
-            "<strong>Vor dem Kauf prüfen:</strong> Bestätigen Sie Wattzahl, Anschlüsse, Formfaktor und Modellqualität anhand von Dokumentation und unabhängigen Tests."
+            "<strong>Das passende Szenario wählen:</strong> Das 30%-Ergebnis ist der normale Ausgangspunkt für den aktuellen Build. 15% dient als knapper Vergleich; 50% passt zu einem konkreten Upgrade oder einer ungewöhnlichen Last.",
+            "<strong>Die exakte GPU-Anforderung anwenden:</strong> Vergleichen Sie das Ergebnis mit der empfohlenen Systemnetzteil-Leistung des Grafikkartenherstellers. Fordert die Dokumentation mehr, hat sie Vorrang vor allgemeiner Arithmetik.",
+            "<strong>Anschlüsse und Kabel prüfen:</strong> Bestätigen Sie PCIe 8-Pin oder natives 12VHPWR/12V-2x6, die Kabelanzahl und die 12V-Kapazität. Verwenden Sie keine modularen Kabel eines anderen Netzteils, nur weil der Stecker passt.",
+            "<strong>Effizienz nicht mit Qualität verwechseln:</strong> 80 PLUS beschreibt Effizienz an definierten Testpunkten, nicht Schutzschaltungen, Transientenverhalten, Lautstärke, Temperaturverhalten oder Lebensdauer. Lesen Sie unabhängige Tests des exakten Modells und der Revision.",
+            "<strong>Upgrades gezielt planen:</strong> Ein größeres Netzteil ist sinnvoll, wenn es zu einer konkreten zukünftigen GPU oder Erweiterung passt. Maximale Wattzahl ohne Plan kann teurer sein und trotzdem den falschen Anschluss oder Formfaktor haben.",
+            "<strong>Symptome richtig einordnen:</strong> Ein zu kleines oder defektes Netzteil kann unter Last Abschaltungen, schwarze Bildschirme und Neustarts verursachen. Es erzeugt normalerweise keinen FPS-Engpass wie CPU oder GPU; prüfen Sie Leistung und Stromversorgung getrennt."
         ],
-        "conclusion_title": "Klug bauen mit dem richtigen Netzteil",
-        "conclusion_desc": "Das Netzteil ist wichtig für einen zuverlässigen PC. Nutzen Sie den Rechner für eine vorläufige Schätzung und prüfen Sie vor dem Kauf die genaue Grafikkarte, das Netzteilmodell, die Anschlüsse und Herstelleranforderungen."
+        "conclusion_title": "Von der Watt-Schätzung zum Netzteilkauf",
+        "conclusion_desc": "Prüfen Sie vor der Bestellung die exakten CPU- und GPU-Leistungswerte, die Mindestempfehlung der GPU für das Systemnetzteil, Anschlüsse und Kabel, Abmessungen, 12V-Ausgang, Schutzschaltungen, unabhängige Tests, Garantie und die Eingangsspannung Ihrer Region. Bei einem Upgrade hilft der <a href=\"/de/werkzeuge/pc-upgrade-prioritaet-rechner\" class=\"text-primary hover:underline\">PC-Upgrade-Prioritätsrechner</a> bei der Entscheidung, ob Netzteil, GPU, CPU, RAM oder Speicher zuerst geprüft werden sollte."
     },
     "bottleneck_promo": {
         "title": "Sind Ihre FPS niedriger als erwartet?",

@@ -277,7 +277,7 @@
         "faqs": [
             {
                 "q": "¿Cómo determina la calculadora de PSU el vataje requerido?",
-                "a": "La calculadora combina las cifras publicadas de CPU y GPU con una asignación general para otros componentes y aplica un margen del 15–50%. Es una estimación de planificación, no una medición ni certificación eléctrica."
+                "a": "La calculadora combina la potencia de CPU y GPU con asignaciones visibles para placa, memoria, unidades, refrigeración, ventiladores y cargas opcionales seleccionadas, y aplica un margen del 15–50%. Es una estimación de planificación, no una medición ni certificación eléctrica."
             },
             {
                 "q": "¿Es malo usar una PSU con muchos más vatios de los necesarios?",
@@ -317,7 +317,7 @@
         "rec_wattage_label": "Vataje de Planificación",
         "selected_efficiency": "Preferencia de eficiencia seleccionada",
         "estimate_notice_title": "Estimación de planificación, no certificación de seguridad",
-        "estimate_notice": "La estimación usa cifras publicadas de CPU y GPU más una asignación general. No modela por completo picos transitorios, límites de fábrica, antigüedad o calidad de la PSU, raíles ni conectores.",
+        "estimate_notice": "La estimación usa cifras publicadas de CPU y GPU más las asignaciones de componentes mostradas en el desglose. No modela por completo picos transitorios, límites de fábrica, antigüedad o calidad de la PSU, raíles ni conectores.",
         "vendor_check": "Antes de comprar, verifica el vataje mínimo y los conectores exigidos por el fabricante de la GPU y el socio de la tarjeta.",
         "categories": {
             "min": "Estimación con margen menor",
@@ -334,7 +334,7 @@
             "gpu": "Potencia de GPU",
             "other": "Otros Componentes",
             "total": "Carga estimada de componentes",
-            "total_desc": "Suma de cifras publicadas de CPU/GPU y la asignación elegida; no es una medición en el enchufe"
+            "total_desc": "Suma de cifras publicadas de CPU/GPU y las asignaciones seleccionadas; no es una medición en el enchufe"
         },
         "efficiency": {
             "title": "Preferencia de Eficiencia",
@@ -420,21 +420,23 @@
     },
     "psu_guide": {
         "header_title": "Calculadora de Vatios PSU – Encuentra la Fuente de Alimentación Adecuada",
-        "intro": "Elegir una <strong>Fuente de Alimentación (PSU)</strong> adecuada requiere más que sumar vatios. Una unidad inadecuada o de baja calidad puede contribuir a apagados o inestabilidad. Nuestra <strong>Calculadora de PSU</strong> ofrece una estimación de planificación y no sustituye las indicaciones del fabricante.",
-        "why_title": "¿Por Qué Usar una Calculadora de Vatios PSU?",
-        "why_desc": "Además del vataje importan los conectores, la calidad, el formato, la eficiencia, la respuesta a picos y la garantía. Una <strong>calculadora de vatios PSU</strong> reduce el intervalo a estudiar, pero no certifica compatibilidad ni seguridad.",
-        "how_title": "¿Cómo Funciona la Calculadora de PSU?",
-        "how_desc_1": "La herramienta suma las cifras publicadas de CPU y GPU a una asignación general para otros componentes y muestra estimaciones con 15%, 30% y 50% de margen. No modela por completo picos transitorios, conectores, antigüedad ni calidad de la PSU.",
-        "how_desc_2": "Usa el resultado para crear una preselección y luego verifica los requisitos del fabricante de la GPU y del socio de la tarjeta. La <strong>Calculadora de Cuello de Botella de PC</strong> compara puntuaciones relativas y no valida compatibilidad eléctrica.",
-        "benefits_title": "Beneficios de Usar Nuestra Calculadora de PSU",
+        "intro": "Elegir la <strong>fuente de alimentación (PSU)</strong> correcta es una decisión de capacidad y compatibilidad, no solo una suma de CPU y GPU. La calculadora de vatios PSU estima la capacidad de salida de CC que debes planificar para tu equipo, muestra las asignaciones del resto del sistema y ofrece varios niveles de margen. Úsala para reducir la preselección y después verifica la documentación exacta de la tarjeta gráfica y la PSU.",
+        "why_title": "¿Qué debería decirte el resultado de vatios de la PSU?",
+        "why_desc": "Una buena <strong>calculadora de PSU</strong> hace visibles sus supuestos. Esta página incluye la base de la placa, RAM, almacenamiento, ventiladores, refrigeración y cargas opcionales, en lugar de ocultar una reserva sin explicar. También separa una estimación ajustada, un objetivo normal de planificación y un escenario para futuras actualizaciones. Así puedes adaptar el resultado a una segunda GPU, tarjeta de captura, circuito personalizado, límites de potencia elevados o dispositivos USB poco habituales.",
+        "how_title": "¿Cómo estima tu equipo la calculadora de PSU?",
+        "how_desc_1": "Selecciona primero los modelos exactos de CPU y GPU y añade después solo los componentes y cargas opcionales que realmente utilizarás. La calculadora combina las cifras de potencia publicadas de CPU y GPU con las asignaciones de los componentes elegidos y muestra tres escenarios: 15% para una configuración stock conocida, 30% para la planificación general y 50% cuando una actualización futura o la incertidumbre justifican más capacidad. La fórmula es <strong>(CPU + GPU + asignaciones seleccionadas) × 1,30</strong>, redondeada a un tamaño de PSU habitual cuando es posible.",
+        "how_desc_2": "Ejemplo: una CPU de 120W, una GPU de 250W y una asignación de plataforma de 100W producen una base de 470W; 470W × 1,30 = 611W, por lo que 650W es el siguiente tamaño práctico. Si el fabricante de la GPU exacta exige 750W como mínimo u otro conector, aplica el requisito válido más alto. Consulta la <a href=\"/es/metodologia\" class=\"text-primary hover:underline\">metodología completa del cálculo de PSU</a> para conocer los supuestos de cada asignación. Es una planificación de capacidad, no una medición en la toma, una certificación de laboratorio ni una garantía para cada pico transitorio.",
+        "benefits_title": "Qué comprobar después de calcular los vatios de la PSU",
         "benefits_list": [
-            "<strong>Empieza con un intervalo:</strong> Compara varios tamaños de PSU sin tratar un número como exacto.",
-            "<strong>Compara márgenes:</strong> Observa cómo distintas reservas modifican la estimación.",
-            "<strong>Planifica actualizaciones:</strong> Considera si componentes futuros aumentarán la carga.",
-            "<strong>Verifica antes de comprar:</strong> Confirma vataje, conectores, formato y calidad del modelo con documentación y pruebas independientes."
+            "<strong>Elige el escenario adecuado:</strong> Toma el resultado del 30% como punto de partida normal para el equipo actual. El 15% sirve como comparación ajustada y el 50% encaja con una actualización definida o una carga poco habitual.",
+            "<strong>Aplica el requisito de la GPU exacta:</strong> Compara el resultado con la potencia de sistema recomendada por el fabricante de la tarjeta. Si la documentación exige más, tiene prioridad sobre la aritmética genérica.",
+            "<strong>Comprueba conectores y cables:</strong> Confirma PCIe de 8 pines o 12VHPWR/12V-2x6 nativo, el número de cables y la capacidad de 12V. Nunca reutilices cables modulares de otra PSU solo porque el conector encaja.",
+            "<strong>Separa eficiencia y calidad:</strong> 80 PLUS describe la eficiencia en puntos de prueba definidos; no demuestra protecciones, respuesta a transitorios, ruido, comportamiento térmico o fiabilidad. Busca pruebas independientes del modelo y revisión exactos.",
+            "<strong>Planifica las actualizaciones:</strong> Una PSU más grande es útil si corresponde a una GPU o ampliación futura concreta. Comprar el máximo sin un plan puede costar más y dejarte con el conector o formato equivocados.",
+            "<strong>Interpreta bien los síntomas:</strong> Una PSU insuficiente o averiada puede causar apagados, pantallas negras y reinicios bajo carga. Normalmente no crea un cuello de botella de FPS como la CPU o la GPU; analiza por separado rendimiento y alimentación."
         ],
-        "conclusion_title": "Construye Inteligentemente con la PSU Correcta",
-        "conclusion_desc": "La PSU es importante para un PC fiable. Usa la calculadora para una estimación preliminar y después verifica la tarjeta gráfica exacta, el modelo de PSU, los conectores y los requisitos de los fabricantes antes de comprar."
+        "conclusion_title": "De la estimación de vatios a la compra de la PSU",
+        "conclusion_desc": "Antes de comprar, verifica las cifras exactas de CPU y GPU, el requisito mínimo de PSU para la GPU, conectores y cables, dimensiones del modelo, salida de 12V, protecciones, pruebas independientes, garantía y tensión de entrada de tu región. Si estás actualizando el equipo, usa la <a href=\"/es/herramientas/calculadora-prioridad-actualizacion-pc\" class=\"text-primary hover:underline\">Calculadora de Prioridad de Actualización de PC</a> para decidir si debes revisar primero la PSU, la GPU, la CPU, la RAM o el almacenamiento."
     },
     "bottleneck_promo": {
         "title": "Verificar Cuellos de Botella",

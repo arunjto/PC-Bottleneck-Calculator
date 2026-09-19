@@ -17,6 +17,9 @@ function getSignificantLastmod(route) {
   const canonicalPath = match?.[1];
   if (!canonicalPath) return undefined;
 
+  if (indexingPolicy.corePageUpdates[canonicalPath]) {
+    return indexingPolicy.corePageUpdates[canonicalPath];
+  }
   if (canonicalPath.startsWith('builds/')) return indexingPolicy.popularBuildsUpdated;
   if (canonicalPath.startsWith('tools/')) {
     const slug = canonicalPath.slice('tools/'.length);

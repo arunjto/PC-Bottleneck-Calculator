@@ -12,22 +12,62 @@ import {
   Cable,
   CheckCircle,
   ChevronDown,
+  Copy,
   ExternalLink,
   Gauge,
   Shield,
   ShieldCheck,
+  Share2,
   TrendingUp,
   Zap,
 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { estimatePSUPlanning } from '@/lib/psu-model';
+import { PsuPeripheralInputs } from '@/components/calculators/psu-peripheral-inputs';
+import type { Locale } from '@/i18n-config';
+import { getPsuPhaseTwoCopy } from '@/lib/psu-page-phase-two';
+import { getPsuPhaseThreeCopy } from '@/lib/psu-page-phase-three';
+import { getPsuPhaseFourCopy } from '@/lib/psu-page-phase-four';
+import {
+  DEFAULT_PSU_PERIPHERALS,
+  assessPsuTransientRisk,
+  estimateDetailedPSUPlanning,
+  type PsuPeripheralBreakdown,
+} from '@/lib/psu-model';
+import { getLocalizedPath } from '@/lib/path-translations';
+import { parsePsuShareParams, serializePsuShareConfig } from '@/lib/psu-share';
+import { getPsuGpuGuidance } from '@/lib/psu-gpu-guidance';
+
+async function copyText(value: string) {
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch {
+    const textArea = document.createElement('textarea');
+    textArea.value = value;
+    textArea.setAttribute('readonly', '');
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      return document.execCommand('copy');
+    } catch {
+      return false;
+    } finally {
+      document.body.removeChild(textArea);
+    }
+  }
+}
 
 export function EnhancedPSUCalculator({
   dict,
+  lang,
   initialSelection,
 }: {
   dict: any;
+  lang: Locale;
   initialSelection?: { cpu?: string; gpu?: string };
 }) {
   const initialCPU = initialSelection?.cpu && getCPUById(initialSelection.cpu)
@@ -38,10 +78,15 @@ export function EnhancedPSUCalculator({
     : '';
   const [selectedCPU, setSelectedCPU] = useState(initialCPU);
   const [selectedGPU, setSelectedGPU] = useState(initialGPU);
-  const [selectedComponents, setSelectedComponents] = useState(initialCPU && initialGPU ? 'gaming' : '');
+  const [peripherals, setPeripherals] = useState({ ...DEFAULT_PSU_PERIPHERALS });
+  const [secondGpu, setSecondGpu] = useState('');
   const [selectedEfficiency, setSelectedEfficiency] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [shareState, setShareState] = useState<'idle' | 'copied' | 'error'>('idle');
   const resultsRegionRef = useRef<HTMLDivElement>(null);
+  const phaseTwo = getPsuPhaseTwoCopy(lang);
+  const phaseThree = getPsuPhaseThreeCopy(lang);
+  const phaseFour = getPsuPhaseFourCopy(lang);
 
   useEffect(() => {
     if (!showResults) return;
@@ -65,16 +110,24 @@ export function EnhancedPSUCalculator({
     return () => cancelAnimationFrame(frameId);
   }, [showResults]);
 
+  useEffect(() => {
+    if (secondGpu && secondGpu === selectedGPU) setSecondGpu('');
+  }, [secondGpu, selectedGPU]);
+
+  useEffect(() => {
+    const shared = parsePsuShareParams(window.location.search);
+    if (!shared) return;
+
+    setSelectedCPU(shared.cpu);
+    setSelectedGPU(shared.gpu);
+    setSecondGpu(shared.secondGpu);
+    setPeripherals(shared.peripherals);
+    setSelectedEfficiency(shared.efficiency);
+    setShowResults(true);
+  }, []);
+
   const t = dict?.psu_calculator;
   if (!t) return null;
-
-
-  const additionalComponents = [
-    { id: 'basic', name: t.component_options.basic.name, power: 100, description: t.component_options.basic.desc },
-    { id: 'gaming', name: t.component_options.gaming.name, power: 150, description: t.component_options.gaming.desc },
-    { id: 'enthusiast', name: t.component_options.enthusiast.name, power: 200, description: t.component_options.enthusiast.desc },
-    { id: 'workstation', name: t.component_options.workstation.name, power: 250, description: t.component_options.workstation.desc }
-  ];
 
   const psuEfficiencyRatings = [
     { id: '80plus', name: '80 PLUS', description: t.efficiency_options['80plus'].desc },
@@ -104,14 +157,6 @@ export function EnhancedPSUCalculator({
     price: gpu.currentPrice
   }));
 
-  const componentOptions = additionalComponents.map(comp => ({
-    id: comp.id,
-    name: comp.name,
-    tier: '',
-    specs: `~${comp.power}W, ${comp.description}`,
-    price: 0
-  }));
-
   const efficiencyOptions = psuEfficiencyRatings.map(eff => ({
     id: eff.id,
     name: eff.name,
@@ -121,20 +166,61 @@ export function EnhancedPSUCalculator({
   }));
 
   const handleCalculate = () => {
-    if (selectedCPU && selectedGPU && selectedComponents) {
+    if (selectedCPU && selectedGPU) {
       setShowResults(true);
     }
   };
 
-  const isFormComplete = Boolean(selectedCPU && selectedGPU && selectedComponents);
+  const isFormComplete = Boolean(selectedCPU && selectedGPU);
+  const secondGpuOptions = gpuOptions.filter((option) => option.id !== selectedGPU);
+
+  const getShareUrl = () => {
+    const url = new URL(getLocalizedPath(lang, 'psu-calculator'), window.location.origin);
+    url.search = serializePsuShareConfig({
+      cpu: selectedCPU,
+      gpu: selectedGPU,
+      secondGpu,
+      peripherals,
+      efficiency: selectedEfficiency,
+    }).toString();
+    url.hash = 'psu-calculator-form';
+    return url.toString();
+  };
+
+  const copyResultLink = async () => {
+    const copied = await copyText(getShareUrl());
+    setShareState(copied ? 'copied' : 'error');
+    if (copied) window.setTimeout(() => setShareState('idle'), 2500);
+  };
+
+  const shareResult = async () => {
+    const url = getShareUrl();
+    const shareData = {
+      title: `${getCPUById(selectedCPU)?.name ?? selectedCPU} + ${getGPUById(selectedGPU)?.name ?? selectedGPU} PSU estimate`,
+      text: phaseThree.shareDescription,
+      url,
+    };
+    const canUseNativeShare = typeof navigator.share === 'function'
+      && (typeof navigator.canShare !== 'function' || navigator.canShare(shareData));
+
+    if (canUseNativeShare) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+      }
+    }
+    await copyResultLink();
+  };
 
   if (showResults) {
     const cpu = getCPUById(selectedCPU);
     const gpu = getGPUById(selectedGPU);
-    const components = additionalComponents.find(c => c.id === selectedComponents);
+    const secondaryGpu = getGPUById(secondGpu);
     const efficiency = psuEfficiencyRatings.find(e => e.id === selectedEfficiency);
 
-    if (cpu && gpu && components) {
+    if (cpu && gpu) {
       const {
         estimatedLoad,
         lowerHeadroomEstimate,
@@ -142,8 +228,23 @@ export function EnhancedPSUCalculator({
         planningWattage,
         upgradeHeadroomEstimate,
         upgradePlanningWattage,
-      } = estimatePSUPlanning(cpu, gpu, components.power);
+        systemOverhead,
+        peripheralBreakdown,
+      } = estimateDetailedPSUPlanning(cpu, gpu, peripherals, secondaryGpu?.tdp ?? 0);
       const availableHeadroom = planningWattage - estimatedLoad;
+      const transientAssessment = assessPsuTransientRisk(
+        gpu.tdp,
+        secondaryGpu?.tdp ?? 0,
+        peripherals.addInCards,
+      );
+      const gpuGuidance = getPsuGpuGuidance(gpu);
+      const gpuPowerTierRange = {
+        'up-to-75': '≤75W',
+        '76-to-150': '76–150W',
+        '151-to-225': '151–225W',
+        '226-to-350': '226–350W',
+        'over-350': '>350W',
+      }[gpuGuidance.powerTier];
 
       const getPSURecommendations = () => {
         return [
@@ -265,6 +366,29 @@ export function EnhancedPSUCalculator({
             </CardContent>
           </Card>
 
+          <Card className="border-violet-200 dark:border-violet-900">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Share2 className="h-5 w-5 text-violet-600" />
+                {phaseThree.shareTitle}
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">{phaseThree.shareDescription}</p>
+            </CardHeader>
+            <CardContent className="flex flex-wrap items-center gap-3">
+              <Button type="button" variant="outline" onClick={copyResultLink}>
+                <Copy className="mr-2 h-4 w-4" />
+                {shareState === 'copied' ? phaseThree.copied : phaseThree.copyLink}
+              </Button>
+              <Button type="button" variant="outline" onClick={shareResult}>
+                <Share2 className="mr-2 h-4 w-4" />
+                {phaseThree.share}
+              </Button>
+              <p className={`w-full text-xs ${shareState === 'error' ? 'text-red-600' : 'text-emerald-700 dark:text-emerald-400'}`} aria-live="polite">
+                {shareState === 'error' ? phaseThree.copyFailed : shareState === 'copied' ? phaseThree.copied : ''}
+              </p>
+            </CardContent>
+          </Card>
+
           {/* Actionable but deliberately non-certified compatibility guidance. */}
           <Card className="border-emerald-200 dark:border-emerald-900">
             <CardHeader>
@@ -333,6 +457,112 @@ export function EnhancedPSUCalculator({
             </CardContent>
           </Card>
 
+          <Card className="border-amber-200 dark:border-amber-900">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Zap className="h-6 w-6 text-amber-600" />
+                <span>{phaseThree.transientTitle}</span>
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">{phaseThree.transientDescription}</p>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="rounded-lg border bg-muted/30 p-4">
+                  <p className="text-sm text-muted-foreground">{phaseThree.combinedGpuPower}</p>
+                  <p className="mt-1 text-2xl font-bold">{transientAssessment.combinedGpuPower}W</p>
+                </div>
+                <div className="rounded-lg border bg-muted/30 p-4">
+                  <p className="text-sm text-muted-foreground">{phaseThree.riskLabel}</p>
+                  <p className="mt-1 text-2xl font-bold text-amber-700 dark:text-amber-300">
+                    {phaseThree.riskValues[transientAssessment.risk]}
+                  </p>
+                </div>
+                <div className="rounded-lg border bg-muted/30 p-4">
+                  <p className="text-sm text-muted-foreground">{phaseThree.dedicatedCables}</p>
+                  <p className="mt-1 font-semibold">
+                    {transientAssessment.requiresDedicatedGpuCables ? phaseThree.yes : phaseThree.verify}
+                  </p>
+                </div>
+                <div className="rounded-lg border bg-muted/30 p-4">
+                  <p className="text-sm text-muted-foreground">{phaseThree.connectorLabel}</p>
+                  <p className="mt-1 font-semibold">{phaseThree.verify}</p>
+                </div>
+              </div>
+
+              <p className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-100">
+                {phaseThree.riskDescriptions[transientAssessment.risk]}
+              </p>
+
+              <dl className="grid gap-3 md:grid-cols-2">
+                <div className="rounded-lg border p-4">
+                  <dt className="text-sm font-medium text-muted-foreground">{phaseThree.atxLabel}</dt>
+                  <dd className="mt-1 font-semibold">
+                    {transientAssessment.atxRecommendation === 'standard'
+                      ? phaseThree.standard
+                      : transientAssessment.atxRecommendation === 'atx-3-preferred'
+                        ? phaseThree.atxPreferred
+                        : phaseThree.atxVerify}
+                  </dd>
+                </div>
+                <div className="rounded-lg border p-4">
+                  <dt className="text-sm font-medium text-muted-foreground">{phaseThree.connectorLabel}</dt>
+                  <dd className="mt-1 font-semibold">
+                    {transientAssessment.connectorRecommendation === 'vendor-specified'
+                      ? phaseThree.vendorSpecified
+                      : transientAssessment.connectorRecommendation === 'native-high-current-preferred'
+                        ? phaseThree.nativePreferred
+                        : phaseThree.nativeVerify}
+                  </dd>
+                </div>
+              </dl>
+
+              <details className="rounded-lg border bg-muted/20 p-4">
+                <summary className="cursor-pointer font-semibold">{phaseThree.referenceTitle}</summary>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{phaseThree.referenceDescription}</p>
+                <div className="mt-3 flex flex-wrap gap-4 text-sm font-medium">
+                  <a href="https://edc.intel.com/content/www/us/en/design/ipla/software-development-platforms/client/platforms/alder-lake-desktop/atx-version-3-0-multi-rail-desktop-platform-power-supply-design-guide/2.0/2.01/psu-power-excursion/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                    {phaseThree.intelSource}<ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                  <a href="https://pcisig.com/PCI%20Express/ECN/Base/12V-2x6ConnectorUpdatestoPCIeBase_6.0" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                    {phaseThree.pciSigSource}<ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </details>
+              <div className="rounded-lg border border-blue-200 bg-blue-50/70 p-4 dark:border-blue-900 dark:bg-blue-950/30">
+                <h3 className="font-semibold text-blue-950 dark:text-blue-100">{phaseFour.modelGuidanceTitle}</h3>
+                <p className="mt-1 text-sm leading-6 text-blue-900/80 dark:text-blue-100/80">{phaseFour.modelGuidanceDescription}</p>
+                <dl className="mt-4 grid gap-3 sm:grid-cols-3">
+                  <div>
+                    <dt className="text-xs font-medium text-blue-900/70 dark:text-blue-100/70">{phaseFour.gpuPowerTier}</dt>
+                    <dd className="mt-1 font-semibold text-blue-950 dark:text-blue-100">{gpuPowerTierRange} · {gpu.tdp}W</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-medium text-blue-900/70 dark:text-blue-100/70">{phaseFour.planningClass}</dt>
+                    <dd className="mt-1 font-semibold text-blue-950 dark:text-blue-100">{phaseFour.planningClassValue(gpuGuidance.planningClassWattage)}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-medium text-blue-900/70 dark:text-blue-100/70">{phaseFour.officialRequirement}</dt>
+                    <dd className="mt-1 font-semibold text-blue-950 dark:text-blue-100">{phaseFour.officialRequirementValue}</dd>
+                  </div>
+                </dl>
+                <p className="mt-3 text-xs leading-5 text-blue-900/70 dark:text-blue-100/70">{phaseFour.notOfficialMinimum}</p>
+              </div>
+              <p className="text-xs leading-5 text-muted-foreground">{phaseThree.safetyNotice}</p>
+              <div className="flex flex-wrap gap-4 text-sm font-medium">
+                {gpu.officialUrl && (
+                  <a href={gpu.officialUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                    {gpu.name} — {phaseThree.verify}<ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
+                {secondaryGpu?.officialUrl && (
+                  <a href={secondaryGpu.officialUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                    {secondaryGpu.name} — {phaseThree.verify}<ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Power Breakdown */}
           <Card>
             <CardHeader>
@@ -365,11 +595,29 @@ export function EnhancedPSUCalculator({
                   <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-medium">{t.breakdown.other}</span>
-                      <span className="font-bold">{components.power}W</span>
+                      <span className="font-bold">{systemOverhead}W</span>
                     </div>
-                    <Progress value={(components.power / estimatedLoad) * 100} className="h-2" />
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{components.description}</p>
+                    <Progress value={(systemOverhead / estimatedLoad) * 100} className="h-2" />
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{phaseTwo.breakdownDescription}</p>
                   </div>
+                </div>
+
+                <div className="rounded-lg border p-4">
+                  <h3 className="font-semibold">{phaseTwo.breakdownTitle}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{phaseTwo.breakdownDescription}</p>
+                  <dl className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+                    {(Object.entries(peripheralBreakdown) as Array<[keyof PsuPeripheralBreakdown, number]>)
+                      .filter(([, watts]) => watts > 0)
+                      .map(([key, watts]) => (
+                        <div key={key} className="flex items-center justify-between gap-4 border-b py-2 text-sm last:border-0">
+                          <dt className="text-muted-foreground">
+                            {phaseTwo.breakdownLabels[key]}
+                            {key === 'secondGpu' && secondaryGpu ? ` — ${secondaryGpu.name}` : ''}
+                          </dt>
+                          <dd className="font-semibold tabular-nums">{watts}W</dd>
+                        </div>
+                      ))}
+                  </dl>
                 </div>
 
                 <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -482,22 +730,7 @@ export function EnhancedPSUCalculator({
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="psu-components-select" className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {t.labels.components}
-            </label>
-            <EnhancedSearchableSelect
-              id="psu-components-select"
-              options={componentOptions}
-              value={selectedComponents}
-              onValueChange={setSelectedComponents}
-              placeholder={t.placeholders.components}
-              type="components"
-              showTier={false}
-            />
-          </div>
-
-          <div className="space-y-2">
+          <div className="space-y-2 md:col-span-2">
             <label htmlFor="psu-efficiency-select" className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t.labels.efficiency}
             </label>
@@ -513,6 +746,15 @@ export function EnhancedPSUCalculator({
           </div>
         </div>
 
+        <PsuPeripheralInputs
+          copy={phaseTwo}
+          value={peripherals}
+          onChange={setPeripherals}
+          secondGpu={secondGpu}
+          onSecondGpuChange={setSecondGpu}
+          secondGpuOptions={secondGpuOptions}
+        />
+
         <div className="pt-4">
           <Button
             onClick={handleCalculate}
@@ -525,7 +767,7 @@ export function EnhancedPSUCalculator({
                 {t.button}
               </>
             ) : (
-              t.incomplete
+              phaseTwo.incomplete
             )}
           </Button>
         </div>

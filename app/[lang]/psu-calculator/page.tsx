@@ -3,13 +3,19 @@ import EnhancedPSUCalculator from '@/components/calculators/enhanced-psu-calcula
 import { InterlinkBox } from '@/components/ui/interlink-box';
 import { PsuContent } from '@/components/content/psu-guide-content';
 import { CalculatorMethodology } from '@/components/content/calculator-methodology';
+import { CalculatorMaintainer } from '@/components/content/calculator-maintainer';
+import {
+  PsuBuildExamples,
+  PsuBuyingDecision,
+  PsuRelatedResources,
+} from '@/components/calculators/psu-page-phase-one';
 import { getDictionary } from '@/get-dictionary';
 import { Locale } from '@/i18n-config';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { JsonLd } from '@/components/seo/json-ld';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
-import { BookOpen, ChevronDown, FlaskConical } from 'lucide-react';
+import { getPsuPhaseOneCopy, getPsuPhaseOneFaqs } from '@/lib/psu-page-phase-one';
 
 type Props = {
   params: Promise<{ lang: Locale }>;
@@ -67,7 +73,8 @@ export default async function PsuCalculatorPage({ params, searchParams }: Props)
   const query = await searchParams;
   const dict = await getDictionary(lang);
   const t = dict.psu_page;
-  const technical = dict.psu_calculator.technical;
+  const phaseOne = getPsuPhaseOneCopy(lang);
+  const faqs = getPsuPhaseOneFaqs(lang, t.faqs);
 
   const pageUrl = `${SITE_URL}${getLocalizedPath(lang, '/psu-calculator')}`;
   const schemaData = createSchemaGraph([
@@ -85,7 +92,7 @@ export default async function PsuCalculatorPage({ params, searchParams }: Props)
       { name: 'Home', url: `${SITE_URL}/${lang}` },
       { name: t.title, url: pageUrl },
     ]),
-    createFaqSchema(pageUrl, t.faqs),
+    createFaqSchema(pageUrl, faqs),
   ]);
 
   return (
@@ -99,48 +106,27 @@ export default async function PsuCalculatorPage({ params, searchParams }: Props)
             {t.hero_title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {t.hero_subtitle}
+            {phaseOne.heroSubtitle}
           </p>
         </div>
 
-        <EnhancedPSUCalculator
-          dict={dict}
-          initialSelection={{
-            cpu: typeof query.cpu === 'string' ? query.cpu : undefined,
-            gpu: typeof query.gpu === 'string' ? query.gpu : undefined,
-          }}
-        />
-        <details className="group overflow-hidden rounded-xl border bg-card shadow-sm">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset">
-            <div className="flex items-start gap-3">
-              <FlaskConical className="mt-0.5 h-6 w-6 flex-none text-blue-600" />
-              <div>
-                <h2 className="text-xl font-semibold">{technical.methodology_title}</h2>
-                <p className="mt-1 text-sm font-normal text-muted-foreground">{technical.methodology_subtitle}</p>
-              </div>
-            </div>
-            <ChevronDown className="h-5 w-5 flex-none text-muted-foreground transition-transform group-open:rotate-180" />
-          </summary>
-          <div className="border-t p-4 md:p-6">
-            <CalculatorMethodology lang={lang} variant="psu" />
-          </div>
-        </details>
+        <div id="psu-calculator-form" className="scroll-mt-20">
+          <EnhancedPSUCalculator
+            dict={dict}
+            lang={lang}
+            initialSelection={{
+              cpu: typeof query.cpu === 'string' ? query.cpu : undefined,
+              gpu: typeof query.gpu === 'string' ? query.gpu : undefined,
+            }}
+          />
+        </div>
 
-        <details className="group overflow-hidden rounded-xl border bg-card shadow-sm">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset">
-            <div className="flex items-start gap-3">
-              <BookOpen className="mt-0.5 h-6 w-6 flex-none text-violet-600" />
-              <div>
-                <h2 className="text-xl font-semibold">{technical.guide_title}</h2>
-                <p className="mt-1 text-sm font-normal text-muted-foreground">{technical.guide_subtitle}</p>
-              </div>
-            </div>
-            <ChevronDown className="h-5 w-5 flex-none text-muted-foreground transition-transform group-open:rotate-180" />
-          </summary>
-          <div className="border-t p-4 md:p-6">
-            <PsuContent dict={dict.psu_guide} />
-          </div>
-        </details>
+        <PsuBuildExamples lang={lang} />
+        <PsuBuyingDecision lang={lang} />
+        <CalculatorMethodology lang={lang} variant="psu" />
+        <CalculatorMaintainer lang={lang} />
+        <PsuContent dict={dict.psu_guide} />
+        <PsuRelatedResources lang={lang} />
 
         <InterlinkBox
           title={t.interlink_title}
@@ -166,7 +152,7 @@ export default async function PsuCalculatorPage({ params, searchParams }: Props)
           </header>
 
           <div className="space-y-4">
-            {t.faqs.map((faq: any, index: number) => (
+            {faqs.map((faq, index) => (
               <details key={index} className="group bg-white/80 dark:bg-gray-900/80 border border-gray-200/60 dark:border-gray-700/60 rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden">
                 <summary className="flex justify-between items-center cursor-pointer px-6 py-4 font-semibold text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors">
                   <span>{faq.q}</span>
