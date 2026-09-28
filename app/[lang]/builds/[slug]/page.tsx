@@ -23,6 +23,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { LoadBuildButton } from '@/components/builds/load-build-button';
 import { LocalizedBuildAnalysis } from '@/components/builds/localized-build-analysis';
 import { BuildAlternativeComparison } from '@/components/builds/build-alternative-comparison';
+import { BuildDetailRecommendations } from '@/components/content/detail-recommendations';
 import { i18n, isSupportedLocale, type Locale } from '@/i18n-config';
 import { getPopularBuildCopy } from '@/lib/popular-builds-i18n';
 import {
@@ -32,6 +33,7 @@ import {
   getPopularBuildAnalysis,
   getResolutionPlanningRows,
 } from '@/lib/popular-builds';
+import { getRelatedPopularBuilds } from '@/lib/detail-recommendations';
 import {
   SITE_URL,
   createBreadcrumbSchema,
@@ -150,7 +152,7 @@ export default async function PopularBuildPage({ params }: { params: Promise<Pag
       createWebPageSchema({ pageUrl: localizedUrl, name: localizedTitle, description: localizedDescription, lang: locale, image: `${SITE_URL}/og-image.png`, type: 'TechArticle' }),
       createBreadcrumbSchema(localizedUrl, [
         { name: copy.back, url: `${SITE_URL}/${locale}` },
-        { name: copy.sectionTitle, url: `${SITE_URL}/${locale}#popular-builds-title` },
+        { name: copy.sectionTitle, url: `${SITE_URL}/${locale}/builds` },
         { name: `${cpu.name} + ${gpu.name}`, url: localizedUrl },
       ]),
     ]);
@@ -163,7 +165,7 @@ export default async function PopularBuildPage({ params }: { params: Promise<Pag
   const pageUrl = `${SITE_URL}/en/builds/${build.slug}`;
   const pageTitle = `${cpu.name} + ${gpu.name} Bottleneck Analysis`;
   const description = `A practical ${build.resolution} planning analysis for ${cpu.name} and ${gpu.name}.`;
-  const related = POPULAR_BUILDS.filter((candidate) => candidate.slug !== build.slug).slice(0, 3);
+  const related = getRelatedPopularBuilds(build);
   const schema = createSchemaGraph([
     createWebPageSchema({
       pageUrl,
@@ -175,7 +177,7 @@ export default async function PopularBuildPage({ params }: { params: Promise<Pag
     }),
     createBreadcrumbSchema(pageUrl, [
       { name: 'PC Bottleneck Calculator', url: `${SITE_URL}/en` },
-      { name: 'Popular PC Build Checks', url: `${SITE_URL}/en#popular-builds-title` },
+      { name: 'Popular PC Build Checks', url: `${SITE_URL}/en/builds` },
       { name: `${cpu.name} + ${gpu.name}`, url: pageUrl },
     ]),
   ]);
@@ -185,8 +187,8 @@ export default async function PopularBuildPage({ params }: { params: Promise<Pag
       <JsonLd data={schema} />
 
       <nav aria-label="Breadcrumb" className="text-sm text-gray-600 dark:text-gray-400">
-        <Link href="/en" className="inline-flex items-center hover:text-blue-600 hover:underline">
-          <ArrowLeft className="mr-1.5 h-4 w-4" aria-hidden="true" /> PC Bottleneck Calculator
+        <Link href="/en/builds" className="inline-flex items-center hover:text-blue-600 hover:underline">
+          <ArrowLeft className="mr-1.5 h-4 w-4" aria-hidden="true" /> Popular PC Build Checks
         </Link>
       </nav>
 
@@ -402,6 +404,8 @@ export default async function PopularBuildPage({ params }: { params: Promise<Pag
       </Card>
 
       <BuildAlternativeComparison lang="en" build={build} />
+
+      <BuildDetailRecommendations lang="en" build={build} />
 
       <section aria-labelledby="related-builds" className="space-y-4">
         <h2 id="related-builds" className="text-2xl font-bold">Compare other popular build checks</h2>

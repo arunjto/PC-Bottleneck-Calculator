@@ -4,10 +4,12 @@ import type { Locale } from '@/i18n-config';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoadBuildButton } from '@/components/builds/load-build-button';
-import { POPULAR_BUILDS, getPopularBuildAnalysis, getResolutionPlanningRows, type PopularBuild } from '@/lib/popular-builds';
+import { getPopularBuildAnalysis, getResolutionPlanningRows, type PopularBuild } from '@/lib/popular-builds';
 import { getLocalizedBuildDetails, getPopularBuildCopy, getPopularBuildReviewedDate, localizedConstraintLabel, localizePressureLabel } from '@/lib/popular-builds-i18n';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { BuildAlternativeComparison } from '@/components/builds/build-alternative-comparison';
+import { BuildDetailRecommendations } from '@/components/content/detail-recommendations';
+import { getRelatedPopularBuilds } from '@/lib/detail-recommendations';
 
 function ScoreBar({ label, value, color }: { label: string; value: number; color: string }) {
   return (
@@ -23,13 +25,13 @@ export function LocalizedBuildAnalysis({ lang, build }: { lang: Locale; build: P
   const details = getLocalizedBuildDetails(build, lang);
   const { cpu, gpu, scoreGap, constraint, calculatedPsu, commonPsu } = getPopularBuildAnalysis(build);
   const rows = getResolutionPlanningRows(cpu, gpu);
-  const related = POPULAR_BUILDS.filter(candidate => candidate.slug !== build.slug).slice(0, 3);
+  const related = getRelatedPopularBuilds(build);
   const balanced = constraint === 'Balanced';
 
   return (
     <main className="mx-auto w-full max-w-5xl space-y-8 px-4 py-8">
       <nav aria-label="Breadcrumb" className="text-sm text-gray-600 dark:text-gray-400">
-        <Link href={`/${lang}`} className="inline-flex items-center hover:text-blue-600 hover:underline"><ArrowLeft className="mr-1.5 h-4 w-4" />{copy.back}</Link>
+        <Link href={`/${lang}/builds`} className="inline-flex items-center hover:text-blue-600 hover:underline"><ArrowLeft className="mr-1.5 h-4 w-4" />{copy.sectionTitle}</Link>
       </nav>
 
       <header className="space-y-4 rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-50 via-white to-violet-50 p-6 dark:border-gray-800 dark:from-blue-950/40 dark:via-gray-950 dark:to-violet-950/30 sm:p-8">
@@ -126,6 +128,8 @@ export function LocalizedBuildAnalysis({ lang, build }: { lang: Locale; build: P
       </Card>
 
       <BuildAlternativeComparison lang={lang} build={build} />
+
+      <BuildDetailRecommendations lang={lang} build={build} />
 
       <section aria-labelledby="localized-related" className="space-y-4"><h2 id="localized-related" className="text-2xl font-bold">{copy.relatedBuilds}</h2><div className="grid gap-3 md:grid-cols-3">{related.map(candidate => { const analysis = getPopularBuildAnalysis(candidate); return <Link key={candidate.slug} href={`/${lang}/builds/${candidate.slug}`} className="rounded-xl border p-4 transition hover:border-violet-400 hover:shadow-sm"><p className="font-semibold">{analysis.cpu.name} + {analysis.gpu.name}</p><p className="mt-2 inline-flex items-center text-sm text-violet-700 dark:text-violet-300">{copy.openAnalysis}<ArrowRight className="ml-1 h-4 w-4" /></p></Link>; })}</div></section>
     </main>

@@ -6,6 +6,7 @@ import { TOOLS, TOOL_SLUGS, getToolContent, getToolPath, type ToolCategory } fro
 import { getToolsPageCopy } from '@/lib/tools-page-i18n';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
+import { BuildGuideLinks, GameGuideLinks } from '@/components/content/planning-discovery-links';
 
 const CATEGORY_ORDER: ToolCategory[] = ['upgrade', 'performance', 'memory', 'storage'];
 const CATEGORY_ICONS = {
@@ -128,6 +129,9 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ lang:
             </section>
           );
         })}
+
+        <GameGuideLinks lang={lang} />
+        <BuildGuideLinks lang={lang} />
 
         <section aria-labelledby="core-tools-heading" className="rounded-2xl border bg-slate-50 p-6 dark:bg-slate-900/50 md:p-8">
           <h2 id="core-tools-heading" className="text-2xl font-semibold">{copy.coreHeading}</h2>

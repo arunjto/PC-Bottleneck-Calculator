@@ -8,6 +8,7 @@ import { PopularBuilds } from '@/components/content/popular-builds';
 import { BottleneckFieldGuide } from '@/components/content/bottleneck-field-guide';
 import { CalculatorMaintainer } from '@/components/content/calculator-maintainer';
 import { BottleneckVerification } from '@/components/content/bottleneck-verification';
+import { GameGuideLinks } from '@/components/content/planning-discovery-links';
 
 import { getDictionary } from '@/get-dictionary';
 import { isSupportedLocale, Locale } from '@/i18n-config';
@@ -122,6 +123,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </div>
         <BottleneckVerification lang={lang} />
         <PopularBuilds lang={lang} />
+        <GameGuideLinks lang={lang} />
         <CalculatorMethodology lang={lang} variant="bottleneck" />
 
         {/* Below-the-fold: deferred rendering via content-visibility for mobile performance */}

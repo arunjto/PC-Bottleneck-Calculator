@@ -8,12 +8,14 @@ import {
   Scale,
   ShieldCheck,
   Wrench,
+  Zap,
 } from 'lucide-react';
 import type { Locale } from '@/i18n-config';
 import { getCPUById, getGPUById } from '@/lib/hardware-database';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { DEFAULT_PSU_PERIPHERALS, estimateDetailedPSUPlanning } from '@/lib/psu-model';
 import { getPsuPhaseOneCopy, PSU_EXAMPLES } from '@/lib/psu-page-phase-one';
+import { getPlanningDiscoveryCopy } from '@/lib/planning-discovery-i18n';
 
 function getExampleRows(lang: Locale) {
   const calculatorPath = getLocalizedPath(lang, 'psu-calculator');
@@ -142,6 +144,7 @@ export function PsuBuyingDecision({ lang }: { lang: Locale }) {
 
 export function PsuRelatedResources({ lang }: { lang: Locale }) {
   const copy = getPsuPhaseOneCopy(lang).resources;
+  const discoveryCopy = getPlanningDiscoveryCopy(lang);
   const guide = lang === 'en'
     ? { title: copy.guideTitle, description: copy.guideDescription, href: '/en/blog/how-much-psu-wattage-do-i-need', icon: BookOpen }
     : { title: copy.methodologyTitle, description: copy.methodologyDescription, href: getLocalizedPath(lang, 'methodology'), icon: BookOpen };
@@ -149,6 +152,7 @@ export function PsuRelatedResources({ lang }: { lang: Locale }) {
     guide,
     { title: copy.upgradeTitle, description: copy.upgradeDescription, href: getLocalizedPath(lang, 'tools/pc-upgrade-priority-calculator'), icon: Wrench },
     { title: copy.comparisonTitle, description: copy.comparisonDescription, href: getLocalizedPath(lang, 'tools/component-comparison'), icon: Calculator },
+    { title: discoveryCopy.allBuilds, description: discoveryCopy.buildsIntro, href: `/${lang}/builds`, icon: Zap },
     { title: copy.midrangeBuildTitle, description: copy.midrangeBuildDescription, href: `/${lang}/builds/core-i5-14600k-rtx-4070-super`, icon: Gauge },
     { title: copy.enthusiastBuildTitle, description: copy.enthusiastBuildDescription, href: `/${lang}/builds/ryzen-7-9800x3d-rtx-5080`, icon: ShieldCheck },
   ];
