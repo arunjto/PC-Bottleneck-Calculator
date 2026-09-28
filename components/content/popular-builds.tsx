@@ -5,9 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { POPULAR_BUILDS, getPopularBuildAnalysis } from '@/lib/popular-builds';
 import type { Locale } from '@/i18n-config';
 import { getLocalizedBuildDetails, getPopularBuildCopy, getPopularBuildReviewedDate, localizedConstraintLabel } from '@/lib/popular-builds-i18n';
+import { getPlanningDiscoveryCopy } from '@/lib/planning-discovery-i18n';
 
 export function PopularBuilds({ lang }: { lang: Locale }) {
   const copy = getPopularBuildCopy(lang);
+  const discoveryCopy = getPlanningDiscoveryCopy(lang);
   return (
     <section aria-labelledby="popular-builds-title" className="space-y-5">
       <div className="text-center">
@@ -71,7 +73,12 @@ export function PopularBuilds({ lang }: { lang: Locale }) {
 
       <div className="flex flex-col items-center justify-between gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-xs text-gray-600 sm:flex-row dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
         <span className="flex items-center gap-1.5"><Cpu className="h-4 w-4" />{copy.selectionNote}</span>
-        <span>{copy.reviewed} {getPopularBuildReviewedDate(lang)}</span>
+        <span className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2">
+          <span>{copy.reviewed} {getPopularBuildReviewedDate(lang)}</span>
+          <Link href={`/${lang}/builds`} className="inline-flex items-center gap-1 font-semibold text-violet-700 hover:underline dark:text-violet-300">
+            {discoveryCopy.allBuilds}<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
+        </span>
       </div>
     </section>
   );

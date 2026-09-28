@@ -6,6 +6,7 @@ import { Locale } from "@/i18n-config";
 import { constructMetadataAlternates } from "@/lib/seo";
 import { FpsGuideContent } from "@/components/content/fps-guide-content";
 import { FpsRangeGuide } from "@/components/content/fps-range-guide";
+import { GameGuideLinks } from "@/components/content/planning-discovery-links";
 import { CalculatorMethodology } from "@/components/content/calculator-methodology";
 import { CalculatorMaintainer } from "@/components/content/calculator-maintainer";
 import { FAQSection } from "@/components/faq/faq-section";
@@ -131,6 +132,9 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
         </div>
         <div className="mx-auto mt-8 max-w-4xl">
           <FpsRangeGuide lang={lang} />
+        </div>
+        <div className="mx-auto mt-8 max-w-4xl">
+          <GameGuideLinks lang={lang} />
         </div>
         {cs2Spotlight && (
           <section

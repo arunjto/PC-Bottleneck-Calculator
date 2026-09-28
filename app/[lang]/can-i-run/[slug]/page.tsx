@@ -19,6 +19,7 @@ import { getLocalizedPath } from '@/lib/path-translations';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
+import { GameDetailRecommendations } from '@/components/content/detail-recommendations';
 
 type PageParams = { lang: Locale; slug: string };
 
@@ -505,6 +506,8 @@ export default async function GameGuidePage({ params }: { params: Promise<PagePa
             </details>
           ))}
         </section>
+
+        <GameDetailRecommendations lang={lang} slug={typedSlug} />
 
         <section aria-labelledby="related-tools" className="rounded-3xl border border-blue-200 bg-blue-50/60 p-6 dark:border-blue-900 dark:bg-blue-950/30 sm:p-8">
           <h2 id="related-tools" className="flex items-center gap-2 text-2xl font-bold"><ArrowRight className="h-5 w-5 text-primary" aria-hidden="true" />{rich.relatedTitle}</h2>
