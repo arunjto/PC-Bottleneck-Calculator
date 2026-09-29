@@ -1,24 +1,28 @@
 import Link from 'next/link';
-import { ArrowRight, Monitor, Wrench } from 'lucide-react';
+import { ArrowRight, Gamepad2, Monitor, Wrench } from 'lucide-react';
 import type { Locale } from '@/i18n-config';
 import { getBlogResourceLinks } from '@/lib/blog-resource-links';
 import { getToolContent, getToolPath } from '@/lib/pc-tools';
 import { getPopularBuild, getPopularBuildAnalysis } from '@/lib/popular-builds';
 import { getLocalizedBuildDetails } from '@/lib/popular-builds-i18n';
+import { getGameGuideCopy } from '@/lib/can-i-run';
+import { getGameGuideDefinition } from '@/lib/game-guides';
+import { getLocalizedPath } from '@/lib/path-translations';
 
 const COPY: Record<Locale, {
   title: string;
   intro: string;
   tools: string;
   builds: string;
+  games: string;
   open: string;
 }> = {
-  en: { title: 'Continue your PC planning', intro: 'Use the guide as context, then test the decision with a focused calculator or a worked build example.', tools: 'Relevant calculators', builds: 'Build examples', open: 'Open resource' },
-  it: { title: 'Continua a pianificare il PC', intro: 'Usa la guida come contesto, poi verifica la decisione con un calcolatore specifico o un esempio di build.', tools: 'Calcolatori pertinenti', builds: 'Esempi di build', open: 'Apri la risorsa' },
-  fr: { title: 'Poursuivez la planification du PC', intro: 'Utilisez le guide comme contexte, puis vérifiez votre décision avec un calculateur ciblé ou un exemple de configuration.', tools: 'Calculateurs pertinents', builds: 'Exemples de configurations', open: 'Ouvrir la ressource' },
-  de: { title: 'PC-Planung fortsetzen', intro: 'Nutzen Sie den Leitfaden als Kontext und prüfen Sie die Entscheidung mit einem passenden Rechner oder Build-Beispiel.', tools: 'Passende Rechner', builds: 'Build-Beispiele', open: 'Ressource öffnen' },
-  es: { title: 'Continúa planificando tu PC', intro: 'Usa la guía como contexto y comprueba la decisión con una calculadora específica o un ejemplo de configuración.', tools: 'Calculadoras relacionadas', builds: 'Ejemplos de configuraciones', open: 'Abrir recurso' },
-  ru: { title: 'Продолжите планирование ПК', intro: 'Используйте руководство как контекст, а затем проверьте решение в подходящем калькуляторе или на примере сборки.', tools: 'Подходящие калькуляторы', builds: 'Примеры сборок', open: 'Открыть ресурс' },
+  en: { title: 'Continue your PC planning', intro: 'Use the guide as context, then test the decision with a focused calculator, game workload or worked build example.', tools: 'Relevant calculators', games: 'Relevant game checks', builds: 'Build examples', open: 'Open resource' },
+  it: { title: 'Continua a pianificare il PC', intro: 'Usa la guida come contesto, poi verifica la decisione con un calcolatore, un gioco o una build.', tools: 'Calcolatori pertinenti', games: 'Verifiche di giochi pertinenti', builds: 'Esempi di build', open: 'Apri la risorsa' },
+  fr: { title: 'Poursuivez la planification du PC', intro: 'Utilisez le guide comme contexte, puis vérifiez la décision avec un calculateur, un jeu ou une configuration.', tools: 'Calculateurs pertinents', games: 'Vérifications de jeux pertinentes', builds: 'Exemples de configurations', open: 'Ouvrir la ressource' },
+  de: { title: 'PC-Planung fortsetzen', intro: 'Nutzen Sie den Leitfaden als Kontext und prüfen Sie die Entscheidung mit Rechner, Spielelast oder Build-Beispiel.', tools: 'Passende Rechner', games: 'Passende Spieleprüfungen', builds: 'Build-Beispiele', open: 'Ressource öffnen' },
+  es: { title: 'Continúa planificando tu PC', intro: 'Usa la guía como contexto y comprueba la decisión con una calculadora, un juego o un equipo.', tools: 'Calculadoras relacionadas', games: 'Comprobaciones de juegos', builds: 'Ejemplos de configuraciones', open: 'Abrir recurso' },
+  ru: { title: 'Продолжите планирование ПК', intro: 'Используйте руководство как контекст, затем проверьте решение в калькуляторе, игре или на примере сборки.', tools: 'Подходящие калькуляторы', games: 'Подходящие проверки игр', builds: 'Примеры сборок', open: 'Открыть ресурс' },
 };
 
 export function PlanningResources({ lang, canonicalSlug }: { lang: Locale; canonicalSlug: string }) {
@@ -53,6 +57,27 @@ export function PlanningResources({ lang, canonicalSlug }: { lang: Locale; canon
             })}
           </div>
         </div>
+
+        {resources.games.length > 0 && (
+          <div>
+            <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
+              <Gamepad2 className="h-4 w-4" aria-hidden="true" />{copy.games}
+            </h3>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {resources.games.map((slug) => {
+                const game = getGameGuideDefinition(slug);
+                const gameCopy = getGameGuideCopy(lang, slug);
+                return (
+                  <Link key={slug} href={getLocalizedPath(lang, `can-i-run/${slug}`)} className="group rounded-xl border bg-background p-4 no-underline transition hover:border-emerald-400 hover:shadow-sm">
+                    <span className="font-semibold text-foreground group-hover:text-emerald-700 dark:group-hover:text-emerald-300">{game.name}</span>
+                    <span className="mt-2 line-clamp-2 block text-sm leading-6 text-muted-foreground">{gameCopy.quickAnswer}</span>
+                    <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 dark:text-emerald-300">{copy.open}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {builds.length > 0 && (
           <div>
