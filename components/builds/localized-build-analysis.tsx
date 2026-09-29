@@ -8,6 +8,7 @@ import { getPopularBuildAnalysis, getResolutionPlanningRows, type PopularBuild }
 import { getLocalizedBuildDetails, getPopularBuildCopy, getPopularBuildReviewedDate, localizedConstraintLabel, localizePressureLabel } from '@/lib/popular-builds-i18n';
 import { getLocalizedPath } from '@/lib/path-translations';
 import { BuildAlternativeComparison } from '@/components/builds/build-alternative-comparison';
+import { BuildDecisionCheckpoint } from '@/components/builds/build-decision-checkpoint';
 import { BuildDetailRecommendations } from '@/components/content/detail-recommendations';
 import { getRelatedPopularBuilds } from '@/lib/detail-recommendations';
 
@@ -52,6 +53,8 @@ export function LocalizedBuildAnalysis({ lang, build }: { lang: Locale; build: P
           <LoadBuildButton cpu={build.cpuId} gpu={build.gpuId} ram={build.ramId} resolution={build.resolution} lang={lang} label={copy.loadBuild} />
         </CardContent>
       </Card>
+
+      <BuildDecisionCheckpoint lang={lang} build={build} />
 
       <section aria-labelledby="localized-dashboard" className="space-y-4">
         <h2 id="localized-dashboard" className="text-2xl font-bold">{copy.dashboard}</h2>
