@@ -7,6 +7,7 @@ import { getLocalizedPath } from '@/lib/path-translations';
 import { HARDWARE_DATABASE_UPDATED, HARDWARE_SCORE_METHODOLOGY_VERSION } from '@/lib/hardware-database';
 import { FPS_MODEL_VERSION } from '@/lib/fps-model';
 import { JsonLd } from '@/components/seo/json-ld';
+import { MethodologyEvidence } from '@/components/content/methodology-evidence';
 import { createBreadcrumbSchema, createSchemaGraph, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
 
 const copy: Record<Locale, {
@@ -119,6 +120,8 @@ export default async function MethodologyPage({ params }: { params: Promise<{ la
           <h2 className="mb-3 flex items-center gap-2 text-2xl font-semibold"><AlertTriangle className="h-6 w-6 text-amber-600" />{t.limits}</h2>
           <ul className="list-disc space-y-2 pl-6 text-muted-foreground">{t.limitItems.map((item) => <li key={item}>{item}</li>)}</ul>
         </section>
+
+        {lang === 'en' && <MethodologyEvidence lang={lang} />}
 
         <section className="space-y-3">
           <h2 className="text-2xl font-semibold">{t.sources}</h2>

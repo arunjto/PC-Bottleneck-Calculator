@@ -20,6 +20,7 @@ import { constructMetadataAlternates } from '@/lib/seo';
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebPageSchema, SITE_URL } from '@/lib/structured-data';
 import { getSiteChromeCopy } from '@/lib/site-i18n';
 import { GameDetailRecommendations } from '@/components/content/detail-recommendations';
+import { GameDecisionGuide } from '@/components/content/game-decision-guide';
 
 type PageParams = { lang: Locale; slug: string };
 
@@ -422,6 +423,8 @@ export default async function GameGuidePage({ params }: { params: Promise<PagePa
           </div>
           <p className="text-sm leading-6 text-muted-foreground">{copy.sourceNote}</p>
         </section>
+
+        <GameDecisionGuide lang={lang} guide={guide} />
 
         <section className="rounded-2xl border border-indigo-300 bg-gradient-to-br from-indigo-50 to-blue-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-blue-950/30 sm:p-8">
           <Gamepad2 className="h-7 w-7 text-indigo-700 dark:text-indigo-300" aria-hidden="true" />

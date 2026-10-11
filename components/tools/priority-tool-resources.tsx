@@ -5,21 +5,45 @@ import { getPostBySlug } from '@/lib/blog';
 import { getLocalizedBlogSlug } from '@/lib/blog-slug-translations';
 import type { ToolContent, ToolSlug } from '@/lib/pc-tools';
 
-type PriorityToolSlug = Extract<
-  ToolSlug,
-  | 'component-comparison'
-  | 'pc-upgrade-priority-calculator'
-  | 'resolution-scaling-calculator'
-  | 'ssd-upgrade-calculator'
->;
-
 type Faq = { q: string; a: string };
 
-const GUIDE_SLUGS: Record<PriorityToolSlug, readonly string[]> = {
+const GUIDE_SLUGS: Record<ToolSlug, readonly string[]> = {
+  'gpu-upgrade-calculator': [
+    'best-gpu-for-gaming-2026',
+    'how-much-vram-do-you-need-for-gaming',
+    'cpu-vs-gpu-bottleneck-explained',
+  ],
+  'cpu-upgrade-calculator': [
+    'cpu-vs-gpu-bottleneck-explained',
+    'how-to-check-pc-bottleneck',
+    'how-to-estimate-gaming-fps',
+  ],
   'component-comparison': [
     'cpu-vs-gpu-bottleneck-explained',
     'how-to-check-pc-bottleneck',
     'best-gpu-for-gaming-2026',
+  ],
+  'what-games-can-my-pc-run': [
+    'how-to-estimate-gaming-fps',
+    'how-to-check-fps-on-pc',
+    'how-to-check-pc-bottleneck',
+  ],
+  'vram-calculator': [
+    'how-much-vram-do-you-need-for-gaming',
+    'best-gpu-for-gaming-2026',
+    'how-to-estimate-gaming-fps',
+  ],
+  'gaming-ram-calculator': [
+    'how-to-check-pc-bottleneck',
+    'how-to-estimate-gaming-fps',
+  ],
+  'frame-time-calculator': [
+    'how-to-check-fps-on-pc',
+    'how-to-estimate-gaming-fps',
+  ],
+  'fps-refresh-rate-calculator': [
+    'how-to-check-fps-on-pc',
+    'how-to-estimate-gaming-fps',
   ],
   'pc-upgrade-priority-calculator': [
     'how-to-check-pc-bottleneck',
@@ -30,6 +54,11 @@ const GUIDE_SLUGS: Record<PriorityToolSlug, readonly string[]> = {
     'how-to-estimate-gaming-fps',
     'how-to-check-fps-on-pc',
     'best-gpu-for-gaming-2026',
+  ],
+  'game-settings-optimizer': [
+    'how-to-estimate-gaming-fps',
+    'best-gpu-for-gaming-2026',
+    'how-much-vram-do-you-need-for-gaming',
   ],
   'ssd-upgrade-calculator': [
     'how-to-check-fps-on-pc',
@@ -109,10 +138,6 @@ const COPY: Record<Locale, {
   },
 };
 
-function isPriorityTool(slug: ToolSlug): slug is PriorityToolSlug {
-  return slug in GUIDE_SLUGS;
-}
-
 function getFaqs(lang: Locale, content: ToolContent): Faq[] {
   const copy = COPY[lang] ?? COPY.en;
   return [
@@ -133,8 +158,6 @@ export function PriorityToolResources({
   content: ToolContent;
   pageUrl: string;
 }) {
-  if (!isPriorityTool(slug)) return null;
-
   const copy = COPY[lang] ?? COPY.en;
   const faqs = getFaqs(lang, content);
   const guides = GUIDE_SLUGS[slug]

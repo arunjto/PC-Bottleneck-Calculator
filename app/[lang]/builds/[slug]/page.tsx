@@ -23,6 +23,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { LoadBuildButton } from '@/components/builds/load-build-button';
 import { LocalizedBuildAnalysis } from '@/components/builds/localized-build-analysis';
 import { BuildAlternativeComparison } from '@/components/builds/build-alternative-comparison';
+import { BuildDecisionCheckpoint } from '@/components/builds/build-decision-checkpoint';
 import { BuildDetailRecommendations } from '@/components/content/detail-recommendations';
 import { i18n, isSupportedLocale, type Locale } from '@/i18n-config';
 import { getPopularBuildCopy } from '@/lib/popular-builds-i18n';
@@ -231,6 +232,8 @@ export default async function PopularBuildPage({ params }: { params: Promise<Pag
           <LoadBuildButton cpu={build.cpuId} gpu={build.gpuId} ram={build.ramId} resolution={build.resolution} lang="en" />
         </CardContent>
       </Card>
+
+      <BuildDecisionCheckpoint lang="en" build={build} />
 
       <section aria-labelledby="planning-dashboard" className="space-y-4">
         <h2 id="planning-dashboard" className="text-2xl font-bold">Build planning dashboard</h2>
