@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Cpu, Gamepad2, Zap } from 'lucide-react';
+import { ArrowRight, Cpu, Gamepad2, Thermometer, Zap } from 'lucide-react';
 import type { Locale } from '@/i18n-config';
 import { Card, CardContent } from '@/components/ui/card';
 import { getBuildDecisionCopy } from '@/lib/build-decision-i18n';
@@ -10,12 +10,20 @@ import { getPopularBuildAnalysis, type PopularBuild } from '@/lib/popular-builds
 
 export function BuildDecisionCheckpoint({ lang, build }: { lang: Locale; build: PopularBuild }) {
   const copy = getBuildDecisionCopy(lang);
-  const gameSlug = BUILD_GAMES[build.slug]?.[0];
+  const gameSlugs = BUILD_GAMES[build.slug] ?? [];
+  const cheaperCandidates: Record<string, string> = {
+    'core-i5-12600k-rtx-4060': 'ryzen-5-5600x-rtx-4060',
+    'ryzen-5-7600x-rx-7800-xt': 'ryzen-5-5600x-rtx-4060',
+    'core-i5-14600k-rtx-4070-super': 'ryzen-5-7600x-rx-7800-xt',
+    'ryzen-7-7800x3d-rtx-5070': 'core-i5-14600k-rtx-4070-super',
+    'ryzen-7-9800x3d-rtx-5080': 'ryzen-7-7800x3d-rtx-5070',
+  };
+  const cheaperSlug = cheaperCandidates[build.slug];
 
-  if (!copy || !gameSlug) return null;
+  if (!copy || gameSlugs.length === 0) return null;
 
   const summary = copy.summaries[build.slug];
-  const game = getGameGuideDefinition(gameSlug);
+  const games = gameSlugs.map(getGameGuideDefinition);
   const { cpu, gpu, commonPsu } = getPopularBuildAnalysis(build);
   const publishedPower = cpu.tdp + gpu.tdp;
 
@@ -30,7 +38,7 @@ export function BuildDecisionCheckpoint({ lang, build }: { lang: Locale; build: 
     },
     {
       title: copy.workloadTitle,
-      body: copy.workloadBody(build.resolution, gpu.vram, game.name),
+      body: copy.workloadBody(build.resolution, gpu.vram, games.map(game => game.name).join(' + ')),
       icon: Gamepad2,
       iconClass: 'text-violet-600',
     },
@@ -39,6 +47,12 @@ export function BuildDecisionCheckpoint({ lang, build }: { lang: Locale; build: 
       body: copy.powerBody(publishedPower, commonPsu),
       icon: Zap,
       iconClass: 'text-amber-600',
+    },
+    {
+      title: copy.coolingTitle,
+      body: copy.coolingBody,
+      icon: Thermometer,
+      iconClass: 'text-red-600',
     },
   ] as const;
 
@@ -51,7 +65,7 @@ export function BuildDecisionCheckpoint({ lang, build }: { lang: Locale; build: 
         <p className="mt-4 border-l-4 border-blue-500 pl-4 font-medium leading-7 text-gray-800 dark:text-gray-100">{summary}</p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {checks.map(({ title, body, icon: Icon, iconClass }) => (
           <Card key={title} className="bg-background/90 shadow-none">
             <CardContent className="pt-6">
@@ -63,10 +77,10 @@ export function BuildDecisionCheckpoint({ lang, build }: { lang: Locale; build: 
         ))}
       </div>
 
-      <Link href={getLocalizedPath(lang, `can-i-run/${game.slug}`)} className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:underline dark:text-blue-300">
-        {copy.gameLink(game.name)}
-        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-      </Link>
+      <div className="flex flex-wrap gap-x-5 gap-y-3">
+        {games.map(game => <Link key={game.slug} href={getLocalizedPath(lang, `can-i-run/${game.slug}`)} className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:underline dark:text-blue-300">{copy.gameLink(game.name)}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>)}
+        {cheaperSlug && <Link href={`/${lang}/builds/${cheaperSlug}`} className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 hover:underline dark:text-emerald-300">{copy.cheaperLink}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>}
+      </div>
     </section>
   );
 }

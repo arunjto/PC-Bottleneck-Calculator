@@ -10,11 +10,37 @@ type BuildDecisionCopy = {
   workloadBody: (resolution: string, vram: number, game: string) => string;
   powerTitle: string;
   powerBody: (publishedPower: number, psu: number) => string;
+  coolingTitle: string;
+  coolingBody: string;
   gameLink: (game: string) => string;
+  cheaperLink: string;
   summaries: Record<string, string>;
 };
 
 const COPY: Partial<Record<Locale, BuildDecisionCopy>> = {
+  en: {
+    eyebrow: 'Buyer decision checkpoint',
+    title: 'Before you buy this configuration',
+    intro: 'A component score cannot decide whether the total purchase makes sense. Verify the platform, two representative workloads, power delivery and physical fit using the exact parts you intend to buy.',
+    platformTitle: 'Platform and total cost',
+    platformBody: (socket, memory) => `This plan uses ${socket} and ${memory}. Price the motherboard, memory, cooler and any BIOS requirement—not only the CPU and GPU.`,
+    workloadTitle: 'Two workload checks',
+    workloadBody: (resolution, vram, game) => `The target is ${resolution} with ${vram}GB VRAM. Use ${game} plus the second linked game to compare a CPU-sensitive and a graphics-heavy scenario.`,
+    powerTitle: 'Power and connector gate',
+    powerBody: (publishedPower, psu) => `CPU and GPU list ${publishedPower}W combined; ${psu}W is the next common planning size. Confirm the exact GPU maker’s PSU and native-connector requirement.`,
+    coolingTitle: 'Cooling and case gate',
+    coolingBody: 'Confirm cooler mounting and capacity, GPU length and slot thickness, front-radiator conflicts, airflow, and safe power-cable bend clearance.',
+    gameLink: game => `Check ${game}`,
+    cheaperLink: 'Compare the lower-cost candidate; verify today’s total price',
+    summaries: {
+      'ryzen-5-5600x-rtx-4060': 'Buy mainly as a cost-controlled upgrade for an existing AM4/DDR4 PC. For a new system, price an AM5 board and DDR5 too: the higher entry cost can buy a longer CPU upgrade path. Skip a CPU replacement if your measured limit is the RTX 4060 at the intended settings.',
+      'core-i5-12600k-rtx-4060': 'Buy when an LGA1700 board, compatible memory and adequate cooler can be reused. DDR4 and DDR5 boards are not interchangeable. For gaming-only use at higher resolutions, compare the total platform cost against putting more budget into the GPU.',
+      'ryzen-5-7600x-rx-7800-xt': 'A sensible new AM5 base for 1440p: 16GB VRAM supports texture-heavy workloads and the socket leaves CPU upgrade options. Skip the premium over an AM4 reuse build if future CPU swaps and high-quality 1440p are not part of the plan.',
+      'core-i5-14600k-rtx-4070-super': 'Buy for high-refresh 1440p plus rendering or productivity work that can use the CPU. Cooler, motherboard and PSU materially affect total cost. For gaming alone, compare a lower-power CPU and redirect the saving toward the display or GPU tier.',
+      'ryzen-7-7800x3d-rtx-5070': 'Buy for competitive, simulation or CPU-sensitive games where high 1% lows justify CPU headroom. In GPU-heavy games, a cheaper CPU can produce a similar experience; verify the exact game and monitor target before paying the premium.',
+      'ryzen-7-9800x3d-rtx-5080': 'Buy only when a premium 4K/high-refresh display and the chosen settings can use the hardware. PSU quality, native connector, case clearance and cooling are purchase gates. A less expensive CPU/GPU allocation is better value when 4K high-refresh is not the real target.',
+    },
+  },
   it: {
     eyebrow: 'Punto decisionale',
     title: 'Prima di acquistare questa configurazione',
@@ -25,7 +51,10 @@ const COPY: Partial<Record<Locale, BuildDecisionCopy>> = {
     workloadBody: (resolution, vram, game) => `Il piano punta a ${resolution} con ${vram} GB di VRAM. Usa ${game} come controllo pratico, non come promessa di FPS identici in ogni gioco.`,
     powerTitle: 'Alimentazione e margine',
     powerBody: (publishedPower, psu) => `CPU e GPU dichiarano insieme ${publishedPower} W; ${psu} W è il taglio PSU comune consigliato, con margine per picchi, ventole e periferiche.`,
+    coolingTitle: 'Raffreddamento e spazio nel case',
+    coolingBody: 'Conferma montaggio e capacità del dissipatore, lunghezza e spessore della GPU, conflitti con radiatori, airflow e spazio sicuro per il cavo di alimentazione.',
     gameLink: (game) => `Verifica i requisiti di ${game}`,
+    cheaperLink: 'Confronta l’alternativa potenzialmente meno costosa e verifica il prezzo attuale',
     summaries: {
       'ryzen-5-5600x-rtx-4060': 'È soprattutto un aggiornamento conveniente per un PC AM4/DDR4 già esistente. Per una build completamente nuova, confronta il costo totale con AM5; il prezzo iniziale può essere maggiore, ma il percorso di upgrade è più lungo.',
       'core-i5-12600k-rtx-4060': 'Ha senso se puoi riutilizzare una scheda LGA1700, la memoria e un dissipatore adeguato. Verifica se la scheda madre usa DDR4 o DDR5: non sono intercambiabili, e il costo della piattaforma può cambiare la scelta.',
@@ -45,7 +74,10 @@ const COPY: Partial<Record<Locale, BuildDecisionCopy>> = {
     workloadBody: (resolution, vram, game) => `L’objectif est ${resolution} avec ${vram} Go de VRAM. Utilisez ${game} comme test pratique, pas comme garantie de FPS identiques dans tous les jeux.`,
     powerTitle: 'Alimentation et marge',
     powerBody: (publishedPower, psu) => `Le CPU et le GPU totalisent ${publishedPower} W annoncés ; ${psu} W est le palier d’alimentation conseillé avec une marge pour les pointes, ventilateurs et périphériques.`,
+    coolingTitle: 'Refroidissement et boîtier',
+    coolingBody: 'Vérifiez montage et capacité du refroidisseur, longueur et épaisseur du GPU, conflits avec le radiateur, airflow et courbure sûre du câble.',
     gameLink: (game) => `Vérifier les exigences de ${game}`,
+    cheaperLink: 'Comparer l’option potentiellement moins chère et vérifier le prix actuel',
     summaries: {
       'ryzen-5-5600x-rtx-4060': 'C’est surtout une mise à niveau rentable pour un PC AM4/DDR4 existant. Pour une machine entièrement neuve, comparez le coût global avec AM5 : l’investissement initial peut être supérieur, mais la voie d’évolution est plus longue.',
       'core-i5-12600k-rtx-4060': 'Le choix est pertinent si vous réutilisez une carte LGA1700, la mémoire et un refroidissement adapté. Vérifiez si la carte mère accepte la DDR4 ou la DDR5 : elles ne sont pas interchangeables et le coût de plateforme peut changer la décision.',
@@ -65,7 +97,10 @@ const COPY: Partial<Record<Locale, BuildDecisionCopy>> = {
     workloadBody: (resolution, vram, game) => `Geplant sind ${resolution} mit ${vram} GB VRAM. Nutze ${game} als praxisnahen Check, nicht als Garantie für gleiche FPS in jedem Spiel.`,
     powerTitle: 'Netzteil und Reserve',
     powerBody: (publishedPower, psu) => `CPU und GPU kommen zusammen auf ${publishedPower} W veröffentlichte Leistung; ${psu} W ist die empfohlene gängige Netzteilgröße mit Reserve für Lastspitzen, Lüfter und Peripherie.`,
+    coolingTitle: 'Kühlung und Gehäuse',
+    coolingBody: 'Kühlermontage und -leistung, GPU-Länge und Slotbreite, Radiatorkonflikte, Airflow sowie sicheren Kabelbiegeradius prüfen.',
     gameLink: (game) => `Anforderungen für ${game} prüfen`,
+    cheaperLink: 'Günstigeren Kandidaten vergleichen und aktuellen Gesamtpreis prüfen',
     summaries: {
       'ryzen-5-5600x-rtx-4060': 'Dieser Build ist vor allem als preiswertes Upgrade eines vorhandenen AM4/DDR4-PCs sinnvoll. Bei einem kompletten Neubau solltest du die Gesamtkosten mit AM5 vergleichen: Der Einstieg kann teurer sein, bietet aber den längeren Upgrade-Pfad.',
       'core-i5-12600k-rtx-4060': 'Die Kombination lohnt sich besonders, wenn LGA1700-Mainboard, Speicher und ein passender Kühler vorhanden sind. Prüfe, ob das Board DDR4 oder DDR5 nutzt – beides ist nicht austauschbar und verändert die Plattformkosten.',
@@ -85,7 +120,10 @@ const COPY: Partial<Record<Locale, BuildDecisionCopy>> = {
     workloadBody: (resolution, vram, game) => `El objetivo es ${resolution} con ${vram} GB de VRAM. Usa ${game} como comprobación práctica, no como promesa de los mismos FPS en todos los juegos.`,
     powerTitle: 'Fuente y margen',
     powerBody: (publishedPower, psu) => `CPU y GPU suman ${publishedPower} W publicados; ${psu} W es el tamaño de fuente común recomendado, con margen para picos, ventiladores y periféricos.`,
+    coolingTitle: 'Refrigeración y caja',
+    coolingBody: 'Confirma montaje y capacidad del disipador, longitud y grosor de la GPU, conflictos con radiador, flujo de aire y curva segura del cable.',
     gameLink: (game) => `Comprobar los requisitos de ${game}`,
+    cheaperLink: 'Compara la opción potencialmente más económica y verifica el precio actual',
     summaries: {
       'ryzen-5-5600x-rtx-4060': 'Es principalmente una actualización rentable para un PC AM4/DDR4 existente. Si vas a montar desde cero, compara el coste total con AM5: la entrada puede ser más cara, pero ofrece un recorrido de actualización más largo.',
       'core-i5-12600k-rtx-4060': 'Tiene sentido si puedes reutilizar una placa LGA1700, memoria y refrigeración adecuada. Confirma si la placa usa DDR4 o DDR5; no son intercambiables y el coste de plataforma puede cambiar la decisión.',
@@ -105,7 +143,10 @@ const COPY: Partial<Record<Locale, BuildDecisionCopy>> = {
     workloadBody: (resolution, vram, game) => `Цель — ${resolution} при ${vram} ГБ VRAM. Используйте ${game} как практическую проверку, а не как обещание одинакового FPS во всех играх.`,
     powerTitle: 'Блок питания и запас',
     powerBody: (publishedPower, psu) => `Заявленная мощность CPU и GPU вместе составляет ${publishedPower} Вт; ${psu} Вт — рекомендуемый стандартный номинал с запасом для пиков, вентиляторов и периферии.`,
+    coolingTitle: 'Охлаждение и корпус',
+    coolingBody: 'Проверьте крепление и мощность кулера, длину и толщину видеокарты, конфликты с радиатором, вентиляцию и безопасный изгиб кабеля питания.',
     gameLink: (game) => `Проверить требования ${game}`,
+    cheaperLink: 'Сравнить потенциально более доступный вариант и проверить текущую общую цену',
     summaries: {
       'ryzen-5-5600x-rtx-4060': 'В первую очередь это выгодный апгрейд существующего ПК на AM4/DDR4. Для полностью новой сборки сравните общую стоимость с AM5: старт может быть дороже, зато путь дальнейшего обновления будет длиннее.',
       'core-i5-12600k-rtx-4060': 'Связка особенно разумна, если уже есть плата LGA1700, память и подходящее охлаждение. Уточните, поддерживает ли плата DDR4 или DDR5: они несовместимы между собой, а стоимость платформы может изменить выбор.',
