@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Check, ChevronDown, Copy, History, Pencil, RotateCcw, ShieldCheck, Trash2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getCPUById, getGameById, getGPUById } from '@/lib/hardware-database';
+import { getCPUById, getGameById, getGPUById } from '@/lib/hardware-client-data';
 import type { FPSHistoryEntry } from '@/lib/fps-history';
 import { serializeFPSShareConfig, type FPSCalculatorConfig } from '@/lib/fps-share';
 
@@ -52,7 +52,7 @@ export function FPSSavedHistory({
 
   const copySavedLink = async (entry: FPSHistoryEntry) => {
     const params = serializeFPSShareConfig(entry.config);
-    const link = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    const link = `${window.location.origin}${window.location.pathname}#${params.toString()}`;
 
     try {
       await navigator.clipboard.writeText(link);

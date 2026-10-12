@@ -100,6 +100,7 @@ export default function BlogPagination({
       {hasPrev ? (
         <Link
           href={pageUrl(basePath, currentPage - 1)}
+          prefetch={false}
           className={`${basePageClass} hover:bg-muted`}
           aria-label="Go to previous page"
         >
@@ -148,6 +149,7 @@ export default function BlogPagination({
           <Link
             key={page}
             href={pageUrl(basePath, page)}
+            prefetch={false}
             className={`${basePageClass} hover:bg-muted`}
             aria-label={`Go to page ${page}`}
           >
@@ -160,6 +162,7 @@ export default function BlogPagination({
       {hasNext ? (
         <Link
           href={pageUrl(basePath, currentPage + 1)}
+          prefetch={false}
           className={`${basePageClass} hover:bg-muted`}
           aria-label="Go to next page"
         >

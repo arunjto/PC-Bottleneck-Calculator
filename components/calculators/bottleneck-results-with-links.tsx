@@ -33,7 +33,7 @@ import {
   CPU, 
   GPU, 
   allGames 
-} from '@/lib/hardware-database';
+} from '@/lib/hardware-client-data';
 import { estimateFPS } from '@/lib/fps-model';
 
 interface ComprehensiveBottleneckResultsProps {

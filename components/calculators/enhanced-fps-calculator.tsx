@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
-import { allCPUs, allGPUs, allGames, getCPUById, getGPUById, getGameById } from '@/lib/hardware-database';
+import { allCPUs, allGPUs, allGames, getCPUById, getGPUById, getGameById } from '@/lib/hardware-client-data';
 import { estimateFPSRange, estimateFPSWithBreakdown, FPS_MODEL_VERSION, getFPSGameProfileMetadata } from '@/lib/fps-model';
 import type { FPSEstimate, FPSModelOptions } from '@/lib/fps-model';
 import { serializeFPSShareConfig } from '@/lib/fps-share';
@@ -531,7 +531,7 @@ export function EnhancedFPSCalculator({
 
   const getRestorableShareUrl = (config: FPSCalculatorConfig) => {
     const url = new URL(window.location.pathname, window.location.origin);
-    url.search = serializeFPSShareConfig(config).toString();
+    url.hash = serializeFPSShareConfig(config).toString();
     return url.toString();
   };
 
@@ -791,7 +791,7 @@ export function EnhancedFPSCalculator({
           : selectedUpscaling.includes('balanced') || selectedUpscaling === 'xe-ss'
             ? 'balanced'
             : 'quality';
-      const vramToolHref = `${getLocalizedPath(lang as Locale, 'tools/vram-calculator')}?${new URLSearchParams({
+      const vramToolHref = `${getLocalizedPath(lang as Locale, 'tools/vram-calculator')}#${new URLSearchParams({
         game: game.id,
         resolution: vramResolution,
         textureQuality: vramTextureQuality,
@@ -923,7 +923,7 @@ export function EnhancedFPSCalculator({
           ? '2560x1440'
           : '1920x1080';
       const getUpgradeToolUrl = (slug: string, params: Record<string, string>) =>
-        `${getLocalizedPath(lang as Locale, `tools/${slug}`)}?${new URLSearchParams(params).toString()}`;
+        `${getLocalizedPath(lang as Locale, `tools/${slug}`)}#${new URLSearchParams(params).toString()}`;
       const cpuUpgradeToolUrl = getUpgradeToolUrl('cpu-upgrade-calculator', {
         currentCpu: cpu.id,
         gpu: gpu.id,

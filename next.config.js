@@ -130,6 +130,26 @@ const nextConfig = {
     ],
     minimumCacheTTL: 86400, // Cache optimized images for 24 hours
   },
+  async headers() {
+    const durableAssetCache = {
+      key: 'Cache-Control',
+      value: 'public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400',
+    };
+
+    return [
+      { source: '/images/:path*', headers: [durableAssetCache] },
+      { source: '/flags/:path*', headers: [durableAssetCache] },
+      { source: '/logo.webp', headers: [durableAssetCache] },
+      { source: '/og-image.png', headers: [durableAssetCache] },
+      { source: '/og-image-fps.png', headers: [durableAssetCache] },
+      { source: '/author-arun-kumar-yadav.jpg', headers: [durableAssetCache] },
+      { source: '/favicon.ico', headers: [durableAssetCache] },
+      { source: '/favicon-96x96.png', headers: [durableAssetCache] },
+      { source: '/apple-touch-icon.png', headers: [durableAssetCache] },
+      { source: '/icon-192.png', headers: [durableAssetCache] },
+      { source: '/icon-512.png', headers: [durableAssetCache] },
+    ];
+  },
   experimental: {
     optimizeCss: true, // Inline critical CSS → eliminates render-blocking stylesheet
   },

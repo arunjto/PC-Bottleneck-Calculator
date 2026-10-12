@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'; // Dynamic import
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
-import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-database';
+import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-client-data';
 import { Cpu, Zap, HardDrive, Monitor, Calculator, ShieldCheck } from 'lucide-react';
 import type { Locale } from '@/i18n-config';
 

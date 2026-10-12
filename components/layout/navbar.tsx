@@ -42,6 +42,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
           {/* Brand */}
           <Link
             href={`/${lang}`}
+            prefetch={false}
             className="flex items-center gap-2.5 font-semibold text-base hover:text-blue-300 transition-colors flex-shrink-0"
           >
             <Image
@@ -60,6 +61,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
                 className="shrink-0 whitespace-nowrap rounded-md px-2 py-1.5 text-[13px] font-medium text-gray-200 transition-colors hover:bg-white/10 hover:text-white 2xl:px-3 2xl:text-sm"
               >
                 {link.label}
@@ -91,6 +93,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
                     <li key={link.href}>
                       <Link
                         href={link.href}
+                        prefetch={false}
                         className="block rounded-md px-3 py-2.5 text-sm font-medium text-gray-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                       >
                         {link.label}

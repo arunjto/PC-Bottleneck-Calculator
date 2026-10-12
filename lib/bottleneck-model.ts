@@ -1,4 +1,5 @@
-import type { CPU, GPU } from '@/lib/hardware-database';
+export type BottleneckModelCPU = { benchmarkScore: number };
+export type BottleneckModelGPU = { benchmarkScore: number };
 
 export type GamingResolution = '1080p' | '1440p' | '4K';
 export type PlanningConstraint = 'CPU' | 'GPU' | 'Balanced';
@@ -39,8 +40,8 @@ function normalizeGamingResolution(resolution: string): GamingResolution {
 }
 
 export function calculateResolutionAdjustedBalance(
-  cpu: CPU,
-  gpu: GPU,
+  cpu: BottleneckModelCPU,
+  gpu: BottleneckModelGPU,
   resolution: string,
 ): ResolutionAdjustedBalance {
   const normalizedResolution = normalizeGamingResolution(resolution);

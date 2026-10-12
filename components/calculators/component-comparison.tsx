@@ -128,7 +128,7 @@ export function ComponentComparison({
     if (!hasComparison || !first || !second) return;
     const query = new URLSearchParams({ type: comparisonType, first: first.id, second: second.id });
     const path = getLocalizedPath(lang, 'tools/component-comparison');
-    const url = `${window.location.origin}${path}?${query.toString()}`;
+    const url = `${window.location.origin}${path}#${query.toString()}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopyState('copied');

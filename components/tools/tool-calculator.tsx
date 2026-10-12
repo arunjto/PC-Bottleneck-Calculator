@@ -929,7 +929,7 @@ export function ToolCalculator({
               .replace('{proposed}', proposed.socket);
       return {
         items: [socketMessage, copy.messages.cpuBios, copy.messages.cpuCooling],
-        psuHref: `${getLocalizedPath(lang, 'psu-calculator')}?${new URLSearchParams({
+        psuHref: `${getLocalizedPath(lang, 'psu-calculator')}#${new URLSearchParams({
           cpu: proposed.id,
           gpu: gpu.id,
         }).toString()}`,
@@ -941,7 +941,7 @@ export function ToolCalculator({
       const cpu = byId(data.cpus, submitted.cpu);
       return {
         items: [copy.messages.gpuPower, copy.messages.gpuClearance, copy.messages.gpuDrivers],
-        psuHref: `${getLocalizedPath(lang, 'psu-calculator')}?${new URLSearchParams({
+        psuHref: `${getLocalizedPath(lang, 'psu-calculator')}#${new URLSearchParams({
           cpu: cpu.id,
           gpu: proposed.id,
         }).toString()}`,

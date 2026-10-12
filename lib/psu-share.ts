@@ -1,4 +1,4 @@
-import { allCPUs, allGPUs } from '@/lib/hardware-database';
+import { allCPUs, allGPUs } from '@/lib/hardware-client-data';
 import {
   DEFAULT_PSU_PERIPHERALS,
   type PsuCoolingType,

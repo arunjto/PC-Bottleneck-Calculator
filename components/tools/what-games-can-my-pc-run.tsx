@@ -263,7 +263,7 @@ export function WhatGamesCanMyPCRun({
         hasRamWarning,
         hasVramWarning,
         suggestedQuality,
-        detailHref: `${getLocalizedPath(lang, 'fps-calculator')}?${detailParams.toString()}`,
+        detailHref: `${getLocalizedPath(lang, 'fps-calculator')}#${detailParams.toString()}`,
       };
     }).sort((a, b) => STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status) || b.calculation.estimate.average - a.calculation.estimate.average);
   }, [cpuId, data.cpus, data.games, data.gpus, gpuId, lang, quality, ram, resolution, submitted, targetFps]);

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EnhancedSearchableSelect } from '@/components/ui/enhanced-searchable-select';
-import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-database';
+import { allCPUs, allGPUs, getCPUById, getGPUById } from '@/lib/hardware-client-data';
 import {
   AlertTriangle,
   BarChart3,
@@ -64,20 +64,12 @@ async function copyText(value: string) {
 export function EnhancedPSUCalculator({
   dict,
   lang,
-  initialSelection,
 }: {
   dict: any;
   lang: Locale;
-  initialSelection?: { cpu?: string; gpu?: string };
 }) {
-  const initialCPU = initialSelection?.cpu && getCPUById(initialSelection.cpu)
-    ? initialSelection.cpu
-    : '';
-  const initialGPU = initialSelection?.gpu && getGPUById(initialSelection.gpu)
-    ? initialSelection.gpu
-    : '';
-  const [selectedCPU, setSelectedCPU] = useState(initialCPU);
-  const [selectedGPU, setSelectedGPU] = useState(initialGPU);
+  const [selectedCPU, setSelectedCPU] = useState('');
+  const [selectedGPU, setSelectedGPU] = useState('');
   const [peripherals, setPeripherals] = useState({ ...DEFAULT_PSU_PERIPHERALS });
   const [secondGpu, setSecondGpu] = useState('');
   const [selectedEfficiency, setSelectedEfficiency] = useState('');
@@ -115,8 +107,35 @@ export function EnhancedPSUCalculator({
   }, [secondGpu, selectedGPU]);
 
   useEffect(() => {
-    const shared = parsePsuShareParams(window.location.search);
-    if (!shared) return;
+    const hashParams = window.location.hash.startsWith('#')
+      ? window.location.hash.slice(1)
+      : window.location.hash;
+    const sharedFromHash = parsePsuShareParams(hashParams);
+    const shared = sharedFromHash ?? parsePsuShareParams(window.location.search);
+    const stateParams = new URLSearchParams(hashParams || window.location.search);
+
+    if (!shared) {
+      const cpu = stateParams.get('cpu') ?? '';
+      const gpu = stateParams.get('gpu') ?? '';
+      if (getCPUById(cpu) && getGPUById(gpu)) {
+        setSelectedCPU(cpu);
+        setSelectedGPU(gpu);
+        if (!hashParams) {
+          window.history.replaceState(
+            null,
+            '',
+            `${window.location.pathname}#${new URLSearchParams({ prefill: '1', cpu, gpu }).toString()}`
+          );
+        }
+      }
+      return;
+    }
+
+    // Keep old query-string links working, then collapse them into the static URL.
+    if (!sharedFromHash) {
+      const hash = serializePsuShareConfig(shared).toString();
+      window.history.replaceState(null, '', `${window.location.pathname}#${hash}`);
+    }
 
     setSelectedCPU(shared.cpu);
     setSelectedGPU(shared.gpu);
@@ -176,14 +195,14 @@ export function EnhancedPSUCalculator({
 
   const getShareUrl = () => {
     const url = new URL(getLocalizedPath(lang, 'psu-calculator'), window.location.origin);
-    url.search = serializePsuShareConfig({
+    url.hash = serializePsuShareConfig({
       cpu: selectedCPU,
       gpu: selectedGPU,
       secondGpu,
       peripherals,
       efficiency: selectedEfficiency,
     }).toString();
-    url.hash = 'psu-calculator-form';
+
     return url.toString();
   };
 

@@ -1,4 +1,4 @@
-import type { CPU, GPU } from '@/lib/hardware-database';
+export type PsuModelComponent = { tdp: number };
 
 export const COMMON_PSU_WATTAGES = [450, 500, 550, 600, 650, 700, 750, 800, 850, 1000, 1200, 1500] as const;
 
@@ -139,8 +139,8 @@ export function roundUpToCommonPSUWattage(requiredWattage: number): number {
 }
 
 export function estimatePSUPlanning(
-  cpu: CPU,
-  gpu: GPU,
+  cpu: PsuModelComponent,
+  gpu: PsuModelComponent,
   systemOverhead = 150
 ): PSUPlanningEstimate {
   return estimatePSUPlanningFromPower(cpu.tdp, gpu.tdp, systemOverhead);
@@ -170,8 +170,8 @@ export function estimatePSUPlanningFromPower(
 }
 
 export function estimateDetailedPSUPlanning(
-  cpu: CPU,
-  gpu: GPU,
+  cpu: PsuModelComponent,
+  gpu: PsuModelComponent,
   peripherals: PsuPeripheralSelection,
   secondGpuPower = 0,
 ): DetailedPSUPlanningEstimate {

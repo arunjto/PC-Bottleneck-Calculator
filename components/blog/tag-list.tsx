@@ -37,6 +37,7 @@ export default function TagList({ tags, lang = "en" }: TagListProps) {
           <Link
             key={tag}
             href={`/${lang}/blog/tag/${slug}`}
+            prefetch={false}
             role="listitem"
             className="
               inline-flex items-center rounded-full px-2.5 py-0.5

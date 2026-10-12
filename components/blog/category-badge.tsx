@@ -46,6 +46,7 @@ export default function CategoryBadge({
   return (
     <Link
       href={`/${lang}/blog/category/${slug}`}
+      prefetch={false}
       className={className}
       aria-label={`View all posts in ${category}`}
     >
