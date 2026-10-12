@@ -1,7 +1,9 @@
-import type { CPU, GPU, Game } from '@/lib/hardware-database';
 import {
   estimateFPSWithBreakdown,
   type FPSEstimate,
+  type FPSModelCPU,
+  type FPSModelGPU,
+  type FPSModelGame,
   type FPSModelOptions,
   type FPSQuality,
   type FPSUpscaling,
@@ -77,9 +79,9 @@ function scenarioChangeKey(changes: TargetFPSScenario['changes']) {
 }
 
 export function optimizeForTargetFPS(
-  cpu: CPU,
-  gpu: GPU,
-  game: Game,
+  cpu: FPSModelCPU,
+  gpu: FPSModelGPU,
+  game: FPSModelGame,
   currentOptions: FPSModelOptions,
   target: TargetFPS,
   recommendationLimit = 3

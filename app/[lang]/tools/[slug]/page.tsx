@@ -4,13 +4,6 @@ import { notFound } from 'next/navigation';
 import { AlertTriangle, ArrowRight, BookOpenCheck, Calculator, CheckCircle2, Database, Gauge, SearchCheck, SquareFunction } from 'lucide-react';
 import { i18n, type Locale } from '@/i18n-config';
 import {
-  allCPUs,
-  allGPUs,
-  allGames,
-  HARDWARE_DATABASE_UPDATED,
-  HARDWARE_SCORE_METHODOLOGY_VERSION,
-} from '@/lib/hardware-database';
-import {
   TOOL_SLUGS,
   getTool,
   getToolContent,
@@ -21,9 +14,7 @@ import {
 import { getToolsPageCopy } from '@/lib/tools-page-i18n';
 import { constructMetadataAlternates } from '@/lib/seo';
 import { getLocalizedPath } from '@/lib/path-translations';
-import { ToolCalculator, type ToolDatasets } from '@/components/tools/tool-calculator';
-import { ComponentComparison } from '@/components/calculators/component-comparison';
-import { WhatGamesCanMyPCRun } from '@/components/tools/what-games-can-my-pc-run';
+import { ToolCalculatorClient } from '@/components/tools/tool-calculator-client';
 import { ToolWorkedExample } from '@/components/tools/tool-worked-example';
 import { PriorityToolResources } from '@/components/tools/priority-tool-resources';
 
@@ -35,17 +26,11 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: {
   params: Promise<PageParams>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const { lang, slug } = await params;
   if (!isToolSlug(slug)) return {};
-  const query = await searchParams;
-  const isPrefilledUrl = Object.values(query).some((value) =>
-    Array.isArray(value) ? value.length > 0 : typeof value === 'string'
-  );
   const content = getToolContent(slug, lang);
   const path = '/tools/' + slug;
   const alternates = constructMetadataAlternates(lang, path);
@@ -53,16 +38,7 @@ export async function generateMetadata({
     title: content.title,
     description: content.shortDescription,
     alternates,
-    ...(isPrefilledUrl && {
-      robots: {
-        index: false,
-        follow: true,
-        googleBot: {
-          index: false,
-          follow: true,
-        },
-      },
-    }),
+
     openGraph: {
       type: 'website',
       title: content.title,
@@ -239,13 +215,10 @@ function VramEducationSection({ lang }: { lang: Locale }) {
 
 export default async function ToolPage({
   params,
-  searchParams,
 }: {
   params: Promise<PageParams>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { lang, slug } = await params;
-  const query = await searchParams;
   const tool = getTool(slug);
   if (!tool) notFound();
 
@@ -254,67 +227,6 @@ export default async function ToolPage({
   const path = getToolPath(lang, tool.slug);
   const toolsPath = getLocalizedPath(lang, 'tools');
   const pageUrl = 'https://www.pcbuildcheck.com' + path;
-  const includeComparisonDetails = tool.slug === 'component-comparison';
-  const includeGameFinderDetails = tool.slug === 'what-games-can-my-pc-run';
-  const initialSelection = Object.fromEntries(
-    Object.entries(query).filter((entry): entry is [string, string] => typeof entry[1] === 'string')
-  );
-  const data: ToolDatasets = {
-    cpus: allCPUs.map((cpu) => ({
-      id: cpu.id,
-      name: cpu.name,
-      score: cpu.benchmarkScore,
-      tdp: cpu.tdp,
-      cores: cpu.cores,
-      socket: cpu.socket,
-      ...(includeComparisonDetails || includeGameFinderDetails ? {
-        brand: cpu.brand,
-        series: cpu.series,
-        tier: cpu.tier,
-        category: cpu.category,
-        baseClock: cpu.baseClock,
-        boostClock: cpu.boostClock,
-        threads: cpu.threads,
-        architecture: cpu.architecture,
-        releaseYear: cpu.releaseYear,
-        officialUrl: cpu.officialUrl,
-      } : {}),
-    })),
-    gpus: allGPUs.map((gpu) => ({
-      id: gpu.id,
-      name: gpu.name,
-      score: gpu.benchmarkScore,
-      tdp: gpu.tdp,
-      vram: gpu.vram,
-      ...(includeComparisonDetails || includeGameFinderDetails ? {
-        brand: gpu.brand,
-        series: gpu.series,
-        tier: gpu.tier,
-        category: gpu.category,
-        baseClock: gpu.baseClock,
-        boostClock: gpu.boostClock,
-        architecture: gpu.architecture,
-        releaseYear: gpu.releaseYear,
-        officialUrl: gpu.officialUrl,
-      } : {}),
-    })),
-    games: allGames.map((game) => ({
-      id: game.id,
-      name: game.name,
-      cpuDemand: game.cpuDemand,
-      gpuDemand: game.gpuDemand,
-      ramRequirement: game.ramRequirement,
-      ...(includeGameFinderDetails ? {
-        category: game.category,
-        storageRequirement: game.storageRequirement,
-        releaseYear: game.releaseYear,
-        optimizations: game.optimizations,
-      } : {}),
-    })),
-    databaseUpdated: HARDWARE_DATABASE_UPDATED,
-    scoreMethodologyVersion: HARDWARE_SCORE_METHODOLOGY_VERSION,
-  };
-
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -390,29 +302,7 @@ export default async function ToolPage({
         </header>
 
         <section aria-label={content.title}>
-          {tool.slug === 'component-comparison' ? (
-            <ComponentComparison
-              lang={lang}
-              cpus={data.cpus}
-              gpus={data.gpus}
-              initialSelection={initialSelection}
-              databaseUpdated={data.databaseUpdated}
-              scoreMethodologyVersion={data.scoreMethodologyVersion}
-            />
-          ) : tool.slug === 'what-games-can-my-pc-run' ? (
-            <WhatGamesCanMyPCRun
-              lang={lang}
-              data={data}
-              initialSelection={initialSelection}
-            />
-          ) : (
-            <ToolCalculator
-              slug={tool.slug}
-              lang={lang}
-              data={data}
-              initialSelection={initialSelection}
-            />
-          )}
+          <ToolCalculatorClient slug={tool.slug} lang={lang} />
         </section>
 
         <ToolWorkedExample slug={tool.slug} lang={lang} content={content} />

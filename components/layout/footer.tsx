@@ -79,6 +79,7 @@ export function Footer({ lang }: { dict?: unknown; lang: string }) {
               <li key={link.href}>
                 <Link
                   href={link.href}
+                  prefetch={false}
                   className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-300 border border-gray-600/50 rounded-full hover:border-blue-400/60 hover:text-white hover:bg-white/5 transition-all duration-200"
                 >
                   <link.icon className="w-3.5 h-3.5" aria-hidden="true" />

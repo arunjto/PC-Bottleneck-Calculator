@@ -28,16 +28,10 @@ type Cs2SpotlightCopy = {
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: {
   params: Promise<{ lang: Locale }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { lang } = await params;
-  const query = await searchParams;
-  const isPrefilledResult = Array.isArray(query.fps)
-    ? query.fps.includes('1')
-    : query.fps === '1';
   const dict = await getDictionary(lang);
   const title = dict.fps.title;
   const pageUrl = constructMetadataAlternates(lang, '/fps-calculator').canonical;
@@ -54,16 +48,7 @@ export async function generateMetadata({
       "PC FPS benchmark"
     ],
     alternates: constructMetadataAlternates(lang, '/fps-calculator'),
-    ...(isPrefilledResult && {
-      robots: {
-        index: false,
-        follow: true,
-        googleBot: {
-          index: false,
-          follow: true,
-        },
-      },
-    }),
+
     openGraph: {
       title,
       description: dict.fps.subtitle,

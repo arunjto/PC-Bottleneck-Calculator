@@ -21,7 +21,7 @@ export function GameGuideLinks({ lang }: { lang: Locale }) {
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {games.map((game) => (
-          <Link key={game.slug} href={getLocalizedPath(lang, `can-i-run/${game.slug}`)} className="group rounded-xl border bg-background p-4 transition hover:border-indigo-400 hover:shadow-sm">
+          <Link key={game.slug} href={getLocalizedPath(lang, `can-i-run/${game.slug}`)} prefetch={false} className="group rounded-xl border bg-background p-4 transition hover:border-indigo-400 hover:shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{game.category}</p>
             <h3 className="mt-2 font-bold group-hover:text-indigo-700 dark:group-hover:text-indigo-300">{game.name}</h3>
             <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">{game.summary}</p>
@@ -31,7 +31,7 @@ export function GameGuideLinks({ lang }: { lang: Locale }) {
           </Link>
         ))}
       </div>
-      <Link href={getLocalizedPath(lang, 'can-i-run')} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline">
+      <Link href={getLocalizedPath(lang, 'can-i-run')} prefetch={false} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline">
         {copy.allGames}<ArrowRight className="h-4 w-4" aria-hidden="true" />
       </Link>
     </section>
@@ -54,7 +54,7 @@ export function BuildGuideLinks({ lang }: { lang: Locale }) {
           const { cpu, gpu, commonPsu } = getPopularBuildAnalysis(build);
           const localized = getLocalizedBuildDetails(build, lang);
           return (
-            <Link key={build.slug} href={`/${lang}/builds/${build.slug}`} className="group rounded-xl border bg-background p-4 transition hover:border-violet-400 hover:shadow-sm">
+            <Link key={build.slug} href={`/${lang}/builds/${build.slug}`} prefetch={false} className="group rounded-xl border bg-background p-4 transition hover:border-violet-400 hover:shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{localized.category}</p>
               <h3 className="mt-2 font-bold group-hover:text-violet-700 dark:group-hover:text-violet-300">{cpu.name} + {gpu.name}</h3>
               <p className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground">
@@ -68,7 +68,7 @@ export function BuildGuideLinks({ lang }: { lang: Locale }) {
           );
         })}
       </div>
-      <Link href={`/${lang}/builds`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline">
+      <Link href={`/${lang}/builds`} prefetch={false} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline">
         {copy.allBuilds}<ArrowRight className="h-4 w-4" aria-hidden="true" />
       </Link>
     </section>

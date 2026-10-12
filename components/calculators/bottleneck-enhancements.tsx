@@ -23,7 +23,7 @@ import {
   HARDWARE_SCORE_METHODOLOGY_VERSION,
   type CPU,
   type GPU,
-} from '@/lib/hardware-database';
+} from '@/lib/hardware-client-data';
 import { calculateResolutionAdjustedBalance } from '@/lib/bottleneck-model';
 import { estimateFPSWithBreakdown, type FPSQuality } from '@/lib/fps-model';
 import { serializeFPSShareConfig } from '@/lib/fps-share';

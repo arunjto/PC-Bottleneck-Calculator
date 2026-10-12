@@ -6,10 +6,10 @@ import {
   getGPUById,
   getGameById,
   allGames,
-} from '@/lib/hardware-database';
+} from '@/lib/hardware-client-data';
 import { estimateFPS } from '@/lib/fps-model';
 import { MonitorPlay } from 'lucide-react';
-import type { Game } from '@/lib/hardware-database';
+import type { Game } from '@/lib/hardware-client-data';
 
 interface OtherGamesPerformanceProps {
   cpuId: string;

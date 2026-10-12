@@ -60,7 +60,7 @@ export function GameGuideDirectory({ games, labels }: {
         <section aria-labelledby="recent-games" className="rounded-2xl border border-indigo-200 bg-indigo-50/70 p-5 dark:border-indigo-900 dark:bg-indigo-950/30">
           <h3 id="recent-games" className="flex items-center gap-2 font-bold"><Bookmark className="h-4 w-4 text-indigo-600" aria-hidden="true" />{labels.recentTitle}</h3>
           <div className="mt-3 flex flex-wrap gap-2">
-            {recentGames.map((game) => <Link key={game.id} href={game.href} onClick={() => rememberGame(game.id)} className="rounded-full border bg-background px-3 py-1.5 text-sm font-medium hover:border-primary hover:text-primary">{game.name}</Link>)}
+            {recentGames.map((game) => <Link key={game.id} href={game.href} prefetch={false} onClick={() => rememberGame(game.id)} className="rounded-full border bg-background px-3 py-1.5 text-sm font-medium hover:border-primary hover:text-primary">{game.name}</Link>)}
           </div>
         </section>
       )}
@@ -91,7 +91,7 @@ export function GameGuideDirectory({ games, labels }: {
               </div>
               <h3 className="mt-4 text-xl font-bold">{game.name}</h3>
               <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-muted-foreground">{game.summary}</p>
-              <Link href={game.href} onClick={() => rememberGame(game.id)} rel={game.reviewed ? undefined : 'nofollow'} className="mt-4 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
+              <Link href={game.href} prefetch={false} onClick={() => rememberGame(game.id)} rel={game.reviewed ? undefined : 'nofollow'} className="mt-4 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
                 {game.reviewed ? labels.openGuide : labels.estimateFps}<ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </article>

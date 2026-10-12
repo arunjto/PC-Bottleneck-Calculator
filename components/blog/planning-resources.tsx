@@ -48,7 +48,7 @@ export function PlanningResources({ lang, canonicalSlug }: { lang: Locale; canon
             {resources.tools.map((slug) => {
               const tool = getToolContent(slug, lang);
               return (
-                <Link key={slug} href={getToolPath(lang, slug)} className="group rounded-xl border bg-background p-4 no-underline transition hover:border-blue-400 hover:shadow-sm">
+                <Link key={slug} href={getToolPath(lang, slug)} prefetch={false} className="group rounded-xl border bg-background p-4 no-underline transition hover:border-blue-400 hover:shadow-sm">
                   <span className="font-semibold text-foreground group-hover:text-blue-700 dark:group-hover:text-blue-300">{tool.title}</span>
                   <span className="mt-2 block text-sm leading-6 text-muted-foreground">{tool.shortDescription}</span>
                   <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-blue-700 dark:text-blue-300">{copy.open}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></span>
@@ -68,7 +68,7 @@ export function PlanningResources({ lang, canonicalSlug }: { lang: Locale; canon
                 const game = getGameGuideDefinition(slug);
                 const gameCopy = getGameGuideCopy(lang, slug);
                 return (
-                  <Link key={slug} href={getLocalizedPath(lang, `can-i-run/${slug}`)} className="group rounded-xl border bg-background p-4 no-underline transition hover:border-emerald-400 hover:shadow-sm">
+                  <Link key={slug} href={getLocalizedPath(lang, `can-i-run/${slug}`)} prefetch={false} className="group rounded-xl border bg-background p-4 no-underline transition hover:border-emerald-400 hover:shadow-sm">
                     <span className="font-semibold text-foreground group-hover:text-emerald-700 dark:group-hover:text-emerald-300">{game.name}</span>
                     <span className="mt-2 line-clamp-2 block text-sm leading-6 text-muted-foreground">{gameCopy.quickAnswer}</span>
                     <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 dark:text-emerald-300">{copy.open}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></span>
@@ -89,7 +89,7 @@ export function PlanningResources({ lang, canonicalSlug }: { lang: Locale; canon
                 const { cpu, gpu } = getPopularBuildAnalysis(build);
                 const localized = getLocalizedBuildDetails(build, lang);
                 return (
-                  <Link key={build.slug} href={`/${lang}/builds/${build.slug}`} className="group rounded-xl border bg-background p-4 no-underline transition hover:border-violet-400 hover:shadow-sm">
+                  <Link key={build.slug} href={`/${lang}/builds/${build.slug}`} prefetch={false} className="group rounded-xl border bg-background p-4 no-underline transition hover:border-violet-400 hover:shadow-sm">
                     <span className="font-semibold text-foreground group-hover:text-violet-700 dark:group-hover:text-violet-300">{cpu.name} + {gpu.name}</span>
                     <span className="mt-1 block text-sm text-muted-foreground">{localized.category} · {build.ramLabel}</span>
                     <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-violet-700 dark:text-violet-300">{copy.open}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></span>

@@ -7,7 +7,7 @@ import { BarChart3, ChevronDown, Gamepad2 } from "lucide-react";
 import type { Locale } from "@/i18n-config";
 import { EnhancedFPSCalculator } from "@/components/calculators/enhanced-fps-calculator";
 import { FPSSavedHistory } from "@/components/calculators/fps-saved-history";
-import { getCPUById, getGameById, getGPUById } from "@/lib/hardware-database";
+import { getCPUById, getGameById, getGPUById } from "@/lib/hardware-client-data";
 import {
   configFromFPSBuild,
   FPS_HISTORY_STORAGE_KEY,
@@ -98,31 +98,39 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
   );
 
   const readSharedConfig = useCallback(() => {
-    const parsedConfig = parseFPSShareParams(window.location.search);
+    const hashParams = window.location.hash.startsWith('#')
+      ? window.location.hash.slice(1)
+      : window.location.hash;
+    const parsedFromHash = parseFPSShareParams(hashParams);
+    const parsedConfig = parsedFromHash ?? parseFPSShareParams(window.location.search);
     const parsed = parsedConfig
       && getCPUById(parsedConfig.cpu)
       && getGPUById(parsedConfig.gpu)
       && getGameById(parsedConfig.game)
       ? parsedConfig
       : null;
-    const currentParams = new URLSearchParams(window.location.search);
     urlStateActiveRef.current = Boolean(parsed);
 
-    if (window.location.hash) {
+    if (parsed && !parsedFromHash) {
+      const hash = serializeFPSShareConfig(parsed).toString();
       window.history.replaceState(
         null,
         "",
-        `${window.location.pathname}${window.location.search}`
+        `${window.location.pathname}#${hash}`
       );
-    }
-
-    if (!parsed && currentParams.has("fps")) {
+    } else if (!parsed) {
+      const currentParams = new URLSearchParams(window.location.search);
+      if (!currentParams.has("fps")) {
+        setInitialConfig(null);
+        setCurrentBuild(null);
+        return;
+      }
       const cleanParams = removeFPSShareParams(currentParams);
       const cleanQuery = cleanParams.toString();
       window.history.replaceState(
         null,
         "",
-        `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ""}`
+        `${window.location.pathname}${cleanQuery ? `#${cleanQuery}` : ""}`
       );
     }
 
@@ -133,13 +141,17 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
   useEffect(() => {
     readSharedConfig();
 
-    const handlePopState = () => {
+    const handleLocationChange = () => {
       readSharedConfig();
       setCalculatorRevision((revision) => revision + 1);
     };
 
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    window.addEventListener("popstate", handleLocationChange);
+    window.addEventListener("hashchange", handleLocationChange);
+    return () => {
+      window.removeEventListener("popstate", handleLocationChange);
+      window.removeEventListener("hashchange", handleLocationChange);
+    };
   }, [readSharedConfig]);
 
   useEffect(() => {
@@ -170,19 +182,13 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
       window.history.replaceState(
         null,
         "",
-        `${window.location.pathname}?${params.toString()}`
+        `${window.location.pathname}#${params.toString()}`
       );
       return;
     }
 
     urlStateActiveRef.current = false;
-    const cleanParams = removeFPSShareParams(window.location.search);
-    const cleanQuery = cleanParams.toString();
-    window.history.replaceState(
-      null,
-      "",
-      `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ""}`
-    );
+    window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
   useEffect(() => {
@@ -199,7 +205,7 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
     window.history.pushState(
       null,
       "",
-      `${window.location.pathname}?${params.toString()}`
+      `${window.location.pathname}#${params.toString()}`
     );
     setCurrentBuild(null);
     setInitialConfig(config);
@@ -250,7 +256,7 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
     ? currentBuild.quality
     : 'high';
   const gameFinderHref = currentBuild
-    ? `${getLocalizedPath(lang, 'tools/what-games-can-my-pc-run')}?${new URLSearchParams({
+    ? `${getLocalizedPath(lang, 'tools/what-games-can-my-pc-run')}#${new URLSearchParams({
         cpu: currentBuild.cpu,
         gpu: currentBuild.gpu,
         ramCapacity: currentBuild.ramSize.replace('gb', ''),

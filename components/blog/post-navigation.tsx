@@ -47,6 +47,7 @@ export default function PostNavigation({
       {previousPost ? (
         <Link
           href={`/${lang}/blog/${previousPost.slug}`}
+          prefetch={false}
           className="
             group flex items-start gap-3 rounded-lg border border-border
             bg-card p-4
@@ -77,6 +78,7 @@ export default function PostNavigation({
       {nextPost ? (
         <Link
           href={`/${lang}/blog/${nextPost.slug}`}
+          prefetch={false}
           className="
             group flex items-start justify-end gap-3 rounded-lg
             border border-border bg-card p-4 text-right

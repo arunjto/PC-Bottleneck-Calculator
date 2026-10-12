@@ -19,15 +19,10 @@ import { getPsuPhaseOneCopy, getPsuPhaseOneFaqs } from '@/lib/psu-page-phase-one
 
 type Props = {
   params: Promise<{ lang: Locale }>;
-  searchParams: Promise<{ cpu?: string | string[]; gpu?: string | string[] }>;
 };
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  const query = await searchParams;
-  const isPrefilledUrl = Object.values(query).some((value) =>
-    Array.isArray(value) ? value.length > 0 : typeof value === 'string'
-  );
   const dict = await getDictionary(lang);
   const pageUrl = constructMetadataAlternates(lang, '/psu-calculator').canonical;
   const socialImage = `${SITE_URL}/og-image.png`;
@@ -42,16 +37,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       'system power requirements'
     ],
     alternates: constructMetadataAlternates(lang, '/psu-calculator'),
-    ...(isPrefilledUrl && {
-      robots: {
-        index: false,
-        follow: true,
-        googleBot: {
-          index: false,
-          follow: true,
-        },
-      },
-    }),
+
     openGraph: {
       title: dict.psu_page.title,
       description: dict.psu_page.description,
@@ -68,9 +54,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   };
 }
 
-export default async function PsuCalculatorPage({ params, searchParams }: Props) {
+export default async function PsuCalculatorPage({ params }: Props) {
   const { lang } = await params;
-  const query = await searchParams;
   const dict = await getDictionary(lang);
   const t = dict.psu_page;
   const phaseOne = getPsuPhaseOneCopy(lang);
@@ -111,14 +96,7 @@ export default async function PsuCalculatorPage({ params, searchParams }: Props)
         </div>
 
         <div id="psu-calculator-form" className="scroll-mt-20">
-          <EnhancedPSUCalculator
-            dict={dict}
-            lang={lang}
-            initialSelection={{
-              cpu: typeof query.cpu === 'string' ? query.cpu : undefined,
-              gpu: typeof query.gpu === 'string' ? query.gpu : undefined,
-            }}
-          />
+          <EnhancedPSUCalculator dict={dict} lang={lang} />
         </div>
 
         <PsuBuildExamples lang={lang} />

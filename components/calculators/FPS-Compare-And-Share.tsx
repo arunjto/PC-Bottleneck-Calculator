@@ -19,7 +19,7 @@ import {
   getCPUById,
   getGPUById,
   getGameById,
-} from "@/lib/hardware-database";
+} from "@/lib/hardware-client-data";
 import { estimateFPS } from '@/lib/fps-model';
 import type { Locale } from "@/i18n-config";
 import { getLocalizedPath } from "@/lib/path-translations";

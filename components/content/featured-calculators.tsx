@@ -108,6 +108,7 @@ export function FeaturedCalculators({ lang }: { lang: Locale }) {
               <Link
                 key={slug}
                 href={getToolPath(lang, slug)}
+                prefetch={false}
                 className="group flex items-start gap-3 rounded-xl border bg-background p-4 transition hover:border-primary/50 hover:shadow-sm"
               >
                 <span className="mt-0.5 rounded-lg bg-muted p-2 text-primary"><Icon className="h-4 w-4" aria-hidden="true" /></span>
@@ -124,6 +125,7 @@ export function FeaturedCalculators({ lang }: { lang: Locale }) {
       <div className="mt-5 text-center">
         <Link
           href={getLocalizedPath(lang, 'tools')}
+          prefetch={false}
           className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
         >
           <Wrench className="h-4 w-4" aria-hidden="true" />

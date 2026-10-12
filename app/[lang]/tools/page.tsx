@@ -119,7 +119,7 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ lang:
                     <article key={slug} className="flex h-full flex-col rounded-2xl border bg-card p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                       <h3 className="text-xl font-semibold">{content.title}</h3>
                       <p className="mt-3 flex-1 leading-7 text-muted-foreground">{content.shortDescription}</p>
-                      <Link href={getToolPath(lang, slug)} className="mt-5 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
+                      <Link href={getToolPath(lang, slug)} prefetch={false} className="mt-5 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
                         {copy.openTool}<ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </Link>
                     </article>
@@ -137,7 +137,7 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ lang:
           <h2 id="core-tools-heading" className="text-2xl font-semibold">{copy.coreHeading}</h2>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {coreTools.map((tool) => (
-              <Link key={tool.href} href={tool.href} className="rounded-xl border bg-background p-5 transition hover:border-primary/50 hover:shadow-sm">
+              <Link key={tool.href} href={tool.href} prefetch={false} className="rounded-xl border bg-background p-5 transition hover:border-primary/50 hover:shadow-sm">
                 <h3 className="font-semibold text-primary">{tool.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">{tool.description}</p>
               </Link>

@@ -25,7 +25,11 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react';
-import { CPU, GPU, calculatePSURequirement } from '@/lib/hardware-database';
+import type { CPU, GPU } from '@/lib/hardware-client-data';
+
+function calculatePSURequirement(cpu: CPU, gpu: GPU) {
+  return Math.round((cpu.tdp + gpu.tdp + 150) * 1.2);
+}
 import { calculateResolutionAdjustedBalance, type GamingResolution } from '@/lib/bottleneck-model';
 import type { Locale } from '@/i18n-config';
 import { BottleneckEnhancements } from '@/components/calculators/bottleneck-enhancements';

@@ -81,6 +81,7 @@ export default function PostCard({ post, lang = "en" }: PostCardProps) {
         <h3 className="mb-2 line-clamp-2 text-lg font-bold leading-snug tracking-tight">
           <Link
             href={postUrl}
+            prefetch={false}
             className="
               after:absolute after:inset-0
               focus-visible:outline-none
