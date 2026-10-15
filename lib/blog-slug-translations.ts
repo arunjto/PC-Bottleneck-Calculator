@@ -32,6 +32,7 @@ export const blogSlugTranslations: Record<string, Record<string, string>> = {
     'how-to-check-pc-bottleneck': 'como-verificar-bottleneck-pc',
   },
   ru: {
+    'best-gpu-for-gaming-2026': 'luchshie-videokarty-dlya-igr-2026',
     'cpu-vs-gpu-bottleneck-explained': 'uzkoe-mesto-cpu-ili-gpu',
     'how-to-check-pc-bottleneck': 'kak-proverit-uzkoe-mesto-pk',
     'how-to-estimate-gaming-fps': 'kak-uznat-skolko-fps-budet-v-igre',

@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "dev:webpack": "next dev",
     "generate:hardware-client": "node scripts/generate-client-hardware-data.mjs",
+    "check:blog-i18n": "node scripts/check-blog-i18n.mjs",
     "check:internal-links": "node scripts/check-internal-links.mjs",
     "check:indexnow": "node scripts/check-indexnow.mjs",
     "check:sitemap": "node scripts/check-sitemap.mjs",
