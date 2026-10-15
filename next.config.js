@@ -30,6 +30,10 @@ function buildLocalizedRedirects() {
     permanentRedirect('/index', `/${DEFAULT_LOCALE}`),
     permanentRedirect('/index.html', `/${DEFAULT_LOCALE}`),
     permanentRedirect(
+      '/ru/blog/best-gpu-for-gaming-2026',
+      '/ru/blog/luchshie-videokarty-dlya-igr-2026'
+    ),
+    permanentRedirect(
       '/apple-touch-icon-precomposed.png',
       '/apple-touch-icon.png'
     ),
