@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Allow: /
+Allow: /api/rss
 Disallow: /api/
 Disallow: /404
 Disallow: /500

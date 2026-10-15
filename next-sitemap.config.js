@@ -50,6 +50,9 @@ module.exports = {
   additionalPaths: async (config) => {
     const entries = [];
     for (const [locale, translations] of Object.entries(publicPaths)) {
+      const buildsEntry = await config.transform(config, `/${locale}/builds`);
+      if (buildsEntry) entries.push(buildsEntry);
+
       for (const canonicalPath of Object.keys(translations)) {
         const shouldAddExplicitly =
           canonicalPath === 'fps-calculator' ||
@@ -73,7 +76,7 @@ module.exports = {
     policies: [
       {
         userAgent: '*',
-        allow: '/',
+        allow: ['/', '/api/rss'],
         disallow: ['/api/', '/404', '/500'],
       },
     ],
