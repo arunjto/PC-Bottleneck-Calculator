@@ -54,6 +54,7 @@ function dedupeRedirects(redirects) {
 
 const expectedConfig = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
+  framework: null,
   buildCommand: 'npm run build',
   outputDirectory: 'out',
   cleanUrls: true,
