@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { BarChart3, ChevronDown, Gamepad2 } from "lucide-react";
 import type { Locale } from "@/i18n-config";
+import { EnhancedFPSCalculator } from "@/components/calculators/enhanced-fps-calculator";
 import { getCPUById, getGameById, getGPUById } from "@/lib/hardware-client-data";
 import {
   configFromFPSBuild,
@@ -24,21 +25,6 @@ import {
   type FPSCalculatorConfig,
 } from "@/lib/fps-share";
 import { getLocalizedPath } from "@/lib/path-translations";
-
-const EnhancedFPSCalculator = dynamic(
-  () =>
-    import("@/components/calculators/enhanced-fps-calculator").then(
-      (module) => module.EnhancedFPSCalculator
-    ),
-  {
-    loading: () => (
-      <div
-        aria-hidden="true"
-        className="mx-auto h-96 max-w-7xl animate-pulse rounded-xl border border-slate-200/70 bg-slate-100/60 dark:border-slate-800/60 dark:bg-slate-900/40"
-      />
-    ),
-  }
-);
 
 const FPSSavedHistory = dynamic(
   () =>
