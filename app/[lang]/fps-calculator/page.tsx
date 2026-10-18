@@ -81,6 +81,12 @@ export async function generateMetadata({
 export default async function FpsCalculatorPage({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const calculatorDict = {
+    fps_calculator: dict.fps_calculator,
+    results: dict.results,
+    fps_compare: dict.fps_compare,
+    other_games: dict.other_games,
+  };
   const cs2Spotlight = lang === 'ru'
     ? (dict.fps as { cs2_spotlight?: Cs2SpotlightCopy }).cs2_spotlight ?? null
     : null;
@@ -113,7 +119,7 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{dict.fps.subtitle}</p>
         </header>
         <div id="fps-calculator" className="scroll-mt-20">
-          <FpsCalculatorClient dict={dict} lang={lang} />
+          <FpsCalculatorClient dict={calculatorDict} lang={lang} />
         </div>
         <div className="mx-auto mt-8 max-w-4xl">
           <FpsRangeGuide lang={lang} />
