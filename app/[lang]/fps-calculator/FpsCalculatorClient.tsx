@@ -84,7 +84,7 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
   const calculatorRegionRef = useRef<HTMLDivElement>(null);
   const urlStateActiveRef = useRef(false);
   const [currentBuild, setCurrentBuild] = useState<FPSCalculatorBuild | null>(null);
-  const [initialConfig, setInitialConfig] = useState<FPSCalculatorConfig | null | undefined>(undefined);
+  const [initialConfig, setInitialConfig] = useState<FPSCalculatorConfig | null>(null);
   const [calculatorRevision, setCalculatorRevision] = useState(0);
   const [savedHistory, setSavedHistory] = useState<FPSHistoryEntry[]>([]);
   const [historyReady, setHistoryReady] = useState(false);
@@ -149,6 +149,9 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
     }
 
     setInitialConfig(parsed);
+    // Remount only when restoring a URL configuration: the empty form is
+    // already server-rendered and must not mount again on ordinary visits.
+    if (parsed) setCalculatorRevision((revision) => revision + 1);
     setCurrentBuild(null);
   }, []);
 
@@ -284,12 +287,6 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
     <>
       {/* 🧮 Step 1: Main Calculator */}
       <div ref={calculatorRegionRef} className="scroll-mt-16 [overflow-anchor:none]">
-        {initialConfig === undefined ? (
-          <div
-            aria-hidden="true"
-            className="mx-auto h-96 max-w-7xl animate-pulse rounded-xl border border-slate-200/70 bg-slate-100/60 dark:border-slate-800/60 dark:bg-slate-900/40"
-          />
-        ) : (
           <EnhancedFPSCalculator
             key={calculatorRevision}
             initialConfig={initialConfig}
@@ -297,7 +294,6 @@ export default function FpsCalculatorClient({ dict, lang }: { dict: any; lang: L
             dict={dict}
             lang={lang}
           />
-        )}
       </div>
 
       {/* ⚖️ Step 2: Compare & Share (only appears after FPS is calculated) */}

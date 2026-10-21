@@ -9,7 +9,6 @@ import { FpsRangeGuide } from "@/components/content/fps-range-guide";
 import { GameGuideLinks } from "@/components/content/planning-discovery-links";
 import { CalculatorMethodology } from "@/components/content/calculator-methodology";
 import { CalculatorMaintainer } from "@/components/content/calculator-maintainer";
-import { FAQSection } from "@/components/faq/faq-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getLocalizedPath } from "@/lib/path-translations";
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from "@/lib/structured-data";
@@ -244,7 +243,22 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
               <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
             <div className="border-t border-slate-200/80 p-4 dark:border-slate-800 sm:p-6">
-              <FAQSection title={dict.fps.faq_title} items={dict.fps.faqs} />
+              <div className="py-8">
+                <div className="rounded-xl border border-primary/10 bg-card shadow-lg">
+                  <h3 className="p-6 text-center text-2xl font-semibold text-primary">{dict.fps.faq_title}</h3>
+                  <div className="px-6 pb-6">
+                    {dict.fps.faqs.map((faq: { q: string; a: string }, index: number) => (
+                      <details key={index} className="group/faq border-b">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
+                          {faq.q}
+                          <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open/faq:rotate-180" aria-hidden="true" />
+                        </summary>
+                        <div className="pb-4 leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: faq.a }} />
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </details>
         </div>

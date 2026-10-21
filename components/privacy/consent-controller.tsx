@@ -1,20 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Cookie } from 'lucide-react';
 
 import { GoogleAnalytics } from '@/components/analytics/google-analytics';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Switch } from '@/components/ui/switch';
 import type { Locale } from '@/i18n-config';
 import {
   CONSENT_CHANGED_EVENT,
@@ -26,6 +18,8 @@ import {
 } from '@/lib/consent';
 import { getConsentCopy } from '@/lib/consent-i18n';
 import { getLocalizedPath } from '@/lib/path-translations';
+
+const ConsentPreferencesDialog = dynamic(() => import('./consent-preferences-dialog'));
 
 type ConsentControllerProps = {
   lang: Locale;
@@ -119,11 +113,11 @@ export function ConsentController({ lang, measurementId }: ConsentControllerProp
               </div>
               <p className="text-sm leading-6 text-muted-foreground">
                 {copy.bannerDescription}{' '}
-                <Link className="underline underline-offset-2 hover:text-foreground" href={getLocalizedPath(lang, 'privacy')}>
+                <Link prefetch={false} className="underline underline-offset-2 hover:text-foreground" href={getLocalizedPath(lang, 'privacy')}>
                   {copy.privacyPolicy}
                 </Link>{' '}
                 ·{' '}
-                <Link className="underline underline-offset-2 hover:text-foreground" href={getLocalizedPath(lang, 'cookie-policy')}>
+                <Link prefetch={false} className="underline underline-offset-2 hover:text-foreground" href={getLocalizedPath(lang, 'cookie-policy')}>
                   {copy.cookiePolicy}
                 </Link>
               </p>
@@ -144,47 +138,16 @@ export function ConsentController({ lang, measurementId }: ConsentControllerProp
         </section>
       )}
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent aria-labelledby="consent-dialog-title">
-          <DialogHeader>
-            <DialogTitle id="consent-dialog-title">{copy.dialogTitle}</DialogTitle>
-            <DialogDescription>{copy.dialogDescription}</DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-4">
-            <div className="flex items-center justify-between rounded-md border p-3">
-              <div className="pr-4">
-                <p className="font-medium">{copy.essentialCookies}</p>
-                <p className="text-sm text-muted-foreground">{copy.essentialDescription}</p>
-              </div>
-              <Switch checked disabled aria-readonly />
-            </div>
-
-            <div className="flex items-center justify-between rounded-md border p-3">
-              <div className="pr-4">
-                <p className="font-medium">{copy.analyticsCookies}</p>
-                <p className="text-sm text-muted-foreground">{copy.analyticsDescription}</p>
-              </div>
-              <Switch
-                checked={draftPreferences.analytics}
-                onCheckedChange={(analytics) =>
-                  setDraftPreferences({ analytics, advertising: false })
-                }
-                aria-label={copy.analyticsCookies}
-              />
-            </div>
-          </div>
-
-          <DialogFooter className="gap-2 pt-4">
-            <Button type="button" variant="ghost" onClick={rejectOptional}>
-              {copy.rejectOptional}
-            </Button>
-            <Button type="button" onClick={() => persistPreferences(draftPreferences)}>
-              {copy.savePreferences}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {dialogOpen && (
+        <ConsentPreferencesDialog
+          copy={copy}
+          draftPreferences={draftPreferences}
+          onDraftChange={setDraftPreferences}
+          onOpenChange={setDialogOpen}
+          onReject={rejectOptional}
+          onSave={persistPreferences}
+        />
+      )}
     </>
   );
 }

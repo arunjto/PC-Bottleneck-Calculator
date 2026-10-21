@@ -250,7 +250,7 @@ function localizeBasicOptions(
   }));
 }
 
-export function EnhancedFPSCalculator({
+export const EnhancedFPSCalculator = React.memo(function EnhancedFPSCalculator({
   onBuildChange,
   initialConfig,
   dict,
@@ -943,4 +943,4 @@ export function EnhancedFPSCalculator({
       </Card>
     </div>
   );
-}
+});
