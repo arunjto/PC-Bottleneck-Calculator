@@ -14,6 +14,13 @@ import { getLocalizedPath } from "@/lib/path-translations";
 import { createBreadcrumbSchema, createFaqSchema, createSchemaGraph, createWebApplicationSchema, createWebPageSchema, SITE_URL } from "@/lib/structured-data";
 import { BookOpen, Calculator, ChevronDown, CircleHelp, Cpu, Gamepad2 } from "lucide-react";
 
+// Keep editorial HTML available while skipping its offscreen layout/paint work.
+// The browser renders these blocks normally as they approach the viewport.
+const deferredEditorialStyle = {
+  contentVisibility: 'auto',
+  containIntrinsicSize: 'auto 450px',
+} as const;
+
 type Cs2SpotlightCopy = {
   eyebrow: string;
   title: string;
@@ -120,15 +127,16 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
         <div id="fps-calculator" className="scroll-mt-20">
           <FpsCalculatorClient dict={calculatorDict} lang={lang} />
         </div>
-        <div className="mx-auto mt-8 max-w-4xl">
+        <div className="mx-auto mt-8 max-w-4xl" style={deferredEditorialStyle}>
           <FpsRangeGuide lang={lang} />
         </div>
-        <div className="mx-auto mt-8 max-w-4xl">
+        <div className="mx-auto mt-8 max-w-4xl" style={deferredEditorialStyle}>
           <GameGuideLinks lang={lang} />
         </div>
         {cs2Spotlight && (
           <section
             aria-labelledby="cs2-fps-heading"
+            style={deferredEditorialStyle}
             className="mx-auto mt-8 max-w-4xl overflow-hidden rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 shadow-sm dark:border-cyan-900/70 dark:from-cyan-950/30 dark:to-blue-950/30"
           >
             <div className="p-5 sm:p-7">
@@ -170,7 +178,7 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
             </div>
           </section>
         )}
-        <div className="mx-auto mt-8 max-w-4xl">
+        <div className="mx-auto mt-8 max-w-4xl" style={deferredEditorialStyle}>
           <details className="group overflow-hidden rounded-2xl border border-slate-200/80 bg-card shadow-sm dark:border-slate-800">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary [&::-webkit-details-marker]:hidden sm:p-6">
               <span className="flex items-center gap-3 text-lg font-semibold">
@@ -213,7 +221,7 @@ export default async function FpsCalculatorPage({ params }: { params: Promise<{ 
             </div>
           </details>
         </div>
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-4xl" style={deferredEditorialStyle}>
           <CalculatorMaintainer lang={lang} />
         </div>
       </div>

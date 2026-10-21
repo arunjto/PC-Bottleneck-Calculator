@@ -61,3 +61,36 @@ The 90+ median target is not yet met. Raw candidate audits are in the system tem
 ## Next decision
 
 Keep the verified conditional preferences-editor loading and the previous four edits for review. No deployment or branch publication is part of this measurement pass. The next performance change needs a profile attributing a remaining long task to a specific application boundary; the shared scheduler chunk and generic document-layout attribution do not justify removing framework functionality, delaying the calculator, or changing the public UI. In particular, do not lower Lighthouse throttling or select the best individual run to claim the target.
+
+## Follow-up: native layout isolation
+
+Verified changes were checkpointed in `30d84f7`. Chrome CPU profiles at 4x slowdown compared normal visits, saved-consent visits, and JavaScript-disabled visits. Even with no JavaScript, LayoutDuration remained 0.935–1.216 s. Thus the remaining cost cannot be attributed solely to hydration or FPS estimation.
+
+Diagnostic CSS isolation (never retained in source) removed the form, native dropdowns, or editorial content. Removing native dropdowns did not improve layout. Removing the offscreen editorial content reduced layout in both rounds, motivating a content-preserving experiment rather than removing content.
+
+Three alternating live-JavaScript comparisons then tested footer containment and the calculator's static editorial siblings:
+
+| Scenario | LayoutDuration median (s) | TaskDuration median (s) |
+| --- | ---: | ---: |
+| Current | 0.696 | 1.473 |
+| Footer auto containment | 0.723 | 1.849 |
+| FPS editorial auto containment | 0.492 | 1.356 |
+
+Editorial containment improved both metrics in all three pairs; footer containment did not. The source change therefore applies `content-visibility: auto` with remembered intrinsic height only to the FPS range guide, relevant-game links, Russian CS2 spotlight, methodology wrapper and maintainer wrapper. It does not affect CPU/GPU/Game controls, calculators, the footer, or the existing guide/FAQ content and schema. All editorial content remains in the initial server HTML.
+
+### Production-build verification
+
+The production build generated 366 pages and passed internal-link, sitemap, lint and type checks. First Load JS remains 150 kB; this optimization addresses rendering cost, not bundle size.
+
+| Editorial run | Performance | TBT (ms) | LCP (ms) | CLS | CPU benchmark |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | 84 | 321 | 3,441 | 0 | 1,132 |
+| 2 | 83 | 488 | 2,894 | 0 | 1,523 |
+| 3 | 86 | 237 | 3,169 | 0 | 1,596.5 |
+| Median | 84 | 321 | 3,169 | 0 | |
+
+Compared with the consent checkpoint, median TBT decreased from 401 to 321 ms while median Performance stayed 84. No CPU warnings were emitted. CPU benchmark variation limits causal claims; the controlled layout comparisons provide the stronger evidence for this source change. The 90+ target is still unmet.
+
+Browser regression checks passed for mobile and desktop editorial reveal, methodology expansion, contextual game-link navigation, calculation, saved history, shared-URL restoration and returning to the form. Mobile and desktop screenshots were inspected. All six locales retained server-rendered controls, editorial text, FAQ answers, localized canonical URLs, seven hreflang links and FAQ structured data. No runtime errors occurred. Raw reports are `fps-editorial-oct21-1.json` through `fps-editorial-oct21-3.json` in the system temporary directory.
+
+The follow-up plan is to verify the exact reviewed commit on the feature branch's Vercel Preview. Production and `main` remain out of scope.
