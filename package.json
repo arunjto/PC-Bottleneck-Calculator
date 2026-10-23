@@ -6,16 +6,20 @@
     "dev": "next dev --turbopack",
     "dev:webpack": "next dev",
     "generate:hardware-client": "node scripts/generate-client-hardware-data.mjs",
+    "sync:vercel-routing": "node scripts/sync-vercel-routing.mjs",
+    "check:static-routing": "node scripts/sync-vercel-routing.mjs --check",
+    "check:static-export": "node scripts/check-static-export.mjs",
+    "check:static-runtime": "node scripts/check-static-runtime.mjs",
     "check:blog-i18n": "node scripts/check-blog-i18n.mjs",
     "check:internal-links": "node scripts/check-internal-links.mjs",
     "check:indexnow": "node scripts/check-indexnow.mjs",
     "check:sitemap": "node scripts/check-sitemap.mjs",
     "indexnow:submit": "node scripts/submit-indexnow.mjs",
-    "prebuild": "npm run generate:hardware-client && npm run check:internal-links",
+    "prebuild": "npm run generate:hardware-client && npm run check:internal-links && npm run check:static-routing",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/serve-static-export.mjs",
     "lint": "eslint . --max-warnings 0",
-    "postbuild": "next-sitemap && npm run check:sitemap"
+    "postbuild": "next-sitemap && npm run check:sitemap && npm run check:static-export"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.7.4",

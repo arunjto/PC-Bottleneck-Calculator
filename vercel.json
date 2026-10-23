@@ -1,4 +1,10 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+   "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "out",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/:path*",
@@ -23,8 +29,2938 @@
       "statusCode": 301
     },
     {
+      "source": "/",
+      "destination": "/en",
+      "statusCode": 301
+    },
+    {
+      "source": "/index",
+      "destination": "/en",
+      "statusCode": 301
+    },
+    {
       "source": "/index.html",
       "destination": "/en",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/blog/best-gpu-for-gaming-2026",
+      "destination": "/ru/blog/luchshie-videokarty-dlya-igr-2026",
+      "statusCode": 301
+    },
+    {
+      "source": "/apple-touch-icon-precomposed.png",
+      "destination": "/apple-touch-icon.png",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/",
+      "destination": "/en",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/about/",
+      "destination": "/en/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/fps-calculator/",
+      "destination": "/en/fps-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/psu-calculator/",
+      "destination": "/en/psu-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/contact/",
+      "destination": "/en/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/privacy/",
+      "destination": "/en/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/thank-you/",
+      "destination": "/en/thank-you",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/terms/",
+      "destination": "/en/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/disclaimer/",
+      "destination": "/en/disclaimer",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/cookie-policy/",
+      "destination": "/en/cookie-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/author/",
+      "destination": "/en/author",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/methodology/",
+      "destination": "/en/methodology",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/",
+      "destination": "/en/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/can-i-run/",
+      "destination": "/en/can-i-run",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/can-i-run/cyberpunk-2077/",
+      "destination": "/en/can-i-run/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/can-i-run/forza-horizon-5/",
+      "destination": "/en/can-i-run/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/can-i-run/apex-legends/",
+      "destination": "/en/can-i-run/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/can-i-run/counter-strike-2/",
+      "destination": "/en/can-i-run/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/can-i-run/fortnite/",
+      "destination": "/en/can-i-run/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/can-i-run/elden-ring/",
+      "destination": "/en/can-i-run/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/gpu-upgrade-calculator/",
+      "destination": "/en/tools/gpu-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/cpu-upgrade-calculator/",
+      "destination": "/en/tools/cpu-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/component-comparison/",
+      "destination": "/en/tools/component-comparison",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/what-games-can-my-pc-run/",
+      "destination": "/en/tools/what-games-can-my-pc-run",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/vram-calculator/",
+      "destination": "/en/tools/vram-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/gaming-ram-calculator/",
+      "destination": "/en/tools/gaming-ram-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/frame-time-calculator/",
+      "destination": "/en/tools/frame-time-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/fps-refresh-rate-calculator/",
+      "destination": "/en/tools/fps-refresh-rate-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/resolution-scaling-calculator/",
+      "destination": "/en/tools/resolution-scaling-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/game-settings-optimizer/",
+      "destination": "/en/tools/game-settings-optimizer",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/ssd-upgrade-calculator/",
+      "destination": "/en/tools/ssd-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/tools/pc-upgrade-priority-calculator/",
+      "destination": "/en/tools/pc-upgrade-priority-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/blog/",
+      "destination": "/en/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/blog/:path*/",
+      "destination": "/en/blog/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/builds/:path*/",
+      "destination": "/en/builds/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/",
+      "destination": "/it",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/about",
+      "destination": "/it/chi-siamo",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/about/",
+      "destination": "/it/chi-siamo",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/chi-siamo/",
+      "destination": "/it/chi-siamo",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/fps-calculator",
+      "destination": "/it/calcolatore-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/fps-calculator/",
+      "destination": "/it/calcolatore-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/calcolatore-fps/",
+      "destination": "/it/calcolatore-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/psu-calculator",
+      "destination": "/it/calcolatore-psu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/psu-calculator/",
+      "destination": "/it/calcolatore-psu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/calcolatore-psu/",
+      "destination": "/it/calcolatore-psu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/contact",
+      "destination": "/it/contatti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/contact/",
+      "destination": "/it/contatti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/contatti/",
+      "destination": "/it/contatti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/privacy/",
+      "destination": "/it/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/thank-you",
+      "destination": "/it/grazie",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/thank-you/",
+      "destination": "/it/grazie",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/grazie/",
+      "destination": "/it/grazie",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/terms",
+      "destination": "/it/termini",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/terms/",
+      "destination": "/it/termini",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/termini/",
+      "destination": "/it/termini",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/disclaimer",
+      "destination": "/it/avvertenza",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/disclaimer/",
+      "destination": "/it/avvertenza",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/avvertenza/",
+      "destination": "/it/avvertenza",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/cookie-policy",
+      "destination": "/it/politica-cookie",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/cookie-policy/",
+      "destination": "/it/politica-cookie",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/politica-cookie/",
+      "destination": "/it/politica-cookie",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/author",
+      "destination": "/it/autore",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/author/",
+      "destination": "/it/autore",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/autore/",
+      "destination": "/it/autore",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/methodology",
+      "destination": "/it/metodologia",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/methodology/",
+      "destination": "/it/metodologia",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/metodologia/",
+      "destination": "/it/metodologia",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools",
+      "destination": "/it/strumenti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/",
+      "destination": "/it/strumenti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/",
+      "destination": "/it/strumenti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run",
+      "destination": "/it/posso-eseguirlo",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/",
+      "destination": "/it/posso-eseguirlo",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/posso-eseguirlo/",
+      "destination": "/it/posso-eseguirlo",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/cyberpunk-2077",
+      "destination": "/it/posso-eseguirlo/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/cyberpunk-2077/",
+      "destination": "/it/posso-eseguirlo/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/posso-eseguirlo/cyberpunk-2077/",
+      "destination": "/it/posso-eseguirlo/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/forza-horizon-5",
+      "destination": "/it/posso-eseguirlo/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/forza-horizon-5/",
+      "destination": "/it/posso-eseguirlo/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/posso-eseguirlo/forza-horizon-5/",
+      "destination": "/it/posso-eseguirlo/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/apex-legends",
+      "destination": "/it/posso-eseguirlo/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/apex-legends/",
+      "destination": "/it/posso-eseguirlo/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/posso-eseguirlo/apex-legends/",
+      "destination": "/it/posso-eseguirlo/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/counter-strike-2",
+      "destination": "/it/posso-eseguirlo/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/counter-strike-2/",
+      "destination": "/it/posso-eseguirlo/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/posso-eseguirlo/counter-strike-2/",
+      "destination": "/it/posso-eseguirlo/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/fortnite",
+      "destination": "/it/posso-eseguirlo/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/fortnite/",
+      "destination": "/it/posso-eseguirlo/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/posso-eseguirlo/fortnite/",
+      "destination": "/it/posso-eseguirlo/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/elden-ring",
+      "destination": "/it/posso-eseguirlo/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/can-i-run/elden-ring/",
+      "destination": "/it/posso-eseguirlo/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/posso-eseguirlo/elden-ring/",
+      "destination": "/it/posso-eseguirlo/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/gpu-upgrade-calculator",
+      "destination": "/it/strumenti/calcolatore-upgrade-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/gpu-upgrade-calculator/",
+      "destination": "/it/strumenti/calcolatore-upgrade-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-upgrade-gpu/",
+      "destination": "/it/strumenti/calcolatore-upgrade-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/cpu-upgrade-calculator",
+      "destination": "/it/strumenti/calcolatore-upgrade-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/cpu-upgrade-calculator/",
+      "destination": "/it/strumenti/calcolatore-upgrade-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-upgrade-cpu/",
+      "destination": "/it/strumenti/calcolatore-upgrade-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/component-comparison",
+      "destination": "/it/strumenti/confronto-componenti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/component-comparison/",
+      "destination": "/it/strumenti/confronto-componenti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/confronto-componenti/",
+      "destination": "/it/strumenti/confronto-componenti",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/what-games-can-my-pc-run",
+      "destination": "/it/strumenti/quali-giochi-puo-eseguire-il-mio-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/what-games-can-my-pc-run/",
+      "destination": "/it/strumenti/quali-giochi-puo-eseguire-il-mio-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/quali-giochi-puo-eseguire-il-mio-pc/",
+      "destination": "/it/strumenti/quali-giochi-puo-eseguire-il-mio-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/vram-calculator",
+      "destination": "/it/strumenti/calcolatore-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/vram-calculator/",
+      "destination": "/it/strumenti/calcolatore-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-vram/",
+      "destination": "/it/strumenti/calcolatore-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/gaming-ram-calculator",
+      "destination": "/it/strumenti/calcolatore-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/gaming-ram-calculator/",
+      "destination": "/it/strumenti/calcolatore-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-ram-gaming/",
+      "destination": "/it/strumenti/calcolatore-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/frame-time-calculator",
+      "destination": "/it/strumenti/calcolatore-tempo-frame",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/frame-time-calculator/",
+      "destination": "/it/strumenti/calcolatore-tempo-frame",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-tempo-frame/",
+      "destination": "/it/strumenti/calcolatore-tempo-frame",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/fps-refresh-rate-calculator",
+      "destination": "/it/strumenti/calcolatore-fps-frequenza-aggiornamento",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/fps-refresh-rate-calculator/",
+      "destination": "/it/strumenti/calcolatore-fps-frequenza-aggiornamento",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-fps-frequenza-aggiornamento/",
+      "destination": "/it/strumenti/calcolatore-fps-frequenza-aggiornamento",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/resolution-scaling-calculator",
+      "destination": "/it/strumenti/calcolatore-scaling-risoluzione",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/resolution-scaling-calculator/",
+      "destination": "/it/strumenti/calcolatore-scaling-risoluzione",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-scaling-risoluzione/",
+      "destination": "/it/strumenti/calcolatore-scaling-risoluzione",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/game-settings-optimizer",
+      "destination": "/it/strumenti/ottimizzatore-impostazioni-gioco",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/game-settings-optimizer/",
+      "destination": "/it/strumenti/ottimizzatore-impostazioni-gioco",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/ottimizzatore-impostazioni-gioco/",
+      "destination": "/it/strumenti/ottimizzatore-impostazioni-gioco",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/ssd-upgrade-calculator",
+      "destination": "/it/strumenti/calcolatore-upgrade-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/ssd-upgrade-calculator/",
+      "destination": "/it/strumenti/calcolatore-upgrade-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-upgrade-ssd/",
+      "destination": "/it/strumenti/calcolatore-upgrade-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/pc-upgrade-priority-calculator",
+      "destination": "/it/strumenti/calcolatore-priorita-upgrade-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/tools/pc-upgrade-priority-calculator/",
+      "destination": "/it/strumenti/calcolatore-priorita-upgrade-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/strumenti/calcolatore-priorita-upgrade-pc/",
+      "destination": "/it/strumenti/calcolatore-priorita-upgrade-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/blog/",
+      "destination": "/it/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/blog/:path*/",
+      "destination": "/it/blog/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/it/builds/:path*/",
+      "destination": "/it/builds/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/",
+      "destination": "/fr",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/about",
+      "destination": "/fr/a-propos",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/about/",
+      "destination": "/fr/a-propos",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/a-propos/",
+      "destination": "/fr/a-propos",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/fps-calculator",
+      "destination": "/fr/calculateur-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/fps-calculator/",
+      "destination": "/fr/calculateur-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/calculateur-fps/",
+      "destination": "/fr/calculateur-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/psu-calculator",
+      "destination": "/fr/calculateur-alimentation",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/psu-calculator/",
+      "destination": "/fr/calculateur-alimentation",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/calculateur-alimentation/",
+      "destination": "/fr/calculateur-alimentation",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/contact/",
+      "destination": "/fr/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/privacy",
+      "destination": "/fr/confidentialite",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/privacy/",
+      "destination": "/fr/confidentialite",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/confidentialite/",
+      "destination": "/fr/confidentialite",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/thank-you",
+      "destination": "/fr/merci",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/thank-you/",
+      "destination": "/fr/merci",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/merci/",
+      "destination": "/fr/merci",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/terms",
+      "destination": "/fr/conditions",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/terms/",
+      "destination": "/fr/conditions",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/conditions/",
+      "destination": "/fr/conditions",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/disclaimer",
+      "destination": "/fr/avertissement",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/disclaimer/",
+      "destination": "/fr/avertissement",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/avertissement/",
+      "destination": "/fr/avertissement",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/cookie-policy",
+      "destination": "/fr/politique-cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/cookie-policy/",
+      "destination": "/fr/politique-cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/politique-cookies/",
+      "destination": "/fr/politique-cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/author",
+      "destination": "/fr/auteur",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/author/",
+      "destination": "/fr/auteur",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/auteur/",
+      "destination": "/fr/auteur",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/methodology",
+      "destination": "/fr/methodologie",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/methodology/",
+      "destination": "/fr/methodologie",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/methodologie/",
+      "destination": "/fr/methodologie",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools",
+      "destination": "/fr/outils",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/",
+      "destination": "/fr/outils",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/",
+      "destination": "/fr/outils",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run",
+      "destination": "/fr/puis-je-le-faire-tourner",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/",
+      "destination": "/fr/puis-je-le-faire-tourner",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/",
+      "destination": "/fr/puis-je-le-faire-tourner",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/cyberpunk-2077",
+      "destination": "/fr/puis-je-le-faire-tourner/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/cyberpunk-2077/",
+      "destination": "/fr/puis-je-le-faire-tourner/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/cyberpunk-2077/",
+      "destination": "/fr/puis-je-le-faire-tourner/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/forza-horizon-5",
+      "destination": "/fr/puis-je-le-faire-tourner/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/forza-horizon-5/",
+      "destination": "/fr/puis-je-le-faire-tourner/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/forza-horizon-5/",
+      "destination": "/fr/puis-je-le-faire-tourner/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/apex-legends",
+      "destination": "/fr/puis-je-le-faire-tourner/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/apex-legends/",
+      "destination": "/fr/puis-je-le-faire-tourner/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/apex-legends/",
+      "destination": "/fr/puis-je-le-faire-tourner/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/counter-strike-2",
+      "destination": "/fr/puis-je-le-faire-tourner/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/counter-strike-2/",
+      "destination": "/fr/puis-je-le-faire-tourner/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/counter-strike-2/",
+      "destination": "/fr/puis-je-le-faire-tourner/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/fortnite",
+      "destination": "/fr/puis-je-le-faire-tourner/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/fortnite/",
+      "destination": "/fr/puis-je-le-faire-tourner/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/fortnite/",
+      "destination": "/fr/puis-je-le-faire-tourner/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/elden-ring",
+      "destination": "/fr/puis-je-le-faire-tourner/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/can-i-run/elden-ring/",
+      "destination": "/fr/puis-je-le-faire-tourner/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/elden-ring/",
+      "destination": "/fr/puis-je-le-faire-tourner/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/gpu-upgrade-calculator",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/gpu-upgrade-calculator/",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-a-niveau-gpu/",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/cpu-upgrade-calculator",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/cpu-upgrade-calculator/",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-a-niveau-cpu/",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/component-comparison",
+      "destination": "/fr/outils/comparateur-composants",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/component-comparison/",
+      "destination": "/fr/outils/comparateur-composants",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/comparateur-composants/",
+      "destination": "/fr/outils/comparateur-composants",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/what-games-can-my-pc-run",
+      "destination": "/fr/outils/quels-jeux-mon-pc-peut-il-faire-tourner",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/what-games-can-my-pc-run/",
+      "destination": "/fr/outils/quels-jeux-mon-pc-peut-il-faire-tourner",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/quels-jeux-mon-pc-peut-il-faire-tourner/",
+      "destination": "/fr/outils/quels-jeux-mon-pc-peut-il-faire-tourner",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/vram-calculator",
+      "destination": "/fr/outils/calculateur-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/vram-calculator/",
+      "destination": "/fr/outils/calculateur-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-vram/",
+      "destination": "/fr/outils/calculateur-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/gaming-ram-calculator",
+      "destination": "/fr/outils/calculateur-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/gaming-ram-calculator/",
+      "destination": "/fr/outils/calculateur-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-ram-gaming/",
+      "destination": "/fr/outils/calculateur-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/frame-time-calculator",
+      "destination": "/fr/outils/calculateur-temps-image",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/frame-time-calculator/",
+      "destination": "/fr/outils/calculateur-temps-image",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-temps-image/",
+      "destination": "/fr/outils/calculateur-temps-image",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/fps-refresh-rate-calculator",
+      "destination": "/fr/outils/calculateur-fps-taux-rafraichissement",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/fps-refresh-rate-calculator/",
+      "destination": "/fr/outils/calculateur-fps-taux-rafraichissement",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-fps-taux-rafraichissement/",
+      "destination": "/fr/outils/calculateur-fps-taux-rafraichissement",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/resolution-scaling-calculator",
+      "destination": "/fr/outils/calculateur-mise-echelle-resolution",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/resolution-scaling-calculator/",
+      "destination": "/fr/outils/calculateur-mise-echelle-resolution",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-echelle-resolution/",
+      "destination": "/fr/outils/calculateur-mise-echelle-resolution",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/game-settings-optimizer",
+      "destination": "/fr/outils/optimiseur-parametres-jeu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/game-settings-optimizer/",
+      "destination": "/fr/outils/optimiseur-parametres-jeu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/optimiseur-parametres-jeu/",
+      "destination": "/fr/outils/optimiseur-parametres-jeu",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/ssd-upgrade-calculator",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/ssd-upgrade-calculator/",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-a-niveau-ssd/",
+      "destination": "/fr/outils/calculateur-mise-a-niveau-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/pc-upgrade-priority-calculator",
+      "destination": "/fr/outils/calculateur-priorite-mise-a-niveau-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/tools/pc-upgrade-priority-calculator/",
+      "destination": "/fr/outils/calculateur-priorite-mise-a-niveau-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/outils/calculateur-priorite-mise-a-niveau-pc/",
+      "destination": "/fr/outils/calculateur-priorite-mise-a-niveau-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/blog/",
+      "destination": "/fr/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/blog/:path*/",
+      "destination": "/fr/blog/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/fr/builds/:path*/",
+      "destination": "/fr/builds/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/about",
+      "destination": "/de/ueber-uns",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/about/",
+      "destination": "/de/ueber-uns",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/ueber-uns/",
+      "destination": "/de/ueber-uns",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/fps-calculator",
+      "destination": "/de/fps-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/fps-calculator/",
+      "destination": "/de/fps-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/fps-rechner/",
+      "destination": "/de/fps-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/psu-calculator",
+      "destination": "/de/netzteil-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/psu-calculator/",
+      "destination": "/de/netzteil-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/netzteil-rechner/",
+      "destination": "/de/netzteil-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/contact",
+      "destination": "/de/kontakt",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/contact/",
+      "destination": "/de/kontakt",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kontakt/",
+      "destination": "/de/kontakt",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/privacy",
+      "destination": "/de/datenschutz",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/privacy/",
+      "destination": "/de/datenschutz",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/datenschutz/",
+      "destination": "/de/datenschutz",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/thank-you",
+      "destination": "/de/danke",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/thank-you/",
+      "destination": "/de/danke",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/danke/",
+      "destination": "/de/danke",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/terms",
+      "destination": "/de/agb",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/terms/",
+      "destination": "/de/agb",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/agb/",
+      "destination": "/de/agb",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/disclaimer",
+      "destination": "/de/haftungsausschluss",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/disclaimer/",
+      "destination": "/de/haftungsausschluss",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/haftungsausschluss/",
+      "destination": "/de/haftungsausschluss",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/cookie-policy",
+      "destination": "/de/cookie-richtlinie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/cookie-policy/",
+      "destination": "/de/cookie-richtlinie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/cookie-richtlinie/",
+      "destination": "/de/cookie-richtlinie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/author",
+      "destination": "/de/autor",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/author/",
+      "destination": "/de/autor",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/autor/",
+      "destination": "/de/autor",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/methodology",
+      "destination": "/de/methodik",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/methodology/",
+      "destination": "/de/methodik",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/methodik/",
+      "destination": "/de/methodik",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools",
+      "destination": "/de/werkzeuge",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/",
+      "destination": "/de/werkzeuge",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/",
+      "destination": "/de/werkzeuge",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run",
+      "destination": "/de/kann-ich-es-spielen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/",
+      "destination": "/de/kann-ich-es-spielen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/",
+      "destination": "/de/kann-ich-es-spielen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/cyberpunk-2077",
+      "destination": "/de/kann-ich-es-spielen/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/cyberpunk-2077/",
+      "destination": "/de/kann-ich-es-spielen/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/cyberpunk-2077/",
+      "destination": "/de/kann-ich-es-spielen/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/forza-horizon-5",
+      "destination": "/de/kann-ich-es-spielen/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/forza-horizon-5/",
+      "destination": "/de/kann-ich-es-spielen/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/forza-horizon-5/",
+      "destination": "/de/kann-ich-es-spielen/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/apex-legends",
+      "destination": "/de/kann-ich-es-spielen/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/apex-legends/",
+      "destination": "/de/kann-ich-es-spielen/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/apex-legends/",
+      "destination": "/de/kann-ich-es-spielen/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/counter-strike-2",
+      "destination": "/de/kann-ich-es-spielen/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/counter-strike-2/",
+      "destination": "/de/kann-ich-es-spielen/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/counter-strike-2/",
+      "destination": "/de/kann-ich-es-spielen/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/fortnite",
+      "destination": "/de/kann-ich-es-spielen/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/fortnite/",
+      "destination": "/de/kann-ich-es-spielen/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/fortnite/",
+      "destination": "/de/kann-ich-es-spielen/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/elden-ring",
+      "destination": "/de/kann-ich-es-spielen/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/can-i-run/elden-ring/",
+      "destination": "/de/kann-ich-es-spielen/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/elden-ring/",
+      "destination": "/de/kann-ich-es-spielen/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/gpu-upgrade-calculator",
+      "destination": "/de/werkzeuge/gpu-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/gpu-upgrade-calculator/",
+      "destination": "/de/werkzeuge/gpu-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/gpu-upgrade-rechner/",
+      "destination": "/de/werkzeuge/gpu-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/cpu-upgrade-calculator",
+      "destination": "/de/werkzeuge/cpu-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/cpu-upgrade-calculator/",
+      "destination": "/de/werkzeuge/cpu-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/cpu-upgrade-rechner/",
+      "destination": "/de/werkzeuge/cpu-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/component-comparison",
+      "destination": "/de/werkzeuge/komponentenvergleich",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/component-comparison/",
+      "destination": "/de/werkzeuge/komponentenvergleich",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/komponentenvergleich/",
+      "destination": "/de/werkzeuge/komponentenvergleich",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/what-games-can-my-pc-run",
+      "destination": "/de/werkzeuge/welche-spiele-schafft-mein-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/what-games-can-my-pc-run/",
+      "destination": "/de/werkzeuge/welche-spiele-schafft-mein-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/welche-spiele-schafft-mein-pc/",
+      "destination": "/de/werkzeuge/welche-spiele-schafft-mein-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/vram-calculator",
+      "destination": "/de/werkzeuge/vram-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/vram-calculator/",
+      "destination": "/de/werkzeuge/vram-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/vram-rechner/",
+      "destination": "/de/werkzeuge/vram-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/gaming-ram-calculator",
+      "destination": "/de/werkzeuge/gaming-ram-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/gaming-ram-calculator/",
+      "destination": "/de/werkzeuge/gaming-ram-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/gaming-ram-rechner/",
+      "destination": "/de/werkzeuge/gaming-ram-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/frame-time-calculator",
+      "destination": "/de/werkzeuge/frametime-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/frame-time-calculator/",
+      "destination": "/de/werkzeuge/frametime-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/frametime-rechner/",
+      "destination": "/de/werkzeuge/frametime-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/fps-refresh-rate-calculator",
+      "destination": "/de/werkzeuge/fps-bildwiederholrate-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/fps-refresh-rate-calculator/",
+      "destination": "/de/werkzeuge/fps-bildwiederholrate-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/fps-bildwiederholrate-rechner/",
+      "destination": "/de/werkzeuge/fps-bildwiederholrate-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/resolution-scaling-calculator",
+      "destination": "/de/werkzeuge/aufloesungsskalierung-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/resolution-scaling-calculator/",
+      "destination": "/de/werkzeuge/aufloesungsskalierung-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/aufloesungsskalierung-rechner/",
+      "destination": "/de/werkzeuge/aufloesungsskalierung-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/game-settings-optimizer",
+      "destination": "/de/werkzeuge/spiel-einstellungen-optimierer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/game-settings-optimizer/",
+      "destination": "/de/werkzeuge/spiel-einstellungen-optimierer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/spiel-einstellungen-optimierer/",
+      "destination": "/de/werkzeuge/spiel-einstellungen-optimierer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/ssd-upgrade-calculator",
+      "destination": "/de/werkzeuge/ssd-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/ssd-upgrade-calculator/",
+      "destination": "/de/werkzeuge/ssd-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/ssd-upgrade-rechner/",
+      "destination": "/de/werkzeuge/ssd-upgrade-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/pc-upgrade-priority-calculator",
+      "destination": "/de/werkzeuge/pc-upgrade-prioritaet-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/tools/pc-upgrade-priority-calculator/",
+      "destination": "/de/werkzeuge/pc-upgrade-prioritaet-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/werkzeuge/pc-upgrade-prioritaet-rechner/",
+      "destination": "/de/werkzeuge/pc-upgrade-prioritaet-rechner",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/:path*/",
+      "destination": "/de/blog/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/builds/:path*/",
+      "destination": "/de/builds/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/",
+      "destination": "/es",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/about",
+      "destination": "/es/sobre-nosotros",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/about/",
+      "destination": "/es/sobre-nosotros",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/sobre-nosotros/",
+      "destination": "/es/sobre-nosotros",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/fps-calculator",
+      "destination": "/es/calculadora-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/fps-calculator/",
+      "destination": "/es/calculadora-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/calculadora-fps/",
+      "destination": "/es/calculadora-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/psu-calculator",
+      "destination": "/es/calculadora-psu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/psu-calculator/",
+      "destination": "/es/calculadora-psu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/calculadora-psu/",
+      "destination": "/es/calculadora-psu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/contact",
+      "destination": "/es/contacto",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/contact/",
+      "destination": "/es/contacto",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/contacto/",
+      "destination": "/es/contacto",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/privacy",
+      "destination": "/es/privacidad",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/privacy/",
+      "destination": "/es/privacidad",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/privacidad/",
+      "destination": "/es/privacidad",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/thank-you",
+      "destination": "/es/gracias",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/thank-you/",
+      "destination": "/es/gracias",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/gracias/",
+      "destination": "/es/gracias",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/terms",
+      "destination": "/es/terminos",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/terms/",
+      "destination": "/es/terminos",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/terminos/",
+      "destination": "/es/terminos",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/disclaimer",
+      "destination": "/es/aviso-legal",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/disclaimer/",
+      "destination": "/es/aviso-legal",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/aviso-legal/",
+      "destination": "/es/aviso-legal",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/cookie-policy",
+      "destination": "/es/politica-cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/cookie-policy/",
+      "destination": "/es/politica-cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/politica-cookies/",
+      "destination": "/es/politica-cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/author",
+      "destination": "/es/autor",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/author/",
+      "destination": "/es/autor",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/autor/",
+      "destination": "/es/autor",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/methodology",
+      "destination": "/es/metodologia",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/methodology/",
+      "destination": "/es/metodologia",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/metodologia/",
+      "destination": "/es/metodologia",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools",
+      "destination": "/es/herramientas",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/",
+      "destination": "/es/herramientas",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/",
+      "destination": "/es/herramientas",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run",
+      "destination": "/es/puedo-ejecutarlo",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/",
+      "destination": "/es/puedo-ejecutarlo",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/",
+      "destination": "/es/puedo-ejecutarlo",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/cyberpunk-2077",
+      "destination": "/es/puedo-ejecutarlo/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/cyberpunk-2077/",
+      "destination": "/es/puedo-ejecutarlo/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/cyberpunk-2077/",
+      "destination": "/es/puedo-ejecutarlo/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/forza-horizon-5",
+      "destination": "/es/puedo-ejecutarlo/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/forza-horizon-5/",
+      "destination": "/es/puedo-ejecutarlo/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/forza-horizon-5/",
+      "destination": "/es/puedo-ejecutarlo/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/apex-legends",
+      "destination": "/es/puedo-ejecutarlo/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/apex-legends/",
+      "destination": "/es/puedo-ejecutarlo/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/apex-legends/",
+      "destination": "/es/puedo-ejecutarlo/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/counter-strike-2",
+      "destination": "/es/puedo-ejecutarlo/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/counter-strike-2/",
+      "destination": "/es/puedo-ejecutarlo/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/counter-strike-2/",
+      "destination": "/es/puedo-ejecutarlo/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/fortnite",
+      "destination": "/es/puedo-ejecutarlo/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/fortnite/",
+      "destination": "/es/puedo-ejecutarlo/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/fortnite/",
+      "destination": "/es/puedo-ejecutarlo/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/elden-ring",
+      "destination": "/es/puedo-ejecutarlo/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/can-i-run/elden-ring/",
+      "destination": "/es/puedo-ejecutarlo/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/elden-ring/",
+      "destination": "/es/puedo-ejecutarlo/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/gpu-upgrade-calculator",
+      "destination": "/es/herramientas/calculadora-actualizacion-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/gpu-upgrade-calculator/",
+      "destination": "/es/herramientas/calculadora-actualizacion-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-actualizacion-gpu/",
+      "destination": "/es/herramientas/calculadora-actualizacion-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/cpu-upgrade-calculator",
+      "destination": "/es/herramientas/calculadora-actualizacion-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/cpu-upgrade-calculator/",
+      "destination": "/es/herramientas/calculadora-actualizacion-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-actualizacion-cpu/",
+      "destination": "/es/herramientas/calculadora-actualizacion-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/component-comparison",
+      "destination": "/es/herramientas/comparador-componentes",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/component-comparison/",
+      "destination": "/es/herramientas/comparador-componentes",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/comparador-componentes/",
+      "destination": "/es/herramientas/comparador-componentes",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/what-games-can-my-pc-run",
+      "destination": "/es/herramientas/que-juegos-puede-ejecutar-mi-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/what-games-can-my-pc-run/",
+      "destination": "/es/herramientas/que-juegos-puede-ejecutar-mi-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/que-juegos-puede-ejecutar-mi-pc/",
+      "destination": "/es/herramientas/que-juegos-puede-ejecutar-mi-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/vram-calculator",
+      "destination": "/es/herramientas/calculadora-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/vram-calculator/",
+      "destination": "/es/herramientas/calculadora-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-vram/",
+      "destination": "/es/herramientas/calculadora-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/gaming-ram-calculator",
+      "destination": "/es/herramientas/calculadora-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/gaming-ram-calculator/",
+      "destination": "/es/herramientas/calculadora-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-ram-gaming/",
+      "destination": "/es/herramientas/calculadora-ram-gaming",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/frame-time-calculator",
+      "destination": "/es/herramientas/calculadora-tiempo-fotograma",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/frame-time-calculator/",
+      "destination": "/es/herramientas/calculadora-tiempo-fotograma",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-tiempo-fotograma/",
+      "destination": "/es/herramientas/calculadora-tiempo-fotograma",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/fps-refresh-rate-calculator",
+      "destination": "/es/herramientas/calculadora-fps-frecuencia-actualizacion",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/fps-refresh-rate-calculator/",
+      "destination": "/es/herramientas/calculadora-fps-frecuencia-actualizacion",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-fps-frecuencia-actualizacion/",
+      "destination": "/es/herramientas/calculadora-fps-frecuencia-actualizacion",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/resolution-scaling-calculator",
+      "destination": "/es/herramientas/calculadora-escalado-resolucion",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/resolution-scaling-calculator/",
+      "destination": "/es/herramientas/calculadora-escalado-resolucion",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-escalado-resolucion/",
+      "destination": "/es/herramientas/calculadora-escalado-resolucion",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/game-settings-optimizer",
+      "destination": "/es/herramientas/optimizador-ajustes-juego",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/game-settings-optimizer/",
+      "destination": "/es/herramientas/optimizador-ajustes-juego",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/optimizador-ajustes-juego/",
+      "destination": "/es/herramientas/optimizador-ajustes-juego",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/ssd-upgrade-calculator",
+      "destination": "/es/herramientas/calculadora-actualizacion-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/ssd-upgrade-calculator/",
+      "destination": "/es/herramientas/calculadora-actualizacion-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-actualizacion-ssd/",
+      "destination": "/es/herramientas/calculadora-actualizacion-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/pc-upgrade-priority-calculator",
+      "destination": "/es/herramientas/calculadora-prioridad-actualizacion-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/tools/pc-upgrade-priority-calculator/",
+      "destination": "/es/herramientas/calculadora-prioridad-actualizacion-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/herramientas/calculadora-prioridad-actualizacion-pc/",
+      "destination": "/es/herramientas/calculadora-prioridad-actualizacion-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/blog/",
+      "destination": "/es/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/blog/:path*/",
+      "destination": "/es/blog/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/es/builds/:path*/",
+      "destination": "/es/builds/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/",
+      "destination": "/ru",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/about",
+      "destination": "/ru/o-nas",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/about/",
+      "destination": "/ru/o-nas",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/o-nas/",
+      "destination": "/ru/o-nas",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/fps-calculator",
+      "destination": "/ru/kalkulyator-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/fps-calculator/",
+      "destination": "/ru/kalkulyator-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/kalkulyator-fps/",
+      "destination": "/ru/kalkulyator-fps",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/psu-calculator",
+      "destination": "/ru/kalkulyator-bloka-pitaniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/psu-calculator/",
+      "destination": "/ru/kalkulyator-bloka-pitaniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/kalkulyator-bloka-pitaniya/",
+      "destination": "/ru/kalkulyator-bloka-pitaniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/contact",
+      "destination": "/ru/kontakty",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/contact/",
+      "destination": "/ru/kontakty",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/kontakty/",
+      "destination": "/ru/kontakty",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/privacy",
+      "destination": "/ru/konfidencialnost",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/privacy/",
+      "destination": "/ru/konfidencialnost",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/konfidencialnost/",
+      "destination": "/ru/konfidencialnost",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/thank-you",
+      "destination": "/ru/spasibo",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/thank-you/",
+      "destination": "/ru/spasibo",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/spasibo/",
+      "destination": "/ru/spasibo",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/terms",
+      "destination": "/ru/usloviya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/terms/",
+      "destination": "/ru/usloviya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/usloviya/",
+      "destination": "/ru/usloviya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/disclaimer",
+      "destination": "/ru/otkaz-ot-otvetstvennosti",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/disclaimer/",
+      "destination": "/ru/otkaz-ot-otvetstvennosti",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/otkaz-ot-otvetstvennosti/",
+      "destination": "/ru/otkaz-ot-otvetstvennosti",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/cookie-policy",
+      "destination": "/ru/politika-cookie",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/cookie-policy/",
+      "destination": "/ru/politika-cookie",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/politika-cookie/",
+      "destination": "/ru/politika-cookie",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/author",
+      "destination": "/ru/avtor",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/author/",
+      "destination": "/ru/avtor",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/avtor/",
+      "destination": "/ru/avtor",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/methodology",
+      "destination": "/ru/metodologiya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/methodology/",
+      "destination": "/ru/metodologiya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/metodologiya/",
+      "destination": "/ru/metodologiya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools",
+      "destination": "/ru/instrumenty",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/",
+      "destination": "/ru/instrumenty",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/",
+      "destination": "/ru/instrumenty",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run",
+      "destination": "/ru/potyanet-li-moy-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/",
+      "destination": "/ru/potyanet-li-moy-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/",
+      "destination": "/ru/potyanet-li-moy-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/cyberpunk-2077",
+      "destination": "/ru/potyanet-li-moy-pc/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/cyberpunk-2077/",
+      "destination": "/ru/potyanet-li-moy-pc/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/cyberpunk-2077/",
+      "destination": "/ru/potyanet-li-moy-pc/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/forza-horizon-5",
+      "destination": "/ru/potyanet-li-moy-pc/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/forza-horizon-5/",
+      "destination": "/ru/potyanet-li-moy-pc/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/forza-horizon-5/",
+      "destination": "/ru/potyanet-li-moy-pc/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/apex-legends",
+      "destination": "/ru/potyanet-li-moy-pc/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/apex-legends/",
+      "destination": "/ru/potyanet-li-moy-pc/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/apex-legends/",
+      "destination": "/ru/potyanet-li-moy-pc/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/counter-strike-2",
+      "destination": "/ru/potyanet-li-moy-pc/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/counter-strike-2/",
+      "destination": "/ru/potyanet-li-moy-pc/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/counter-strike-2/",
+      "destination": "/ru/potyanet-li-moy-pc/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/fortnite",
+      "destination": "/ru/potyanet-li-moy-pc/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/fortnite/",
+      "destination": "/ru/potyanet-li-moy-pc/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/fortnite/",
+      "destination": "/ru/potyanet-li-moy-pc/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/elden-ring",
+      "destination": "/ru/potyanet-li-moy-pc/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/can-i-run/elden-ring/",
+      "destination": "/ru/potyanet-li-moy-pc/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/elden-ring/",
+      "destination": "/ru/potyanet-li-moy-pc/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/gpu-upgrade-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/gpu-upgrade-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-apgreida-gpu/",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-gpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/cpu-upgrade-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/cpu-upgrade-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-apgreida-cpu/",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-cpu",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/component-comparison",
+      "destination": "/ru/instrumenty/sravnenie-komponentov",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/component-comparison/",
+      "destination": "/ru/instrumenty/sravnenie-komponentov",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/sravnenie-komponentov/",
+      "destination": "/ru/instrumenty/sravnenie-komponentov",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/what-games-can-my-pc-run",
+      "destination": "/ru/instrumenty/kakie-igry-potyanet-moy-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/what-games-can-my-pc-run/",
+      "destination": "/ru/instrumenty/kakie-igry-potyanet-moy-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kakie-igry-potyanet-moy-pc/",
+      "destination": "/ru/instrumenty/kakie-igry-potyanet-moy-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/vram-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/vram-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-vram/",
+      "destination": "/ru/instrumenty/kalkulyator-vram",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/gaming-ram-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-igrovoi-ram",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/gaming-ram-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-igrovoi-ram",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-igrovoi-ram/",
+      "destination": "/ru/instrumenty/kalkulyator-igrovoi-ram",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/frame-time-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-vremeni-kadra",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/frame-time-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-vremeni-kadra",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-vremeni-kadra/",
+      "destination": "/ru/instrumenty/kalkulyator-vremeni-kadra",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/fps-refresh-rate-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-fps-i-chastoty-obnovleniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/fps-refresh-rate-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-fps-i-chastoty-obnovleniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-fps-i-chastoty-obnovleniya/",
+      "destination": "/ru/instrumenty/kalkulyator-fps-i-chastoty-obnovleniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/resolution-scaling-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-masshtabirovaniya-razresheniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/resolution-scaling-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-masshtabirovaniya-razresheniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-masshtabirovaniya-razresheniya/",
+      "destination": "/ru/instrumenty/kalkulyator-masshtabirovaniya-razresheniya",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/game-settings-optimizer",
+      "destination": "/ru/instrumenty/optimizator-nastroek-igr",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/game-settings-optimizer/",
+      "destination": "/ru/instrumenty/optimizator-nastroek-igr",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/optimizator-nastroek-igr/",
+      "destination": "/ru/instrumenty/optimizator-nastroek-igr",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/ssd-upgrade-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/ssd-upgrade-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-apgreida-ssd/",
+      "destination": "/ru/instrumenty/kalkulyator-apgreida-ssd",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/pc-upgrade-priority-calculator",
+      "destination": "/ru/instrumenty/kalkulyator-prioriteta-apgreida-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/tools/pc-upgrade-priority-calculator/",
+      "destination": "/ru/instrumenty/kalkulyator-prioriteta-apgreida-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-prioriteta-apgreida-pc/",
+      "destination": "/ru/instrumenty/kalkulyator-prioriteta-apgreida-pc",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/blog/",
+      "destination": "/ru/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/blog/:path*/",
+      "destination": "/ru/blog/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/builds/:path*/",
+      "destination": "/ru/builds/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/about",
+      "destination": "/en/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/about/",
+      "destination": "/en/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/fps-calculator",
+      "destination": "/en/fps-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/fps-calculator/",
+      "destination": "/en/fps-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/psu-calculator",
+      "destination": "/en/psu-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/psu-calculator/",
+      "destination": "/en/psu-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact",
+      "destination": "/en/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact/",
+      "destination": "/en/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy",
+      "destination": "/en/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy/",
+      "destination": "/en/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/thank-you",
+      "destination": "/en/thank-you",
+      "statusCode": 301
+    },
+    {
+      "source": "/thank-you/",
+      "destination": "/en/thank-you",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms",
+      "destination": "/en/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms/",
+      "destination": "/en/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/disclaimer",
+      "destination": "/en/disclaimer",
+      "statusCode": 301
+    },
+    {
+      "source": "/disclaimer/",
+      "destination": "/en/disclaimer",
+      "statusCode": 301
+    },
+    {
+      "source": "/cookie-policy",
+      "destination": "/en/cookie-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/cookie-policy/",
+      "destination": "/en/cookie-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/author",
+      "destination": "/en/author",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/",
+      "destination": "/en/author",
+      "statusCode": 301
+    },
+    {
+      "source": "/methodology",
+      "destination": "/en/methodology",
+      "statusCode": 301
+    },
+    {
+      "source": "/methodology/",
+      "destination": "/en/methodology",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools",
+      "destination": "/en/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/",
+      "destination": "/en/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run",
+      "destination": "/en/can-i-run",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/",
+      "destination": "/en/can-i-run",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/cyberpunk-2077",
+      "destination": "/en/can-i-run/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/cyberpunk-2077/",
+      "destination": "/en/can-i-run/cyberpunk-2077",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/forza-horizon-5",
+      "destination": "/en/can-i-run/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/forza-horizon-5/",
+      "destination": "/en/can-i-run/forza-horizon-5",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/apex-legends",
+      "destination": "/en/can-i-run/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/apex-legends/",
+      "destination": "/en/can-i-run/apex-legends",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/counter-strike-2",
+      "destination": "/en/can-i-run/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/counter-strike-2/",
+      "destination": "/en/can-i-run/counter-strike-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/fortnite",
+      "destination": "/en/can-i-run/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/fortnite/",
+      "destination": "/en/can-i-run/fortnite",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/elden-ring",
+      "destination": "/en/can-i-run/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/can-i-run/elden-ring/",
+      "destination": "/en/can-i-run/elden-ring",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/gpu-upgrade-calculator",
+      "destination": "/en/tools/gpu-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/gpu-upgrade-calculator/",
+      "destination": "/en/tools/gpu-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/cpu-upgrade-calculator",
+      "destination": "/en/tools/cpu-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/cpu-upgrade-calculator/",
+      "destination": "/en/tools/cpu-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/component-comparison",
+      "destination": "/en/tools/component-comparison",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/component-comparison/",
+      "destination": "/en/tools/component-comparison",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/what-games-can-my-pc-run",
+      "destination": "/en/tools/what-games-can-my-pc-run",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/what-games-can-my-pc-run/",
+      "destination": "/en/tools/what-games-can-my-pc-run",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/vram-calculator",
+      "destination": "/en/tools/vram-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/vram-calculator/",
+      "destination": "/en/tools/vram-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/gaming-ram-calculator",
+      "destination": "/en/tools/gaming-ram-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/gaming-ram-calculator/",
+      "destination": "/en/tools/gaming-ram-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/frame-time-calculator",
+      "destination": "/en/tools/frame-time-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/frame-time-calculator/",
+      "destination": "/en/tools/frame-time-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/fps-refresh-rate-calculator",
+      "destination": "/en/tools/fps-refresh-rate-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/fps-refresh-rate-calculator/",
+      "destination": "/en/tools/fps-refresh-rate-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/resolution-scaling-calculator",
+      "destination": "/en/tools/resolution-scaling-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/resolution-scaling-calculator/",
+      "destination": "/en/tools/resolution-scaling-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/game-settings-optimizer",
+      "destination": "/en/tools/game-settings-optimizer",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/game-settings-optimizer/",
+      "destination": "/en/tools/game-settings-optimizer",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/ssd-upgrade-calculator",
+      "destination": "/en/tools/ssd-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/ssd-upgrade-calculator/",
+      "destination": "/en/tools/ssd-upgrade-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/pc-upgrade-priority-calculator",
+      "destination": "/en/tools/pc-upgrade-priority-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/tools/pc-upgrade-priority-calculator/",
+      "destination": "/en/tools/pc-upgrade-priority-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog",
+      "destination": "/en/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/",
+      "destination": "/en/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/en/blog/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/builds/:path*",
+      "destination": "/en/builds/:path*",
       "statusCode": 301
     },
     {
@@ -33,5 +2969,745 @@
       "statusCode": 301
     }
   ],
-  "rewrites": []
+  "rewrites": [
+    {
+      "source": "/it/chi-siamo",
+      "destination": "/it/about"
+    },
+    {
+      "source": "/it/calcolatore-fps",
+      "destination": "/it/fps-calculator"
+    },
+    {
+      "source": "/it/calcolatore-psu",
+      "destination": "/it/psu-calculator"
+    },
+    {
+      "source": "/it/contatti",
+      "destination": "/it/contact"
+    },
+    {
+      "source": "/it/grazie",
+      "destination": "/it/thank-you"
+    },
+    {
+      "source": "/it/termini",
+      "destination": "/it/terms"
+    },
+    {
+      "source": "/it/avvertenza",
+      "destination": "/it/disclaimer"
+    },
+    {
+      "source": "/it/politica-cookie",
+      "destination": "/it/cookie-policy"
+    },
+    {
+      "source": "/it/autore",
+      "destination": "/it/author"
+    },
+    {
+      "source": "/it/metodologia",
+      "destination": "/it/methodology"
+    },
+    {
+      "source": "/it/strumenti",
+      "destination": "/it/tools"
+    },
+    {
+      "source": "/it/posso-eseguirlo",
+      "destination": "/it/can-i-run"
+    },
+    {
+      "source": "/it/posso-eseguirlo/cyberpunk-2077",
+      "destination": "/it/can-i-run/cyberpunk-2077"
+    },
+    {
+      "source": "/it/posso-eseguirlo/forza-horizon-5",
+      "destination": "/it/can-i-run/forza-horizon-5"
+    },
+    {
+      "source": "/it/posso-eseguirlo/apex-legends",
+      "destination": "/it/can-i-run/apex-legends"
+    },
+    {
+      "source": "/it/posso-eseguirlo/counter-strike-2",
+      "destination": "/it/can-i-run/counter-strike-2"
+    },
+    {
+      "source": "/it/posso-eseguirlo/fortnite",
+      "destination": "/it/can-i-run/fortnite"
+    },
+    {
+      "source": "/it/posso-eseguirlo/elden-ring",
+      "destination": "/it/can-i-run/elden-ring"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-upgrade-gpu",
+      "destination": "/it/tools/gpu-upgrade-calculator"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-upgrade-cpu",
+      "destination": "/it/tools/cpu-upgrade-calculator"
+    },
+    {
+      "source": "/it/strumenti/confronto-componenti",
+      "destination": "/it/tools/component-comparison"
+    },
+    {
+      "source": "/it/strumenti/quali-giochi-puo-eseguire-il-mio-pc",
+      "destination": "/it/tools/what-games-can-my-pc-run"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-vram",
+      "destination": "/it/tools/vram-calculator"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-ram-gaming",
+      "destination": "/it/tools/gaming-ram-calculator"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-tempo-frame",
+      "destination": "/it/tools/frame-time-calculator"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-fps-frequenza-aggiornamento",
+      "destination": "/it/tools/fps-refresh-rate-calculator"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-scaling-risoluzione",
+      "destination": "/it/tools/resolution-scaling-calculator"
+    },
+    {
+      "source": "/it/strumenti/ottimizzatore-impostazioni-gioco",
+      "destination": "/it/tools/game-settings-optimizer"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-upgrade-ssd",
+      "destination": "/it/tools/ssd-upgrade-calculator"
+    },
+    {
+      "source": "/it/strumenti/calcolatore-priorita-upgrade-pc",
+      "destination": "/it/tools/pc-upgrade-priority-calculator"
+    },
+    {
+      "source": "/fr/a-propos",
+      "destination": "/fr/about"
+    },
+    {
+      "source": "/fr/calculateur-fps",
+      "destination": "/fr/fps-calculator"
+    },
+    {
+      "source": "/fr/calculateur-alimentation",
+      "destination": "/fr/psu-calculator"
+    },
+    {
+      "source": "/fr/confidentialite",
+      "destination": "/fr/privacy"
+    },
+    {
+      "source": "/fr/merci",
+      "destination": "/fr/thank-you"
+    },
+    {
+      "source": "/fr/conditions",
+      "destination": "/fr/terms"
+    },
+    {
+      "source": "/fr/avertissement",
+      "destination": "/fr/disclaimer"
+    },
+    {
+      "source": "/fr/politique-cookies",
+      "destination": "/fr/cookie-policy"
+    },
+    {
+      "source": "/fr/auteur",
+      "destination": "/fr/author"
+    },
+    {
+      "source": "/fr/methodologie",
+      "destination": "/fr/methodology"
+    },
+    {
+      "source": "/fr/outils",
+      "destination": "/fr/tools"
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner",
+      "destination": "/fr/can-i-run"
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/cyberpunk-2077",
+      "destination": "/fr/can-i-run/cyberpunk-2077"
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/forza-horizon-5",
+      "destination": "/fr/can-i-run/forza-horizon-5"
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/apex-legends",
+      "destination": "/fr/can-i-run/apex-legends"
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/counter-strike-2",
+      "destination": "/fr/can-i-run/counter-strike-2"
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/fortnite",
+      "destination": "/fr/can-i-run/fortnite"
+    },
+    {
+      "source": "/fr/puis-je-le-faire-tourner/elden-ring",
+      "destination": "/fr/can-i-run/elden-ring"
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-a-niveau-gpu",
+      "destination": "/fr/tools/gpu-upgrade-calculator"
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-a-niveau-cpu",
+      "destination": "/fr/tools/cpu-upgrade-calculator"
+    },
+    {
+      "source": "/fr/outils/comparateur-composants",
+      "destination": "/fr/tools/component-comparison"
+    },
+    {
+      "source": "/fr/outils/quels-jeux-mon-pc-peut-il-faire-tourner",
+      "destination": "/fr/tools/what-games-can-my-pc-run"
+    },
+    {
+      "source": "/fr/outils/calculateur-vram",
+      "destination": "/fr/tools/vram-calculator"
+    },
+    {
+      "source": "/fr/outils/calculateur-ram-gaming",
+      "destination": "/fr/tools/gaming-ram-calculator"
+    },
+    {
+      "source": "/fr/outils/calculateur-temps-image",
+      "destination": "/fr/tools/frame-time-calculator"
+    },
+    {
+      "source": "/fr/outils/calculateur-fps-taux-rafraichissement",
+      "destination": "/fr/tools/fps-refresh-rate-calculator"
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-echelle-resolution",
+      "destination": "/fr/tools/resolution-scaling-calculator"
+    },
+    {
+      "source": "/fr/outils/optimiseur-parametres-jeu",
+      "destination": "/fr/tools/game-settings-optimizer"
+    },
+    {
+      "source": "/fr/outils/calculateur-mise-a-niveau-ssd",
+      "destination": "/fr/tools/ssd-upgrade-calculator"
+    },
+    {
+      "source": "/fr/outils/calculateur-priorite-mise-a-niveau-pc",
+      "destination": "/fr/tools/pc-upgrade-priority-calculator"
+    },
+    {
+      "source": "/de/ueber-uns",
+      "destination": "/de/about"
+    },
+    {
+      "source": "/de/fps-rechner",
+      "destination": "/de/fps-calculator"
+    },
+    {
+      "source": "/de/netzteil-rechner",
+      "destination": "/de/psu-calculator"
+    },
+    {
+      "source": "/de/kontakt",
+      "destination": "/de/contact"
+    },
+    {
+      "source": "/de/datenschutz",
+      "destination": "/de/privacy"
+    },
+    {
+      "source": "/de/danke",
+      "destination": "/de/thank-you"
+    },
+    {
+      "source": "/de/agb",
+      "destination": "/de/terms"
+    },
+    {
+      "source": "/de/haftungsausschluss",
+      "destination": "/de/disclaimer"
+    },
+    {
+      "source": "/de/cookie-richtlinie",
+      "destination": "/de/cookie-policy"
+    },
+    {
+      "source": "/de/autor",
+      "destination": "/de/author"
+    },
+    {
+      "source": "/de/methodik",
+      "destination": "/de/methodology"
+    },
+    {
+      "source": "/de/werkzeuge",
+      "destination": "/de/tools"
+    },
+    {
+      "source": "/de/kann-ich-es-spielen",
+      "destination": "/de/can-i-run"
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/cyberpunk-2077",
+      "destination": "/de/can-i-run/cyberpunk-2077"
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/forza-horizon-5",
+      "destination": "/de/can-i-run/forza-horizon-5"
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/apex-legends",
+      "destination": "/de/can-i-run/apex-legends"
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/counter-strike-2",
+      "destination": "/de/can-i-run/counter-strike-2"
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/fortnite",
+      "destination": "/de/can-i-run/fortnite"
+    },
+    {
+      "source": "/de/kann-ich-es-spielen/elden-ring",
+      "destination": "/de/can-i-run/elden-ring"
+    },
+    {
+      "source": "/de/werkzeuge/gpu-upgrade-rechner",
+      "destination": "/de/tools/gpu-upgrade-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/cpu-upgrade-rechner",
+      "destination": "/de/tools/cpu-upgrade-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/komponentenvergleich",
+      "destination": "/de/tools/component-comparison"
+    },
+    {
+      "source": "/de/werkzeuge/welche-spiele-schafft-mein-pc",
+      "destination": "/de/tools/what-games-can-my-pc-run"
+    },
+    {
+      "source": "/de/werkzeuge/vram-rechner",
+      "destination": "/de/tools/vram-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/gaming-ram-rechner",
+      "destination": "/de/tools/gaming-ram-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/frametime-rechner",
+      "destination": "/de/tools/frame-time-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/fps-bildwiederholrate-rechner",
+      "destination": "/de/tools/fps-refresh-rate-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/aufloesungsskalierung-rechner",
+      "destination": "/de/tools/resolution-scaling-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/spiel-einstellungen-optimierer",
+      "destination": "/de/tools/game-settings-optimizer"
+    },
+    {
+      "source": "/de/werkzeuge/ssd-upgrade-rechner",
+      "destination": "/de/tools/ssd-upgrade-calculator"
+    },
+    {
+      "source": "/de/werkzeuge/pc-upgrade-prioritaet-rechner",
+      "destination": "/de/tools/pc-upgrade-priority-calculator"
+    },
+    {
+      "source": "/es/sobre-nosotros",
+      "destination": "/es/about"
+    },
+    {
+      "source": "/es/calculadora-fps",
+      "destination": "/es/fps-calculator"
+    },
+    {
+      "source": "/es/calculadora-psu",
+      "destination": "/es/psu-calculator"
+    },
+    {
+      "source": "/es/contacto",
+      "destination": "/es/contact"
+    },
+    {
+      "source": "/es/privacidad",
+      "destination": "/es/privacy"
+    },
+    {
+      "source": "/es/gracias",
+      "destination": "/es/thank-you"
+    },
+    {
+      "source": "/es/terminos",
+      "destination": "/es/terms"
+    },
+    {
+      "source": "/es/aviso-legal",
+      "destination": "/es/disclaimer"
+    },
+    {
+      "source": "/es/politica-cookies",
+      "destination": "/es/cookie-policy"
+    },
+    {
+      "source": "/es/autor",
+      "destination": "/es/author"
+    },
+    {
+      "source": "/es/metodologia",
+      "destination": "/es/methodology"
+    },
+    {
+      "source": "/es/herramientas",
+      "destination": "/es/tools"
+    },
+    {
+      "source": "/es/puedo-ejecutarlo",
+      "destination": "/es/can-i-run"
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/cyberpunk-2077",
+      "destination": "/es/can-i-run/cyberpunk-2077"
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/forza-horizon-5",
+      "destination": "/es/can-i-run/forza-horizon-5"
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/apex-legends",
+      "destination": "/es/can-i-run/apex-legends"
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/counter-strike-2",
+      "destination": "/es/can-i-run/counter-strike-2"
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/fortnite",
+      "destination": "/es/can-i-run/fortnite"
+    },
+    {
+      "source": "/es/puedo-ejecutarlo/elden-ring",
+      "destination": "/es/can-i-run/elden-ring"
+    },
+    {
+      "source": "/es/herramientas/calculadora-actualizacion-gpu",
+      "destination": "/es/tools/gpu-upgrade-calculator"
+    },
+    {
+      "source": "/es/herramientas/calculadora-actualizacion-cpu",
+      "destination": "/es/tools/cpu-upgrade-calculator"
+    },
+    {
+      "source": "/es/herramientas/comparador-componentes",
+      "destination": "/es/tools/component-comparison"
+    },
+    {
+      "source": "/es/herramientas/que-juegos-puede-ejecutar-mi-pc",
+      "destination": "/es/tools/what-games-can-my-pc-run"
+    },
+    {
+      "source": "/es/herramientas/calculadora-vram",
+      "destination": "/es/tools/vram-calculator"
+    },
+    {
+      "source": "/es/herramientas/calculadora-ram-gaming",
+      "destination": "/es/tools/gaming-ram-calculator"
+    },
+    {
+      "source": "/es/herramientas/calculadora-tiempo-fotograma",
+      "destination": "/es/tools/frame-time-calculator"
+    },
+    {
+      "source": "/es/herramientas/calculadora-fps-frecuencia-actualizacion",
+      "destination": "/es/tools/fps-refresh-rate-calculator"
+    },
+    {
+      "source": "/es/herramientas/calculadora-escalado-resolucion",
+      "destination": "/es/tools/resolution-scaling-calculator"
+    },
+    {
+      "source": "/es/herramientas/optimizador-ajustes-juego",
+      "destination": "/es/tools/game-settings-optimizer"
+    },
+    {
+      "source": "/es/herramientas/calculadora-actualizacion-ssd",
+      "destination": "/es/tools/ssd-upgrade-calculator"
+    },
+    {
+      "source": "/es/herramientas/calculadora-prioridad-actualizacion-pc",
+      "destination": "/es/tools/pc-upgrade-priority-calculator"
+    },
+    {
+      "source": "/ru/o-nas",
+      "destination": "/ru/about"
+    },
+    {
+      "source": "/ru/kalkulyator-fps",
+      "destination": "/ru/fps-calculator"
+    },
+    {
+      "source": "/ru/kalkulyator-bloka-pitaniya",
+      "destination": "/ru/psu-calculator"
+    },
+    {
+      "source": "/ru/kontakty",
+      "destination": "/ru/contact"
+    },
+    {
+      "source": "/ru/konfidencialnost",
+      "destination": "/ru/privacy"
+    },
+    {
+      "source": "/ru/spasibo",
+      "destination": "/ru/thank-you"
+    },
+    {
+      "source": "/ru/usloviya",
+      "destination": "/ru/terms"
+    },
+    {
+      "source": "/ru/otkaz-ot-otvetstvennosti",
+      "destination": "/ru/disclaimer"
+    },
+    {
+      "source": "/ru/politika-cookie",
+      "destination": "/ru/cookie-policy"
+    },
+    {
+      "source": "/ru/avtor",
+      "destination": "/ru/author"
+    },
+    {
+      "source": "/ru/metodologiya",
+      "destination": "/ru/methodology"
+    },
+    {
+      "source": "/ru/instrumenty",
+      "destination": "/ru/tools"
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc",
+      "destination": "/ru/can-i-run"
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/cyberpunk-2077",
+      "destination": "/ru/can-i-run/cyberpunk-2077"
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/forza-horizon-5",
+      "destination": "/ru/can-i-run/forza-horizon-5"
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/apex-legends",
+      "destination": "/ru/can-i-run/apex-legends"
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/counter-strike-2",
+      "destination": "/ru/can-i-run/counter-strike-2"
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/fortnite",
+      "destination": "/ru/can-i-run/fortnite"
+    },
+    {
+      "source": "/ru/potyanet-li-moy-pc/elden-ring",
+      "destination": "/ru/can-i-run/elden-ring"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-apgreida-gpu",
+      "destination": "/ru/tools/gpu-upgrade-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-apgreida-cpu",
+      "destination": "/ru/tools/cpu-upgrade-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/sravnenie-komponentov",
+      "destination": "/ru/tools/component-comparison"
+    },
+    {
+      "source": "/ru/instrumenty/kakie-igry-potyanet-moy-pc",
+      "destination": "/ru/tools/what-games-can-my-pc-run"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-vram",
+      "destination": "/ru/tools/vram-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-igrovoi-ram",
+      "destination": "/ru/tools/gaming-ram-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-vremeni-kadra",
+      "destination": "/ru/tools/frame-time-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-fps-i-chastoty-obnovleniya",
+      "destination": "/ru/tools/fps-refresh-rate-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-masshtabirovaniya-razresheniya",
+      "destination": "/ru/tools/resolution-scaling-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/optimizator-nastroek-igr",
+      "destination": "/ru/tools/game-settings-optimizer"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-apgreida-ssd",
+      "destination": "/ru/tools/ssd-upgrade-calculator"
+    },
+    {
+      "source": "/ru/instrumenty/kalkulyator-prioriteta-apgreida-pc",
+      "destination": "/ru/tools/pc-upgrade-priority-calculator"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/images/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/flags/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/logo.webp",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/og-image.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/og-image-fps.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/author-arun-kumar-yadav.jpg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/favicon-96x96.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/icon-192.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/icon-512.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/blog/what-is-pc-bottleneck.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400"
+        },
+        {
+          "key": "Content-Type",
+          "value": "image/jpeg"
+        }
+      ]
+    },
+    {
+      "source": "/api/rss",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=600"
+        }
+      ]
+    }
+  ]
 }

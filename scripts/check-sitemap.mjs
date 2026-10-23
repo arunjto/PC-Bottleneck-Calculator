@@ -24,8 +24,10 @@ if (locations.length !== uniqueLocations.size) {
 }
 
 const requiredIndexableUrls = [];
+const requiredBuildListingUrls = [];
 const expectedDatedUrls = new Map();
 for (const [locale, localePaths] of Object.entries(translations)) {
+  requiredBuildListingUrls.push(`${siteUrl}/${locale}/builds`);
   for (const canonicalPath of policy.requiredIndexablePaths) {
     requiredIndexableUrls.push(`${siteUrl}/${locale}/${localePaths[canonicalPath]}`);
   }
@@ -41,6 +43,11 @@ for (const [locale, localePaths] of Object.entries(translations)) {
   for (const slug of policy.popularBuildSlugs) {
     expectedDatedUrls.set(`${siteUrl}/${locale}/builds/${slug}`, policy.popularBuildsUpdated);
   }
+}
+
+const missingBuildListings = requiredBuildListingUrls.filter((url) => !uniqueLocations.has(url));
+if (missingBuildListings.length > 0) {
+  throw new Error(`Build listing URL(s) missing from sitemap:\n${missingBuildListings.join('\n')}`);
 }
 
 const missingIndexableUrls = requiredIndexableUrls.filter((url) => !uniqueLocations.has(url));
@@ -65,4 +72,4 @@ if (unexpectedDates.length > 0) {
   throw new Error(`Unexpected lastmod URL(s):\n${unexpectedDates.map((entry) => entry.loc).join('\n')}`);
 }
 
-console.log(`Sitemap checks passed: ${locations.length} unique URLs, ${expectedDatedUrls.size} dated priority URLs, ${requiredIndexableUrls.length} required indexable URLs present.`);
+console.log(`Sitemap checks passed: ${locations.length} unique URLs, ${expectedDatedUrls.size} dated priority URLs, ${requiredIndexableUrls.length} required indexable URLs and ${requiredBuildListingUrls.length} build listings present.`);
