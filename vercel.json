@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-   "framework": null,
+  "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "out",
   "cleanUrls": true,
@@ -26,6 +26,11 @@
         }
       ],
       "destination": "https://www.pcbuildcheck.com/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/ads.txt",
+      "destination": "https://adstxt.journeymv.com/sites/e1ac38cd-d500-42df-abad-507e1c843afe/ads.txt",
       "statusCode": 301
     },
     {
