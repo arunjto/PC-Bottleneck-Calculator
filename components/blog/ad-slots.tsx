@@ -12,14 +12,11 @@ interface AdSlotProps {
 }
 
 /**
- * Advertising remains disabled unless the deployment explicitly confirms that
- * both AdSense and the required Google-certified consent platform are ready.
+ * Legacy AdSense placeholders stay disabled. Mediavine manages ad placement;
+ * old AdSense environment flags must not reserve empty slots.
  */
 function isAdsEnabled(): boolean {
-  return (
-    process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "true" &&
-    process.env.NEXT_PUBLIC_GOOGLE_CERTIFIED_CMP_CONFIGURED === "true"
-  );
+  return false;
 }
 
 // -----------------------------------------------------------------------------

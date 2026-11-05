@@ -88,9 +88,6 @@ export default async function RootLayout({
     notFound();
   }
 
-  const adsConfigured =
-    process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true' &&
-    process.env.NEXT_PUBLIC_GOOGLE_CERTIFIED_CMP_CONFIGURED === 'true';
   const gaEnabled = process.env.NEXT_PUBLIC_GA_ENABLED !== 'false';
   const gaMeasurementId =
     process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-7W6RG58JC7';
@@ -113,20 +110,13 @@ export default async function RootLayout({
             `}
           </Script>
         )}
-        <meta
-          name="google-adsense-account"
-          content="ca-pub-9111916848868133"
+        <script
+          type="text/javascript"
+          async
+          data-noptimize="1"
+          data-cfasync="false"
+          src="https://scripts.scriptwrapper.com/tags/e1ac38cd-d500-42df-abad-507e1c843afe.js"
         />
-        {adsConfigured && (
-          <>
-            <link
-              rel="preconnect"
-              href="https://pagead2.googlesyndication.com"
-              crossOrigin="anonymous"
-            />
-            <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
-          </>
-        )}
       </head>
       <body className="font-sans" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -145,15 +135,6 @@ export default async function RootLayout({
           </div>
         </ThemeProvider>
 
-        {/* AdSense — lazyOnload ensures it doesn't block interactivity on mobile */}
-        {adsConfigured && (
-          <Script
-            id="adsbygoogle-init"
-            strategy="lazyOnload"
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9111916848868133"
-            crossOrigin="anonymous"
-          />
-        )}
         <ConsentController
           lang={lang}
           measurementId={gaEnabled ? gaMeasurementId : undefined}
