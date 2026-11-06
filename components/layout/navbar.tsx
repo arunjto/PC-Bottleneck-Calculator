@@ -46,7 +46,7 @@ export function Navbar({ lang }: { lang: string; dict?: unknown }) {
             className="flex items-center gap-2.5 font-semibold text-base hover:text-blue-300 transition-colors flex-shrink-0"
           >
             <Image
-              src="/logo.webp"
+              src="/images/logo-chrome.webp"
               alt="PC Build Check"
               width={28}
               height={28}

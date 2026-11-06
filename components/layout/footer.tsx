@@ -62,7 +62,7 @@ export function Footer({ lang }: { dict?: unknown; lang: string }) {
         <div className="flex flex-col items-center text-center mb-8">
           <div className="flex items-center gap-3 mb-2">
             <Image
-              src="/logo.webp"
+              src="/images/logo-chrome.webp"
               alt="PC Build Check"
               width={36}
               height={36}

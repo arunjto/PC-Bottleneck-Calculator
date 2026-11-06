@@ -108,13 +108,13 @@ export function EnhancedSearchableSelect({
   // Defer filtering and avoid mounting hundreds of rows on lower-end phones.
   const matchingOptions = useMemo(
     () =>
-      options.filter(
+      !isOpen ? [] : !normalizedSearchTerm ? options : options.filter(
         (option) =>
           option.name.toLowerCase().includes(normalizedSearchTerm) ||
           option.tier.toLowerCase().includes(normalizedSearchTerm) ||
           option.specs.toLowerCase().includes(normalizedSearchTerm)
       ),
-    [normalizedSearchTerm, options]
+    [isOpen, normalizedSearchTerm, options]
   );
   const filteredOptions = useMemo(() => matchingOptions.slice(0, 60), [matchingOptions]);
   const hasMoreOptions = matchingOptions.length > filteredOptions.length;
@@ -125,6 +125,7 @@ export function EnhancedSearchableSelect({
   );
 
   useEffect(() => {
+    if (!isOpen) return;
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -134,7 +135,7 @@ export function EnhancedSearchableSelect({
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) inputRef.current.focus();

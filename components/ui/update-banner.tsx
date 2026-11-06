@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { Rocket, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
@@ -8,10 +5,7 @@ export function UpdateBanner({ dict, href }: { dict: any; href: string }) {
   if (!dict) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+    <div
       className="flex flex-col items-start gap-4 rounded-lg border border-green-200 bg-green-50 p-4 shadow-sm dark:border-green-800 dark:bg-green-950/30 sm:flex-row sm:items-center sm:justify-between"
     >
       <div className="flex items-center gap-3">
@@ -35,6 +29,6 @@ export function UpdateBanner({ dict, href }: { dict: any; href: string }) {
         <Sparkles className="h-3 w-3" />
         {dict.badge}
       </div>
-    </motion.div>
+    </div>
   );
 }
